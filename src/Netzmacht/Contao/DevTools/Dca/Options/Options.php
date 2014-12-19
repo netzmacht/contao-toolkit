@@ -18,4 +18,10 @@ namespace Netzmacht\Contao\DevTools\Dca\Options;
  */
 interface Options extends \ArrayAccess, \Iterator
 {
+    /**
+     * Get array copy.
+     *
+     * @return array
+     */
+    public function getArrayCopy();
 }

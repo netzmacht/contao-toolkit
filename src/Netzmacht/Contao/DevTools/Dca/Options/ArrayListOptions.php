@@ -212,4 +212,18 @@ class ArrayListOptions implements Options
     {
         unset($this->list[$offset]);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getArrayCopy()
+    {
+        $values = array();
+
+        foreach ($this as $key => $value) {
+            $values[$key] = $value;
+        }
+
+        return $values;
+    }
 }

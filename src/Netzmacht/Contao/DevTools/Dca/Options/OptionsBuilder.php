@@ -50,6 +50,8 @@ class OptionsBuilder
             $options->setLabelCallback($labelColumn);
         } elseif ($labelColumn) {
             $options->setLabelColumn($labelColumn);
+        } else {
+            $options->setLabelColumn($valueColumn);
         }
 
         return new static($options);
@@ -110,11 +112,11 @@ class OptionsBuilder
     /**
      * Get the build options.
      *
-     * @return Options
+     * @return array
      */
     public function getOptions()
     {
-        return $this->options;
+        return $this->options->getArrayCopy();
     }
 
     /**

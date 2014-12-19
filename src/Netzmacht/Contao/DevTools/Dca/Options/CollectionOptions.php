@@ -187,11 +187,15 @@ class CollectionOptions implements Options
      */
     public function offsetExists($offset)
     {
-        if (!is_numeric($offset)) {
-            return false;
+        $all = $this->collection->fetchAll();
+
+        foreach ($all as $row) {
+            if ($row[$this->valueColumn] === $offset) {
+                return true;
+            }
         }
 
-        return ($offset < $this->collection->current());
+        return false;
     }
 
     /**
@@ -201,7 +205,13 @@ class CollectionOptions implements Options
     {
         $all = $this->collection->fetchAll();
 
-        return $all[$offset];
+        foreach ($all as $row) {
+            if ($row[$this->valueColumn] === $offset) {
+                return $row;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -218,5 +228,19 @@ class CollectionOptions implements Options
     public function offsetUnset($offset)
     {
         // unsupported
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getArrayCopy()
+    {
+        $values = array();
+
+        foreach ($this as $id => $value) {
+            $values[$id] = $value;
+        }
+
+        return $values;
     }
 }
