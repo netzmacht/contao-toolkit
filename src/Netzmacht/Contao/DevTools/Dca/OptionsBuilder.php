@@ -32,6 +32,48 @@ class OptionsBuilder
     private $options;
 
     /**
+     * Get Options builder for collection.
+     *
+     * @param Collection       $collection  Model collection.
+     * @param string           $valueColumn Value column.
+     * @param string|\callable $labelColumn Label column or callback.
+     *
+     * @return OptionsBuilder
+     */
+    public static function fromCollection(Collection $collection, $valueColumn = 'id', $labelColumn = null)
+    {
+        $options = new CollectionOptions($collection);
+        $options->setValueColumn($valueColumn);
+
+        if (is_callable($labelColumn)) {
+            $options->setLabelCallback($labelColumn);
+        } elseif ($labelColumn) {
+            $options->setLabelColumn($labelColumn);
+        }
+
+        return new static($options);
+    }
+
+    /**
+     * Create options from array list.
+     *
+     * It expects an array which is a list of associatives arrays where the value column is part of the associative
+     * array and has to be extracted.
+     *
+     * @param array            $data     Raw data list.
+     * @param string           $valueKey Value key.
+     * @param string|\callable $labelKey Label key or callback.
+     *
+     * @return OptionsBuilder
+     */
+    public static function fromArrayList(array $data, $valueKey = 'id', $labelKey = null)
+    {
+        $options = new Options\ArrayListOptions($data, $valueKey, $labelKey);
+
+        return new static($options);
+    }
+
+    /**
      * Construct.
      *
      * @param Options $options The options.
@@ -39,29 +81,6 @@ class OptionsBuilder
     public function __construct(Options $options)
     {
         $this->options = $options;
-    }
-
-    /**
-     * Get Options builder for collection.
-     *
-     * @param Collection       $collection  Model collection.
-     * @param string|\callable $labelColumn Label column or callback.
-     * @param string           $valueColumn Value column.
-     *
-     * @return OptionsBuilder
-     */
-    public static function fromCollection(Collection $collection, $labelColumn, $valueColumn = 'id')
-    {
-        $options = new CollectionOptions($collection);
-        $options->setValueColumn($valueColumn);
-
-        if (is_callable($labelColumn)) {
-            $options->setLabelCallback($labelColumn);
-        } else {
-            $options->setLabelColumn($labelColumn);
-        }
-
-        return new static($options);
     }
 
     /**
@@ -77,7 +96,7 @@ class OptionsBuilder
         $options = array();
 
         foreach ($this->options as $key => $value) {
-            $group = $this->groupValue($this->options[$column], $callback);
+            $group = $this->groupValue($this->options[$key][$column], $callback);
 
             $options[$group][$key] = $value;
         }

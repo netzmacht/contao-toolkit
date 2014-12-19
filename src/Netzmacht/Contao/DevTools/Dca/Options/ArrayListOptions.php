@@ -11,39 +11,38 @@
 
 namespace Netzmacht\Contao\DevTools\Dca\Options;
 
-use Contao\Model\Collection;
 use Netzmacht\Contao\DevTools\Dca\Options;
 
 /**
- * Class CollectionOptions maps a model collection to the option format.
+ * Class ArrayListOptions extracts options from a list of associative arrays.
  *
  * @package Netzmacht\Contao\DevTools\Dca\Options
  */
-class CollectionOptions implements Options
+class ArrayListOptions implements Options
 {
     /**
-     * The model collection.
+     * The array list.
      *
-     * @var Collection
+     * @var array
      */
-    private $collection;
+    private $list;
 
     /**
-     * The label column.
-     *
-     * @var string
-     */
-    private $labelColumn;
-
-    /**
-     * The value column.
+     * The label key.
      *
      * @var string
      */
-    private $valueColumn = 'id';
+    private $labelKey;
 
     /**
-     * Instead of a label column you can define a callable.
+     * The value key.
+     *
+     * @var string
+     */
+    private $valueKey = 'id';
+
+    /**
+     * Instead of a label key you can define a callable.
      *
      * @var \callable
      */
@@ -59,15 +58,16 @@ class CollectionOptions implements Options
     /**
      * Construct.
      *
-     * @param Collection $collection  Model collection.
-     * @param string     $labelColumn Name of label column.
-     * @param string     $valueColumn Name of value column.
+     * @param array  $list     Array list.
+     * @param string $valueKey Name of value key.
+     * @param string $labelKey Name of label key.
      */
-    public function __construct(Collection $collection, $labelColumn = null, $valueColumn = 'id')
+    public function __construct(array $list, $valueKey = 'id', $labelKey = null)
     {
-        $this->collection  = $collection;
-        $this->labelColumn = $labelColumn;
-        $this->valueColumn = $valueColumn;
+        $this->list     = $list;
+        $this->keys     = array_keys($list);
+        $this->labelKey = $labelKey;
+        $this->valueKey = $valueKey;
     }
 
     /**
@@ -75,21 +75,21 @@ class CollectionOptions implements Options
      *
      * @return string
      */
-    public function getLabelColumn()
+    public function getLabelKey()
     {
-        return $this->labelColumn;
+        return $this->labelKey;
     }
 
     /**
      * Set label column.
      *
-     * @param string $labelColumn Label column.
+     * @param string $labelKey Label column.
      *
      * @return $this
      */
-    public function setLabelColumn($labelColumn)
+    public function setLabelKey($labelKey)
     {
-        $this->labelColumn = $labelColumn;
+        $this->labelKey = $labelKey;
 
         return $this;
     }
@@ -99,21 +99,21 @@ class CollectionOptions implements Options
      *
      * @return string
      */
-    public function getValueColumn()
+    public function getValueKey()
     {
-        return $this->valueColumn;
+        return $this->valueKey;
     }
 
     /**
      * Set the value column.
      *
-     * @param string $valueColumn Value column.
+     * @param string $valueKey Value column.
      *
      * @return $this
      */
-    public function setValueColumn($valueColumn)
+    public function setValueKey($valueKey)
     {
-        $this->valueColumn = $valueColumn;
+        $this->valueKey = $valueKey;
 
         return $this;
     }
@@ -140,13 +140,15 @@ class CollectionOptions implements Options
      */
     public function current()
     {
+        $current = $this->list[$this->keys[$this->position]];
+
         if ($this->labelCallback) {
             $callback = $this->labelCallback;
 
-            return $callback($this->collection->current());
+            return $callback($current);
         }
 
-        return $this->collection->{$this->labelColumn};
+        return $current[$this->labelKey];
     }
 
     /**
@@ -155,7 +157,6 @@ class CollectionOptions implements Options
     public function next()
     {
         $this->position++;
-        $this->collection->next();
     }
 
     /**
@@ -163,7 +164,7 @@ class CollectionOptions implements Options
      */
     public function key()
     {
-        return $this->collection->{$this->valueColumn};
+        return $this->keys[$this->position];
     }
 
     /**
@@ -171,7 +172,7 @@ class CollectionOptions implements Options
      */
     public function valid()
     {
-        return $this->position < $this->collection->count();
+        return $this->position < count($this->keys);
     }
 
     /**
@@ -180,7 +181,6 @@ class CollectionOptions implements Options
     public function rewind()
     {
         $this->position = 0;
-        $this->collection->reset();
     }
 
     /**
@@ -188,11 +188,7 @@ class CollectionOptions implements Options
      */
     public function offsetExists($offset)
     {
-        if (!is_numeric($offset)) {
-            return false;
-        }
-
-        return ($offset < $this->collection->current());
+        return isset($this->list[$offset]);
     }
 
     /**
@@ -200,9 +196,7 @@ class CollectionOptions implements Options
      */
     public function offsetGet($offset)
     {
-        $all = $this->collection->fetchAll();
-
-        return $all[$offset];
+        return $this->list[$offset];
     }
 
     /**
@@ -210,7 +204,7 @@ class CollectionOptions implements Options
      */
     public function offsetSet($offset, $value)
     {
-        // unsupported
+        $this->list[$offset] = $value;
     }
 
     /**
@@ -218,6 +212,6 @@ class CollectionOptions implements Options
      */
     public function offsetUnset($offset)
     {
-        // unsupported
+        unset($this->list[$offset]);
     }
 }
