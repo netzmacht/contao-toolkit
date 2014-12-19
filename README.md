@@ -33,7 +33,7 @@ This library ships with a common toggle state icon callback.
 // dca/tl_custom.php
 
 $GLOBALS['TL_DCA']['tl_custom']['fields']['published']['button_callback'] = 
-	Netzmacht\Contao\DevTools\Ḑca::createToggleIconCallback(
+	Netzmacht\Contao\DevTools\Dca::createToggleIconCallback(
 		'tl_custom',	// The database table.
 		'published',	// the state column
 		false,			// Inverse the state. Set to true for invisible='' columns
@@ -73,7 +73,7 @@ Contao does not provide any help for dependency injection. If you need some depe
 
 class YourContentElement extends \ContentElement
 {
-	use Netzmacht\Contao\DevTolls\ServiceContainerTrait;
+	use Netzmacht\Contao\DevTools\ServiceContainerTrait;
 	
 	private $service;
 	
