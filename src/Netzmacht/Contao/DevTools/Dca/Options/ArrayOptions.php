@@ -11,7 +11,11 @@
 
 namespace Netzmacht\Contao\DevTools\Dca\Options;
 
-
+/**
+ * Class ArrayOptions decorates an already existing options array with the Options interface.
+ *
+ * @package Netzmacht\Contao\DevTools\Dca\Options
+ */
 class ArrayOptions extends \ArrayIterator implements Options
 {
 }

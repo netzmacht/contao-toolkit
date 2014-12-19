@@ -25,6 +25,7 @@ use Netzmacht\Contao\DevTools\Dca\Options\Options;
 class OptionsBuilder
 {
     /**
+     * The options.
      *
      * @var Options
      */
@@ -33,7 +34,7 @@ class OptionsBuilder
     /**
      * Construct.
      *
-     * @param Options $options Options.
+     * @param Options $options The options.
      */
     public function __construct(Options $options)
     {
@@ -43,9 +44,9 @@ class OptionsBuilder
     /**
      * Get Options builder for collection.
      *
-     * @param Collection        $collection  Model collection.
-     * @param string|\callable  $labelColumn Label column or callback.
-     * @param string            $valueColumn Value column.
+     * @param Collection       $collection  Model collection.
+     * @param string|\callable $labelColumn Label column or callback.
+     * @param string           $valueColumn Value column.
      *
      * @return OptionsBuilder
      */
@@ -99,7 +100,7 @@ class OptionsBuilder
     /**
      * Get the group value.
      *
-     * @param mixed           $value    Raw group value.
+     * @param mixed          $value    Raw group value.
      * @param \callable|null $callback Optional callback.
      *
      * @return mixed

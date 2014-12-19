@@ -11,7 +11,13 @@
 
 namespace Netzmacht\Contao\DevTools;
 
+use Netzmacht\Contao\DevTools\Dca\DcaLoader;
 
+/**
+ * Class Dca simplifies DCA access.
+ *
+ * @package Netzmacht\Contao\DevTools
+ */
 class Dca
 {
     /**
@@ -26,24 +32,5 @@ class Dca
     {
         $loader = new DcaLoader();
         $loader->loadDataContainer($name, $ignoreCache);
-    }
-}
-
-
-/**
- * Class Loader loads the data container.
- *
- * @package Netzmacht\Contao\DevTools\Dca
- */
-class DcaLoader extends \Controller
-{
-    /**
-     * Construct.
-     */
-    public function __construct()
-    {
-        // Override it to make it public.
-
-        parent::__construct();
     }
 }

@@ -13,6 +13,11 @@ namespace Netzmacht\Contao\DevTools\Dca\Options;
 
 use Contao\Model\Collection;
 
+/**
+ * Class CollectionOptions maps a model collection to the option format.
+ *
+ * @package Netzmacht\Contao\DevTools\Dca\Options
+ */
 class CollectionOptions implements Options
 {
     /**
@@ -202,15 +207,7 @@ class CollectionOptions implements Options
     }
 
     /**
-     * (PHP 5 &gt;= 5.0.0)<br/>
-     * Offset to unset
-     * @link http://php.net/manual/en/arrayaccess.offsetunset.php
-     *
-     * @param mixed $offset <p>
-     *                      The offset to unset.
-     *                      </p>
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function offsetUnset($offset)
     {

@@ -11,8 +11,11 @@
 
 namespace Netzmacht\Contao\DevTools\Dca\Options;
 
-
+/**
+ * Interface Options describes the options.
+ *
+ * @package Netzmacht\Contao\DevTools\Dca\Options
+ */
 interface Options extends \ArrayAccess, \Iterator
 {
-
 }
