@@ -12,6 +12,7 @@
 namespace Netzmacht\Contao\DevTools;
 
 use Netzmacht\Contao\DevTools\Dca\DcaLoader;
+use Netzmacht\Contao\DevTools\Dca\ToggleIconCallback;
 
 /**
  * Class Dca simplifies DCA access.
@@ -20,6 +21,8 @@ use Netzmacht\Contao\DevTools\Dca\DcaLoader;
  */
 class Dca
 {
+    use ServiceContainerTrait;
+
     /**
      * Load the data container.
      *
@@ -32,5 +35,28 @@ class Dca
     {
         $loader = new DcaLoader();
         $loader->loadDataContainer($name, $ignoreCache);
+    }
+
+    /**
+     * Create an toggle icon callback.
+     *
+     * @param string      $table        The table name.
+     * @param string      $stateColumn  The column name.
+     * @param bool        $inversed     State is inversed.
+     * @param string|null $disabledIcon Custom disabled icon.
+     *
+     * @return ToggleIconCallback
+     */
+    public static function createToggleIconCallback($table, $stateColumn, $inversed = false, $disabledIcon = null)
+    {
+        return new ToggleIconCallback(
+            static::getService('user'),
+            static::getService('input'),
+            static::getService('database.connection'),
+            $table,
+            $stateColumn,
+            $inversed,
+            $disabledIcon
+        );
     }
 }
