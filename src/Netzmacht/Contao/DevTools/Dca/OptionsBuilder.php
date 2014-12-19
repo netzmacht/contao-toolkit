@@ -76,7 +76,7 @@ class OptionsBuilder
         $options = array();
 
         foreach ($this->options as $key => $value) {
-            $group = $this->groupValue($this->options[$key][$column], $callback);
+            $group = $this->groupValue($this->options[$column], $callback);
 
             $options[$group][$key] = $value;
         }
