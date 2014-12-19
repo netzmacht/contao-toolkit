@@ -1,10 +1,11 @@
 <?php
 
-namespace spec\Netzmacht\Contao\DevTools\Dca;
+namespace spec\Netzmacht\Contao\DevTools\Dca\Options;
 
 use Model\Collection;
-use Netzmacht\Contao\DevTools\Dca\Options;
-use Netzmacht\Contao\DevTools\Dca\OptionsBuilder;
+use Netzmacht\Contao\DevTools\Dca\Options\ArrayOptions;
+use Netzmacht\Contao\DevTools\Dca\Options\Options;
+use Netzmacht\Contao\DevTools\Dca\Options\OptionsBuilder;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -22,12 +23,12 @@ class OptionsBuilderSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Netzmacht\Contao\DevTools\Dca\OptionsBuilder');
+        $this->shouldHaveType('Netzmacht\Contao\DevTools\Dca\Options\OptionsBuilder');
     }
 
     function it_gets_the_options()
     {
-        $this->getOptions()->shouldImplement('Netzmacht\Contao\DevTools\Dca\Options');
+        $this->getOptions()->shouldImplement('Netzmacht\Contao\DevTools\Dca\Options\Options');
     }
 
     function it_converts_model_collection(Collection $collection)
@@ -43,7 +44,7 @@ class OptionsBuilderSpec extends ObjectBehavior
             7 => array('id' => '7', 'group' => 'b', 'label' => 'Seven'),
         );
 
-        $options = new Options\ArrayOptions($data);
+        $options = new ArrayOptions($data);
 
         $this->beConstructedWith($options);
         $this->groupBy('group');
@@ -68,7 +69,7 @@ class OptionsBuilderSpec extends ObjectBehavior
             7 => array('id' => '7', 'group' => 'b', 'label' => 'Seven'),
         );
 
-        $options  = new Options\ArrayOptions($data);
+        $options  = new ArrayOptions($data);
         $callback = function ($group) {
             return $group . $group;
         };

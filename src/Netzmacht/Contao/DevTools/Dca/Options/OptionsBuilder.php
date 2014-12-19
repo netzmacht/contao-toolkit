@@ -9,13 +9,10 @@
  *
  */
 
-namespace Netzmacht\Contao\DevTools\Dca;
+namespace Netzmacht\Contao\DevTools\Dca\Options;
 
 use Model\Collection;
 use Netzmacht\Contao\DevTools\Dca;
-use Netzmacht\Contao\DevTools\Dca\Options\ArrayOptions;
-use Netzmacht\Contao\DevTools\Dca\Options\CollectionOptions;
-use Netzmacht\Contao\DevTools\Dca\Options;
 
 /**
  * Class OptionsBuilder is designed to transfer data to the requested format for options.
@@ -27,7 +24,7 @@ class OptionsBuilder
     /**
      * The options.
      *
-     * @var Options
+     * @var \Netzmacht\Contao\DevTools\Dca\Options\Options
      */
     private $options;
 
@@ -68,7 +65,7 @@ class OptionsBuilder
      */
     public static function fromArrayList(array $data, $valueKey = 'id', $labelKey = null)
     {
-        $options = new Options\ArrayListOptions($data, $valueKey, $labelKey);
+        $options = new ArrayListOptions($data, $valueKey, $labelKey);
 
         return new static($options);
     }

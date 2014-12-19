@@ -11,8 +11,6 @@
 
 namespace Netzmacht\Contao\DevTools\Dca\Options;
 
-use Netzmacht\Contao\DevTools\Dca\Options;
-
 /**
  * Class ArrayListOptions extracts options from a list of associative arrays.
  *

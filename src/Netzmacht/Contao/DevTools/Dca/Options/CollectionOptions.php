@@ -12,7 +12,6 @@
 namespace Netzmacht\Contao\DevTools\Dca\Options;
 
 use Contao\Model\Collection;
-use Netzmacht\Contao\DevTools\Dca\Options;
 
 /**
  * Class CollectionOptions maps a model collection to the option format.
