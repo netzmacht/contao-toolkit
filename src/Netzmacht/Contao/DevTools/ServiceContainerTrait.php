@@ -16,6 +16,9 @@ namespace Netzmacht\Contao\DevTools;
  * Injecting the container or use the Container as a service locator is a bad thing. This is used because Contao
  * does not provide dependency injection.
  *
+ * You don't grant access to the container. If you have to add some service to the Container use the designed
+ * places (services.php or initializeDependencyContainer for it).
+ *
  * @package Netzmacht\Workflow\Contao
  */
 trait ServiceContainerTrait
@@ -29,7 +32,7 @@ trait ServiceContainerTrait
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public static function getService($name)
+    protected static function getService($name)
     {
         return $GLOBALS['container'][$name];
     }
