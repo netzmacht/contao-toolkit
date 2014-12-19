@@ -186,6 +186,10 @@ class ToggleIconCallback extends \Controller
             return $this->disabledIcon;
         }
 
+        if ($icon === 'visible.gif') {
+            return 'invisible.gif';
+        }
+
         return preg_replace('\.([^\.])*$', '._$2', $icon);
     }
 
