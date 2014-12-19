@@ -9,7 +9,7 @@
  *
  */
 
-namespace Netzmacht\Contao\DevTools\Dca\Options;
+namespace Netzmacht\Contao\DevTools\Dca;
 
 /**
  * Interface Options describes the options.

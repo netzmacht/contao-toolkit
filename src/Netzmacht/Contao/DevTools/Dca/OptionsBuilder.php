@@ -15,7 +15,7 @@ use Model\Collection;
 use Netzmacht\Contao\DevTools\Dca;
 use Netzmacht\Contao\DevTools\Dca\Options\ArrayOptions;
 use Netzmacht\Contao\DevTools\Dca\Options\CollectionOptions;
-use Netzmacht\Contao\DevTools\Dca\Options\Options;
+use Netzmacht\Contao\DevTools\Dca\Options;
 
 /**
  * Class OptionsBuilder is designed to transfer data to the requested format for options.

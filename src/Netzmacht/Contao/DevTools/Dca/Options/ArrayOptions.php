@@ -11,6 +11,8 @@
 
 namespace Netzmacht\Contao\DevTools\Dca\Options;
 
+use Netzmacht\Contao\DevTools\Dca\Options;
+
 /**
  * Class ArrayOptions decorates an already existing options array with the Options interface.
  *
