@@ -37,8 +37,12 @@ class OptionsBuilder
      *
      * @return OptionsBuilder
      */
-    public static function fromCollection(Collection $collection, $valueColumn = 'id', $labelColumn = null)
+    public static function fromCollection(Collection $collection = null, $valueColumn = 'id', $labelColumn = null)
     {
+        if ($collection === null) {
+            return  new static(new ArrayOptions());
+        }
+
         $options = new CollectionOptions($collection);
         $options->setValueColumn($valueColumn);
 
