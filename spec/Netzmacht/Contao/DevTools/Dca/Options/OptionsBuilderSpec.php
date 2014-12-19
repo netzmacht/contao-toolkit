@@ -26,9 +26,11 @@ class OptionsBuilderSpec extends ObjectBehavior
         $this->shouldHaveType('Netzmacht\Contao\DevTools\Dca\Options\OptionsBuilder');
     }
 
-    function it_gets_the_options()
+    function it_gets_the_options(Options $options)
     {
-        $this->getOptions()->shouldImplement('Netzmacht\Contao\DevTools\Dca\Options\Options');
+        $options->getArrayCopy()->willReturn(array());
+
+        $this->getOptions()->shouldBeArray();
     }
 
     function it_converts_model_collection(Collection $collection)
