@@ -190,7 +190,7 @@ class ToggleIconCallback extends \Controller
             return 'invisible.gif';
         }
 
-        return preg_replace('\.([^\.])*$', '._$2', $icon);
+        return preg_replace('\.([^\.]*)$', '._$1', $icon);
     }
 
     /**
