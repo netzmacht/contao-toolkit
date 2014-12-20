@@ -29,12 +29,14 @@ class Dca
      * @param string $name        The data container name.
      * @param bool   $ignoreCache Ignore the Contao cache.
      *
-     * @return void
+     * @return array
      */
-    public static function load($name, $ignoreCache = false)
+    public static function &load($name, $ignoreCache = false)
     {
         $loader = new DcaLoader();
         $loader->loadDataContainer($name, $ignoreCache);
+
+        return $GLOBALS['TL_DCA'][$name];
     }
 
     /**
