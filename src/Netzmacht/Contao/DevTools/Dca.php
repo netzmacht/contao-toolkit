@@ -30,6 +30,8 @@ class Dca
      * @param bool   $ignoreCache Ignore the Contao cache.
      *
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public static function &load($name, $ignoreCache = false)
     {
