@@ -12,11 +12,11 @@
 namespace Netzmacht\Contao\DevTools\Dca\Options;
 
 /**
- * Class CollectionOptions maps a model collection to the option format.
+ * Class ResultOptions maps a database result to the option format.
  *
  * @package Netzmacht\Contao\DevTools\Dca\Options
  */
-class CollectionOptions extends AbstractDatabaseOptions
+class ResultOptions extends AbstractDatabaseOptions
 {
     /**
      * Fetch all.
@@ -25,6 +25,6 @@ class CollectionOptions extends AbstractDatabaseOptions
      */
     protected function fetchAll()
     {
-        return $this->collection->fetchAll();
+        return $this->collection->fetchAllAssoc();
     }
 }

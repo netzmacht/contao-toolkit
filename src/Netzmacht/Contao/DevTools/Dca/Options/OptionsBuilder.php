@@ -11,6 +11,7 @@
 
 namespace Netzmacht\Contao\DevTools\Dca\Options;
 
+use Database\Result;
 use Model\Collection;
 use Netzmacht\Contao\DevTools\Dca;
 
@@ -44,6 +45,35 @@ class OptionsBuilder
         }
 
         $options = new CollectionOptions($collection);
+        $options->setValueColumn($valueColumn);
+
+        if (is_callable($labelColumn)) {
+            $options->setLabelCallback($labelColumn);
+        } elseif ($labelColumn) {
+            $options->setLabelColumn($labelColumn);
+        } else {
+            $options->setLabelColumn($valueColumn);
+        }
+
+        return new static($options);
+    }
+
+    /**
+     * Get Options builder for collection.
+     *
+     * @param Result           $result      Database result.
+     * @param string           $valueColumn Value column.
+     * @param string|\callable $labelColumn Label column or callback.
+     *
+     * @return OptionsBuilder
+     */
+    public static function fromResult(Result $result = null, $valueColumn = 'id', $labelColumn = null)
+    {
+        if ($result->numRows < 1) {
+            return  new static(new ArrayOptions());
+        }
+
+        $options = new ResultOptions($result);
         $options->setValueColumn($valueColumn);
 
         if (is_callable($labelColumn)) {
