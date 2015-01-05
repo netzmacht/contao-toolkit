@@ -19,9 +19,9 @@ namespace Netzmacht\Contao\DevTools\Dca;
 class ToggleIconCallback extends \Controller
 {
     /**
-     * Backend user.
+     * Contao user.
      *
-     * @var \BackendUser
+     * @var \User
      */
     private $user;
 
@@ -70,16 +70,16 @@ class ToggleIconCallback extends \Controller
     /**
      * Construct.
      *
-     * @param \BackendUser $user         The backend user.
-     * @param \Input       $input        The user input.
-     * @param \Database    $database     The database connection.
-     * @param string       $table        The table name.
-     * @param string       $column       The column name.
-     * @param bool         $inversed     State is inversed.
-     * @param string|null  $disabledIcon Custom disabled icon.
+     * @param \User       $user         The Contao user.
+     * @param \Input      $input        The user input.
+     * @param \Database   $database     The database connection.
+     * @param string      $table        The table name.
+     * @param string      $column       The column name.
+     * @param bool        $inversed     State is inversed.
+     * @param string|null $disabledIcon Custom disabled icon.
      */
     public function __construct(
-        \BackendUser $user,
+        \User $user,
         \Input $input,
         \Database $database,
         $table,
@@ -200,6 +200,10 @@ class ToggleIconCallback extends \Controller
      */
     private function hasAccess()
     {
-        return $this->user->hasAccess($this->table . '::' . $this->column, 'alexf');
+        if ($this->user instanceof \BackendUser) {
+            return $this->user->hasAccess($this->table . '::' . $this->column, 'alexf');
+        }
+
+        return false;
     }
 }
