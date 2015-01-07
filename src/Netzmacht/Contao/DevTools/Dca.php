@@ -11,6 +11,7 @@
 
 namespace Netzmacht\Contao\DevTools;
 
+use Netzmacht\Contao\DevTools\Dca\Callback\ColorPickerCallback;
 use Netzmacht\Contao\DevTools\Dca\DcaLoader;
 use Netzmacht\Contao\DevTools\Dca\ToggleIconCallback;
 
@@ -62,5 +63,10 @@ class Dca
             $inversed,
             $disabledIcon
         );
+    }
+
+    public static function createColorPickerCallback($replaceHex = false, $icon = null, $alt = null, $class = null)
+    {
+        return new ColorPickerCallback($replaceHex, $icon, $alt, $class);
     }
 }

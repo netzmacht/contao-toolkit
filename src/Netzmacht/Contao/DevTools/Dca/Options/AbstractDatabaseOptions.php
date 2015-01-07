@@ -19,7 +19,7 @@ use Model\Collection;
  *
  * @package Netzmacht\Contao\DevTools\Dca\Options
  */
-abstract class AbstractDatabaseOptions
+abstract class AbstractDatabaseOptions implements Options
 {
     /**
      * The database result.
