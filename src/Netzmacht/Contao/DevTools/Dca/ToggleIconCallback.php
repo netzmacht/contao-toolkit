@@ -167,7 +167,7 @@ class ToggleIconCallback extends \Controller
 
         $this->database
             ->prepare(sprintf('UPDATE %s %s WHERE id=?', $this->table, '%s'))
-            ->set(array('tstamp' => time(), $this->column => $newState))
+            ->set(array('tstamp' => time(), $this->column => $newState ? '1' : ''))
             ->execute($recordId);
 
         $versions->create();
