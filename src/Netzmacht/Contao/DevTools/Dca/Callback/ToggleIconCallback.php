@@ -9,7 +9,7 @@
  *
  */
 
-namespace Netzmacht\Contao\DevTools\Dca;
+namespace Netzmacht\Contao\DevTools\Dca\Callback;
 
 /**
  * Class ToggleIconCallback is used as button_callback for state toggling icons.
