@@ -41,7 +41,7 @@ class OptionsBuilder
     public static function fromCollection(Collection $collection = null, $valueColumn = 'id', $labelColumn = null)
     {
         if ($collection === null) {
-            return  new static(new ArrayOptions());
+            return new static(new ArrayOptions());
         }
 
         $options = new CollectionOptions($collection);
@@ -73,15 +73,15 @@ class OptionsBuilder
             return  new static(new ArrayOptions());
         }
 
-        $options = new ResultOptions($result);
-        $options->setValueColumn($valueColumn);
+        $options = new ArrayListOptions($result->fetchAllAssoc());
+        $options->setValueKey($valueColumn);
 
         if (is_callable($labelColumn)) {
             $options->setLabelCallback($labelColumn);
         } elseif ($labelColumn) {
-            $options->setLabelColumn($labelColumn);
+            $options->setLabelKey($labelColumn);
         } else {
-            $options->setLabelColumn($valueColumn);
+            $options->setLabelKey($valueColumn);
         }
 
         return new static($options);
@@ -140,6 +140,32 @@ class OptionsBuilder
     }
 
     /**
+     * Get options as tree.
+     *
+     * @param string $parent   Column which stores parent value.
+     * @param string $indentBy Indent entry by this value.
+     *
+     * @return $this
+     */
+    public function asTree($parent = 'pid', $indentBy = '-- ')
+    {
+        $options = array();
+        $values  = array();
+
+        foreach ($this->options as $key => $value) {
+            $pid = $this->options[$key][$parent];
+
+            $values[$pid][$key] = $value;
+        }
+
+        $this->buildTree($values, $options, 0, $indentBy);
+
+        $this->options = new ArrayOptions($options);
+
+        return $this;
+    }
+
+    /**
      * Get the build options.
      *
      * @return array
@@ -164,5 +190,30 @@ class OptionsBuilder
         }
 
         return $value;
+    }
+
+    /**
+     * Build options tree.
+     *
+     * @param     $values
+     * @param     $options
+     * @param     $index
+     * @param     $indentBy
+     * @param int $depth
+     *
+     * @return mixed
+     */
+    private function buildTree(&$values, &$options, $index, $indentBy, $depth = 0)
+    {
+        if (empty($values[$index])) {
+            return $options;
+        }
+
+        foreach ($values[$index] as $key => $value) {
+            $options[$key] = str_repeat($indentBy, $depth) . ' ' . $value;
+            $this->buildTree($values, $options, $key, $indentBy, ($depth + 1));
+        }
+
+        return $options;
     }
 }
