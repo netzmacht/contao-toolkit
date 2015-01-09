@@ -11,7 +11,9 @@
 
 namespace Netzmacht\Contao\DevTools;
 
+use Netzmacht\Contao\DevTools\Data\AliasGenerator;
 use Netzmacht\Contao\DevTools\Dca\Callback\ColorPickerCallback;
+use Netzmacht\Contao\DevTools\Dca\Callback\GenerateAliasCallback;
 use Netzmacht\Contao\DevTools\Dca\DcaLoader;
 use Netzmacht\Contao\DevTools\Dca\Callback\ToggleIconCallback;
 
@@ -65,8 +67,46 @@ class Dca
         );
     }
 
+    /**
+     * Create a color picker callback.
+     *
+     * The callback
+     *
+     * @param bool $replaceHex
+     * @param null $icon
+     * @param null $alt
+     * @param null $class
+     *
+     * @return ColorPickerCallback
+     */
     public static function createColorPickerCallback($replaceHex = false, $icon = null, $alt = null, $class = null)
     {
         return new ColorPickerCallback($replaceHex, $icon, $alt, $class);
+    }
+
+    /**
+     * Create Generate alias callback.
+     *
+     * @param string       $tableName   The table name.
+     * @param array|string $valueColumn The value columns.
+     * @param string       $aliasColumn The alias column.
+     * @param null         $strategy    Alias generator strategy flags.
+     *
+     * @return GenerateAliasCallback
+     */
+    public static function createGenerateAliasCallback(
+        $tableName,
+        $valueColumn,
+        $aliasColumn = 'alias',
+        $strategy = null
+    ) {
+        $database  = static::getService('database.connection');
+        $generator = new AliasGenerator($database, $tableName, $aliasColumn, (array) $valueColumn);
+
+        if ($strategy) {
+            $generator->setStrategy($strategy);
+        }
+
+        return new GenerateAliasCallback($generator);
     }
 }
