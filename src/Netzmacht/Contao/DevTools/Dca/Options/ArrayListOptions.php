@@ -141,9 +141,7 @@ class ArrayListOptions implements Options
         $current = $this->list[$this->keys[$this->position]];
 
         if ($this->labelCallback) {
-            $callback = $this->labelCallback;
-
-            return $callback($current);
+            return call_user_func($this->labelCallback, $current);
         }
 
         return $current[$this->labelKey];
@@ -162,7 +160,7 @@ class ArrayListOptions implements Options
      */
     public function key()
     {
-        return $this->keys[$this->position];
+        return $this->list[$this->keys[$this->position]][$this->valueKey];
     }
 
     /**

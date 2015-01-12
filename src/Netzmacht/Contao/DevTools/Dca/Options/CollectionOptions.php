@@ -140,9 +140,7 @@ class CollectionOptions implements Options
     public function current()
     {
         if ($this->labelCallback) {
-            $callback = $this->labelCallback;
-
-            return $callback($this->collection->row());
+            return call_user_func($this->labelCallback, $this->collection->row());
         }
 
         return $this->collection->{$this->labelColumn};
