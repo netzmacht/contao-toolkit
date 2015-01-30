@@ -11,26 +11,51 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Callback;
 
-
+/**
+ * Class ColorPickerCallback handles a colorpicker wizard callback for a customized color picker.
+ *
+ * @package Netzmacht\Contao\Toolkit\Dca\Callback
+ */
 class ColorPickerCallback
 {
     /**
+     * If true no '#' item is displayed.
+     *
      * @var bool
      */
     private $replaceHex;
+
     /**
-     * @var null
+     * The color picker icon.
+     *
+     * @var string
      */
     private $icon;
+
     /**
-     * @var null
+     * The alt attribute.
+     *
+     * @var string
      */
     private $alt;
+
     /**
-     * @var null
+     * The class attribute.
+     *
+     * @var string
      */
     private $class;
 
+    /**
+     * Construct.
+     *
+     * @param bool   $replaceHex Should the hex '#' be replaced.
+     * @param string $icon       Optional custom color picker icon.
+     * @param string $alt        Optional color picker alt.
+     * @param string $class      Optional color picker class.
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
+     */
     public function __construct($replaceHex = false, $icon = null, $alt = null, $class = null)
     {
         $this->replaceHex = $replaceHex;
@@ -39,6 +64,13 @@ class ColorPickerCallback
         $this->class      = $class;
     }
 
+    /**
+     * Invoke the callback.
+     *
+     * @param \DataContainer $dataContainer The data container driver.
+     *
+     * @return string
+     */
     public function __invoke($dataContainer)
     {
         $version = COLORPICKER;
@@ -48,7 +80,7 @@ class ColorPickerCallback
             $replace = '.replace("#", "")';
         }
 
-        $html = \Image::getHtml($this->icon, $this->alt, $this->getStyle($dataContainer));
+        $html  = \Image::getHtml($this->icon, $this->alt, $this->getAttributes($dataContainer));
         $html .= <<<HTML
 <script>
 window.addEvent('domready', function() {
@@ -67,7 +99,14 @@ HTML;
         return $html;
     }
 
-    private function getStyle($dataContainer)
+    /**
+     * Get the attributes.
+     *
+     * @param \DataContainer $dataContainer The data container driver.
+     *
+     * @return string
+     */
+    private function getAttributes($dataContainer)
     {
         return sprintf(
             'style="vertical-align:top;cursor:pointer;padding-left:3px" title="%s" id="moo_%s"',

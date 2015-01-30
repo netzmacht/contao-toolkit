@@ -13,31 +13,68 @@ namespace Netzmacht\Contao\Toolkit\Data;
 
 use Database\Result;
 
+/**
+ * Class AliasGenerator creates an alias and can handle different strategies.
+ *
+ * @package Netzmacht\Contao\Toolkit\Data
+ */
 class AliasGenerator
 {
     const STRATEGY_ALL    = 1;
     const STRATEGY_FORCE  = 2;
     const STRATEGY_ADD_ID = 4;
 
+    /**
+     * The database connection.
+     *
+     * @var \Database
+     */
     private $database;
 
+    /**
+     * The columns being combined for the alias value.
+     *
+     * @var array
+     */
     private $columns;
 
+    /**
+     * Alias generation strategies.
+     *
+     * @var int
+     */
     private $strategy = self::STRATEGY_ADD_ID;
 
     /**
+     * The alias field.
+     *
      * @var string
      */
     private $aliasField;
 
+    /**
+     * The table name.
+     *
+     * @var string
+     */
     private $tableName;
 
+    /**
+     * The suffix index limit.
+     *
+     * If limit is 0, no limit is given.
+     *
+     * @var int
+     */
     private $limit = 0;
 
     /**
-     * @param \Database $database
-     * @param string    $aliasField
-     * @param array     $columns
+     * Construct.
+     *
+     * @param \Database $database   The database connection.
+     * @param string    $tableName  The table name.
+     * @param string    $aliasField The alias field.
+     * @param array     $columns    Columns being included into the alias.
      */
     public function __construct(\Database $database, $tableName, $aliasField = 'alias', array $columns = array())
     {
@@ -47,6 +84,13 @@ class AliasGenerator
         $this->tableName  = $tableName;
     }
 
+    /**
+     * Add a column.
+     *
+     * @param string $column The column name.
+     *
+     * @return $this
+     */
     public function addColumn($column)
     {
         $this->columns[] = $column;
@@ -54,6 +98,13 @@ class AliasGenerator
         return $this;
     }
 
+    /**
+     * Add multiple columns.
+     *
+     * @param array $columns The column names.
+     *
+     * @return $this
+     */
     public function addColumns(array $columns)
     {
         $this->columns = array_merge($this->columns, $columns);
@@ -61,6 +112,13 @@ class AliasGenerator
         return $this;
     }
 
+    /**
+     * Set the alias field.
+     *
+     * @param string $field The alias field.
+     *
+     * @return $this
+     */
     public function setAliasField($field)
     {
         $this->aliasField = $field;
@@ -68,13 +126,20 @@ class AliasGenerator
         return $this;
     }
 
+    /**
+     * Get the alias field.
+     *
+     * @return string
+     */
     public function getAliasField()
     {
         return $this->aliasField;
     }
 
     /**
-     * @return mixed
+     * The table name.
+     *
+     * @return string
      */
     public function getTableName()
     {
@@ -84,7 +149,7 @@ class AliasGenerator
     /**
      * Set table name.
      *
-     * @param string $tableName
+     * @param string $tableName The table name.
      *
      * @return $this
      */
@@ -96,6 +161,8 @@ class AliasGenerator
     }
 
     /**
+     * Get used strategy.
+     *
      * @return int
      */
     public function getStrategy()
@@ -104,7 +171,9 @@ class AliasGenerator
     }
 
     /**
-     * @param int $strategy
+     * The the strategy.
+     *
+     * @param int $strategy The strategy.
      *
      * @return $this
      */
@@ -116,6 +185,8 @@ class AliasGenerator
     }
 
     /**
+     * Get the limit.
+     *
      * @return int
      */
     public function getLimit()
@@ -124,7 +195,9 @@ class AliasGenerator
     }
 
     /**
-     * @param int $limit
+     * Set the limit.
+     *
+     * @param int $limit The limit.
      *
      * @return $this
      */
@@ -136,8 +209,10 @@ class AliasGenerator
     }
 
     /**
-     * @param Result $result
-     * @param null   $value
+     * Generate the alias.
+     *
+     * @param Result $result The database result.
+     * @param mixed  $value  The current value.
      *
      * @return mixed|null|string
      */
@@ -147,24 +222,8 @@ class AliasGenerator
         $value = $this->standardize($value);
 
         // Check if already an valid alias exists.
-        if (!$this->hasStrategy(static::STRATEGY_FORCE) && $value && $this->isUniqueValue($value, $result->id)) {
+        if ($this->isAlreadyUnique($result, $value) || $this->createDefaultAlias($value, $result)) {
             return $value;
-        }
-
-        $value = '';
-
-        foreach ($this->columns as $column) {
-            if ($value) {
-                $value .= '_';
-            }
-
-            $value .= $this->standardize($result->$column);
-
-            if (!$this->hasStrategy(static::STRATEGY_ALL)) {
-                if ($this->isUniqueValue($value, $result->id)) {
-                    return $value;
-                }
-            }
         }
 
         if ($this->isUniqueValue($value, $result->id)) {
@@ -180,20 +239,7 @@ class AliasGenerator
             }
         }
 
-        $suffix = '';
-        $index  = 2;
-
-        while (!$this->isUniqueValue($value . $suffix, $result->id)) {
-            $suffix = '_' . $index++;
-
-            if ($this->limit > 0 && $this->limit <= $index) {
-                throw new \InvalidArgumentException(
-                    sprintf('Alias can not be generated. Suffix limit of "%s" reached', $this->limit)
-                );
-            }
-        }
-
-        return $value . $suffix;
+        return $this->suffixAlias($result->id, $value);
     }
 
     /**
@@ -206,7 +252,7 @@ class AliasGenerator
      */
     private function isUniqueValue($value, $rowId)
     {
-        $query= sprintf(
+        $query = sprintf(
             'SELECT count(*) AS result FROM %s WHERE %s=? AND id !=?',
             $this->tableName,
             $this->aliasField
@@ -218,7 +264,9 @@ class AliasGenerator
     }
 
     /**
-     * @param $strategy
+     * Check if a strategy is given.
+     *
+     * @param int $strategy The strategy.
      *
      * @return bool
      */
@@ -228,7 +276,7 @@ class AliasGenerator
     }
 
     /**
-     * Standardize the value
+     * Standardize the value.
      *
      * @param mixed $value The value.
      *
@@ -237,5 +285,77 @@ class AliasGenerator
     protected function standardize($value)
     {
         return str_replace('-', '_', standardize($value));
+    }
+
+    /**
+     * Create default alias without suffix by combining the fields.
+     *
+     * It returns true, if the value is unique for sure.
+     *
+     * @param mixed  $value  Current value.
+     * @param Result $result The database result.
+     *
+     * @return bool
+     */
+    private function createDefaultAlias(&$value, Result $result)
+    {
+        $value = '';
+
+        foreach ($this->columns as $column) {
+            if ($value) {
+                $value .= '_';
+            }
+
+            $value .= $this->standardize($result->$column);
+
+            if (!$this->hasStrategy(static::STRATEGY_ALL)) {
+                if ($this->isUniqueValue($value, $result->id)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Add suffixes to alias until it's unique or limit is reached.
+     *
+     * @param int    $rowId The current record id.
+     * @param string $value The current alias.
+     *
+     * @return string
+     *
+     * @throws \RuntimeException If the alias could not be generated.
+     */
+    protected function suffixAlias($rowId, $value)
+    {
+        $suffix = '';
+        $index  = 2;
+
+        while (!$this->isUniqueValue($value . $suffix, $rowId)) {
+            $suffix = '_' . ($index++);
+
+            if ($this->limit > 0 && $this->limit <= $index) {
+                throw new \RuntimeException(
+                    sprintf('Alias can not be generated. Suffix limit of "%s" reached', $this->limit)
+                );
+            }
+        }
+
+        return $value . $suffix;
+    }
+
+    /**
+     * Check if alias is already unique.
+     *
+     * @param Result $result The database result.
+     * @param string $value  The given alias value.
+     *
+     * @return bool
+     */
+    protected function isAlreadyUnique(Result $result, $value)
+    {
+        return !$this->hasStrategy(static::STRATEGY_FORCE) && $value && $this->isUniqueValue($value, $result->id);
     }
 }

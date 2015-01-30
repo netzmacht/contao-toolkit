@@ -70,12 +70,10 @@ class Dca
     /**
      * Create a color picker callback.
      *
-     * The callback
-     *
-     * @param bool $replaceHex
-     * @param null $icon
-     * @param null $alt
-     * @param null $class
+     * @param bool   $replaceHex Should the hex '#' be replaced.
+     * @param string $icon       Optional custom color picker icon.
+     * @param string $alt        Optional color picker alt.
+     * @param string $class      Optional color picker class.
      *
      * @return ColorPickerCallback
      */
@@ -120,7 +118,7 @@ class Dca
      */
     public static function createGetTemplatesCallback($prefix = '', array $exclude = array())
     {
-        return function() use ($prefix, $exclude) {
+        return function () use ($prefix, $exclude) {
             return array_diff(\Controller::getTemplateGroup($prefix), $exclude);
         };
     }

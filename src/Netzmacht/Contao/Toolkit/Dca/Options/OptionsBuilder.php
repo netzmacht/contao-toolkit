@@ -195,11 +195,11 @@ class OptionsBuilder
     /**
      * Build options tree.
      *
-     * @param     $values
-     * @param     $options
-     * @param     $index
-     * @param     $indentBy
-     * @param int $depth
+     * @param array  $values   The values.
+     * @param array  $options  The created options.
+     * @param int    $index    The current index.
+     * @param string $indentBy The indent characters.
+     * @param int    $depth    The current depth.
      *
      * @return mixed
      */

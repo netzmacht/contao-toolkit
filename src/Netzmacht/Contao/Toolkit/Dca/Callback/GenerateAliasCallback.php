@@ -11,9 +11,13 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Callback;
 
-
 use Netzmacht\Contao\Toolkit\Data\AliasGenerator;
 
+/**
+ * Class GenerateAliasCallback is designed to create an alias of a column.
+ *
+ * @package Netzmacht\Contao\Toolkit\Dca\Callback
+ */
 class GenerateAliasCallback
 {
     /**
