@@ -1,10 +1,10 @@
 Contao Dev Tools
 ==================
 
-[![Build Status](http://img.shields.io/travis/netzmacht/contao-dev-tools/master.svg?style=flat-square)](https://travis-ci.org/netzmacht/contao-dev-tools)
-[![Version](http://img.shields.io/packagist/v/netzmacht/contao-dev-tools.svg?style=flat-square)](http://packagist.com/packages/netzmacht/contao-dev-tools)
-[![License](http://img.shields.io/packagist/l/netzmacht/contao-dev-tools.svg?style=flat-square)](http://packagist.com/packages/netzmacht/contao-dev-tools)
-[![Downloads](http://img.shields.io/packagist/dt/netzmacht/contao-dev-tools.svg?style=flat-square)](http://packagist.com/packages/netzmacht/contao-dev-tools)
+[![Build Status](http://img.shields.io/travis/netzmacht/contao-toolkit/master.svg?style=flat-square)](https://travis-ci.org/netzmacht/contao-toolkit)
+[![Version](http://img.shields.io/packagist/v/netzmacht/contao-toolkit.svg?style=flat-square)](http://packagist.com/packages/netzmacht/contao-toolkit)
+[![License](http://img.shields.io/packagist/l/netzmacht/contao-toolkit.svg?style=flat-square)](http://packagist.com/packages/netzmacht/contao-toolkit)
+[![Downloads](http://img.shields.io/packagist/dt/netzmacht/contao-toolkit.svg?style=flat-square)](http://packagist.com/packages/netzmacht/contao-toolkit)
 [![Contao Community Alliance coding standard](http://img.shields.io/badge/cca-coding_standard-red.svg?style=flat-square)](https://github.com/contao-community-alliance/coding-standard)
 
 This library provides tools for solving common tasks required when developing for Contao CMS.
@@ -15,7 +15,7 @@ Install
 You can install this library using Composer.
 
 ```
-$ php composer.phar require netzmacht/contao-dev-tools:~1.0
+$ php composer.phar require netzmacht/contao-toolkit:~1.0
 ```
 
 Features
@@ -43,7 +43,7 @@ $GLOBALS['TL_DCA']['tl_custom']['fields']['published']['button_callback'] =
 
 ####Convert models to options
 
-One standard task using Contao models is to transform when to options for select lists or checkbox menus. Dev-Tools 
+One standard task using Contao models is to transform when to options for select lists or checkbox menus. toolkit 
 simplifies it for you.
 
  * Convert collections to options arrays.
