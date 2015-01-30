@@ -109,4 +109,19 @@ class Dca
 
         return new GenerateAliasCallback($generator);
     }
+
+    /**
+     * Create a get templates callback.
+     *
+     * @param string $prefix  The template prefix.
+     * @param array  $exclude Exclude following templates.
+     *
+     * @return callable
+     */
+    public static function createGetTemplatesCallback($prefix = '', array $exclude = array())
+    {
+        return function() use ($prefix, $exclude) {
+            return array_diff(\Controller::getTemplateGroup($prefix), $exclude);
+        };
+    }
 }
