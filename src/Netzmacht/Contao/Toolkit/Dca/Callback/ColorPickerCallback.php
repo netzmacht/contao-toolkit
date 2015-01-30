@@ -9,7 +9,7 @@
  *
  */
 
-namespace Netzmacht\Contao\DevTools\Dca\Callback;
+namespace Netzmacht\Contao\Toolkit\Dca\Callback;
 
 
 class ColorPickerCallback

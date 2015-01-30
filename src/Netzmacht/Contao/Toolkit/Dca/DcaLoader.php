@@ -9,7 +9,7 @@
  *
  */
 
-namespace Netzmacht\Contao\DevTools\Dca;
+namespace Netzmacht\Contao\Toolkit\Dca;
 
 /**
  * Class Loader loads the data container.

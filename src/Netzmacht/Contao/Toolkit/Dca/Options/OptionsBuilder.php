@@ -9,11 +9,11 @@
  *
  */
 
-namespace Netzmacht\Contao\DevTools\Dca\Options;
+namespace Netzmacht\Contao\Toolkit\Dca\Options;
 
 use Database\Result;
 use Model\Collection;
-use Netzmacht\Contao\DevTools\Dca;
+use Netzmacht\Contao\Toolkit\Dca;
 
 /**
  * Class OptionsBuilder is designed to transfer data to the requested format for options.
@@ -25,7 +25,7 @@ class OptionsBuilder
     /**
      * The options.
      *
-     * @var \Netzmacht\Contao\DevTools\Dca\Options\Options
+     * @var \Netzmacht\Contao\Toolkit\Dca\Options\Options
      */
     private $options;
 

@@ -9,19 +9,13 @@
  *
  */
 
-namespace Netzmacht\Contao\DevTools\Dca\Options;
+namespace Netzmacht\Contao\Toolkit\Dca\Options;
 
 /**
- * Interface Options describes the options.
+ * Class ArrayOptions decorates an already existing options array with the Options interface.
  *
  * @package Netzmacht\Contao\DevTools\Dca\Options
  */
-interface Options extends \ArrayAccess, \Iterator
+class ArrayOptions extends \ArrayIterator implements Options
 {
-    /**
-     * Get array copy.
-     *
-     * @return array
-     */
-    public function getArrayCopy();
 }

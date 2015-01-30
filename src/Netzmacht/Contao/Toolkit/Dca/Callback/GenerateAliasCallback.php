@@ -9,10 +9,10 @@
  *
  */
 
-namespace Netzmacht\Contao\DevTools\Dca\Callback;
+namespace Netzmacht\Contao\Toolkit\Dca\Callback;
 
 
-use Netzmacht\Contao\DevTools\Data\AliasGenerator;
+use Netzmacht\Contao\Toolkit\Data\AliasGenerator;
 
 class GenerateAliasCallback
 {

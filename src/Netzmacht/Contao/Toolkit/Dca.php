@@ -9,13 +9,13 @@
  *
  */
 
-namespace Netzmacht\Contao\DevTools;
+namespace Netzmacht\Contao\Toolkit;
 
-use Netzmacht\Contao\DevTools\Data\AliasGenerator;
-use Netzmacht\Contao\DevTools\Dca\Callback\ColorPickerCallback;
-use Netzmacht\Contao\DevTools\Dca\Callback\GenerateAliasCallback;
-use Netzmacht\Contao\DevTools\Dca\DcaLoader;
-use Netzmacht\Contao\DevTools\Dca\Callback\ToggleIconCallback;
+use Netzmacht\Contao\Toolkit\Data\AliasGenerator;
+use Netzmacht\Contao\Toolkit\Dca\Callback\ColorPickerCallback;
+use Netzmacht\Contao\Toolkit\Dca\Callback\GenerateAliasCallback;
+use Netzmacht\Contao\Toolkit\Dca\DcaLoader;
+use Netzmacht\Contao\Toolkit\Dca\Callback\ToggleIconCallback;
 
 /**
  * Class Dca simplifies DCA access.
@@ -52,7 +52,7 @@ class Dca
      * @param bool        $inversed     State is inversed.
      * @param string|null $disabledIcon Custom disabled icon.
      *
-     * @return \Netzmacht\Contao\DevTools\Dca\Callback\ToggleIconCallback
+     * @return \Netzmacht\Contao\Toolkit\Dca\Callback\ToggleIconCallback
      */
     public static function createToggleIconCallback($table, $stateColumn, $inversed = false, $disabledIcon = null)
     {

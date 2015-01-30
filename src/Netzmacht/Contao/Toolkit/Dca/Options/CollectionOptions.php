@@ -9,38 +9,40 @@
  *
  */
 
-namespace Netzmacht\Contao\DevTools\Dca\Options;
+namespace Netzmacht\Contao\Toolkit\Dca\Options;
+
+use Model\Collection;
 
 /**
- * Class ArrayListOptions extracts options from a list of associative arrays.
+ * Class CollectionOptions maps a model collection to the option format.
  *
  * @package Netzmacht\Contao\DevTools\Dca\Options
  */
-class ArrayListOptions implements Options
+class CollectionOptions implements Options
 {
     /**
-     * The array list.
+     * The database result.
      *
-     * @var array
+     * @var mixed
      */
-    private $list;
+    protected $collection;
 
     /**
-     * The label key.
-     *
-     * @var string
-     */
-    private $labelKey;
-
-    /**
-     * The value key.
+     * The label column.
      *
      * @var string
      */
-    private $valueKey = 'id';
+    private $labelColumn;
 
     /**
-     * Instead of a label key you can define a callable.
+     * The value column.
+     *
+     * @var string
+     */
+    private $valueColumn = 'id';
+
+    /**
+     * Instead of a label column you can define a callable.
      *
      * @var \callable
      */
@@ -56,16 +58,15 @@ class ArrayListOptions implements Options
     /**
      * Construct.
      *
-     * @param array  $list     Array list.
-     * @param string $valueKey Name of value key.
-     * @param string $labelKey Name of label key.
+     * @param Collection $collection  Model collection.
+     * @param string     $labelColumn Name of label column.
+     * @param string     $valueColumn Name of value column.
      */
-    public function __construct(array $list, $valueKey = 'id', $labelKey = null)
+    public function __construct($collection, $labelColumn = null, $valueColumn = 'id')
     {
-        $this->list     = $list;
-        $this->keys     = array_keys($list);
-        $this->labelKey = $labelKey;
-        $this->valueKey = $valueKey;
+        $this->collection  = $collection;
+        $this->labelColumn = $labelColumn;
+        $this->valueColumn = $valueColumn;
     }
 
     /**
@@ -73,21 +74,21 @@ class ArrayListOptions implements Options
      *
      * @return string
      */
-    public function getLabelKey()
+    public function getLabelColumn()
     {
-        return $this->labelKey;
+        return $this->labelColumn;
     }
 
     /**
      * Set label column.
      *
-     * @param string $labelKey Label column.
+     * @param string $labelColumn Label column.
      *
      * @return $this
      */
-    public function setLabelKey($labelKey)
+    public function setLabelColumn($labelColumn)
     {
-        $this->labelKey = $labelKey;
+        $this->labelColumn = $labelColumn;
 
         return $this;
     }
@@ -97,21 +98,21 @@ class ArrayListOptions implements Options
      *
      * @return string
      */
-    public function getValueKey()
+    public function getValueColumn()
     {
-        return $this->valueKey;
+        return $this->valueColumn;
     }
 
     /**
      * Set the value column.
      *
-     * @param string $valueKey Value column.
+     * @param string $valueColumn Value column.
      *
      * @return $this
      */
-    public function setValueKey($valueKey)
+    public function setValueColumn($valueColumn)
     {
-        $this->valueKey = $valueKey;
+        $this->valueColumn = $valueColumn;
 
         return $this;
     }
@@ -138,13 +139,11 @@ class ArrayListOptions implements Options
      */
     public function current()
     {
-        $current = $this->list[$this->keys[$this->position]];
-
         if ($this->labelCallback) {
-            return call_user_func($this->labelCallback, $current);
+            return call_user_func($this->labelCallback, $this->collection->row());
         }
 
-        return $current[$this->labelKey];
+        return $this->collection->{$this->labelColumn};
     }
 
     /**
@@ -153,6 +152,7 @@ class ArrayListOptions implements Options
     public function next()
     {
         $this->position++;
+        $this->collection->next();
     }
 
     /**
@@ -160,7 +160,7 @@ class ArrayListOptions implements Options
      */
     public function key()
     {
-        return $this->list[$this->keys[$this->position]][$this->valueKey];
+        return $this->collection->{$this->valueColumn};
     }
 
     /**
@@ -168,7 +168,7 @@ class ArrayListOptions implements Options
      */
     public function valid()
     {
-        return $this->position < count($this->keys);
+        return $this->position < $this->collection->count();
     }
 
     /**
@@ -177,6 +177,7 @@ class ArrayListOptions implements Options
     public function rewind()
     {
         $this->position = 0;
+        $this->collection->reset();
     }
 
     /**
@@ -184,7 +185,13 @@ class ArrayListOptions implements Options
      */
     public function offsetExists($offset)
     {
-        return isset($this->list[$offset]);
+        foreach ($this->collection as $row) {
+            if ($row->{$this->valueColumn} === $offset) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -192,7 +199,13 @@ class ArrayListOptions implements Options
      */
     public function offsetGet($offset)
     {
-        return $this->list[$offset];
+        foreach ($this->collection as $row) {
+            if ($row->{$this->valueColumn} === $offset) {
+                return $row->row();
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -200,7 +213,7 @@ class ArrayListOptions implements Options
      */
     public function offsetSet($offset, $value)
     {
-        $this->list[$offset] = $value;
+        // unsupported
     }
 
     /**
@@ -208,7 +221,7 @@ class ArrayListOptions implements Options
      */
     public function offsetUnset($offset)
     {
-        unset($this->list[$offset]);
+        // unsupported
     }
 
     /**
@@ -218,8 +231,8 @@ class ArrayListOptions implements Options
     {
         $values = array();
 
-        foreach ($this as $key => $value) {
-            $values[$key] = $value;
+        foreach ($this as $id => $value) {
+            $values[$id] = $value;
         }
 
         return $values;

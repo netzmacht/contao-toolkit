@@ -8,7 +8,7 @@
  * @filesource
  */
 
-namespace Netzmacht\Contao\DevTools;
+namespace Netzmacht\Contao\Toolkit;
 
 /**
  * Class ServiceProviderTrait.
