@@ -69,6 +69,13 @@ class AliasGenerator
     private $limit = 0;
 
     /**
+     * Filters being applied when standardize the value.
+     *
+     * @var array
+     */
+    private $filters = array();
+
+    /**
      * Construct.
      *
      * @param \Database $database   The database connection.
@@ -82,6 +89,7 @@ class AliasGenerator
         $this->columns    = $columns;
         $this->aliasField = $aliasField;
         $this->tableName  = $tableName;
+        $this->filters[]  = 'standardize';
     }
 
     /**
@@ -209,6 +217,20 @@ class AliasGenerator
     }
 
     /**
+     * Add standardize filter.
+     *
+     * @param callable $filter Filter callback.
+     *
+     * @return $this
+     */
+    public function addFilter($filter)
+    {
+        $this->filters[] = $filter;
+
+        return $this;
+    }
+
+    /**
      * Generate the alias.
      *
      * @param Result $result The database result.
@@ -284,7 +306,11 @@ class AliasGenerator
      */
     protected function standardize($value)
     {
-        return str_replace('-', '_', standardize($value));
+        foreach ($this->filters as $filter) {
+            $value = call_user_func($filter, $value);
+        }
+
+        return $value;
     }
 
     /**
