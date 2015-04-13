@@ -122,4 +122,42 @@ class Dca
             return array_diff(\Controller::getTemplateGroup($prefix), $exclude);
         };
     }
+
+    /**
+     * Create an edit target callback.
+     *
+     * @param      $href
+     * @param      $label
+     * @param      $icon
+     * @param bool $always
+     * @param null $linkTemplate
+     *
+     * @return callable
+     */
+    public static function createPopupWizardCallback($href, $label, $icon, $always = false, $linkTemplate = null)
+    {
+        return function ($dataContainer) use ($href, $label, $icon, $always, $linkTemplate) {
+            if (!$always && !$dataContainer->value) {
+                return '';
+            }
+
+            if (!$linkTemplate) {
+                $linkTemplate = 'contao/main.php?%s&amp;id=%s&amp;popup=1&amp;nb=1&amp;rt=%s';
+            }
+
+            $link    = sprintf($linkTemplate, $href, $dataContainer->value, REQUEST_TOKEN);
+            $onClick = sprintf(
+                'Backend.openModalIframe({\'width\':768,\'title\':\'%s\',\'url\':this.href});return false',
+                specialchars(str_replace("'", "\\'", sprintf($label[0], $dataContainer->value)))
+            );
+
+            return sprintf(
+                '<a href="%s" title="%s" style="padding-left: 3px" onclick="%s">%s</a>',
+                $link,
+                specialchars(sprintf($label[1], $dataContainer->value)),
+                $onClick,
+                \Image::getHtml($icon, $label[0], 'style="vertical-align:top"')
+            );
+        };
+    }
 }
