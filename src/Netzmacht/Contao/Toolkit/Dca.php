@@ -126,11 +126,11 @@ class Dca
     /**
      * Create an edit target callback.
      *
-     * @param      $href
-     * @param      $label
-     * @param      $icon
-     * @param bool $always
-     * @param null $linkTemplate
+     * @param string      $href         The href.
+     * @param string      $label        The label.
+     * @param string      $icon         The icon.
+     * @param bool        $always       Always.
+     * @param string|null $linkTemplate Optional link template pattern.
      *
      * @return callable
      */
