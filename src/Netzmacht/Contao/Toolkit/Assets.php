@@ -28,6 +28,7 @@ class Assets
      * @param null   $name   Optional assets name.
      *
      * @return void
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public static function addJavascript($path, $static = self::STATIC_PRODUCTION, $name = null)
     {
@@ -43,6 +44,28 @@ class Assets
     }
 
     /**
+     * Add javascript files to Contao assets.
+     *
+     * @param array  $paths  The assets paths.
+     * @param string $static Register it as static entry.
+     * @param null   $name   Optional assets name.
+     *
+     * @return void
+     */
+    public static function addJavascripts(array $paths, $static = self::STATIC_PRODUCTION, $name = null)
+    {
+        foreach ($paths as $identifier => $path) {
+            if ($name) {
+                $name .= '_' . $identifier;
+            } elseif (!is_numeric($identifier)) {
+                $name = $identifier;
+            }
+
+            static::addJavascript($path, $static, $name);
+        }
+    }
+
+    /**
      * Add a javascript file to Contao assets.
      *
      * @param string $path   The assets path.
@@ -51,6 +74,7 @@ class Assets
      * @param null   $name   Optional assets name.
      *
      * @return void
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public static function addStylesheet($path, $media = '', $static = self::STATIC_PRODUCTION, $name = null)
     {
@@ -68,6 +92,28 @@ class Assets
             $GLOBALS['TL_CSS'][$name] = $path;
         } else {
             $GLOBALS['TL_CSS'][] = $path;
+        }
+    }
+
+    /**
+     * Add stylesheet files to Contao assets.
+     *
+     * @param array  $paths  The assets paths.
+     * @param string $static Register it as static entry.
+     * @param null   $name   Optional assets name.
+     *
+     * @return void
+     */
+    public static function addStylesheets(array $paths, $static = self::STATIC_PRODUCTION, $name = null)
+    {
+        foreach ($paths as $identifier => $path) {
+            if ($name) {
+                $name .= '_' . $identifier;
+            } elseif (!is_numeric($identifier)) {
+                $name = $identifier;
+            }
+
+            static::addStylesheet($path, $static, $name);
         }
     }
 
