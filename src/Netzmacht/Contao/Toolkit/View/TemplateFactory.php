@@ -13,6 +13,7 @@ namespace Netzmacht\Contao\Toolkit\View;
 
 use ContaoCommunityAlliance\Translator\Contao\LangArrayTranslator;
 use ContaoCommunityAlliance\Translator\TranslatorChain;
+use ContaoCommunityAlliance\Translator\TranslatorInterface;
 use Netzmacht\Contao\Toolkit\ServiceContainerTrait;
 
 /**
@@ -104,18 +105,20 @@ class TemplateFactory
     /**
      * Add translator helper.
      *
-     * @param string|null $defaultDomain The default domain.
-     * @param string|null $service       An service id.
+     * @param string|null                     $defaultDomain The default domain.
+     * @param string|null|TranslatorInterface $translator    The translator as object or service container id.
      *
      * @return $this
      */
-    public function withTranslator($defaultDomain = null, $service = null)
+    public function withTranslator($defaultDomain = null, $translator = null)
     {
-        if ($service) {
-            $translator = $this->getService($service);
-        } else {
-            $translator = new TranslatorChain();
-            $translator->add(new LangArrayTranslator($this->getService('event-dispatcher')));
+        if (!$translator instanceof TranslatorInterface) {
+            if ($translator) {
+                $translator = $this->getService($translator);
+            } else {
+                $translator = new TranslatorChain();
+                $translator->add(new LangArrayTranslator($this->getService('event-dispatcher')));
+            }
         }
 
         $this->data['translate'] = function (
