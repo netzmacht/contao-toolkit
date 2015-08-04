@@ -18,6 +18,8 @@ use Netzmacht\Contao\Toolkit\ServiceContainerTrait;
 
 /**
  * TemplateFactory creates a template with some predefined helpers.
+ *
+ * @deprecated Use provided BackendTemplate and FrontendTemplate instead.
  */
 class TemplateFactory
 {
