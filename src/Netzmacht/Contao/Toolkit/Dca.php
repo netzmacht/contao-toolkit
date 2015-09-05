@@ -38,10 +38,74 @@ class Dca
      */
     public static function &load($name, $ignoreCache = false)
     {
-        $loader = new DcaLoader();
-        $loader->loadDataContainer($name, $ignoreCache);
+        if (!isset($GLOBALS['TL_DCA'][$name])) {
+            $loader = new DcaLoader();
+            $loader->loadDataContainer($name, $ignoreCache);
+        }
 
         return $GLOBALS['TL_DCA'][$name];
+    }
+
+    /**
+     * Get from the dca.
+     *
+     * @param string       $name        The data container name.
+     * @param array|string $path        The path as array or "/" separated string.
+     * @param bool|false   $ignoreCache Ignore the contao cache.
+     *
+     * @return array|null
+     */
+    public static function &get($name, $path = null, $ignoreCache = false)
+    {
+        $dca  = &static::load($name, $ignoreCache);
+        $path = is_array($path) ? $path : explode('/', $path);
+
+        foreach ($path as $key) {
+            if (!is_array($dca) || !array_key_exists($key, $dca)) {
+                return null;
+            }
+
+            $dca =& $dca[$key];
+        }
+
+        return $dca;
+    }
+
+    /**
+     * Set a
+     *
+     * @param string       $name        The data container name.
+     * @param array|string $path        The path as array or "/" separated string.
+     * @param mixed        $value       The value.
+     * @param bool|false   $ignoreCache Ignore the contao cache
+     *
+     * @return bool
+     */
+    public static function set($name, $path, $value, $ignoreCache = false)
+    {
+        $dca     =& static::load($name, $ignoreCache);
+        $path    = is_array($path) ? $path : explode('/', $path);
+        $current =& $dca;
+
+        foreach ($path as $key) {
+            if (!is_array($current)) {
+                return false;
+            }
+
+            if (!isset($current[$key])) {
+                $current[$key] = array();
+            }
+
+            unset($tmp);
+            $tmp =& $current;
+
+            unset($current);
+            $current =& $tmp[$key];
+        }
+
+        $current = $value;
+
+        return true;
     }
 
     /**
