@@ -72,12 +72,12 @@ class Dca
     }
 
     /**
-     * Set a
+     * Set a value in the dca.
      *
      * @param string       $name        The data container name.
      * @param array|string $path        The path as array or "/" separated string.
      * @param mixed        $value       The value.
-     * @param bool|false   $ignoreCache Ignore the contao cache
+     * @param bool|false   $ignoreCache Ignore the contao cache.
      *
      * @return bool
      */
