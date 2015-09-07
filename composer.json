@@ -50,6 +50,9 @@
     "prefer-stable": true,
     "minimum-stability": "dev",
     "extra": {
+        "sources": {
+            "module": "system/modules/netzmacht-toolkit"
+        },
         "branch-alias": {
             "dev-master": "1.0.x-dev"
         }

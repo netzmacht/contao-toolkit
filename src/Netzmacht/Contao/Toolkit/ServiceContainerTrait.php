@@ -36,4 +36,14 @@ trait ServiceContainerTrait
     {
         return $GLOBALS['container'][$name];
     }
+
+    /**
+     * Get the service container.
+     *
+     * @return ServiceContainer
+     */
+    protected function getServiceContainer()
+    {
+        return $this->getService('toolkit.service-container');
+    }
 }
