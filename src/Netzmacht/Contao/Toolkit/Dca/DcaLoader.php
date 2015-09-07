@@ -14,7 +14,7 @@ namespace Netzmacht\Contao\Toolkit\Dca;
 /**
  * Class Loader loads the data container.
  *
- * Internal used loader class. No not used it by your own.
+ * Internal used loader class. Do not used it by your own.
  *
  * @package Netzmacht\Contao\DevTools\Dca
  */
