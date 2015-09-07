@@ -11,6 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit;
 
+use ContaoCommunityAlliance\Translator\TranslatorInterface;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 
 /**
@@ -57,5 +58,15 @@ class ServiceContainer
     public function getDcaManager()
     {
         return $this->getService('toolkit.dca-manager');
+    }
+
+    /**
+     * Get the translator.
+     *
+     * @return TranslatorInterface
+     */
+    public function getTranslator()
+    {
+        return $this->getService('translator');
     }
 }
