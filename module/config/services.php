@@ -11,6 +11,7 @@
 
 use Netzmacht\Contao\Toolkit\Dca\DcaLoader;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
+use Netzmacht\Contao\Toolkit\ServiceContainer;
 
 global $container;
 
@@ -21,5 +22,11 @@ $container['toolkit.dca-loader'] = function () {
 $container['toolkit.dca-manager'] = $container->share(
     function ($container) {
         return new Manager($container['toolkit.dca-loader']);
+    }
+);
+
+$container['toolkit.service-container'] = $container->share(
+    function ($container) {
+        return new ServiceContainer($container);
     }
 );
