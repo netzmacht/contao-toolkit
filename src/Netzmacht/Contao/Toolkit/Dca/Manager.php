@@ -26,6 +26,7 @@ class Manager
     private $definitions = array();
 
     /**
+     * The data definition array loader.
      *
      * @var DcaLoader
      */
@@ -42,12 +43,14 @@ class Manager
     }
 
     /**
-     * Get a data container defintion.
+     * Get a data container definition.
      *
      * @param string $name    The data definition name.
      * @param bool   $noCache If true not the cached version is loaded.
      *
      * @return Definition
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function get($name, $noCache = false)
     {
