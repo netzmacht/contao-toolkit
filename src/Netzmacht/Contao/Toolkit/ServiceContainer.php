@@ -13,6 +13,7 @@ namespace Netzmacht\Contao\Toolkit;
 
 use ContaoCommunityAlliance\Translator\TranslatorInterface;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
+use Netzmacht\Contao\Toolkit\View\AssetsManager;
 
 /**
  * The toolkit service container.
@@ -68,5 +69,15 @@ class ServiceContainer
     public function getTranslator()
     {
         return $this->getService('translator');
+    }
+
+    /**
+     * Get the assets manager.
+     *
+     * @return AssetsManager
+     */
+    public function getAssetsManager()
+    {
+        return $this->getService('toolkit.assets-manager');
     }
 }

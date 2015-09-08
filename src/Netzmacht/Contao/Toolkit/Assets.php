@@ -15,9 +15,13 @@ namespace Netzmacht\Contao\Toolkit;
  * Simple interface to handle assets registration.
  *
  * @package Netzmacht\Contao\Toolkit
+ *
+ * @deprecated Use Netzmacht\Contao\Toolkit\View\AssetsManager
  */
 class Assets
 {
+    use ServiceContainerTrait;
+
     const STATIC_PRODUCTION = 'prod';
 
     /**
@@ -28,19 +32,10 @@ class Assets
      * @param null   $name   Optional assets name.
      *
      * @return void
-     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public static function addJavascript($path, $static = self::STATIC_PRODUCTION, $name = null)
     {
-        if (static::isStatic($static)) {
-            $path .= '|static';
-        }
-
-        if ($name) {
-            $GLOBALS['TL_JAVASCRIPT'][$name] = $path;
-        } else {
-            $GLOBALS['TL_JAVASCRIPT'][] = $path;
-        }
+        static::getServiceContainer()->getAssetsManager()->addJavascript($path, $static, $name);
     }
 
     /**
@@ -54,15 +49,7 @@ class Assets
      */
     public static function addJavascripts(array $paths, $static = self::STATIC_PRODUCTION, $name = null)
     {
-        foreach ($paths as $identifier => $path) {
-            if ($name) {
-                $name .= '_' . $identifier;
-            } elseif (!is_numeric($identifier)) {
-                $name = $identifier;
-            }
-
-            static::addJavascript($path, $static, $name);
-        }
+        static::getServiceContainer()->getAssetsManager()->addJavascripts($paths, $static, $name);
     }
 
     /**
@@ -78,21 +65,7 @@ class Assets
      */
     public static function addStylesheet($path, $media = '', $static = self::STATIC_PRODUCTION, $name = null)
     {
-        $static = static::isStatic($static);
-
-        if ($media || $static) {
-            $path .= '|' . $media;
-
-            if ($static) {
-                $path .= '|static';
-            }
-        }
-
-        if ($name) {
-            $GLOBALS['TL_CSS'][$name] = $path;
-        } else {
-            $GLOBALS['TL_CSS'][] = $path;
-        }
+        static::getServiceContainer()->getAssetsManager()->addStylesheet($path, $media, $static, $name);
     }
 
     /**
@@ -106,30 +79,6 @@ class Assets
      */
     public static function addStylesheets(array $paths, $static = self::STATIC_PRODUCTION, $name = null)
     {
-        foreach ($paths as $identifier => $path) {
-            if ($name) {
-                $name .= '_' . $identifier;
-            } elseif (!is_numeric($identifier)) {
-                $name = $identifier;
-            }
-
-            static::addStylesheet($path, $static, $name);
-        }
-    }
-
-    /**
-     * Evaluate the static flag by recognizing the debug mode setting.
-     *
-     * @param mixed $flag The static flag.
-     *
-     * @return bool
-     */
-    private static function isStatic($flag)
-    {
-        if ($flag === static::STATIC_PRODUCTION) {
-            return !\Config::get('debugMode');
-        }
-
-        return $flag;
+        static::getServiceContainer()->getAssetsManager()->addStylesheets($paths, '', $static, $name);
     }
 }
