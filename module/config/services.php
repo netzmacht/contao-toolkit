@@ -16,6 +16,14 @@ use Netzmacht\Contao\Toolkit\View\AssetsManager;
 
 global $container;
 
+$container['toolkit.production-mode.default'] = function ($container) {
+    return !$container['config']->get('debugMode');
+};
+
+if (!isset($container['toolkit.production-mode'])) {
+    $container['toolkit.production-mode'] = $container['toolkit.production-mode.default'];
+}
+
 $container['toolkit.dca-loader'] = function () {
     return new DcaLoader();
 };
@@ -31,7 +39,7 @@ $container['toolkit.assets-manager'] = $container->share(
         return new AssetsManager(
             $GLOBALS['TL_CSS'],
             $GLOBALS['TL_JAVASCRIPT'],
-            !$container['config']->get('debugMode')
+            $container['toolkit.production-mode']
         );
     }
 );
