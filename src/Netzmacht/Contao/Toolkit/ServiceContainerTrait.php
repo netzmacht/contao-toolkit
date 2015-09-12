@@ -42,8 +42,8 @@ trait ServiceContainerTrait
      *
      * @return ServiceContainer
      */
-    protected function getServiceContainer()
+    protected static function getServiceContainer()
     {
-        return $this->getService('toolkit.service-container');
+        return static::getService('toolkit.service-container');
     }
 }
