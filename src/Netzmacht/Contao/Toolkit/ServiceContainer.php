@@ -15,6 +15,7 @@ use ContaoCommunityAlliance\Translator\TranslatorInterface;
 use DependencyInjection\Container\PageProvider;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Netzmacht\Contao\Toolkit\View\AssetsManager;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * The toolkit service container.
@@ -140,5 +141,15 @@ class ServiceContainer
     public function getPageProvider()
     {
         return $this->getService('page-provider');
+    }
+
+    /**
+     * Get the event dispatcher.
+     *
+     * @return EventDispatcherInterface
+     */
+    public function getEventDispatcher()
+    {
+        return $this->getService('event-dispatcher');
     }
 }
