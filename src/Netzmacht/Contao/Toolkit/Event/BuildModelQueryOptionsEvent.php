@@ -76,7 +76,7 @@ class BuildModelQueryOptionsEvent extends Event
         array $options = array()
     ) {
         $this->table   = $table;
-        $this->context   = $context;
+        $this->context = $context;
         $this->column  = new \ArrayObject($column);
         $this->value   = new \ArrayObject($value);
         $this->options = new \ArrayObject($options);
