@@ -134,6 +134,16 @@ class ServiceContainer
     }
 
     /**
+     * Get the config service.
+     *
+     * @return \Config
+     */
+    public function getConfig()
+    {
+        return $this->getService('config');
+    }
+
+    /**
      * Get the page provider.
      *
      * @return PageProvider

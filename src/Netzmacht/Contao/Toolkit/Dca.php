@@ -121,9 +121,9 @@ class Dca
     public static function createToggleIconCallback($table, $stateColumn, $inversed = false, $disabledIcon = null)
     {
         return new ToggleIconCallback(
-            static::getService('user'),
-            static::getService('input'),
-            static::getService('database.connection'),
+            static::getServiceContainer()->getUser(),
+            static::getServiceContainer()->getInput(),
+            static::getServiceContainer()->getDatabaseConnection(),
             $table,
             $stateColumn,
             $inversed,
@@ -162,7 +162,7 @@ class Dca
         $aliasColumn = 'alias',
         $strategy = null
     ) {
-        $database  = static::getService('database.connection');
+        $database  = static::getServiceContainer()->getDatabaseConnection();
         $generator = new AliasGenerator($database, $tableName, $aliasColumn, (array) $valueColumn);
 
         if ($strategy) {

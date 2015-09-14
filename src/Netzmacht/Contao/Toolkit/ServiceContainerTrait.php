@@ -31,6 +31,8 @@ trait ServiceContainerTrait
      * @return mixed
      *
      * @SuppressWarnings(PHPMD.Superglobals)
+     *
+     * @deprecated Use getServiceContainer()->getService() instead!
      */
     protected static function getService($name)
     {

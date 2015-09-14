@@ -27,7 +27,7 @@ trait TranslatorTrait
      */
     protected function getTranslator()
     {
-        return static::getService('translator');
+        return static::getServiceContainer()->getTranslator();
     }
 
     /**

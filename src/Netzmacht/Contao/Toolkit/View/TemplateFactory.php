@@ -116,10 +116,10 @@ class TemplateFactory
     {
         if (!$translator instanceof TranslatorInterface) {
             if ($translator) {
-                $translator = $this->getService($translator);
+                $translator = $this->getServiceContainer()->getTranslator();
             } else {
                 $translator = new TranslatorChain();
-                $translator->add(new LangArrayTranslator($this->getService('event-dispatcher')));
+                $translator->add(new LangArrayTranslator($this->getServiceContainer()->getEventDispatcher()));
             }
         }
 
