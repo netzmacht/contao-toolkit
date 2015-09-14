@@ -7,12 +7,13 @@ Contao Dev Tools
 [![Downloads](http://img.shields.io/packagist/dt/netzmacht/contao-toolkit.svg?style=flat-square)](http://packagist.com/packages/netzmacht/contao-toolkit)
 [![Contao Community Alliance coding standard](http://img.shields.io/badge/cca-coding_standard-red.svg?style=flat-square)](https://github.com/contao-community-alliance/coding-standard)
 
-This library provides tools for solving common tasks required when developing for Contao CMS.
+This library is a developer toolkit for developing in Contao CMS. It contains a bunch of helpers which are used in many 
+of the extensions of [netzmacht creative][8].
 
 Install
 -------
 
-You can install this library using Composer.
+You can install this library using Composer. It requires at least PHP 5.4 and Contao 3.2.
 
 ```
 $ php composer.phar require netzmacht/contao-toolkit:~1.0
@@ -21,74 +22,25 @@ $ php composer.phar require netzmacht/contao-toolkit:~1.0
 Features
 --------
 
-### DCA related features
+There are different topics which the toolkit covers.
 
-####Toggle icon callback
+ * Easy **dependency Injection** in closed Contao objects providing a [ServiceContainerTrait][1] and a basic 
+   [ServiceContainer service][2].
+ * Adding assets through an [AssetsManager][3].
+ * Translations using contao-community-alliance/translator. Easy access providing an [Trait][4].
+ * Extended [Frontend and Backend template][5] classes without magic property access and including the translator service.
+ * Data container related features:
+     * API access for [reading and manipulating definitions][6].
+     * OptionsBuilder to convert typically data into options.
+     * Generic callbacks for toggle icons, alias generation and a customizable color picker.
+ * Providing default events
+     * [BuildModelQueryOptionsEvent][7] for highly customizable components.
 
-This library ships with a common toggle state icon callback.
-
-```php
-<?php
-
-// dca/tl_custom.php
-
-$GLOBALS['TL_DCA']['tl_custom']['fields']['published']['button_callback'] = 
-	Netzmacht\Contao\DevTools\Dca::createToggleIconCallback(
-		'tl_custom',	// The database table.
-		'published',	// the state column
-		false,			// Inverse the state. Set to true for invisible='' columns
-		'invisible.gif' // Disabled icon. If not set, icons are transformed from edit.gif to edit_.gif
-	)
-```
-
-####Convert models to options
-
-One standard task using Contao models is to transform when to options for select lists or checkbox menus. toolkit 
-simplifies it for you.
-
- * Convert collections to options arrays.
- * Use callbacks to customize the labels.
- * Group values by a third column/callback value.
-
-```php
-<?php 
-
-public function yourOptionsCallback()
-{
-	$collection = \PageModel::findAll();
-	
-	// Empty collections by Contao are NULL. The OptionsBuilder handles is correctly.
-	return Netzmacht\Contao\DevTools\Dca\Options\OptionsBuilder::fromCollection($collection, 'id', 'name')
-		->groupBy('type')
-		->getOptions();
-}
-```php
-
-###Dependency injection
-
-Contao does not provide any help for dependency injection. If you need some dependencies from the 
-[dependency container](https://github.com/contao-community-alliance/dependency-container) you can use this Trait:
-
-```php
-
-class YourContentElement extends \ContentElement
-{
-	use Netzmacht\Contao\DevTools\ServiceContainerTrait;
-	
-	private $service;
-	
-	public function __construct($model)
-	{
-		parent::__construct($model);
-		
-		$this->service = $this->getService('your-required-service');
-	}
-}
-
-```
-
-## Requirements
-
- * PHP 5.4 is required.
- * Contao 3.2 - 3.4 is supported.
- * contao-community-alliance/dependency-container ~1.6 is required.
+[1]: https://github.com/netzmacht/contao-toolkit/blob/master/src/Netzmacht/Contao/Toolkit/ServiceContainerTrait.php
+[2]: https://github.com/netzmacht/contao-toolkit/blob/master/src/Netzmacht/Contao/Toolkit/ServiceContainer.php
+[3]: https://github.com/netzmacht/contao-toolkit/blob/master/src/Netzmacht/Contao/Toolkit/View/AssetsManager.php
+[4]: https://github.com/netzmacht/contao-toolkit/blob/master/src/Netzmacht/Contao/Toolkit/TranslatorTrait.php
+[5]: https://github.com/netzmacht/contao-toolkit/tree/master/src/Netzmacht/Contao/Toolkit/View
+[6]: https://github.com/netzmacht/contao-toolkit/blob/master/src/Netzmacht/Contao/Toolkit/Dca/Definition.php
+[7]: https://github.com/netzmacht/contao-toolkit/blob/master/src/Netzmacht/Contao/Toolkit/Event/BuildModelQueryOptionsEvent.php
+[8]: https://github.com/netzmacht/
