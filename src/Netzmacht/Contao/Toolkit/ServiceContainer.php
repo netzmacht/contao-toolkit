@@ -12,6 +12,7 @@
 namespace Netzmacht\Contao\Toolkit;
 
 use ContaoCommunityAlliance\Translator\TranslatorInterface;
+use DependencyInjection\Container\PageProvider;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Netzmacht\Contao\Toolkit\View\AssetsManager;
 
@@ -79,5 +80,65 @@ class ServiceContainer
     public function getAssetsManager()
     {
         return $this->getService('toolkit.assets-manager');
+    }
+
+    /**
+     * Get the database connection.
+     *
+     * @return \Database
+     */
+    public function getDatabaseConnection()
+    {
+        return $this->getService('database.connection');
+    }
+
+    /**
+     * Get the session.
+     *
+     * @return \Session
+     */
+    public function getSession()
+    {
+        return $this->getService('session');
+    }
+
+    /**
+     * Get the environment.
+     *
+     * @return \Environment
+     */
+    public function getEnvironment()
+    {
+        return $this->getService('environment');
+    }
+
+    /**
+     * Get the input object.
+     *
+     * @return \Input
+     */
+    public function getInput()
+    {
+        return $this->getService('input');
+    }
+
+    /**
+     * Get the user object for the current tl mode.
+     *
+     * @return \FrontendUser|\BackendUser
+     */
+    public function getUser()
+    {
+        return $this->getService('user');
+    }
+
+    /**
+     * Get the page provider.
+     *
+     * @return PageProvider
+     */
+    public function getPageProvider()
+    {
+        return $this->getService('page-provider');
     }
 }
