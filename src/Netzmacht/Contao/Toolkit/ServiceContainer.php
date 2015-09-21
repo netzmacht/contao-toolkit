@@ -162,4 +162,14 @@ class ServiceContainer
     {
         return $this->getService('event-dispatcher');
     }
+
+    /**
+     * Get the contao file system.
+     *
+     * @return \Files
+     */
+    public function getFileSystem()
+    {
+        return $this->getService('toolkit.filesystem');
+    }
 }

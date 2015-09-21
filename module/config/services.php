@@ -44,6 +44,12 @@ $container['toolkit.assets-manager'] = $container->share(
     }
 );
 
+$container['toolkit.filesystem'] = $container->share(
+    function () {
+        return \Files::getInstance();
+    }
+);
+
 $container['toolkit.service-container'] = $container->share(
     function ($container) {
         return new ServiceContainer($container);
