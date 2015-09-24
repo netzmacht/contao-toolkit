@@ -11,7 +11,6 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca;
 
-use Netzmacht\Contao\Toolkit\ServiceContainerTrait;
 use Netzmacht\Contao\Toolkit\TranslatorTrait;
 
 /**
@@ -21,7 +20,6 @@ use Netzmacht\Contao\Toolkit\TranslatorTrait;
  */
 abstract class Callbacks
 {
-    use ServiceContainerTrait;
     use TranslatorTrait;
 
     /**
