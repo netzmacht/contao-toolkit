@@ -29,8 +29,9 @@ trait ComponentTrait
      */
     protected function compile()
     {
-        $translator = $this->getServiceContainer()->getTranslator();
-        $template   = new TemplateDecorator($this->Template, $translator);
+        $translator    = $this->getServiceContainer()->getTranslator();
+        $assetsManager = $this->getServiceContainer()->getAssetsManager();
+        $template      = new TemplateDecorator($this->Template, $translator, $assetsManager);
 
         $this->render($template);
     }

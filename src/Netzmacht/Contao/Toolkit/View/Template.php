@@ -45,4 +45,11 @@ interface Template extends TranslatorInterface
      * @return $this
      */
     public function set($name, $value);
+
+    /**
+     * Get the assets manager.
+     *
+     * @return AssetsManager
+     */
+    public function getAssetsManager();
 }

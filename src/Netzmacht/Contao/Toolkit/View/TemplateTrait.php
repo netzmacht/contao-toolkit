@@ -11,6 +11,8 @@
 
 namespace Netzmacht\Contao\Toolkit\View;
 
+use Netzmacht\Contao\Toolkit\TranslatorTrait;
+
 /**
  * Trait extends the default Contao template classes.
  *
@@ -18,6 +20,8 @@ namespace Netzmacht\Contao\Toolkit\View;
  */
 trait TemplateTrait
 {
+    use TranslatorTrait;
+
     /**
      * Get a template value.
      *
@@ -43,5 +47,15 @@ trait TemplateTrait
         $this->$name = $value;
 
         return $this;
+    }
+
+    /**
+     * Get the assets manager.
+     *
+     * @return AssetsManager
+     */
+    public function getAssetsManager()
+    {
+        return $this->getServiceContainer()->getAssetsManager();
     }
 }

@@ -11,13 +11,10 @@
 
 namespace Netzmacht\Contao\Toolkit\View;
 
-use Netzmacht\Contao\Toolkit\TranslatorTrait;
-
 /**
  * FrontendTemplate with extended features.
  */
 class FrontendTemplate extends \FrontendTemplate implements Template
 {
-    use TranslatorTrait;
     use TemplateTrait;
 }

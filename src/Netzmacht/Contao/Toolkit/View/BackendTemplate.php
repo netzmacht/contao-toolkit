@@ -11,13 +11,10 @@
 
 namespace Netzmacht\Contao\Toolkit\View;
 
-use Netzmacht\Contao\Toolkit\TranslatorTrait;
-
 /**
  * BackendTemplate with extended features.
  */
 class BackendTemplate extends \BackendTemplate implements Template
 {
-    use TranslatorTrait;
     use TemplateTrait;
 }

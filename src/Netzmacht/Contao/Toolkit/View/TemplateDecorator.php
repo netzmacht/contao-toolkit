@@ -33,15 +33,26 @@ class TemplateDecorator implements Template
     private $translator;
 
     /**
+     * The assets manager.
+     *
+     * @var AssetsManager
+     */
+    private $assetsManager;
+
+    /**
      * TemplateDecorator constructor.
      *
      * @param \Template           $innerTemplate The inner template.
      * @param TranslatorInterface $translator    The translator.
+     * @param AssetsManager       $assetsManager Assets manager.
      */
-    public function __construct($innerTemplate, TranslatorInterface $translator)
+    public function __construct($innerTemplate, TranslatorInterface $translator, AssetsManager $assetsManager)
     {
         $this->innerTemplate = $innerTemplate;
         $this->translator    = $translator;
+        $this->assetsManager = $assetsManager;
+
+        $this->registerTemplateMethods();
     }
 
     /**
@@ -84,5 +95,67 @@ class TemplateDecorator implements Template
     public function translatePluralized($string, $number, $domain = null, array $parameters = array(), $locale = null)
     {
         return $this->translatePluralized($string, $number, $domain, $parameters, $locale);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAssetsManager()
+    {
+        return $this->assetsManager;
+    }
+
+    /**
+     * Register all provides methods of the decorator to the inner templte.
+     *
+     * @return void
+     */
+    private function registerTemplateMethods()
+    {
+        $this->set(
+            'set',
+            function ($name, $value) {
+                return $this->set($name, $value);
+            }
+        );
+
+        $this->set(
+            'get',
+            function ($name) {
+                return $this->get($name);
+            }
+        );
+
+        $this->set(
+            'translate',
+            function (
+                $string,
+                $domain = null,
+                array $parameters = array(),
+                $locale = null
+            ) {
+                return $this->translate($string, $domain, $parameters, $locale);
+            }
+        );
+
+        $this->set(
+            'translatePluralized',
+            function (
+                $string,
+                $number,
+                $domain = null,
+                array $parameters = array(),
+                $locale = null
+            ) {
+                return $this->translatePluralized($string, $number, $domain, $parameters, $locale);
+            }
+        );
+
+        $this->set(
+            'getAssetsManager',
+            function () {
+                return $this->getAssetsManager();
+            }
+        );
     }
 }
