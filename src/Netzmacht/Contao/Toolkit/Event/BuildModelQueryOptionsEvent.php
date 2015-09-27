@@ -24,6 +24,10 @@ class BuildModelQueryOptionsEvent extends Event
 {
     const NAME = 'toolkit.model.build-query-options';
 
+    const QUERY_SELECT = 'SELECT';
+
+    const QUERY_COUNT = 'COUNT';
+
     /**
      * The query column conditions.
      *
@@ -60,6 +64,13 @@ class BuildModelQueryOptionsEvent extends Event
     private $table;
 
     /**
+     * Query type. Select or count.
+     *
+     * @var string
+     */
+    private $type;
+
+    /**
      * BuildQueryOptionsEvent constructor.
      *
      * @param string $table   The table name.
@@ -67,19 +78,22 @@ class BuildModelQueryOptionsEvent extends Event
      * @param array  $column  The query column conditions.
      * @param array  $value   The query conditions values.
      * @param array  $options The query options.
+     * @param string $type    Query type. Select or count.
      */
     public function __construct(
         $table,
         $context = null,
         array $column = array(),
         array $value = array(),
-        array $options = array()
+        array $options = array(),
+        $type = self::QUERY_SELECT
     ) {
         $this->table   = $table;
         $this->context = $context;
         $this->column  = new \ArrayObject($column);
         $this->value   = new \ArrayObject($value);
         $this->options = new \ArrayObject($options);
+        $this->type    = $type;
     }
 
     /**
@@ -136,5 +150,15 @@ class BuildModelQueryOptionsEvent extends Event
     public function getTable()
     {
         return $this->table;
+    }
+
+    /**
+     * Get type.
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }
