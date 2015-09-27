@@ -35,6 +35,7 @@ class Dca
      * @return array
      *
      * @SuppressWarnings(PHPMD.Superglobals)
+     * @deprecated Use Netzmacht\Contao\Toolkit\Dca\Manager::get instead.
      */
     public static function &load($name, $ignoreCache = false)
     {
@@ -54,6 +55,7 @@ class Dca
      * @param bool|false   $ignoreCache Ignore the contao cache.
      *
      * @return array|null
+     * @deprecated Use Netzmacht\Contao\Toolkit\Dca\Definition instead.
      */
     public static function &get($name, $path = null, $ignoreCache = false)
     {
@@ -80,6 +82,7 @@ class Dca
      * @param bool|false   $ignoreCache Ignore the contao cache.
      *
      * @return bool
+     * @deprecated Use Netzmacht\Contao\Toolkit\Dca\Definition instead.
      */
     public static function set($name, $path, $value, $ignoreCache = false)
     {
