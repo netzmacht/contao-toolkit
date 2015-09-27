@@ -35,8 +35,8 @@
         "netzmacht/contao-build-tools": "~1.1"
     },
     "autoload": {
-        "psr-0": {
-            "Netzmacht\\Contao\\Toolkit": "src/"
+        "psr-4": {
+            "Netzmacht\\Contao\\Toolkit\\": "src/"
         }
     },
     "autoload-dev": {
