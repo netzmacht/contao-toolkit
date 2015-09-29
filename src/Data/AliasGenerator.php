@@ -12,6 +12,7 @@
 namespace Netzmacht\Contao\Toolkit\Data;
 
 use Database\Result;
+use \Model;
 
 /**
  * Class AliasGenerator creates an alias and can handle different strategies.
@@ -233,12 +234,12 @@ class AliasGenerator
     /**
      * Generate the alias.
      *
-     * @param Result $result The database result.
-     * @param mixed  $value  The current value.
+     * @param Result|Model $result The database result.
+     * @param mixed        $value  The current value.
      *
      * @return mixed|null|string
      */
-    public function generate(Result $result, $value = null)
+    public function generate($result, $value = null)
     {
         $value = ($value === null) ? $result->{$this->aliasField} : $value;
         $value = $this->standardize($value);
@@ -304,7 +305,7 @@ class AliasGenerator
      *
      * @return string
      */
-    protected function standardize($value)
+    private function standardize($value)
     {
         foreach ($this->filters as $filter) {
             $value = call_user_func($filter, $value);
@@ -323,7 +324,7 @@ class AliasGenerator
      *
      * @return bool
      */
-    private function createDefaultAlias(&$value, Result $result)
+    private function createDefaultAlias(&$value, $result)
     {
         $value = '';
 
@@ -354,7 +355,7 @@ class AliasGenerator
      *
      * @throws \RuntimeException If the alias could not be generated.
      */
-    protected function suffixAlias($rowId, $value)
+    private function suffixAlias($rowId, $value)
     {
         $suffix = '';
         $index  = 2;
@@ -380,7 +381,7 @@ class AliasGenerator
      *
      * @return bool
      */
-    protected function isAlreadyUnique(Result $result, $value)
+    private function isAlreadyUnique($result, $value)
     {
         return !$this->hasStrategy(static::STRATEGY_FORCE) && $value && $this->isUniqueValue($value, $result->id);
     }
