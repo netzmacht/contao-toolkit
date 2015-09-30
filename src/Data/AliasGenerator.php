@@ -249,17 +249,13 @@ class AliasGenerator
             return $value;
         }
 
-        if ($this->isUniqueValue($value, $result->id)) {
-            // Value is already unique, just return.
-            return $value;
-
-        } elseif ($this->hasStrategy(static::STRATEGY_ADD_ID)) {
+        if ($this->hasStrategy(static::STRATEGY_ADD_ID)) {
             // Try to add the id first.
-
-            $value .= '_' . $result->id;
-            if ($this->isUniqueValue($value, $result->id)) {
-                return $value;
+            if ($value) {
+                $value .= '_';
             }
+
+            $value .= $result->id;
         }
 
         return $this->suffixAlias($result->id, $value);
@@ -383,6 +379,10 @@ class AliasGenerator
      */
     private function isAlreadyUnique($result, $value)
     {
-        return !$this->hasStrategy(static::STRATEGY_FORCE) && $value && $this->isUniqueValue($value, $result->id);
+        if ($this->hasStrategy(static::STRATEGY_FORCE)) {
+            return false;
+        }
+
+        return !$value && $this->isUniqueValue($value, $result->id);
     }
 }
