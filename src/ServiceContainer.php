@@ -42,6 +42,18 @@ class ServiceContainer
     }
 
     /**
+     * Check if a service exists.
+     *
+     * @param string $service Service name.
+     *
+     * @return bool
+     */
+    public function hasService($service)
+    {
+        return isset($this->container[$service]);
+    }
+
+    /**
      * Get a service from the container.
      *
      * @param string $service The service name.
