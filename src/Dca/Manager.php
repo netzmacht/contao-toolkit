@@ -11,6 +11,9 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca;
 
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory;
+
 /**
  * Data container definition manager.
  *
@@ -26,6 +29,13 @@ class Manager
     private $definitions = array();
 
     /**
+     * Data definition formatter cache
+     *
+     * @var Formatter[]
+     */
+    private $formatters = array();
+
+    /**
      * The data definition array loader.
      *
      * @var DcaLoader
@@ -33,11 +43,19 @@ class Manager
     private $loader;
 
     /**
+     * FormatterFactory.
+     *
+     * @var FormatterFactory
+     */
+    private $formatterFactory;
+
+    /**
      * Manager constructor.
      *
-     * @param DcaLoader $loader The data definition array loader.
+     * @param DcaLoader        $loader           The data definition array loader.
+     * @param FormatterFactory $formatterFactory Formatter factory.
      */
-    public function __construct(DcaLoader $loader)
+    public function __construct(DcaLoader $loader, FormatterFactory $formatterFactory)
     {
         $this->loader = $loader;
     }
@@ -50,9 +68,24 @@ class Manager
      *
      * @return Definition
      *
-     * @SuppressWarnings(PHPMD.Superglobals)
+     * @deprecated Use getDefinition().
      */
     public function get($name, $noCache = false)
+    {
+        return $this->getDefinition($name, $noCache);
+    }
+
+    /**
+     * Get a data container definition.
+     *
+     * @param string $name    The data definition name.
+     * @param bool   $noCache If true not the cached version is loaded.
+     *
+     * @return Definition
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
+     */
+    public function getDefinition($name, $noCache = false)
     {
         if (!$noCache) {
             $this->loader->loadDataContainer($name, $noCache);
@@ -67,5 +100,28 @@ class Manager
         }
 
         return $this->definitions[$name];
+    }
+
+    /**
+     * Get a formatter for a definition.
+     *
+     * @param Definition|string $definition Definition or name.
+     * @return Formatter
+     */
+    public function getFormatter($definition)
+    {
+        if (!$definition instanceof Definition) {
+            if (isset($this->formatters[$definition])) {
+                return $this->formatters[$definition];
+            }
+
+            $definition = $this->getDefinition($definition);
+        }
+
+        if (!isset($this->formatters[$definition->getName()])) {
+            $this->formatters[$definition->getName()] = $this->formatterFactory->createFormatterFor($definition);
+        }
+
+        return $this->formatters[$definition->getName()];
     }
 }
