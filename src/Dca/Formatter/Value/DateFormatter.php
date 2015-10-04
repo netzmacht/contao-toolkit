@@ -12,7 +12,6 @@
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Contao\Config;
-use Netzmacht\Contao\Toolkit\Dca\Definition;
 
 /**
  * DateFormatter format date values.
@@ -39,7 +38,7 @@ class DateFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accept($fieldName, array $fieldDefinition, Definition $definition)
+    public function accept($fieldName, array $fieldDefinition)
     {
         if (empty($fieldDefinition['eval']['rgxp'])) {
             return false;
@@ -51,7 +50,7 @@ class DateFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, Definition $definition, $context = null)
+    public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
         $dateFormat = $this->config->get($fieldDefinition['eval']['rgxp'] . 'Format');
 

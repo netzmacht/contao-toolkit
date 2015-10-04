@@ -11,8 +11,6 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Netzmacht\Contao\Toolkit\Dca\Definition;
-
 /**
  * FileUuidFormatter converts binary file uuids to string uuids.
  *
@@ -23,7 +21,7 @@ class FileUuidFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accept($fieldName, array $fieldDefinition, Definition $definition)
+    public function accept($fieldName, array $fieldDefinition)
     {
         return (!empty($fieldDefinition['inputType']) && $fieldDefinition['inputType'] === 'fileTree');
     }
@@ -31,7 +29,7 @@ class FileUuidFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, Definition $definition, $context = null)
+    public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
         if (is_array($value)) {
             $value = array_map(

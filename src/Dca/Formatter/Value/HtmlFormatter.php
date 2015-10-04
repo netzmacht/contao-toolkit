@@ -11,8 +11,6 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Netzmacht\Contao\Toolkit\Dca\Definition;
-
 /**
  * Class HtmlValue.
  *
@@ -23,7 +21,7 @@ class HtmlValue implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accept($fieldName, array $fieldDefinition, Definition $definition)
+    public function accept($fieldName, array $fieldDefinition)
     {
         if (!empty($fieldDefinition['eval']['allowHtml'])) {
             return true;
@@ -39,7 +37,7 @@ class HtmlValue implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, Definition $definition, $context = null)
+    public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
         return specialchars($value);
     }

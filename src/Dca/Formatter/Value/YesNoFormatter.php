@@ -12,7 +12,6 @@
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use ContaoCommunityAlliance\Translator\TranslatorInterface;
-use Netzmacht\Contao\Toolkit\Dca\Definition;
 
 /**
  * Class YesNoFormatter formats non multiple checkboxes with yes and no.
@@ -41,7 +40,7 @@ class YesNoFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accept($fieldName, array $fieldDefinition, Definition $definition)
+    public function accept($fieldName, array $fieldDefinition)
     {
         if (empty($fieldDefinition['inputType']) || $fieldDefinition['inputType'] !== 'checkbox') {
             return false;
@@ -57,7 +56,7 @@ class YesNoFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, Definition $definition, $context = null)
+    public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
         return $this->translator->translate(($value == '' ? 'no' : 'yes'), 'MSC');
     }

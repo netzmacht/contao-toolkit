@@ -11,8 +11,6 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Netzmacht\Contao\Toolkit\Dca\Definition;
-
 /**
  * A ValueFormatter is responsible to format a field value.
  *
@@ -25,11 +23,10 @@ interface ValueFormatter
      *
      * @param string     $fieldName       Field name.
      * @param array      $fieldDefinition Field definition.
-     * @param Definition $definition      Data container definition.
      *
      * @return bool
      */
-    public function accept($fieldName, array $fieldDefinition, Definition $definition);
+    public function accept($fieldName, array $fieldDefinition);
 
     /**
      * Format a field value.
@@ -37,10 +34,9 @@ interface ValueFormatter
      * @param mixed      $value           Given value.
      * @param string     $fieldName       Field name.
      * @param array      $fieldDefinition Field definition.
-     * @param Definition $definition      Data container definition.
      * @param mixed      $context         Context of the call. Usually the data container driver but not limited to.
      *
      * @return mixed
      */
-    public function format($value, $fieldName, array $fieldDefinition, Definition $definition, $context = null);
+    public function format($value, $fieldName, array $fieldDefinition, $context = null);
 }

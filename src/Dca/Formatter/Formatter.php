@@ -52,8 +52,8 @@ class Formatter
 
         $value = deserialize($value);
 
-        if ($this->valueFormatter->accept($field, $fieldDefinition, $this->definition)) {
-            $value = $this->valueFormatter->format($value, $field, $fieldDefinition, $this->definition);
+        if ($this->valueFormatter->accept($field, $fieldDefinition)) {
+            $value = $this->valueFormatter->format($value, $field, $fieldDefinition);
         }
 
         if ($flat) {

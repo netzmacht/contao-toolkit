@@ -11,8 +11,6 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Netzmacht\Contao\Toolkit\Dca\Definition;
-
 /**
  * EncryptedFormatter decrypts encrypted values.
  *
@@ -23,7 +21,7 @@ class EncryptedFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accept($fieldName, array $fieldDefinition, Definition $definition)
+    public function accept($fieldName, array $fieldDefinition)
     {
         return !empty($fieldDefinition['eval']['encrypt']);
     }
@@ -31,7 +29,7 @@ class EncryptedFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, Definition $definition, $context = null)
+    public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
         return \Encryption::decrypt($value);
     }

@@ -13,14 +13,13 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Contao\DataContainer;
 use Netzmacht\Contao\Toolkit\Dca\Callback\CallbackExecutor;
-use Netzmacht\Contao\Toolkit\Dca\Definition;
 
 class OptionsFormatter implements ValueFormatter
 {
     /**
      * {@inheritDoc}
      */
-    public function accept($fieldName, array $fieldDefinition, Definition $definition)
+    public function accept($fieldName, array $fieldDefinition)
     {
         if (!empty($fieldDefinition['isAssociative']) || !empty($fieldDefinition['options'])) {
             return true;
@@ -32,7 +31,7 @@ class OptionsFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, Definition $definition, $context = null)
+    public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
         if (!empty($fieldDefinition['isAssociative']) || array_is_assoc($fieldDefinition['options'])) {
             if (!empty($fieldDefinition['options'][$value])) {

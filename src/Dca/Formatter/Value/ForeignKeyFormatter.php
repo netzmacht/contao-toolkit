@@ -12,7 +12,6 @@
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Contao\Database;
-use Netzmacht\Contao\Toolkit\Dca\Definition;
 
 /**
  * ForeignKeyFormatter formats fields which defines a foreign key.
@@ -31,7 +30,7 @@ class ForeignKeyFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accept($fieldName, array $fieldDefinition, Definition $definition)
+    public function accept($fieldName, array $fieldDefinition)
     {
         return isset($fieldDefinition['foreignKey']);
     }
@@ -39,7 +38,7 @@ class ForeignKeyFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, Definition $definition, $context = null)
+    public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
         $foreignKey = explode('.', $fieldDefinition['foreignKey'], 2);
 

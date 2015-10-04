@@ -11,8 +11,6 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Netzmacht\Contao\Toolkit\Dca\Definition;
-
 /**
  * ReferenceFormatter formats fields which has a reference defined.
  *
@@ -23,7 +21,7 @@ class ReferenceFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accept($fieldName, array $fieldDefinition, Definition $definition)
+    public function accept($fieldName, array $fieldDefinition)
     {
         return !empty($fieldDefinition['reference']);
     }
@@ -31,7 +29,7 @@ class ReferenceFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, Definition $definition, $context = null)
+    public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
         if (isset($fieldDefinition['reference'][$value])) {
             if (is_array($fieldDefinition['reference'][$value])) {

@@ -11,8 +11,6 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Netzmacht\Contao\Toolkit\Dca\Definition;
-
 /**
  * Set of multiple formatters.
  *
@@ -38,7 +36,7 @@ class FormatterChain implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accept($fieldName, array $fieldDefinition, Definition $definition)
+    public function accept($fieldName, array $fieldDefinition)
     {
         foreach ($this->formatters as $formatter) {
             if ($formatter->accept($fieldName, $fieldDefinition, $definition)) {
@@ -52,11 +50,11 @@ class FormatterChain implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, Definition $definition, $context = null)
+    public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
         foreach ($this->formatters as $formatter) {
-            if ($formatter->accept($fieldName, $fieldDefinition, $definition)) {
-                $formatter->format($value, $fieldName, $fieldDefinition, $definition, $context);
+            if ($formatter->accept($fieldName, $fieldDefinition)) {
+                $formatter->format($value, $fieldName, $fieldDefinition, $context);
             }
         }
 
