@@ -14,11 +14,11 @@ namespace Netzmacht\Contao\Toolkit\View\Wizard;
 use Netzmacht\Contao\Toolkit\View\BackendTemplate;
 
 /**
- * Class PagePickerCallback.
+ * FilePicker wizard.
  *
- * @package Netzmacht\Contao\Toolkit\Dca\Callback
+ * @package Netzmacht\Contao\Toolkit\View\Wizard
  */
-class PagePicker extends AbstractPicker
+class FilePicker extends AbstractPicker
 {
     /**
      * {@inheritDoc}
@@ -26,7 +26,7 @@ class PagePicker extends AbstractPicker
     public function generate($tableName, $fieldName, $rowId, $value)
     {
         $url = sprintf(
-            'contao/page.php?do=%s&amp;table=%s&amp;field=%s&amp;value=%',
+            'contao/file.php?do=%s&amp;table=%s&amp;field=%s&amp;value=%',
             $this->input->get('do'),
             $tableName,
             $fieldName,
@@ -39,16 +39,16 @@ class PagePicker extends AbstractPicker
 
         $cssId   = $fieldName . (($this->input->get('act') === 'editAll') ? '_' . $rowId : '');
         $jsTitle = specialchars(
-            str_replace('\'', '\\\'', $this->translator->translate('MOD.page.0', 'modules'))
+            str_replace('\'', '\\\'', $this->translator->translate('MOD.files.0', 'modules'))
         );
 
         $template = new BackendTemplate($this->template);
         $template
             ->set('url', $url)
-            ->set('title', $this->translator->translate('MSC.pagepicker'))
+            ->set('title', $this->translator->translate('MSC.filepicker'))
             ->set('jsTitle', $jsTitle)
             ->set('field', $fieldName)
-            ->set('icon', 'pickpage.gif')
+            ->set('icon', 'pickfile.gif')
             ->set('id', $cssId);
 
         return $template->parse();

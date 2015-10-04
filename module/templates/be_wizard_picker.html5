@@ -8,5 +8,5 @@
         'self': this
     }); return false"
 >
-<?= $this->generateImage('pickpage.gif', $this->title, 'style="vertical-align:top;cursor:pointer"') ?>
+<?= $this->generateImage($this->icon, $this->title, 'style="vertical-align:top;cursor:pointer"') ?>
 </a>
