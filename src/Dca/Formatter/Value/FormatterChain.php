@@ -36,10 +36,10 @@ class FormatterChain implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accept($fieldName, array $fieldDefinition)
+    public function accepts($fieldName, array $fieldDefinition)
     {
         foreach ($this->formatters as $formatter) {
-            if ($formatter->accept($fieldName, $fieldDefinition, $definition)) {
+            if ($formatter->accepts($fieldName, $fieldDefinition)) {
                 return true;
             }
         }
@@ -53,8 +53,8 @@ class FormatterChain implements ValueFormatter
     public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
         foreach ($this->formatters as $formatter) {
-            if ($formatter->accept($fieldName, $fieldDefinition)) {
-                $formatter->format($value, $fieldName, $fieldDefinition, $context);
+            if ($formatter->accepts($fieldName, $fieldDefinition)) {
+                return $formatter->format($value, $fieldName, $fieldDefinition, $context);
             }
         }
 
