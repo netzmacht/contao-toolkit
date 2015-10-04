@@ -74,8 +74,8 @@ class FormatterFactory
         $event = new CreateFormatterEvent($definition);
         $this->eventDispatcher->dispatch($event::NAME, $event);
 
-        $preFilter  = new FilterFormatter($this->serviceContainer->getService('toolkit.dca-formatter.pre-filters'));
-        $postFilter = new FilterFormatter($this->serviceContainer->getService('toolkit.dca-formatter.post-filters'));
+        $preFilter  = $this->serviceContainer->getService('toolkit.dca-formatter.pre-filter');
+        $postFilter = $this->serviceContainer->getService('toolkit.dca-formatter.post-filter');
         $formatter  = $this->getDefaultValueFormatter();
 
         if ($event->getFormatters()) {
