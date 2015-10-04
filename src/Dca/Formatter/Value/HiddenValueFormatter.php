@@ -12,11 +12,11 @@
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 /**
- * Class HiddenFieldsFormatter.
+ * Class HiddenValueFormatter.
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
-class HiddenFieldFormatter implements ValueFormatter
+class HiddenValueFormatter implements ValueFormatter
 {
     /**
      * Mask representation of a password.
@@ -26,7 +26,7 @@ class HiddenFieldFormatter implements ValueFormatter
     private $passwordMask;
 
     /**
-     * HiddenFieldsFormatter constructor.
+     * HiddenValueFormatter constructor.
      *
      * @param string $passwordMask A mask value for passwords.
      */
@@ -38,7 +38,7 @@ class HiddenFieldFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accept($fieldName, array $fieldDefinition)
+    public function accepts($fieldName, array $fieldDefinition)
     {
         if ($fieldDefinition['inputType'] === 'password') {
             return true;
@@ -52,7 +52,7 @@ class HiddenFieldFormatter implements ValueFormatter
             return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
