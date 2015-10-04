@@ -12,6 +12,7 @@
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter;
 
 use Netzmacht\Contao\Toolkit\Dca\Definition;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FilterFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FormatterChain;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
 use Netzmacht\Contao\Toolkit\Event\CreateFormatterEvent;
@@ -36,11 +37,23 @@ class FormatterFactory
     private $serviceContainer;
 
     /**
+     * FormatterFactory constructor.
+     *
+     * @param ServiceContainer         $serviceContainer
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    public function __construct(ServiceContainer $serviceContainer, EventDispatcherInterface $eventDispatcher)
+    {
+        $this->serviceContainer = $serviceContainer;
+        $this->eventDispatcher  = $eventDispatcher;
+    }
+
+    /**
      * Get the default formatter.
      *
      * @return ValueFormatter
      */
-    public function getDefaultFormatter()
+    public function getDefaultValueFormatter()
     {
         return $this->serviceContainer->getService('toolkit.dca-formatter.default');
     }
@@ -61,12 +74,17 @@ class FormatterFactory
         $event = new CreateFormatterEvent($definition);
         $this->eventDispatcher->dispatch($event::NAME, $event);
 
-        if ($event->getFormatters()) {
-            $local = new FormatterChain($event->getFormatters());
+        $preFilter  = new FilterFormatter($this->serviceContainer->getService('toolkit.dca-formatter.pre-filters'));
+        $postFilter = new FilterFormatter($this->serviceContainer->getService('toolkit.dca-formatter.post-filters'));
+        $formatter  = $this->getDefaultValueFormatter();
 
-            return new FormatterChain([$local, $this->getDefaultFormatter()]);
+        if ($event->getFormatters()) {
+            $local     = new FormatterChain($event->getFormatters());
+            $formatter = new FormatterChain([$local, $formatter]);
         }
 
-        return $this->getDefaultFormatter();
+        $chain = new FilterFormatter([$preFilter, $formatter, $postFilter]);
+
+        return new Formatter($definition, $chain);
     }
 }
