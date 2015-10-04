@@ -11,11 +11,16 @@
 
 namespace Netzmacht\Contao\Toolkit\Event;
 
-
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
+use Symfony\Component\EventDispatcher\Event;
 
-class CreateFormatterEvent
+/**
+ * Class CreateFormatterEvent.
+ *
+ * @package Netzmacht\Contao\Toolkit\Event
+ */
+class CreateFormatterEvent extends Event
 {
     const NAME = 'toolkit.dca.create-formatter';
 
