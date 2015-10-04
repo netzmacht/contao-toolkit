@@ -33,15 +33,26 @@ class Formatter
     private $valueFormatter;
 
     /**
+     * Formatter constructor.
+     *
+     * @param Definition     $definition
+     * @param ValueFormatter $valueFormatter
+     */
+    public function __construct(Definition $definition, ValueFormatter $valueFormatter)
+    {
+        $this->definition     = $definition;
+        $this->valueFormatter = $valueFormatter;
+    }
+
+    /**
      * Format a field value.
      *
      * @param string $field Field name.
      * @param mixed  $value Field value.
-     * @param bool   $flat  If true an array or object will get flatten as comma separated value.
      *
      * @return array|null|string
      */
-    public function formatValue($field, $value, $flat = true)
+    public function formatValue($field, $value)
     {
         $fieldDefinition = $this->definition->get(['fields', $field]);
 
@@ -50,20 +61,8 @@ class Formatter
             return '';
         }
 
-        $value = deserialize($value);
-
-        if ($this->valueFormatter->accept($field, $fieldDefinition)) {
+        if ($this->valueFormatter->accepts($field, $fieldDefinition)) {
             $value = $this->valueFormatter->format($value, $field, $fieldDefinition);
-        }
-
-        if ($flat) {
-            if (is_object($value)) {
-                $value = get_object_vars($value);
-            }
-
-            if (is_array($value)) {
-                return implode(', ', $value);
-            }
         }
 
         return $value;
