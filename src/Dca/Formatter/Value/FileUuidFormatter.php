@@ -21,7 +21,7 @@ class FileUuidFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accept($fieldName, array $fieldDefinition)
+    public function accepts($fieldName, array $fieldDefinition)
     {
         return (!empty($fieldDefinition['inputType']) && $fieldDefinition['inputType'] === 'fileTree');
     }
@@ -32,11 +32,13 @@ class FileUuidFormatter implements ValueFormatter
     public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
         if (is_array($value)) {
-            $value = array_map(
-                function ($value) {
-                    return $value ? \String::binToUuid($value) : '';
-                },
-                $value
+            $value = array_filter(
+                array_map(
+                    function ($value) {
+                        return $value ? \String::binToUuid($value) : '';
+                    },
+                    $value
+                )
             );
         } else {
             $value = $value ? \String::binToUuid($value) : '';
