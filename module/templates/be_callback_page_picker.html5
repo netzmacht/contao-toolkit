@@ -1,0 +1,12 @@
+<a href="<?= $this->url ?>"
+    onclick="Backend.getScrollOffset();Backend.openModalSelector({
+        'width':768,
+        'title':'<?= $this->jsTitle ?>',
+        'url': this.href,
+        'id': '<?= $this->field ?>',
+        'tag': 'ctrl_<?= $this->id ?>',
+        'self': this
+    }); return false"
+>
+<?= $this->generateImage('pickpage.gif', $this->title, 'style="vertical-align:top;cursor:pointer"') ?>
+</a>
