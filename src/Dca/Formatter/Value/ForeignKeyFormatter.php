@@ -28,9 +28,19 @@ class ForeignKeyFormatter implements ValueFormatter
     private $database;
 
     /**
+     * ForeignKeyFormatter constructor.
+     *
+     * @param Database $database Database connection.
+     */
+    public function __construct(Database $database)
+    {
+        $this->database = $database;
+    }
+
+    /**
      * {@inheritDoc}
      */
-    public function accept($fieldName, array $fieldDefinition)
+    public function accepts($fieldName, array $fieldDefinition)
     {
         return isset($fieldDefinition['foreignKey']);
     }
