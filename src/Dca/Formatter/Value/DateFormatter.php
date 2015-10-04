@@ -38,8 +38,12 @@ class DateFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accept($fieldName, array $fieldDefinition)
+    public function accepts($fieldName, array $fieldDefinition)
     {
+        if ($fieldName === 'tstamp') {
+            return true;
+        }
+
         if (empty($fieldDefinition['eval']['rgxp'])) {
             return false;
         }
@@ -52,7 +56,13 @@ class DateFormatter implements ValueFormatter
      */
     public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
-        $dateFormat = $this->config->get($fieldDefinition['eval']['rgxp'] . 'Format');
+        if (empty ($fieldDefinition['eval']['rgxp'])) {
+            $format = 'datim';
+        } else {
+            $format = $fieldDefinition['eval']['rgxp'];
+        }
+
+        $dateFormat = $this->config->get($format . 'Format');
 
         return \Date::parse($dateFormat, $value);
     }
