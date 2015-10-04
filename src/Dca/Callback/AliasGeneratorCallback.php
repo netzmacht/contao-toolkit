@@ -9,7 +9,7 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\Dca\Callback\Feature;
+namespace Netzmacht\Contao\Toolkit\Dca\Callback;
 
 use Contao\DataContainer;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\ExistingAliasFilter;
@@ -25,6 +25,8 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Generator;
 trait AliasGeneratorCallback
 {
     /**
+     * The alias generator.
+     *
      * @var Generator
      */
     protected $aliasGenerator;
