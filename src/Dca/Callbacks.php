@@ -67,7 +67,7 @@ abstract class Callbacks
 
     /**
      * Format a value.
-     * 
+     *
      * @param string             $name      Column name.
      * @param array|\ArrayAccess $data      Given data.
      * @param string|null        $tableName Name of the data container.
