@@ -57,7 +57,8 @@ class Manager
      */
     public function __construct(DcaLoader $loader, FormatterFactory $formatterFactory)
     {
-        $this->loader = $loader;
+        $this->loader           = $loader;
+        $this->formatterFactory = $formatterFactory;
     }
 
     /**
