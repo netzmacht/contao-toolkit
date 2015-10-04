@@ -37,8 +37,9 @@ class Formatter
      *
      * @param string $field Field name.
      * @param mixed  $value Field value.
+     * @param bool   $flat  If true an array or object will get flatten as comma separated value.
      *
-     * @return null|string
+     * @return array|null|string
      */
     public function formatValue($field, $value, $flat = true)
     {
@@ -50,7 +51,10 @@ class Formatter
         }
 
         $value = deserialize($value);
-        $value = $this->valueFormatter->format($value, $field, $fieldDefinition, $this->definition);
+
+        if ($this->valueFormatter->accept($field, $fieldDefinition, $this->definition)) {
+            $value = $this->valueFormatter->format($value, $field, $fieldDefinition, $this->definition);
+        }
 
         if ($flat) {
             if (is_object($value)) {
