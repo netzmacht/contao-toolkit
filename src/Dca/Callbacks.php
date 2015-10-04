@@ -23,6 +23,13 @@ abstract class Callbacks
     use TranslatorTrait;
 
     /**
+     * Name of the data container.
+     *
+     * @var string
+     */
+    protected $name;
+
+    /**
      * Generate the callback definition.
      *
      * @param string $name Callback method.
@@ -32,5 +39,29 @@ abstract class Callbacks
     public static function callback($name)
     {
         return [get_called_class(), $name];
+    }
+
+    /**
+     * Get a definition.
+     *
+     * @param string|null $name Data definition name. If empty the default name is used.
+     *
+     * @return Definition
+     */
+    protected function getDefinition($name = null)
+    {
+        $this->getServiceContainer()->getDcaManager()->getDefinition($name ?: $this->name);
+    }
+
+    /**
+     * Get a formatter.
+     *
+     * @param string|null $name Data definition name. If empty the default name is used.
+     *
+     * @return Formatter\Formatter
+     */
+    protected function getFormatter($name = null)
+    {
+        return $this->getServiceContainer()->getDcaManager()->getFormatter($name ?: $this->name);
     }
 }
