@@ -40,7 +40,7 @@ class YesNoFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accept($fieldName, array $fieldDefinition)
+    public function accepts($fieldName, array $fieldDefinition)
     {
         if (empty($fieldDefinition['inputType']) || $fieldDefinition['inputType'] !== 'checkbox') {
             return false;

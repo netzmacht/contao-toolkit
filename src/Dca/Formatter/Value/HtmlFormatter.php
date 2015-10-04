@@ -16,12 +16,12 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
-class HtmlValue implements ValueFormatter
+class HtmlFormatter implements ValueFormatter
 {
     /**
      * {@inheritDoc}
      */
-    public function accept($fieldName, array $fieldDefinition)
+    public function accepts($fieldName, array $fieldDefinition)
     {
         if (!empty($fieldDefinition['eval']['allowHtml'])) {
             return true;

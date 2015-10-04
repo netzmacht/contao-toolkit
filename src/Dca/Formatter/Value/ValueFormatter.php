@@ -21,20 +21,20 @@ interface ValueFormatter
     /**
      * Check if the the formatter supports the field by the passed field name.
      *
-     * @param string     $fieldName       Field name.
-     * @param array      $fieldDefinition Field definition.
+     * @param string $fieldName       Field name.
+     * @param array  $fieldDefinition Field definition.
      *
      * @return bool
      */
-    public function accept($fieldName, array $fieldDefinition);
+    public function accepts($fieldName, array $fieldDefinition);
 
     /**
      * Format a field value.
      *
-     * @param mixed      $value           Given value.
-     * @param string     $fieldName       Field name.
-     * @param array      $fieldDefinition Field definition.
-     * @param mixed      $context         Context of the call. Usually the data container driver but not limited to.
+     * @param mixed  $value           Given value.
+     * @param string $fieldName       Field name.
+     * @param array  $fieldDefinition Field definition.
+     * @param mixed  $context         Context of the call. Usually the data container driver but not limited to.
      *
      * @return mixed
      */

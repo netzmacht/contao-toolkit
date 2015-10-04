@@ -21,7 +21,7 @@ class EncryptedFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accept($fieldName, array $fieldDefinition)
+    public function accepts($fieldName, array $fieldDefinition)
     {
         return !empty($fieldDefinition['eval']['encrypt']);
     }

@@ -14,12 +14,17 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 use Contao\DataContainer;
 use Netzmacht\Contao\Toolkit\Dca\Callback\CallbackExecutor;
 
+/**
+ * OptionsFormatter fetches the value from the options or options callback.
+ *
+ * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
+ */
 class OptionsFormatter implements ValueFormatter
 {
     /**
      * {@inheritDoc}
      */
-    public function accept($fieldName, array $fieldDefinition)
+    public function accepts($fieldName, array $fieldDefinition)
     {
         if (!empty($fieldDefinition['isAssociative']) || !empty($fieldDefinition['options'])) {
             return true;
