@@ -11,7 +11,11 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
-
+/**
+ * SuffixFilter adds a numeric suffix until a unique value is given.
+ *
+ * @package Netzmacht\Contao\Toolkit\Data\Alias\Filter
+ */
 class SuffixFilter extends AbstractFilter
 {
     /**
@@ -22,7 +26,7 @@ class SuffixFilter extends AbstractFilter
     private $index;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function __construct($break = true)
     {
@@ -30,25 +34,23 @@ class SuffixFilter extends AbstractFilter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function initialize()
     {
         $this->index = 2;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     public function repeatUntilUnique()
     {
         true;
     }
 
     /**
-     * @param $model
-     * @param $value
-     * @param $separator
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function apply($model, $value, $separator)
     {

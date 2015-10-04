@@ -64,7 +64,7 @@ abstract class AbstractPicker
      *
      * @param string $tableName Table name.
      * @param string $fieldName Field name.
-     * @param int    $rowId     Row id
+     * @param int    $rowId     Row id.
      * @param mixed  $value     Field value.
      *
      * @return string

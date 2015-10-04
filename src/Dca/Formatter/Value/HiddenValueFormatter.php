@@ -61,7 +61,7 @@ class HiddenValueFormatter implements ValueFormatter
     public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
         if ($this->passwordMask && $fieldDefinition['inputType'] === 'password') {
-            return $this->passwordMask ;
+            return $this->passwordMask;
         }
 
         return '';

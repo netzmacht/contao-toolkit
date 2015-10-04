@@ -19,6 +19,8 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 class FormatterChain implements ValueFormatter
 {
     /**
+     * List of value formatters.
+     *
      * @var ValueFormatter[]
      */
     private $formatters = array();
@@ -26,7 +28,7 @@ class FormatterChain implements ValueFormatter
     /**
      * FormatterChain constructor.
      *
-     * @param ValueFormatter[] $formatters Value formatters.
+     * @param ValueFormatter[]|array $formatters Value formatters.
      */
     public function __construct(array $formatters)
     {

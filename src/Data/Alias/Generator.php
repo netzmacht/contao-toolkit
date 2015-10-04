@@ -16,6 +16,11 @@ use Contao\Database\Result;
 use Contao\Model;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
+/**
+ * Alias generator.
+ *
+ * @package Netzmacht\Contao\Toolkit\Data\Alias
+ */
 class Generator
 {
     /**
@@ -63,13 +68,13 @@ class Generator
     /**
      * Construct.
      *
-     * @param Filter[]  $filters    Filters.
-     * @param Database $database    The database connection.
-     * @param string    $tableName  The table name.
-     * @param string    $aliasField The alias field.
-     * @param string    $separator  Value separator.
+     * @param Filter[] $filters    Filters.
+     * @param Database $database   The database connection.
+     * @param string   $tableName  The table name.
+     * @param string   $aliasField The alias field.
+     * @param string   $separator  Value separator.
      */
-    public function __construct(array $filters, Database $database, $tableName, $aliasField = 'alias', $separator = '-')
+    public function __construct($filters, Database $database, $tableName, $aliasField = 'alias', $separator = '-')
     {
         $this->database   = $database;
         $this->aliasField = $aliasField;
@@ -140,8 +145,10 @@ class Generator
     }
 
     /**
-     * @param $result
-     * @param $value
+     * Apply filters.
+     *
+     * @param Database|Model $result Data record.
+     * @param mixed          $value  Given value.
      *
      * @return mixed
      */
@@ -164,8 +171,13 @@ class Generator
     }
 
     /**
-     * @param $result
-     * @param $value
+     * Guard that a valid alias is given.
+     *
+     * @param Database|Model $result Data record.
+     * @param mixed          $value  Given value.
+     *
+     * @return void
+     * @throws \RuntimeException When No unique alias is generated.
      */
     private function guardValidAlias($result, $value)
     {

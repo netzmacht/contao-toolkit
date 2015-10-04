@@ -55,6 +55,8 @@ trait AliasGeneratorCallback
                 $column
             );
         }
+
+        return $this->aliasGenerator;
     }
 
     /**

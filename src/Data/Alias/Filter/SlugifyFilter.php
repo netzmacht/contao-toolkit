@@ -11,14 +11,28 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
-
+/**
+ * SlugifyFilter creates a slug value of the columns being representated.
+ *
+ * @package Netzmacht\Contao\Toolkit\Data\Alias\Filter
+ */
 class SlugifyFilter extends AbstractValueFilter
 {
     /**
+     * Preserve uppercase.
+     *
      * @var bool
      */
     private $preserveUppercase;
 
+    /**
+     * Construct.
+     *
+     * @param array $columns           Columns being used for the value.
+     * @param bool  $break             If true break after the filter if value is unique.
+     * @param int   $combine           Combine flag.
+     * @param bool  $preserveUppercase If true uppercase values are not transformed.
+     */
     public function __construct(
         array $columns,
         $break = true,

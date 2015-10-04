@@ -11,7 +11,11 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
-
+/**
+ * RawValueFilter uses the values as given.
+ *
+ * @package Netzmacht\Contao\Toolkit\Data\Alias\Filter
+ */
 class RawValueFilter extends AbstractValueFilter
 {
     /**

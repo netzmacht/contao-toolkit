@@ -22,11 +22,14 @@ use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
 class Formatter
 {
     /**
+     * Data container definition.
+     *
      * @var Definition
      */
     private $definition;
 
     /**
+     * Value formatter.
      *
      * @var ValueFormatter
      */
@@ -35,8 +38,8 @@ class Formatter
     /**
      * Formatter constructor.
      *
-     * @param Definition     $definition
-     * @param ValueFormatter $valueFormatter
+     * @param Definition     $definition     Data container definition.
+     * @param ValueFormatter $valueFormatter Value formatter.
      */
     public function __construct(Definition $definition, ValueFormatter $valueFormatter)
     {
@@ -109,9 +112,9 @@ class Formatter
 
         $options = array();
 
-        foreach ($values as $key => $value) {
+        foreach (array_keys($values) as $key) {
             if (array_key_exists($key, $labels)) {
-                $options[$key] = $labels[$key];
+                $options[$key] = !empty($labels[$key]);
             }
         }
 

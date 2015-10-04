@@ -13,22 +13,39 @@ namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
+/**
+ * Class ExistingAliasFilter uses the existing value.
+ *
+ * @package Netzmacht\Contao\Toolkit\Data\Alias\Filter
+ */
 class ExistingAliasFilter implements Filter
 {
+    /**
+     * {@inheritDoc}
+     */
     public function initialize()
     {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function repeatUntilUnique()
     {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function breakIfUnique()
     {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function apply($model, $value, $separator)
     {
         return $value;

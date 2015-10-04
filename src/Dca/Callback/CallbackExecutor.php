@@ -28,7 +28,7 @@ class CallbackExecutor
     /**
      * CallbackHandler constructor.
      *
-     * @param mixed $callback
+     * @param mixed $callback Callback.
      */
     public function __construct($callback)
     {
@@ -37,8 +37,6 @@ class CallbackExecutor
 
     /**
      * Handle the callback.
-     *
-     * @param mixed ... Various arguments.
      *
      * @return mixed
      */

@@ -11,9 +11,13 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
-
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
+/**
+ * Base filter class.
+ *
+ * @package Netzmacht\Contao\Toolkit\Data\Alias\Filter
+ */
 abstract class AbstractFilter implements Filter
 {
     const COMBINE_REPLACE = 0;

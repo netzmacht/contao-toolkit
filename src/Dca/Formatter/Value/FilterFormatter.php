@@ -31,7 +31,7 @@ class FilterFormatter implements ValueFormatter
     /**
      * Construct.
      *
-     * @param ValueFormatter[] $filters List of filters.
+     * @param ValueFormatter[]|array $filters List of filters.
      */
     public function __construct(array $filters)
     {

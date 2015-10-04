@@ -27,11 +27,15 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class FormatterFactory
 {
     /**
+     * Event dispatcher.
+     *
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;
 
     /**
+     * Service container.
+     *
      * @var ServiceContainer
      */
     private $serviceContainer;
@@ -39,8 +43,8 @@ class FormatterFactory
     /**
      * FormatterFactory constructor.
      *
-     * @param ServiceContainer         $serviceContainer
-     * @param EventDispatcherInterface $eventDispatcher
+     * @param ServiceContainer         $serviceContainer Event dispatcher.
+     * @param EventDispatcherInterface $eventDispatcher  Service container.
      */
     public function __construct(ServiceContainer $serviceContainer, EventDispatcherInterface $eventDispatcher)
     {

@@ -21,6 +21,8 @@ use Contao\Config;
 class DateFormatter implements ValueFormatter
 {
     /**
+     * Contao config.
+     *
      * @var Config
      */
     private $config;
@@ -28,7 +30,7 @@ class DateFormatter implements ValueFormatter
     /**
      * DateFormatter constructor.
      *
-     * @param Config $config
+     * @param Config $config Contao config.
      */
     public function __construct(Config $config)
     {

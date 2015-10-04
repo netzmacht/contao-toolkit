@@ -50,7 +50,7 @@ abstract class Callbacks
      */
     protected function getDefinition($name = null)
     {
-        $this->getServiceContainer()->getDcaManager()->getDefinition($name ?: $this->name);
+        return $this->getServiceContainer()->getDcaManager()->getDefinition($name ?: $this->name);
     }
 
     /**

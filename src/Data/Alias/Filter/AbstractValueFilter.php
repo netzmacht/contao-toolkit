@@ -11,7 +11,11 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
-
+/**
+ * Base class for filters depending on values from other columns.
+ *
+ * @package Netzmacht\Contao\Toolkit\Data\Alias\Filter
+ */
 abstract class AbstractValueFilter extends AbstractFilter
 {
     /**
@@ -24,9 +28,9 @@ abstract class AbstractValueFilter extends AbstractFilter
     /**
      * SlugifyFilter constructor.
      *
-     * @param array $columns
-     * @param bool  $break
-     * @param int   $combine
+     * @param array $columns Columns being used for the value.
+     * @param bool  $break   If true break after the filter if value is unique.
+     * @param int   $combine Combine flag.
      */
     public function __construct(
         array $columns,
@@ -39,7 +43,7 @@ abstract class AbstractValueFilter extends AbstractFilter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function repeatUntilUnique()
     {
@@ -47,7 +51,7 @@ abstract class AbstractValueFilter extends AbstractFilter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function combine($previous, $current, $separator)
     {

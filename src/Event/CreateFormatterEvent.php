@@ -41,7 +41,7 @@ class CreateFormatterEvent extends Event
     /**
      * CreateFormatterEvent constructor.
      *
-     * @param Definition $definition
+     * @param Definition $definition Data container definition.
      */
     public function __construct(Definition $definition)
     {
@@ -59,21 +59,33 @@ class CreateFormatterEvent extends Event
     }
 
     /**
-     * @param ValueFormatter $formatter
+     * Add a formatter.
+     *
+     * @param ValueFormatter $formatter Formatter.
+     *
+     * @return $this
      */
     public function addFormatter(ValueFormatter $formatter)
     {
         $this->formatters[] = $formatter;
+
+        return $this;
     }
 
     /**
-     * @param array $formatters
+     * Add a set of formatters.
+     *
+     * @param ValueFormatter[]|array $formatters Set of formatters.
+     *
+     * @return $this
      */
     public function addFormatters(array $formatters)
     {
         foreach ($formatters as $formatter) {
             $this->addFormatter($formatter);
         }
+
+        return $this;
     }
 
     /**

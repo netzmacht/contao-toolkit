@@ -29,7 +29,7 @@ class Manager
     private $definitions = array();
 
     /**
-     * Data definition formatter cache
+     * Data definition formatter cache.
      *
      * @var Formatter[]
      */
@@ -107,6 +107,7 @@ class Manager
      * Get a formatter for a definition.
      *
      * @param Definition|string $definition Definition or name.
+     *
      * @return Formatter
      */
     public function getFormatter($definition)

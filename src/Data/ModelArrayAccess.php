@@ -39,7 +39,7 @@ class ModelArrayAccess implements \ArrayAccess
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function offsetExists($offset)
     {
@@ -47,7 +47,7 @@ class ModelArrayAccess implements \ArrayAccess
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function offsetGet($offset)
     {
@@ -55,7 +55,7 @@ class ModelArrayAccess implements \ArrayAccess
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function offsetSet($offset, $value)
     {
@@ -63,7 +63,7 @@ class ModelArrayAccess implements \ArrayAccess
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function offsetUnset($offset)
     {
