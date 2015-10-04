@@ -14,7 +14,12 @@ namespace Netzmacht\Contao\Toolkit\View;
 /**
  * FrontendTemplate with extended features.
  */
-class FrontendTemplate extends \FrontendTemplate implements Template
+class FrontendTemplate extends \Contao\FrontendTemplate implements Template
 {
     use TemplateTrait;
+
+    public function generateImage()
+    {
+        parent::generateImage();
+    }
 }

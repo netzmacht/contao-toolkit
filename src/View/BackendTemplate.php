@@ -14,7 +14,7 @@ namespace Netzmacht\Contao\Toolkit\View;
 /**
  * BackendTemplate with extended features.
  */
-class BackendTemplate extends \BackendTemplate implements Template
+class BackendTemplate extends \Contao\BackendTemplate implements Template
 {
     use TemplateTrait;
 }
