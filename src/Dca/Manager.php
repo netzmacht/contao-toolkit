@@ -88,7 +88,7 @@ class Manager
      */
     public function getDefinition($name, $noCache = false)
     {
-        if (!$noCache) {
+        if ($noCache) {
             $this->loader->loadDataContainer($name, $noCache);
 
             return new Definition($name, $GLOBALS['TL_DCA'][$name]);
