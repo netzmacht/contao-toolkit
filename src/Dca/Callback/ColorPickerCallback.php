@@ -15,6 +15,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Callback;
  * Class ColorPickerCallback handles a colorpicker wizard callback for a customized color picker.
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Callback
+ * @deprecated Use Netzmacht\Contao\Toolkit\Dca\Wizard\Callback\ColorPickerCallback instead.
  */
 class ColorPickerCallback
 {

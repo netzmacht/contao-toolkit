@@ -21,6 +21,7 @@ use Netzmacht\Contao\Toolkit\Dca\Callback\ToggleIconCallback;
  * Class Dca simplifies DCA access.
  *
  * @package Netzmacht\Contao\DevTools
+ * @deprecated
  */
 class Dca
 {
