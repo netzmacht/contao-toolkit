@@ -20,7 +20,8 @@ use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Exception\AccessDeniedException;
 
 /**
- * Class StateToggler
+ * Class StateToggler.
+ *
  * @package Netzmacht\Contao\Toolkit\Data\State
  */
 class StateToggler
@@ -56,10 +57,10 @@ class StateToggler
     /**
      * StateToggler constructor.
      *
-     * @param User       $user
-     * @param Database   $database
-     * @param Definition $definition
-     * @param string     $stateColumn
+     * @param User       $user        Contao user object.
+     * @param Database   $database    Database connection.
+     * @param Definition $definition  Data container definition.
+     * @param string     $stateColumn State column.
      */
     public function __construct(User $user, Database $database, Definition $definition, $stateColumn)
     {
@@ -114,6 +115,7 @@ class StateToggler
      *
      * @param int $recordId Record id.
      *
+     * @return void
      * @throws AccessDeniedException When user has no access.
      */
     private function guardUserHasAccess($recordId)

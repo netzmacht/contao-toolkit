@@ -11,8 +11,11 @@
 
 namespace Netzmacht\Contao\Toolkit\Exception;
 
-
+/**
+ * Class AccessDeniedException.
+ *
+ * @package Netzmacht\Contao\Toolkit\Exception
+ */
 class AccessDeniedException extends \Exception
 {
-
 }
