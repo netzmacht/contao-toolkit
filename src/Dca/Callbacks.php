@@ -27,7 +27,17 @@ abstract class Callbacks
      *
      * @var string
      */
-    protected $name;
+    protected static $name;
+
+    /**
+     * Get data container name.
+     *
+     * @return string
+     */
+    public static function getName()
+    {
+        return static::$name;
+    }
 
     /**
      * Generate the callback definition.
@@ -48,9 +58,9 @@ abstract class Callbacks
      *
      * @return Definition
      */
-    protected function getDefinition($name = null)
+    protected static function getDefinition($name = null)
     {
-        return $this->getServiceContainer()->getDcaManager()->getDefinition($name ?: $this->name);
+        return static::getServiceContainer()->getDcaManager()->getDefinition($name ?: static::getName());
     }
 
     /**
@@ -60,9 +70,9 @@ abstract class Callbacks
      *
      * @return Formatter\Formatter
      */
-    protected function getFormatter($name = null)
+    protected static function getFormatter($name = null)
     {
-        return $this->getServiceContainer()->getDcaManager()->getFormatter($name ?: $this->name);
+        return static::getServiceContainer()->getDcaManager()->getFormatter($name ?: static::getName());
     }
 
     /**
