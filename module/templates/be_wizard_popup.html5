@@ -1,0 +1,11 @@
+<a href="<?= $this->href ?>"
+   onclick="Backend.getScrollOffset();Backend.openModalSelector({
+       'width':768,
+       'title':'<?= $this->jsTitle ?>',
+       'url': this.href
+       }); return false"
+   title="<?= $this->label ?>"
+   style="padding-left: 3px"
+    >
+    <?= $this->generateImage($this->icon, $this->title, 'style="vertical-align:top"') ?>
+</a>

@@ -11,22 +11,22 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Wizard;
 
-use Contao\Input;
 use ContaoCommunityAlliance\Translator\TranslatorInterface;
+use Netzmacht\Contao\Toolkit\View\BackendTemplate;
 
 /**
- * AbstractPicker is the base class for a picker wizard.
+ * AbstractWizard is the base class for a wizard.
  *
  * @package Netzmacht\Contao\Toolkit\View\Wizard
  */
-abstract class AbstractPicker extends AbstractWizard
+abstract class AbstractWizard
 {
     /**
      * Template name.
      *
      * @var string
      */
-    protected $template = 'be_wizard_picker';
+    protected $template;
 
     /**
      * Translator.
@@ -36,23 +36,17 @@ abstract class AbstractPicker extends AbstractWizard
     protected $translator;
 
     /**
-     * Request Input.
-     *
-     * @var Input
-     */
-    protected $input;
-
-    /**
      * PagePickerCallback constructor.
      *
      * @param TranslatorInterface $translator Translator.
-     * @param Input               $input      Input.
      * @param string              $template   Template name.
      */
-    public function __construct(TranslatorInterface $translator, Input $input, $template = null)
+    public function __construct(TranslatorInterface $translator, $template = null)
     {
-        parent::__construct($translator, $template);
+        $this->translator = $translator;
 
-        $this->input = $input;
+        if ($template) {
+            $this->template = $template;
+        }
     }
 }
