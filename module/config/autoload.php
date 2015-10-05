@@ -11,6 +11,7 @@
 
 \TemplateLoader::addFiles(
     [
-        'be_wizard_picker' => 'system/modules/netzmacht-toolkit/templates',
+        'be_wizard_picker'       => 'system/modules/netzmacht-toolkit/templates',
+        'be_wizard_color_picker' => 'system/modules/netzmacht-toolkit/templates',
     ]
 );
