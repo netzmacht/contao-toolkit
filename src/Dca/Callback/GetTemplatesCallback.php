@@ -30,7 +30,7 @@ trait GetTemplatesCallback
      */
     public function getTemplates($dataContainer)
     {
-        $config    = $this->definition->get(['fields', $dataContainer->field, 'toolkit', 'get_templates']);
+        $config    = $this->getDefinition()->get(['fields', $dataContainer->field, 'toolkit', 'get_templates']);
         $prefix    = empty($config['prefix']) ? '' : $config['prefix'];
         $templates = Controller::getTemplateGroup($prefix);
 
