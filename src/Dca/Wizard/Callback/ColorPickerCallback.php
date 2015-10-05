@@ -26,7 +26,7 @@ trait ColorPickerCallback
      *
      * @var ColorPicker[]
      */
-    private $colorPicker = [];
+    protected $colorPicker = [];
 
     /**
      * Get the color picker.

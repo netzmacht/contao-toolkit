@@ -26,7 +26,7 @@ trait PagePickerCallback
      *
      * @var PagePicker[]
      */
-    private $pagePicker = [];
+    protected $pagePicker = [];
 
     /**
      * Get the page picker.

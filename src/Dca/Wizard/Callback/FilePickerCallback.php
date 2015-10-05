@@ -26,7 +26,7 @@ trait FilePickerCallback
      *
      * @var FilePicker[]
      */
-    private $filePicker = [];
+    protected $filePicker = [];
 
     /**
      * Get the file picker.
