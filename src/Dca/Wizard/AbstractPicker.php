@@ -9,7 +9,7 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\View\Wizard;
+namespace Netzmacht\Contao\Toolkit\Dca\Wizard;
 
 use Contao\Input;
 use ContaoCommunityAlliance\Translator\TranslatorInterface;

@@ -9,47 +9,47 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\Dca\Callback;
+namespace Netzmacht\Contao\Toolkit\Dca\Wizard\Callback;
 
 use Contao\DataContainer;
-use Netzmacht\Contao\Toolkit\View\Wizard\PagePicker;
+use Netzmacht\Contao\Toolkit\Dca\Wizard\FilePicker;
 
 /**
- * Feature PagePickerWizard adds page picker support the the callbacks class.
+ * Feature FilePickerWizard adds file picker support the the callbacks class.
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Callback\Feature
  */
-trait PagePickerCallback
+trait FilePickerCallback
 {
     /**
-     * Page picker instance.
+     * File picker instance.
      *
-     * @var PagePicker
+     * @var FilePicker
      */
-    protected $pagePicker;
+    protected $filePicker;
 
     /**
-     * Custom page picker template.
+     * Custom file picker template.
      *
      * @var null
      */
-    protected $pagePickerTemplate = null;
+    protected $filePickerTemplate = null;
 
     /**
-     * Get the page picker.
+     * Get the file picker.
      *
-     * @return PagePicker
+     * @return FilePicker
      */
-    protected function getPagePicker()
+    protected function getFilePicker()
     {
-        if ($this->pagePicker === null) {
+        if ($this->filePicker === null) {
             $translator = $this->getServiceContainer()->getTranslator();
             $input      = $this->getServiceContainer()->getInput();
 
-            $this->pagePicker = new PagePicker($translator, $input, $this->pagePickerTemplate);
+            $this->filePicker = new FilePicker($translator, $input, $this->filePickerTemplate);
         }
 
-        return $this->pagePicker;
+        return $this->filePicker;
     }
 
     /**
@@ -59,9 +59,9 @@ trait PagePickerCallback
      *
      * @return string
      */
-    public function generatePagePicker(DataContainer $dataContainer)
+    public function generateFilePicker(DataContainer $dataContainer)
     {
-        return $this->getPagePicker()->generate(
+        return $this->getFilePicker()->generate(
             $dataContainer->table,
             $dataContainer->field,
             $dataContainer->id,
