@@ -58,16 +58,4 @@ abstract class AbstractPicker
             $this->template = $template;
         }
     }
-
-    /**
-     * Generate the wizard.
-     *
-     * @param string $tableName Table name.
-     * @param string $fieldName Field name.
-     * @param int    $rowId     Row id.
-     * @param mixed  $value     Field value.
-     *
-     * @return string
-     */
-    abstract public function generate($tableName, $fieldName, $rowId, $value);
 }
