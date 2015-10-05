@@ -22,11 +22,11 @@ use Netzmacht\Contao\Toolkit\Dca\Wizard\PagePicker;
 trait PagePickerCallback
 {
     /**
-     * Page picker instance.
+     * Page picker instances.
      *
-     * @var PagePicker
+     * @var PagePicker[]
      */
-    protected $pagePicker;
+    private $pagePicker = [];
 
     /**
      * Get the page picker.
@@ -37,15 +37,15 @@ trait PagePickerCallback
      */
     protected function getPagePicker($fieldName)
     {
-        if ($this->pagePicker === null) {
+        if (!isset($this->pagePicker[$fieldName])) {
             $translator = $this->getServiceContainer()->getTranslator();
             $input      = $this->getServiceContainer()->getInput();
             $template   = $this->getDefinition()->get(['fields', $fieldName, 'toolkit', 'page_picker', 'template']);
 
-            $this->pagePicker = new PagePicker($translator, $input, $template);
+            $this->pagePicker[$fieldName] = new PagePicker($translator, $input, $template);
         }
 
-        return $this->pagePicker;
+        return $this->pagePicker[$fieldName];
     }
 
     /**

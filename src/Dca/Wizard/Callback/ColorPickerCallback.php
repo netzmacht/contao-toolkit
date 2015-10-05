@@ -22,11 +22,11 @@ use Netzmacht\Contao\Toolkit\Dca\Wizard\ColorPicker;
 trait ColorPickerCallback
 {
     /**
-     * Color picker instance.
+     * Color picker instances.
      *
-     * @var ColorPicker
+     * @var ColorPicker[]
      */
-    protected $colorPicker;
+    private $colorPicker = [];
 
     /**
      * Get the color picker.
@@ -37,7 +37,7 @@ trait ColorPickerCallback
      */
     protected function getColorPicker($fieldName)
     {
-        if ($this->colorPicker === null) {
+        if (!isset($this->colorPicker[$fieldName])) {
             $translator = $this->getServiceContainer()->getTranslator();
             $input      = $this->getServiceContainer()->getInput();
 
@@ -45,10 +45,10 @@ trait ColorPickerCallback
             $template   = $definition->get(['fields', $fieldName, 'toolkit', 'color_picker', 'template']);
             $replaceHex = !$definition->get(['fields', $fieldName, 'toolkit', 'color_picker', 'hex'], true);
 
-            $this->colorPicker = new ColorPicker($translator, $input, $replaceHex, $template);
+            $this->colorPicker[$fieldName] = new ColorPicker($translator, $input, $replaceHex, $template);
         }
 
-        return $this->colorPicker;
+        return $this->colorPicker[$fieldName];
     }
 
     /**

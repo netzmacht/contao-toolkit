@@ -22,11 +22,11 @@ use Netzmacht\Contao\Toolkit\Dca\Wizard\FilePicker;
 trait FilePickerCallback
 {
     /**
-     * File picker instance.
+     * File picker instances.
      *
-     * @var FilePicker
+     * @var FilePicker[]
      */
-    protected $filePicker;
+    private $filePicker = [];
 
     /**
      * Get the file picker.
@@ -37,15 +37,15 @@ trait FilePickerCallback
      */
     protected function getFilePicker($fieldName)
     {
-        if ($this->filePicker === null) {
+        if (!isset($this->filePicker[$fieldName])) {
             $translator = $this->getServiceContainer()->getTranslator();
             $input      = $this->getServiceContainer()->getInput();
             $template   = $this->getDefinition()->get(['fields', $fieldName, 'toolkit', 'file_picker', 'template']);
 
-            $this->filePicker = new FilePicker($translator, $input, $template);
+            $this->filePicker[$fieldName] = new FilePicker($translator, $input, $template);
         }
 
-        return $this->filePicker;
+        return $this->filePicker[$fieldName];
     }
 
     /**
