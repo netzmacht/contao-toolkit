@@ -41,7 +41,7 @@ abstract class Callbacks
 
     /**
      * Generate the callback definition.
-     * 
+     *
      * This method is used as PHP 5.4 is supported right now. Otherwise the recommend callback notation would rather be
      * [Callbacks::class, 'methodName'].
      *
