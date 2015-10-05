@@ -31,6 +31,8 @@ trait ColorPickerCallback
     /**
      * Get the color picker.
      *
+     * @param string $fieldName Field name.
+     *
      * @return ColorPicker
      */
     protected function getColorPicker($fieldName)

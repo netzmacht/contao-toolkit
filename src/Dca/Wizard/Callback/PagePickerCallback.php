@@ -29,24 +29,20 @@ trait PagePickerCallback
     protected $pagePicker;
 
     /**
-     * Custom page picker template.
-     *
-     * @var null
-     */
-    protected $pagePickerTemplate = null;
-
-    /**
      * Get the page picker.
+     *
+     * @param string $fieldName Field name.
      *
      * @return PagePicker
      */
-    protected function getPagePicker()
+    protected function getPagePicker($fieldName)
     {
         if ($this->pagePicker === null) {
             $translator = $this->getServiceContainer()->getTranslator();
             $input      = $this->getServiceContainer()->getInput();
+            $template   = $this->getDefinition()->get(['fields', $fieldName, 'toolkit', 'page_picker', 'template']);
 
-            $this->pagePicker = new PagePicker($translator, $input, $this->pagePickerTemplate);
+            $this->pagePicker = new PagePicker($translator, $input, $template);
         }
 
         return $this->pagePicker;
@@ -61,7 +57,7 @@ trait PagePickerCallback
      */
     public function generatePagePicker(DataContainer $dataContainer)
     {
-        return $this->getPagePicker()->generate(
+        return $this->getPagePicker($dataContainer->field)->generate(
             $dataContainer->table,
             $dataContainer->field,
             $dataContainer->id,

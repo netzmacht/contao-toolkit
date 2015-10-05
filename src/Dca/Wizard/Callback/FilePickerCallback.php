@@ -29,24 +29,20 @@ trait FilePickerCallback
     protected $filePicker;
 
     /**
-     * Custom file picker template.
-     *
-     * @var null
-     */
-    protected $filePickerTemplate = null;
-
-    /**
      * Get the file picker.
+     *
+     * @param string $fieldName Field name.
      *
      * @return FilePicker
      */
-    protected function getFilePicker()
+    protected function getFilePicker($fieldName)
     {
         if ($this->filePicker === null) {
             $translator = $this->getServiceContainer()->getTranslator();
             $input      = $this->getServiceContainer()->getInput();
+            $template   = $this->getDefinition()->get(['fields', $fieldName, 'toolkit', 'file_picker', 'template']);
 
-            $this->filePicker = new FilePicker($translator, $input, $this->filePickerTemplate);
+            $this->filePicker = new FilePicker($translator, $input, $template);
         }
 
         return $this->filePicker;
@@ -61,7 +57,7 @@ trait FilePickerCallback
      */
     public function generateFilePicker(DataContainer $dataContainer)
     {
-        return $this->getFilePicker()->generate(
+        return $this->getFilePicker($dataContainer->field)->generate(
             $dataContainer->table,
             $dataContainer->field,
             $dataContainer->id,
