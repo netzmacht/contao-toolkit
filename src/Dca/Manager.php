@@ -91,13 +91,13 @@ class Manager
         if (!$noCache) {
             $this->loader->loadDataContainer($name, $noCache);
 
-            return new Definition($GLOBALS['TL_DCA'][$name]);
+            return new Definition($name, $GLOBALS['TL_DCA'][$name]);
         }
 
         if (!isset($this->definitions[$name])) {
             $this->loader->loadDataContainer($name);
 
-            $this->definitions[$name] = new Definition($name);
+            $this->definitions[$name] = new Definition($name, $GLOBALS['TL_DCA'][$name]);
         }
 
         return $this->definitions[$name];

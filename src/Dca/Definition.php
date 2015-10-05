@@ -26,13 +26,22 @@ class Definition
     private $dca;
 
     /**
+     * Name of the data definition.
+     *
+     * @var string
+     */
+    private $name;
+
+    /**
      * Definition constructor.
      *
-     * @param array $dca The data definition array.
+     * @param string $name Name of the data definition.
+     * @param array  $dca  The data definition array.
      */
-    public function __construct(array &$dca)
+    public function __construct($name, array &$dca)
     {
-        $this->dca =& $dca;
+        $this->name = $name;
+        $this->dca  =& $dca;
     }
 
     /**
@@ -137,6 +146,6 @@ class Definition
      */
     public function getName()
     {
-        return $this->get(['config', 'name']);
+        return $this->name;
     }
 }
