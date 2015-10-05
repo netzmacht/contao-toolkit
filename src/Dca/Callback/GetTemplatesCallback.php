@@ -39,5 +39,5 @@ trait GetTemplatesCallback
         }
 
         return array_diff($templates, $config['exclude']);
-     }
+    }
 }

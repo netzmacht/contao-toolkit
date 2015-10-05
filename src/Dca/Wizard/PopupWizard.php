@@ -79,6 +79,8 @@ class PopupWizard extends AbstractWizard
     private $title;
 
     /**
+     * Construct.
+     *
      * @param TranslatorInterface $translator   Translator.
      * @param RequestToken        $requestToken Request token.
      * @param string              $href         Link href snippet.
@@ -169,7 +171,7 @@ class PopupWizard extends AbstractWizard
     /**
      * Generate the popup wizard.
      *
-     * @param mixed  $value Id value.
+     * @param mixed $value Id value.
      *
      * @return string
      */

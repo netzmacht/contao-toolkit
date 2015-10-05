@@ -42,19 +42,31 @@ trait PopupWizardCallback
             $requestToken = \RequestToken::getInstance();
             $definition   = $this->getDefinition();
 
-            $config   = $definition->get(['fields', $fieldName, 'toolkit', 'popup']);
-            $always   = empty($config['always']) ? false : true;
-            $template = empty($config['template']) ? null : $config['template'];
-            $pattern  = empty($config['pattern']) ? null : $config['pattern'];
-            $href     = empty($config['href']) ? '#' : $config['pattern'];
-            $label    = empty($config['label']) ? $fieldName : $config['label'];
-            $title    = empty($config['title']) ? $label : $config['title'];
-            $icon     = empty($config['icon']) ? 'edit.gif' : $config['icon'];
+            $config = array_merge(
+                array(
+                    'always'   => false,
+                    'template' => null,
+                    'href'     => '#',
+                    'label'    => $fieldName,
+                    'title'    => $fieldName,
+                    'icon'     => 'edit.gif'
+                ),
+                $definition->get(['fields', $fieldName, 'toolkit', 'popup'], [])
+            );
 
-            $wizard = new PopupWizard($translator, $requestToken, $href, $label, $title, $icon, $always, $template);
+            $wizard = new PopupWizard(
+                $translator,
+                $requestToken,
+                $config['href'],
+                $config['label'],
+                $config['title'],
+                $config['icon'],
+                $config['always'],
+                $config['template']
+            );
 
-            if ($pattern) {
-                $wizard->setLinkPattern($pattern);
+            if (!empty($config['pattern'])) {
+                $wizard->setLinkPattern($config['pattern']);
             }
 
             $this->popupWizards[$fieldName] = $wizard;
