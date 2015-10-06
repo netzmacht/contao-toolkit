@@ -66,7 +66,7 @@ class IntegratedReplacer implements Replacer
      */
     public static function getInstance()
     {
-        return $GLOBALS['container']['toolkit.insert-tags.replacer'];
+        return $GLOBALS['container']['toolkit.insert-tag-replacer'];
     }
 
     /**
