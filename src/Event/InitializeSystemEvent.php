@@ -50,4 +50,3 @@ class InitializeSystemEvent extends Event
         return $this->serviceContainer;
     }
 }
-

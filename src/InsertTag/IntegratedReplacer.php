@@ -40,7 +40,7 @@ class IntegratedReplacer implements Replacer
      */
     public function __construct($insertTags, array $parsers = array())
     {
-        $this->parsers = $parsers;
+        $this->parsers    = $parsers;
         $this->insertTags = $insertTags;
     }
 

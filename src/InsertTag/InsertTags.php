@@ -34,7 +34,7 @@ class InsertTags extends Controller
     }
 
     /**
-     * Replace insert tags with their values
+     * Replace insert tags with their values.
      *
      * @param string  $buffer The text with the tags to be replaced.
      * @param boolean $cache  If false, non-cacheable tags will be replaced.
