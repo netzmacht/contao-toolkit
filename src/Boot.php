@@ -31,6 +31,11 @@ class Boot
      */
     public function initialize(\Pimple $container)
     {
+        // No initialization when being in install mode.
+        if (TL_SCRIPT === 'contao/install.php') {
+            return;
+        }
+
         /** @var ServiceContainer $serviceContainer */
         $serviceContainer = $container['toolkit.service-container'];
 
