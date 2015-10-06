@@ -28,14 +28,14 @@ interface Parser
     /**
      * Parse an insert tag.
      *
+     * @param string    $raw    Raw insert tag.
      * @param string    $tag    Insert tag name before the first :: separator.
      * @param string    $params Insert tag params, all after the first :: separator.
-     * @param string    $raw    Raw insert tag.
      * @param bool|true $cache  Check if the insert tags get cached.
      *
      * @return string
      */
-    public function parse($tag, $params = null, $raw, $cache = true);
+    public function parse($raw, $tag, $params = null, $cache = true);
 
     /**
      * Check if an tag is supported.
