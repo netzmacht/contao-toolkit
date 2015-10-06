@@ -26,6 +26,8 @@ use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ReferenceFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\YesNoFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
+use Netzmacht\Contao\Toolkit\InsertTag\IntegratedReplacer;
+use Netzmacht\Contao\Toolkit\InsertTag\Replacer;
 use Netzmacht\Contao\Toolkit\ServiceContainer;
 use Netzmacht\Contao\Toolkit\View\AssetsManager;
 
@@ -237,5 +239,20 @@ $container['toolkit.dca-formatter.default'] = $container->share(
 $container['toolkit.dca-formatter.factory'] = $container->share(
     function ($container) {
         return new FormatterFactory($container['toolkit.service-container'], $container['event-dispatcher']);
+    }
+);
+
+$container['toolkit.insert-tag-replacer'] = $container->share(
+    function () {
+        if (version_compare(VERSION . '.' . BUILD, '3.5.3', '>=')) {
+            $insertTags = new \Contao\InsertTags();
+        } else {
+            $insertTags = new \Netzmacht\Contao\Toolkit\InsertTag\InsertTags();
+        }
+
+        $replacer                                   = new IntegratedReplacer($insertTags);
+        $GLOBALS['TL_HOOKS']['replaceInsertTags'][] = [get_class($replacer), 'replaceTag'];
+
+        return $replacer;
     }
 );

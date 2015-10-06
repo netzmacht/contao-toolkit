@@ -14,6 +14,7 @@ namespace Netzmacht\Contao\Toolkit;
 use ContaoCommunityAlliance\Translator\TranslatorInterface;
 use DependencyInjection\Container\PageProvider;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
+use Netzmacht\Contao\Toolkit\InsertTag\Replacer;
 use Netzmacht\Contao\Toolkit\View\AssetsManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -183,5 +184,15 @@ class ServiceContainer
     public function getFileSystem()
     {
         return $this->getService('toolkit.filesystem');
+    }
+
+    /**
+     * Get the insert tag replacer.
+     *
+     * @return Replacer
+     */
+    public function getInsertTagReplacer()
+    {
+        return $this->getService('toolkit.insert-tag-replacer');
     }
 }
