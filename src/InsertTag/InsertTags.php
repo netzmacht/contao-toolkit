@@ -29,8 +29,8 @@ class InsertTags extends Controller
      */
     public function __construct()
     {
-        \Database::getInstance();
         parent::__construct();
+        \Database::getInstance();
     }
 
     /**
