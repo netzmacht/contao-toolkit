@@ -85,7 +85,7 @@ class IntegratedReplacer implements Replacer
 
         foreach ($this->parsers as $parser) {
             if ($parser->supports($tag)) {
-                return $parser->parse($tag, $params, $raw, $cache);
+                return $parser->parse($raw, $tag, $params, $cache);
             }
         }
 
