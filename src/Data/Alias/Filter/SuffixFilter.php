@@ -26,11 +26,23 @@ class SuffixFilter extends AbstractFilter
     private $index;
 
     /**
-     * {@inheritDoc}
+     * Start value.
+     *
+     * @var int
      */
-    public function __construct($break = true)
+    private $start;
+
+    /**
+     * AbstractFilter constructor.
+     *
+     * @param bool $break If true break after the filter if value is unique.
+     * @param int  $start Start value.
+     */
+    public function __construct($break = true, $start = 2)
     {
         parent::__construct($break, static::COMBINE_APPEND);
+
+        $this->start = (int) $start;
     }
 
     /**
@@ -38,7 +50,7 @@ class SuffixFilter extends AbstractFilter
      */
     public function initialize()
     {
-        $this->index = 2;
+        $this->index = $this->start;
     }
 
     /**
@@ -46,7 +58,7 @@ class SuffixFilter extends AbstractFilter
      */
     public function repeatUntilUnique()
     {
-        true;
+        return true;
     }
 
     /**
