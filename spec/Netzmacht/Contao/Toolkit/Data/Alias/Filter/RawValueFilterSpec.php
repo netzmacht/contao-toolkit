@@ -48,7 +48,6 @@ class RawValueFilterSpec extends ObjectBehavior
     {
         $this->beConstructedWith([static::COLUMN], false);
         $this->breakIfUnique()->shouldReturn(false);
-
     }
 
     function it_does_not_support_repeating()
