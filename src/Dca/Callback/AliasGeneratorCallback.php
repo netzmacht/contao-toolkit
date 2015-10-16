@@ -16,6 +16,7 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Filter\ExistingAliasFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SlugifyFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SuffixFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\Generator;
+use Netzmacht\Contao\Toolkit\Data\Alias\Validator\UniqueDatabaseValueValidator;
 
 /**
  * Alias generator callback.
@@ -48,12 +49,13 @@ trait AliasGeneratorCallback
                 new SuffixFilter()
             ];
 
-            $this->aliasGenerator = new Generator(
-                $filters,
+            $validator = new UniqueDatabaseValueValidator(
                 $this->getServiceContainer()->getDatabaseConnection(),
-                $this->name,
+                $this->getName(),
                 $column
             );
+
+            $this->aliasGenerator = new Generator($filters, $validator, $this->getName(), $column);
         }
 
         return $this->aliasGenerator;

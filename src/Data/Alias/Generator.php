@@ -24,11 +24,11 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 class Generator
 {
     /**
-     * The database connection.
+     * Alias validator.
      *
-     * @var \Database
+     * @var Validator
      */
-    private $database;
+    private $validator;
 
     /**
      * The alias field.
@@ -59,34 +59,21 @@ class Generator
     private $separator;
 
     /**
-     * Unique query.
-     *
-     * @var string
-     */
-    private $query;
-
-    /**
      * Construct.
      *
-     * @param Filter[] $filters    Filters.
-     * @param Database $database   The database connection.
-     * @param string   $tableName  The table name.
-     * @param string   $aliasField The alias field.
-     * @param string   $separator  Value separator.
+     * @param Filter[]  $filters    Filters.
+     * @param Validator $validator  Alias validator.
+     * @param string    $tableName  The table name.
+     * @param string    $aliasField The alias field.
+     * @param string    $separator  Value separator.
      */
-    public function __construct($filters, Database $database, $tableName, $aliasField = 'alias', $separator = '-')
+    public function __construct($filters, Validator $validator, $tableName, $aliasField = 'alias', $separator = '-')
     {
-        $this->database   = $database;
+        $this->validator  = $validator;
         $this->aliasField = $aliasField;
         $this->tableName  = $tableName;
         $this->separator  = $separator;
         $this->filters    = $filters;
-
-        $this->query = sprintf(
-            'SELECT count(*) AS result FROM %s WHERE %s=? AND id !=?',
-            $this->tableName,
-            $this->aliasField
-        );
     }
 
     /**
@@ -130,18 +117,16 @@ class Generator
     }
 
     /**
-     * Consider if value is an unique value.
+     * Consider if value is an valid alias.
      *
      * @param mixed $value The alias value.
      * @param int   $rowId The row id.
      *
      * @return bool
      */
-    private function isUniqueValue($value, $rowId)
+    private function isValid($value, $rowId)
     {
-        $result = $this->database->prepare($this->query)->execute($value, $rowId);
-
-        return $result->result == 0;
+        return $this->validator->validate($value, [$rowId]);
     }
 
     /**
@@ -159,12 +144,12 @@ class Generator
 
             do {
                 $value  = $filter->apply($result, $value, $this->separator);
-                $unique = $this->isUniqueValue($value, $result->id);
+                $unique = $this->isValid($value, $result->id);
 
-                if ($filter->breakIfUnique() && $unique) {
+                if ($filter->breakIfValid() && $unique) {
                     break 2;
                 }
-            } while ($filter->repeatUntilUnique() && !$unique);
+            } while ($filter->repeatUntilValid() && !$unique);
         }
 
         return $value;
@@ -181,7 +166,7 @@ class Generator
      */
     private function guardValidAlias($result, $value)
     {
-        if (!$value || !$this->isUniqueValue($value, $result->id)) {
+        if (!$value || !$this->isValid($value, $result->id)) {
             throw new \RuntimeException(
                 sprintf(
                     'Could not create unique alias for "%s::%s". Alias value "%s"',
