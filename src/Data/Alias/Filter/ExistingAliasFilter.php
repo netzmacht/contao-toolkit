@@ -30,7 +30,7 @@ class ExistingAliasFilter implements Filter
     /**
      * {@inheritDoc}
      */
-    public function repeatUntilUnique()
+    public function repeatUntilValid()
     {
         return false;
     }
@@ -38,7 +38,7 @@ class ExistingAliasFilter implements Filter
     /**
      * {@inheritDoc}
      */
-    public function breakIfUnique()
+    public function breakIfValid()
     {
         return true;
     }

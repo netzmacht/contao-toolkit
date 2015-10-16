@@ -64,20 +64,20 @@ class SlugifyFilterSpec extends ObjectBehavior
     function it_breaks_by_default()
     {
         $this->createInstance();
-        $this->breakIfUnique()->shouldReturn(true);
+        $this->breakIfValid()->shouldReturn(true);
     }
 
 
     function it_accepts_break_option()
     {
         $this->beConstructedWith([static::COLUMN], false);
-        $this->breakIfUnique()->shouldReturn(false);
+        $this->breakIfValid()->shouldReturn(false);
     }
 
     function it_does_not_support_repeating()
     {
         $this->createInstance();
-        $this->repeatUntilUnique()->shouldReturn(false);
+        $this->repeatUntilValid()->shouldReturn(false);
     }
 
     function it_standardizes_value()

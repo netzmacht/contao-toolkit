@@ -31,12 +31,12 @@ class ExistingAliasFilterSpec extends ObjectBehavior
 
     function it_does_not_support_repeating()
     {
-        $this->repeatUntilUnique()->shouldReturn(false);
+        $this->repeatUntilValid()->shouldReturn(false);
     }
 
     function it_breaks_if_unique()
     {
-        $this->breakIfUnique()->shouldReturn(true);
+        $this->breakIfValid()->shouldReturn(true);
     }
 
     function it_returns_existing_alias(Model $model)

@@ -56,7 +56,7 @@ class SuffixFilter extends AbstractFilter
     /**
      * {@inheritDoc}
      */
-    public function repeatUntilUnique()
+    public function repeatUntilValid()
     {
         return true;
     }

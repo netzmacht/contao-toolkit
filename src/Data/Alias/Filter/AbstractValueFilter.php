@@ -45,7 +45,7 @@ abstract class AbstractValueFilter extends AbstractFilter
     /**
      * {@inheritDoc}
      */
-    public function repeatUntilUnique()
+    public function repeatUntilValid()
     {
         return false;
     }

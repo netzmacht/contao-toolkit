@@ -29,18 +29,18 @@ class SuffixFilterSpec extends ObjectBehavior
 
     function it_breaks_by_default()
     {
-        $this->breakIfUnique()->shouldReturn(true);
+        $this->breakIfValid()->shouldReturn(true);
     }
 
     function it_accepts_break_option()
     {
         $this->beConstructedWith(false);
-        $this->breakIfUnique()->shouldReturn(false);
+        $this->breakIfValid()->shouldReturn(false);
     }
 
     function it_supports_repeating()
     {
-        $this->repeatUntilUnique()->shouldReturn(true);
+        $this->repeatUntilValid()->shouldReturn(true);
     }
 
     function it_appends_suffix()

@@ -26,14 +26,14 @@ interface Filter
      *
      * @return bool
      */
-    public function repeatUntilUnique();
+    public function repeatUntilValid();
 
     /**
      * If true no ongoing filters get applied.
      *
      * @return bool
      */
-    public function breakIfUnique();
+    public function breakIfValid();
 
     /**
      * Initialize the filter.

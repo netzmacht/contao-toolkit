@@ -53,7 +53,7 @@ abstract class AbstractFilter implements Filter
     /**
      * {@inheritdoc}
      */
-    public function breakIfUnique()
+    public function breakIfValid()
     {
         return $this->break;
     }
