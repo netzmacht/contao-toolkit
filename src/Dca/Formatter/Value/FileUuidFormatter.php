@@ -32,12 +32,14 @@ class FileUuidFormatter implements ValueFormatter
     public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
         if (is_array($value)) {
-            $value = array_filter(
-                array_map(
-                    function ($value) {
-                        return $value ? \String::binToUuid($value) : '';
-                    },
-                    $value
+            $value = array_values(
+                array_filter(
+                    array_map(
+                        function ($value) {
+                            return $value ? \String::binToUuid($value) : '';
+                        },
+                        $value
+                    )
                 )
             );
         } else {
