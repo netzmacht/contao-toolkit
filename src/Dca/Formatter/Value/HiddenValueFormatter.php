@@ -40,7 +40,7 @@ class HiddenValueFormatter implements ValueFormatter
      */
     public function accepts($fieldName, array $fieldDefinition)
     {
-        if ($fieldDefinition['inputType'] === 'password') {
+        if (!empty($fieldDefinition['inputType']) && $fieldDefinition['inputType'] === 'password') {
             return true;
         }
 
@@ -60,8 +60,10 @@ class HiddenValueFormatter implements ValueFormatter
      */
     public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
-        if ($this->passwordMask && $fieldDefinition['inputType'] === 'password') {
-            return $this->passwordMask;
+        if ($this->passwordMask) {
+            if (!empty($fieldDefinition['inputType']) && $fieldDefinition['inputType'] === 'password') {
+                return $this->passwordMask;
+            }
         }
 
         return '';
