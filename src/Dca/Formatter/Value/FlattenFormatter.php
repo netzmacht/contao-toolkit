@@ -31,8 +31,40 @@ class FlattenFormatter implements ValueFormatter
      */
     public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
+        return $this->flatten($value);
+    }
+
+    /**
+     * Flatten array or object to string values. Bypass anything else.
+     *
+     * This will create csv values from arrays and objects. For objects, it's public properties are used. Nested
+     * arrays will be displayed with brackets.
+     * $a = ['a', ['b', 'c']] will be a, [b, c].
+     *
+     * @param mixed      $value    Current value.
+     * @param bool|false $brackets If true the value get brackets.
+     *
+     * @return array|string
+     */
+    private function flatten($value, $brackets = false)
+    {
         if (is_array($value)) {
-            return implode(', ', $value);
+            $value = array_map(
+                function ($value) {
+                    return $this->flatten($value, true);
+                },
+                $value
+            );
+
+            $value = implode(', ', $value);
+        } elseif (is_object($value)) {
+            $value = $this->flatten(get_object_vars($value));
+        } else {
+            return $value;
+        }
+
+        if ($brackets) {
+            $value = '[' . $value .']';
         }
 
         return $value;
