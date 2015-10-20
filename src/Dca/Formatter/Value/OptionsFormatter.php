@@ -26,7 +26,7 @@ class OptionsFormatter implements ValueFormatter
      */
     public function accepts($fieldName, array $fieldDefinition)
     {
-        if (!empty($fieldDefinition['isAssociative']) || !empty($fieldDefinition['options'])) {
+        if (!empty($fieldDefinition['eval']['isAssociative']) || !empty($fieldDefinition['options'])) {
             return true;
         }
 
@@ -38,7 +38,9 @@ class OptionsFormatter implements ValueFormatter
      */
     public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
-        if (!empty($fieldDefinition['isAssociative']) || array_is_assoc($fieldDefinition['options'])) {
+        if (!empty($fieldDefinition['eval']['isAssociative'])
+            || (!empty($fieldDefinition['options']) && array_is_assoc($fieldDefinition['options']))
+        ) {
             if (!empty($fieldDefinition['options'][$value])) {
                 $value = $fieldDefinition['options'][$value];
             }
@@ -46,9 +48,13 @@ class OptionsFormatter implements ValueFormatter
             $callback = new CallbackExecutor($fieldDefinition['options_callback']);
 
             if ($context instanceof DataContainer) {
-                $value = $callback->execute($context);
+                $options = $callback->execute($context);
             } else {
-                $value = $callback->execute();
+                $options = $callback->execute();
+            }
+
+            if (!empty($options[$value])) {
+                $value = $options[$value];
             }
         }
 
