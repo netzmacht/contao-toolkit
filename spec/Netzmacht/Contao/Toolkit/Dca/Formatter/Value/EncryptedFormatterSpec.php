@@ -38,7 +38,7 @@ class EncryptedFormatterSpec extends ObjectBehavior
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
-    function it_does_not_accept_by_default()
+    function it_does_not_accept_a_field_by_default()
     {
         $this->accepts('test', [])->shouldReturn(false);
     }

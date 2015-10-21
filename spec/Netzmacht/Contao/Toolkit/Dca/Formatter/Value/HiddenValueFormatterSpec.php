@@ -45,6 +45,11 @@ class HiddenValueFormatterSpec extends ObjectBehavior
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
+    function it_does_not_accept_a_field_by_default()
+    {
+        $this->accepts('test', [])->shouldReturn(false);
+    }
+
     function it_hides_value()
     {
         $this->format('test', 'test', [])->shouldReturn('');

@@ -38,6 +38,11 @@ class FlattenFormatterSpec extends ObjectBehavior
         $this->accepts('test', [])->shouldReturn(false);
     }
 
+    function it_does_not_accept_a_field_by_default()
+    {
+        $this->accepts('test', [])->shouldReturn(false);
+    }
+
     function it_flattens_arrays_to_csv()
     {
         $value = ['a', 'b'];

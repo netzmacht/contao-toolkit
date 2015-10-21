@@ -38,6 +38,11 @@ class HtmlFormatterSpec extends ObjectBehavior
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
+    function it_does_not_accept_a_field_by_default()
+    {
+        $this->accepts('test', [])->shouldReturn(false);
+    }
+
     function it_encodes_html_entities()
     {
         $test = '<b>Test</b> <a href="http://example.org">Example</a>';
