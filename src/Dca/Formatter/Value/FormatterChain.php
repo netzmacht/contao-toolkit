@@ -60,6 +60,6 @@ class FormatterChain implements ValueFormatter
             }
         }
 
-        return null;
+        return $value;
     }
 }
