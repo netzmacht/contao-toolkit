@@ -11,6 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\View;
 
+use Contao\Template as ContaoTemplate;
 use Netzmacht\Contao\Toolkit\TranslatorTrait;
 
 /**
@@ -47,6 +48,31 @@ trait TemplateTrait
         $this->$name = $value;
 
         return $this;
+    }
+
+    /**
+     * Insert a template.
+     *
+     * @param string $name The template name.
+     * @param array  $data An optional data array.
+     *
+     * @return void
+     */
+    public function insert($name, array $data = null)
+    {
+        if ($this instanceof ContaoTemplate) {
+            $template = new static($name);
+        } elseif (TL_MODE === 'BE') {
+            $template = new BackendTemplate($name);
+        } else {
+            $template = new FrontendTemplate($name);
+        }
+
+        if ($data !== null) {
+            $template->setData($data);
+        }
+
+        echo $template->parse();
     }
 
     /**

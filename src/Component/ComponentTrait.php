@@ -12,8 +12,8 @@
 namespace Netzmacht\Contao\Toolkit\Component;
 
 use Netzmacht\Contao\Toolkit\ServiceContainerTrait;
+use Netzmacht\Contao\Toolkit\View\FrontendTemplate;
 use Netzmacht\Contao\Toolkit\View\Template;
-use Netzmacht\Contao\Toolkit\View\TemplateDecorator;
 
 /**
  * ComponentTrait provides the toolkit way to compile components.
@@ -29,11 +29,22 @@ trait ComponentTrait
      */
     protected function compile()
     {
-        $translator    = $this->getServiceContainer()->getTranslator();
-        $assetsManager = $this->getServiceContainer()->getAssetsManager();
-        $template      = new TemplateDecorator($this->Template, $translator, $assetsManager);
+        $this->Template = new FrontendTemplate($this->strTemplate);
+        $this->Template->setData($this->arrData);
 
-        $this->render($template);
+        $this->preCompile();
+        $this->render($this->Template);
+    }
+
+    /**
+     * Pre compile the component.
+     *
+     * Override this method for non rendering tasks.
+     *
+     * @return void
+     */
+    protected function preCompile()
+    {
     }
 
     /**
