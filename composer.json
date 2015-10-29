@@ -53,7 +53,7 @@
     "extra": {
         "contao": {
             "sources":{
-                "module": "system/modules/netzmacht-toolkit"
+                "module": "system/modules/toolkit"
             }
         },
         "branch-alias": {
