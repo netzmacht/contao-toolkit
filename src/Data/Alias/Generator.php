@@ -14,6 +14,7 @@ namespace Netzmacht\Contao\Toolkit\Data\Alias;
 use Contao\Database;
 use Contao\Database\Result;
 use Contao\Model;
+use Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
 /**
@@ -162,19 +163,12 @@ class Generator
      * @param mixed          $value  Given value.
      *
      * @return void
-     * @throws \RuntimeException When No unique alias is generated.
+     * @throws InvalidAliasException When No unique alias is generated.
      */
     private function guardValidAlias($result, $value)
     {
         if (!$value || !$this->isValid($value, $result->id)) {
-            throw new \RuntimeException(
-                sprintf(
-                    'Could not create unique alias for "%s::%s". Alias value "%s"',
-                    $this->tableName,
-                    $result->id,
-                    $value
-                )
-            );
+            throw InvalidAliasException::forDatabaseEntry($this->tableName, $result->id, $value);
         }
     }
 

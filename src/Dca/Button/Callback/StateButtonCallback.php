@@ -20,6 +20,7 @@ use Contao\System;
 use Contao\User;
 use Netzmacht\Contao\Toolkit\Data\State\StateToggler;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
+use Netzmacht\Contao\Toolkit\Dca\Exception\BadDefinitionException;
 use Netzmacht\Contao\Toolkit\Exception\AccessDeniedException;
 
 /**
@@ -92,12 +93,12 @@ class StateButtonCallback
      * Craete the state toggler.
      *
      * @return StateToggler
-     * @throws \RuntimeException When no state column is defined.
+     * @throws BadDefinitionException When no state column is defined.
      */
     private function createStateToggler()
     {
         if (!isset($this->config['column'])) {
-            throw new \RuntimeException(
+            throw new BadDefinitionException(
                 sprintf('No state column defined for state toggle button "%s"', $this->buttonName)
             );
         }

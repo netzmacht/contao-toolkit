@@ -78,7 +78,7 @@ class GeneratorSpec extends ObjectBehavior
         $validator->validate(Argument::cetera())->willReturn(true);
 
         $this->beConstructedWith([], $validator, static::TABLE_NAME);
-        $this->shouldThrow('RuntimeException')->during('generate', [$model]);
+        $this->shouldThrow('Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException')->during('generate', [$model]);
     }
 
     function it_throws_when_invalid_alias_is_generated(Validator $validator)
@@ -90,6 +90,6 @@ class GeneratorSpec extends ObjectBehavior
         $validator->validate(Argument::cetera())->willReturn(false);
 
         $this->beConstructedWith([], $validator, static::TABLE_NAME);
-        $this->shouldThrow('RuntimeException')->during('generate', [$model, static::ALIAS_VALUE]);
+        $this->shouldThrow('Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException')->during('generate', [$model, static::ALIAS_VALUE]);
     }
 }
