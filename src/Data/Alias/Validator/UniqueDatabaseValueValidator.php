@@ -77,7 +77,7 @@ class UniqueDatabaseValueValidator implements Validator
         $query = $this->query;
 
         if ($exclude) {
-            $query .= ' AND id NOT IN(?' . str_repeat(',?', (count($exclude) - 1));
+            $query .= ' AND id NOT IN(?' . str_repeat(',?', (count($exclude) - 1)) . ')';
             $value  = array_merge([$value], $exclude);
         }
 
