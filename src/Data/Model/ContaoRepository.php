@@ -71,7 +71,7 @@ class ContaoRepository implements Repository
      *
      * @return mixed
      */
-    private function call($method, $arguments = [])
+    protected function call($method, $arguments = [])
     {
         return call_user_func_array([$this->modelClass, $method], $arguments);
     }
