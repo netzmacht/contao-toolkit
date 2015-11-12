@@ -58,6 +58,72 @@ class ContaoRepository implements Repository
     /**
      * {@inheritDoc}
      */
+    public function findBy(array $column, array $values, array $options = [])
+    {
+        return $this->call('findBy', [$column, $values, $options]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function findOneBy(array $column, array $values, array $options = [])
+    {
+        return $this->call('findOneBy', [$column, $values, $options]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function findBySpecification(Specification $specification, array $options = [])
+    {
+        $column = [];
+        $values = [];
+
+        $specification->buildQuery($column, $values);
+
+        return $this->findBy($column, $values, $options);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function findAll(array $options = [])
+    {
+        return $this->call('findAll', [$options]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function countBy(array $column, array $values)
+    {
+        return $this->call('countBy', [$column, $values]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function countBySpecification(Specification $specification)
+    {
+        $column = [];
+        $values = [];
+
+        $specification->buildQuery($column, $values);
+
+        return $this->countBy($column, $values);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function countAll()
+    {
+        return $this->call('countAll');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function save(Model $model)
     {
         $model->save();
