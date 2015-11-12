@@ -22,7 +22,7 @@ install:
 
 script: ant -keep-going
 
-allow_failure:
+allow_failures:
     - php: "7.0"
     - php: "nightly"
 
