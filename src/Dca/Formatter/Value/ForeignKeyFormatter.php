@@ -53,7 +53,7 @@ class ForeignKeyFormatter implements ValueFormatter
         $foreignKey = explode('.', $fieldDefinition['foreignKey'], 2);
 
         if (count($foreignKey) == 2) {
-            $query  = sprintf('SELECT %s AS value FROM %s WHERE id=?', $foreignKey[1], $foreignKey[1]);
+            $query  = sprintf('SELECT %s AS value FROM %s WHERE id=?', $foreignKey[1], $foreignKey[0]);
             $result = $this->database->prepare($query)->execute($value);
 
             if ($result->numRows) {
