@@ -38,7 +38,7 @@ class ToolkitServices
     /**
      * Template helper service.
      *
-     * The template helper service is an instance of Netzmacht\Contao\Toolkit\View\TemplateHelper.
+     * The template helper service is an instance of Netzmacht\Contao\Toolkit\View\ViewHelper.
      *
      * @var string
      */
@@ -47,9 +47,18 @@ class ToolkitServices
     /**
      * Map of all template helpers.
      *
-     * Is an instance of
+     * Is an array object of Netzmacht\Contao\Toolkit\View\ViewHelper
      *
      * @var string
      */
     const VIEW_HELPERS = 'toolkit.view.template-helpers';
+
+    /**
+     * Assets manager service.
+     *
+     * Is an instance of Netzmacht\Contao\Toolkit\View\Assets\
+     *
+     * @var string
+     */
+    const ASSETS_MANAGER = 'toolkit.view.assets-manager';
 }

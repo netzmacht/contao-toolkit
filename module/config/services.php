@@ -28,12 +28,15 @@ use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ReferenceFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\YesNoFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
+use Netzmacht\Contao\Toolkit\DependencyInjection\ContaoServices;
 use Netzmacht\Contao\Toolkit\DependencyInjection\ToolkitServices;
 use Netzmacht\Contao\Toolkit\InsertTag\IntegratedReplacer;
 use Netzmacht\Contao\Toolkit\ServiceContainer;
 use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
+use Netzmacht\Contao\Toolkit\View\Helper\ViewHelperProxy;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
-use Netzmacht\Contao\Toolkit\View\Helper\ViewHelper;
+use Netzmacht\Contao\Toolkit\View\Helper\ViewHelperChain;
+use Netzmacht\Contao\Toolkit\View\ViewHelper;
 
 global $container;
 
@@ -62,14 +65,14 @@ $container[ToolkitServices::TEMPLATE_FACTORY] = $container->share(
 /**
  * Service definition of the view helper.
  *
- * @return ViewHelper
+ * @return ViewHelperChain
  */
 $container[ToolkitServices::VIEW_HELPER] = $container->share(
     function ($container) {
         /** @var ArrayObject $map */
         $map = $container[ToolkitServices::VIEW_HELPERS];
 
-        return new ViewHelper($map->getArrayCopy());
+        return new ViewHelperChain($map->getArrayCopy());
     }
 );
 
@@ -81,6 +84,45 @@ $container[ToolkitServices::VIEW_HELPER] = $container->share(
 $container[ToolkitServices::VIEW_HELPERS] = $container->share(
     function () {
         return new ArrayObject();
+    }
+);
+
+/**
+ * Factory definition of the translator view helper.
+ *
+ * @return ViewHelper
+ */
+$container[ToolkitServices::VIEW_HELPERS][] = function () use ($container) {
+    return new ViewHelperProxy(
+        $container[ContaoServices::TRANSLATOR],
+        ['translate', 'translatePluralized']
+    );
+};
+
+/**
+ * Factory definition of the assets manager view helper.
+ *
+ * @return ViewHelper
+ */
+$container[ToolkitServices::VIEW_HELPERS][] = function () use ($container) {
+    return new ViewHelperProxy(
+        $container[ToolkitServices::ASSETS_MANAGER],
+        ['addJavascript', 'addJavascripts', 'addStylesheet', 'addStylesheets']
+    );
+};
+
+/**
+ * Service definition of the assets manager.
+ *
+ * @return AssetsManager
+ */
+$container[ToolkitServices::ASSETS_MANAGER] = $container->share(
+    function ($container) {
+        return new AssetsManager(
+            $GLOBALS['TL_CSS'],
+            $GLOBALS['TL_JAVASCRIPT'],
+            $container['toolkit.production-mode']
+        );
     }
 );
 
@@ -99,16 +141,6 @@ $container['toolkit.dca-loader'] = function () {
 $container['toolkit.dca-manager'] = $container->share(
     function ($container) {
         return new Manager($container['toolkit.dca-loader'], $container['toolkit.dca-formatter.factory']);
-    }
-);
-
-$container['toolkit.assets-manager'] = $container->share(
-    function ($container) {
-        return new AssetsManager(
-            $GLOBALS['TL_CSS'],
-            $GLOBALS['TL_JAVASCRIPT'],
-            $container['toolkit.production-mode']
-        );
     }
 );
 

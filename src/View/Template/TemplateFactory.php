@@ -11,13 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\View\Template;
 
-use ContaoCommunityAlliance\Translator\Contao\LangArrayTranslator;
-use ContaoCommunityAlliance\Translator\TranslatorChain;
-use ContaoCommunityAlliance\Translator\TranslatorInterface;
-use Netzmacht\Contao\Toolkit\ServiceContainerTrait;
-use Netzmacht\Contao\Toolkit\View\Template\BackendTemplate;
-use Netzmacht\Contao\Toolkit\View\Template\FrontendTemplate;
-use Netzmacht\Contao\Toolkit\View\Helper\ViewHelper;
+use Netzmacht\Contao\Toolkit\View\ViewHelper;
 use Netzmacht\Contao\Toolkit\View\Template;
 
 /**
