@@ -11,6 +11,8 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca;
 
+use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerTrait;
+
 /**
  * Base class for data container callback classes.
  *
@@ -18,12 +20,33 @@ namespace Netzmacht\Contao\Toolkit\Dca;
  */
 abstract class Callbacks
 {
+    use ContainerTrait {
+        getContainer as private;
+    }
+
     /**
      * Name of the data container.
      *
      * @var string
      */
     protected static $name;
+
+    /**
+     * Data container manager.
+     *
+     * @var Manager
+     */
+    private $dcaManager;
+
+    /**
+     * Callbacks constructor.
+     *
+     * @param Manager $dcaManager Data container manager.
+     */
+    public function __construct(Manager $dcaManager)
+    {
+        $this->dcaManager = $dcaManager;
+    }
 
     /**
      * Get data container name.
@@ -38,16 +61,20 @@ abstract class Callbacks
     /**
      * Generate the callback definition.
      *
-     * This method is used as PHP 5.4 is supported right now. Otherwise the recommend callback notation would rather be
-     * [Callbacks::class, 'methodName'].
-     *
      * @param string $name Callback method.
      *
-     * @return array
+     * @return callable
      */
     public static function callback($name)
     {
-        return [get_called_class(), $name];
+        return function () use ($name) {
+            $serviceName = 'contao.dca.' . static::getName();
+            $service     = static::getContainer()->get($serviceName);
+            $callback    = [$service, $name];
+            $arguments   = func_get_args();
+
+            return call_user_func_array($callback, $arguments);
+        };
     }
 
     /**
@@ -57,9 +84,9 @@ abstract class Callbacks
      *
      * @return Definition
      */
-    protected static function getDefinition($name = null)
+    protected function getDefinition($name = null)
     {
-        return static::getServiceContainer()->getDcaManager()->getDefinition($name ?: static::getName());
+        return $this->dcaManager->getDefinition($name ?: static::getName());
     }
 
     /**
@@ -69,9 +96,9 @@ abstract class Callbacks
      *
      * @return Formatter\Formatter
      */
-    protected static function getFormatter($name = null)
+    protected function getFormatter($name = null)
     {
-        return static::getServiceContainer()->getDcaManager()->getFormatter($name ?: static::getName());
+        return $this->dcaManager->getFormatter($name ?: static::getName());
     }
 
     /**
