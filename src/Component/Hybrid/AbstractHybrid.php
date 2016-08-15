@@ -25,7 +25,8 @@ class AbstractHybrid extends AbstractModule implements Component
 {
     /**
      * Hybrid key.
-     * @var
+     *
+     * @var string
      */
     protected $key;
 
@@ -93,6 +94,16 @@ class AbstractHybrid extends AbstractModule implements Component
     }
 
     /**
+     * Get hybrid.
+     *
+     * @return array
+     */
+    protected function getHybrid()
+    {
+        return $this->hybrid;
+    }
+
+    /**
      * Check if content element is visible.
      *
      * @return bool
@@ -139,9 +150,10 @@ class AbstractHybrid extends AbstractModule implements Component
             return;
         }
 
+        /** @var \Model $modelClass */
         $modelClass = \Model::getClassFromTable($this->table);
         if (class_exists($modelClass)) {
-            $hybridModel = $modelClass::findByPK($this->get($this->key));
+            $hybridModel = $modelClass::findByPk($this->get($this->key));
 
             if ($hybridModel) {
                 $this->hybrid = $hybridModel->row();
