@@ -65,7 +65,7 @@ class ViewHelperProxy implements ViewHelper
      */
     public function __call($name, array $arguments)
     {
-        $callback = [$this->handler, $name];
+        $callback = [$this->handler, $this->methods[$name]];
 
         return call_user_func_array($callback, $arguments);
     }
