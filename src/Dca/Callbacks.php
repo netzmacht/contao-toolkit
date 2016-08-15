@@ -11,8 +11,6 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca;
 
-use Netzmacht\Contao\Toolkit\TranslatorTrait;
-
 /**
  * Base class for data container callback classes.
  *
@@ -20,8 +18,6 @@ use Netzmacht\Contao\Toolkit\TranslatorTrait;
  */
 abstract class Callbacks
 {
-    use TranslatorTrait;
-
     /**
      * Name of the data container.
      *
