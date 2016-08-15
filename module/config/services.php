@@ -85,7 +85,7 @@ $container[ToolkitServices::VIEW_HELPERS]['translator'] = function () use ($cont
  *
  * @return AssetsManager
  */
-$container[ToolkitServices::VIEW_HELPERS][] = function () use ($container) {
+$container[ToolkitServices::VIEW_HELPERS]['assets'] = function () use ($container) {
     return $container[ToolkitServices::ASSETS_MANAGER];
 };
 
