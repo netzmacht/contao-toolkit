@@ -68,7 +68,7 @@ abstract class AbstractComponent
     public function __construct($model, TemplateFactory $templateFactory, $column = 'main')
     {
         if ($model instanceof Collection) {
-            $model = $model->current();;
+            $model = $model->current();
         }
 
         if ($model instanceof Model) {
@@ -169,7 +169,7 @@ abstract class AbstractComponent
     /**
      * Pre generate is called before creating the template.
      *
-     * @return  void
+     * @return void
      */
     protected function preGenerate()
     {

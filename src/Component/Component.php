@@ -30,7 +30,7 @@ interface Component
     /**
      * Get the value of the parameter.
      *
-     * @param $name
+     * @param string $name Parameter name.
      *
      * @return mixed
      */
@@ -39,7 +39,7 @@ interface Component
     /**
      * Check if parameter exists.
      *
-     * @param string $name Parameter name
+     * @param string $name Parameter name.
      *
      * @return bool
      */

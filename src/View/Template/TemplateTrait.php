@@ -90,6 +90,8 @@ trait TemplateTrait
      *
      * @return mixed
      * @throws HelperNotFound If helper is not registered.
+     *
+     * @SuppressWarnings(PHPMD.ShortMethodName)
      */
     public function h($name)
     {

@@ -27,19 +27,17 @@ class ModuleDecorator extends \ContentElement
      * @param \ModuleModel $model Component model.
      *
      * @return callable
-     * @throws ModuleNotFound
+     * @throws ModuleNotFound If module is not registered as service.
      */
     protected function getFactory($model)
     {
         $container   = $this->getContainer();
-        $factoryName = 'modules.factory.' . $model->type;
+        $factoryName = 'contao.modules.' . $model->type;
 
         if (!$container->has($factoryName)) {
             throw ModuleNotFound::forModel($model);
         }
 
-        $factory = $container->get($factoryName);
-
-        return $factory;
+        return $container->get($factoryName);
     }
 }

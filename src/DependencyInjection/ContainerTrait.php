@@ -25,6 +25,8 @@ trait ContainerTrait
      * Get the container.
      *
      * @return ContainerInterface
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function getContainer()
     {

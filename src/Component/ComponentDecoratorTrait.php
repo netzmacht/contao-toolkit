@@ -23,7 +23,7 @@ trait ComponentDecoratorTrait
     use ContainerTrait;
 
     /**
-     * Component
+     * Inner component.
      *
      * @var Component
      */
@@ -92,7 +92,6 @@ trait ComponentDecoratorTrait
      * @param \Model $model Component model.
      *
      * @return callable
-     * @throws ContentElementNotFound
      */
     abstract protected function getFactory($model);
 }

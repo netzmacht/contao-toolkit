@@ -54,7 +54,7 @@ interface Template
     /**
      * Set all the template data.
      *
-     * @param array $data Tempate data
+     * @param array $data Tempate data.
      *
      * @return void
      */

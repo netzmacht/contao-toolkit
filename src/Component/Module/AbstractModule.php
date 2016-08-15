@@ -54,7 +54,7 @@ class AbstractModule extends AbstractComponent implements Module
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function generate()
     {
