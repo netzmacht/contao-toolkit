@@ -57,7 +57,7 @@ class ViewHelperProxy implements ViewHelper
      */
     public function supports($method)
     {
-        return in_array($method, $this->methods);
+        return isset($this->methods[$method]);
     }
 
     /**
