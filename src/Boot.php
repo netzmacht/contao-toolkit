@@ -11,6 +11,8 @@
 
 namespace Netzmacht\Contao\Toolkit;
 
+use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerTrait;
+use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
 use Netzmacht\Contao\Toolkit\Event\InitializeSystemEvent;
 
 /**
@@ -20,26 +22,26 @@ use Netzmacht\Contao\Toolkit\Event\InitializeSystemEvent;
  */
 class Boot
 {
+    use ContainerTrait;
+
     /**
      * Initialize.
      *
      * This method is called by the initializeDependencyContainer hook.
      *
-     * @param \Pimple $container The dependency container.
-     *
      * @return void
      */
-    public function initialize(\Pimple $container)
+    public function initialize()
     {
         // No initialization when being in install mode.
         if (TL_SCRIPT === 'contao/install.php') {
             return;
         }
 
-        /** @var ServiceContainer $serviceContainer */
-        $serviceContainer = $container['toolkit.service-container'];
+        $container  = static::getContainer();
+        $event      = new InitializeSystemEvent($container);
+        $dispatcher = $container->get(Services::EVENT_DISPATCHER);
 
-        $event = new InitializeSystemEvent($serviceContainer);
-        $serviceContainer->getEventDispatcher()->dispatch($event::NAME, $event);
+        $dispatcher->dispatch($event::NAME, $event);
     }
 }

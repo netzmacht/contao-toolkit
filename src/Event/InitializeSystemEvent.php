@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Event;
 
-use Netzmacht\Contao\Toolkit\ServiceContainer;
+use Interop\Container\ContainerInterface as Container;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
@@ -26,27 +26,27 @@ class InitializeSystemEvent extends Event
     /**
      * Service container.
      *
-     * @var ServiceContainer
+     * @var Container
      */
-    private $serviceContainer;
+    private $container;
 
     /**
      * InitializeSystemEvent constructor.
      *
-     * @param ServiceContainer $serviceContainer Service container.
+     * @param Container $container Service container.
      */
-    public function __construct(ServiceContainer $serviceContainer)
+    public function __construct(Container $container)
     {
-        $this->serviceContainer = $serviceContainer;
+        $this->container = $container;
     }
 
     /**
      * Get the service container.
      *
-     * @return ServiceContainer
+     * @return Container
      */
-    public function getServiceContainer()
+    public function getContainer()
     {
-        return $this->serviceContainer;
+        return $this->container;
     }
 }
