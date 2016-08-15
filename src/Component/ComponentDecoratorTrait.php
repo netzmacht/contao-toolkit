@@ -10,7 +10,6 @@
 
 namespace Netzmacht\Contao\Toolkit\Component;
 
-use Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElementNotFound;
 use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerTrait;
 
 /**
