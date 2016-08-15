@@ -29,8 +29,7 @@ use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ReferenceFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\YesNoFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
-use Netzmacht\Contao\Toolkit\DependencyInjection\ContaoServices;
-use Netzmacht\Contao\Toolkit\DependencyInjection\ToolkitServices;
+use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
 use Netzmacht\Contao\Toolkit\InsertTag\IntegratedReplacer;
 use Netzmacht\Contao\Toolkit\ServiceContainer;
 use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
@@ -43,7 +42,7 @@ global $container;
  *
  * @return ContainerInterface
  */
-$container[ToolkitServices::CONTAINER] = $container->share(
+$container[Services::CONTAINER] = $container->share(
     function ($container) {
         return new PimpleInterop($container);
     }
@@ -54,9 +53,9 @@ $container[ToolkitServices::CONTAINER] = $container->share(
  *
  * @return TemplateFactory
  */
-$container[ToolkitServices::TEMPLATE_FACTORY] = $container->share(
+$container[Services::TEMPLATE_FACTORY] = $container->share(
     function ($container) {
-        return new TemplateFactory($container[ToolkitServices::VIEW_HELPERS]);
+        return new TemplateFactory($container[Services::VIEW_HELPERS]);
     }
 );
 
@@ -65,7 +64,7 @@ $container[ToolkitServices::TEMPLATE_FACTORY] = $container->share(
  *
  * @return ArrayObject
  */
-$container[ToolkitServices::VIEW_HELPERS] = $container->share(
+$container[Services::VIEW_HELPERS] = $container->share(
     function () {
         return new ArrayObject();
     }
@@ -76,8 +75,8 @@ $container[ToolkitServices::VIEW_HELPERS] = $container->share(
  *
  * @return TranslatorInterface
  */
-$container[ToolkitServices::VIEW_HELPERS]['translator'] = function () use ($container) {
-    return $container[ContaoServices::TRANSLATOR];
+$container[Services::VIEW_HELPERS]['translator'] = function () use ($container) {
+    return $container[Services::TRANSLATOR];
 };
 
 /**
@@ -85,8 +84,8 @@ $container[ToolkitServices::VIEW_HELPERS]['translator'] = function () use ($cont
  *
  * @return AssetsManager
  */
-$container[ToolkitServices::VIEW_HELPERS]['assets'] = function () use ($container) {
-    return $container[ToolkitServices::ASSETS_MANAGER];
+$container[Services::VIEW_HELPERS]['assets'] = function () use ($container) {
+    return $container[Services::ASSETS_MANAGER];
 };
 
 /**
@@ -94,7 +93,7 @@ $container[ToolkitServices::VIEW_HELPERS]['assets'] = function () use ($containe
  *
  * @return AssetsManager
  */
-$container[ToolkitServices::ASSETS_MANAGER] = $container->share(
+$container[Services::ASSETS_MANAGER] = $container->share(
     function ($container) {
         return new AssetsManager(
             $GLOBALS['TL_CSS'],
@@ -116,21 +115,15 @@ $container['toolkit.dca-loader'] = function () {
     return new DcaLoader();
 };
 
-$container['toolkit.dca-manager'] = $container->share(
+$container[Services::DCA_MANAGER] = $container->share(
     function ($container) {
         return new Manager($container['toolkit.dca-loader'], $container['toolkit.dca-formatter.factory']);
     }
 );
 
-$container['toolkit.filesystem'] = $container->share(
+$container[Services::FILE_SYSTEM] = $container->share(
     function () {
         return \Files::getInstance();
-    }
-);
-
-$container['toolkit.service-container'] = $container->share(
-    function ($container) {
-        return new ServiceContainer($container);
     }
 );
 
@@ -299,11 +292,11 @@ $container['toolkit.dca-formatter.default'] = $container->share(
  */
 $container['toolkit.dca-formatter.factory'] = $container->share(
     function ($container) {
-        return new FormatterFactory($container['toolkit.service-container'], $container['event-dispatcher']);
+        return new FormatterFactory($container[Services::CONTAINER], $container[Services::EVENT_DISPATCHER]);
     }
 );
 
-$container['toolkit.insert-tag-replacer'] = $container->share(
+$container[Services::INSERT_TAG_REPLACER] = $container->share(
     function () {
         if (version_compare(VERSION . '.' . BUILD, '3.5.3', '>=')) {
             $insertTags = new \Contao\InsertTags();

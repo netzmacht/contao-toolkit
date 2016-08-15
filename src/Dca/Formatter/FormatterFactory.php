@@ -11,12 +11,12 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter;
 
+use Interop\Container\ContainerInterface;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FilterFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FormatterChain;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
 use Netzmacht\Contao\Toolkit\Event\CreateFormatterEvent;
-use Netzmacht\Contao\Toolkit\ServiceContainer;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -36,17 +36,17 @@ class FormatterFactory
     /**
      * Service container.
      *
-     * @var ServiceContainer
+     * @var ContainerInterface
      */
     private $serviceContainer;
 
     /**
      * FormatterFactory constructor.
      *
-     * @param ServiceContainer         $serviceContainer Event dispatcher.
+     * @param ContainerInterface       $serviceContainer Event dispatcher.
      * @param EventDispatcherInterface $eventDispatcher  Service container.
      */
-    public function __construct(ServiceContainer $serviceContainer, EventDispatcherInterface $eventDispatcher)
+    public function __construct(ContainerInterface $serviceContainer, EventDispatcherInterface $eventDispatcher)
     {
         $this->serviceContainer = $serviceContainer;
         $this->eventDispatcher  = $eventDispatcher;
@@ -59,7 +59,7 @@ class FormatterFactory
      */
     public function getDefaultValueFormatter()
     {
-        return $this->serviceContainer->getService('toolkit.dca-formatter.default');
+        return $this->serviceContainer->get('toolkit.dca-formatter.default');
     }
 
     /**
@@ -67,19 +67,19 @@ class FormatterFactory
      *
      * @param Definition $definition Data container definition.
      *
-     * @return ValueFormatter
+     * @return Formatter
      */
     public function createFormatterFor(Definition $definition)
     {
-        if ($this->serviceContainer->hasService('toolkit.dca-formatter.' . $definition->getName())) {
-            return $this->serviceContainer->getService('toolkit.dca-formatter.' . $definition->getName());
+        if ($this->serviceContainer->has('toolkit.dca-formatter.' . $definition->getName())) {
+            return $this->serviceContainer->get('toolkit.dca-formatter.' . $definition->getName());
         }
 
         $event = new CreateFormatterEvent($definition);
         $this->eventDispatcher->dispatch($event::NAME, $event);
 
-        $preFilter  = $this->serviceContainer->getService('toolkit.dca-formatter.pre-filter');
-        $postFilter = $this->serviceContainer->getService('toolkit.dca-formatter.post-filter');
+        $preFilter  = $this->serviceContainer->get('toolkit.dca-formatter.pre-filter');
+        $postFilter = $this->serviceContainer->get('toolkit.dca-formatter.post-filter');
         $formatter  = $this->getDefaultValueFormatter();
 
         if ($event->getFormatters()) {

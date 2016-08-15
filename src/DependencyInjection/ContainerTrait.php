@@ -28,6 +28,6 @@ trait ContainerTrait
      */
     public function getContainer()
     {
-        return $GLOBALS['container'][ToolkitServices::CONTAINER];
+        return $GLOBALS['container'][Services::CONTAINER];
     }
 }
