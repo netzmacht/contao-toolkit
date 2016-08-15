@@ -8,7 +8,7 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\View\Helper;
+namespace Netzmacht\Contao\Toolkit\View\Template;
 
 use Exception;
 

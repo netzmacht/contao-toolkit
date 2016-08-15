@@ -9,6 +9,7 @@
  *
  */
 
+use ContaoCommunityAlliance\Translator\TranslatorInterface;
 use Interop\Container\ContainerInterface;
 use Interop\Container\Pimple\PimpleInterop;
 use Netzmacht\Contao\Toolkit\Dca\DcaLoader;
@@ -33,10 +34,7 @@ use Netzmacht\Contao\Toolkit\DependencyInjection\ToolkitServices;
 use Netzmacht\Contao\Toolkit\InsertTag\IntegratedReplacer;
 use Netzmacht\Contao\Toolkit\ServiceContainer;
 use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
-use Netzmacht\Contao\Toolkit\View\Helper\ViewHelperProxy;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
-use Netzmacht\Contao\Toolkit\View\Helper\ViewHelperChain;
-use Netzmacht\Contao\Toolkit\View\ViewHelper;
 
 global $container;
 
@@ -58,21 +56,7 @@ $container[ToolkitServices::CONTAINER] = $container->share(
  */
 $container[ToolkitServices::TEMPLATE_FACTORY] = $container->share(
     function ($container) {
-        return new TemplateFactory($container[ToolkitServices::VIEW_HELPER]);
-    }
-);
-
-/**
- * Service definition of the view helper.
- *
- * @return ViewHelperChain
- */
-$container[ToolkitServices::VIEW_HELPER] = $container->share(
-    function ($container) {
-        /** @var ArrayObject $map */
-        $map = $container[ToolkitServices::VIEW_HELPERS];
-
-        return new ViewHelperChain($map->getArrayCopy());
+        return new TemplateFactory($container[ToolkitServices::VIEW_HELPERS]);
     }
 );
 
@@ -90,25 +74,19 @@ $container[ToolkitServices::VIEW_HELPERS] = $container->share(
 /**
  * Factory definition of the translator view helper.
  *
- * @return ViewHelper
+ * @return TranslatorInterface
  */
-$container[ToolkitServices::VIEW_HELPERS][] = function () use ($container) {
-    return new ViewHelperProxy(
-        $container[ContaoServices::TRANSLATOR],
-        ['translate', 'translatePluralized']
-    );
+$container[ToolkitServices::VIEW_HELPERS]['translator'] = function () use ($container) {
+    return $container[ContaoServices::TRANSLATOR];
 };
 
 /**
  * Factory definition of the assets manager view helper.
  *
- * @return ViewHelper
+ * @return AssetsManager
  */
 $container[ToolkitServices::VIEW_HELPERS][] = function () use ($container) {
-    return new ViewHelperProxy(
-        $container[ToolkitServices::ASSETS_MANAGER],
-        ['addJavascript', 'addJavascripts', 'addStylesheet', 'addStylesheets']
-    );
+    return $container[ToolkitServices::ASSETS_MANAGER];
 };
 
 /**

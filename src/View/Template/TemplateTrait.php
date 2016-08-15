@@ -11,8 +11,6 @@
 
 namespace Netzmacht\Contao\Toolkit\View\Template;
 
-use Netzmacht\Contao\Toolkit\View\ViewHelper;
-
 /**
  * Trait extends the default Contao template classes.
  *
@@ -23,22 +21,22 @@ trait TemplateTrait
     /**
      * Template helper.
      *
-     * @var ViewHelper
+     * @var callable[]
      */
-    private $helper;
+    private $helpers = [];
 
     /**
      * TemplateTrait constructor.
      *
      * @param string     $name        The template name.
-     * @param ViewHelper $helper      The template helper.
+     * @param callable[] $helpers     View helpers.
      * @param string     $contentType The content type.
      */
-    public function __construct($name, ViewHelper $helper, $contentType = 'text/html')
+    public function __construct($name, $helpers = [], $contentType = 'text/html')
     {
         parent::__construct($name, $contentType);
 
-        $this->helper = $helper;
+        $this->helpers = $helpers;
     }
 
     /**
@@ -71,21 +69,31 @@ trait TemplateTrait
     /**
      * Get the helper.
      *
-     * @return ViewHelper
+     * @param string $name Name of the view helper.
+     *
+     * @return mixed
+     * @throws HelperNotFound If helper is not registered.
      */
-    public function helper()
+    public function helper($name)
     {
-        return $this->helper;
+        if (!isset($this->helpers[$name])) {
+            throw new HelperNotFound($name);
+        }
+
+        return $this->helpers[$name];
     }
 
     /**
      * Shortcut to get the helper.
      *
-     * @return ViewHelper
+     * @param string $name Name of the view helper.
+     *
+     * @return mixed
+     * @throws HelperNotFound If helper is not registered.
      */
-    public function h()
+    public function h($name)
     {
-        return $this->helper;
+        return $this->helper($name);
     }
 
     /**
@@ -98,7 +106,7 @@ trait TemplateTrait
      */
     public function insert($name, array $data = null)
     {
-        $template = new static($name, $this->helper, $this->strContentType);
+        $template = new static($name, $this->helpers, $this->strContentType);
 
         if ($data !== null) {
             $template->setData($data);

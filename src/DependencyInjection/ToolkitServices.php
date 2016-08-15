@@ -36,15 +36,6 @@ class ToolkitServices
     const TEMPLATE_FACTORY = 'toolkit.view.template-factory';
 
     /**
-     * Template helper service.
-     *
-     * The template helper service is an instance of Netzmacht\Contao\Toolkit\View\ViewHelper.
-     *
-     * @var string
-     */
-    const VIEW_HELPER = 'toolkit.view.template-helper';
-
-    /**
      * Map of all template helpers.
      *
      * Is an array object of Netzmacht\Contao\Toolkit\View\ViewHelper

@@ -11,7 +11,6 @@
 
 namespace Netzmacht\Contao\Toolkit\View\Template;
 
-use Netzmacht\Contao\Toolkit\View\ViewHelper;
 use Netzmacht\Contao\Toolkit\View\Template;
 
 /**
@@ -22,18 +21,18 @@ class TemplateFactory
     /**
      * Template helper.
      *
-     * @var ViewHelper
+     * @var callable[]
      */
-    private $helper;
+    private $helpers;
 
     /**
      * TemplateFactory constructor.
      *
-     * @param ViewHelper $helper
+     * @param callable[] $helpers View helpers.
      */
-    public function __construct(ViewHelper $helper)
+    public function __construct($helpers)
     {
-        $this->helper = $helper;
+        $this->helpers = $helpers;
     }
 
     /**
@@ -47,7 +46,7 @@ class TemplateFactory
      */
     public function createFrontendTemplate($name, array $data = null, $contentType = 'text/html')
     {
-        $template = new FrontendTemplate($name, $this->helper, $contentType);
+        $template = new FrontendTemplate($name, $this->helpers, $contentType);
 
         if ($data) {
             $template->setData($data);
@@ -67,7 +66,7 @@ class TemplateFactory
      */
     public function createBackendTemplate($name, array $data = null, $contentType = 'text/html')
     {
-        $template = new BackendTemplate($name, $this->helper, $contentType);
+        $template = new BackendTemplate($name, $this->helpers, $contentType);
 
         if ($data) {
             $template->setData($data);
