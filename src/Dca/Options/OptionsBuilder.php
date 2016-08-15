@@ -13,7 +13,6 @@ namespace Netzmacht\Contao\Toolkit\Dca\Options;
 
 use Database\Result;
 use Model\Collection;
-use Netzmacht\Contao\Toolkit\Dca;
 
 /**
  * Class OptionsBuilder is designed to transfer data to the requested format for options.
