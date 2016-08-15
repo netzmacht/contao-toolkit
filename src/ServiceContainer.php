@@ -15,7 +15,7 @@ use ContaoCommunityAlliance\Translator\TranslatorInterface;
 use DependencyInjection\Container\PageProvider;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Netzmacht\Contao\Toolkit\InsertTag\Replacer;
-use Netzmacht\Contao\Toolkit\View\AssetsManager;
+use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

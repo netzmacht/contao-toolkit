@@ -14,7 +14,7 @@ use Database\Result;
 use Model;
 use Model\Collection;
 use Netzmacht\Contao\Toolkit\View\Template;
-use Netzmacht\Contao\Toolkit\View\TemplateFactory;
+use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 
 /**
  * Base element.

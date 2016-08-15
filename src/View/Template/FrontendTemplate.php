@@ -9,7 +9,9 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\View;
+namespace Netzmacht\Contao\Toolkit\View\Template;
+
+use Netzmacht\Contao\Toolkit\View\Template;
 
 /**
  * FrontendTemplate with extended features.

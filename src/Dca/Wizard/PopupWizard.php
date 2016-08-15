@@ -13,7 +13,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Wizard;
 
 use Contao\RequestToken;
 use ContaoCommunityAlliance\Translator\TranslatorInterface;
-use Netzmacht\Contao\Toolkit\View\BackendTemplate;
+use Netzmacht\Contao\Toolkit\View\Template\BackendTemplate;
 
 /**
  * Class PopupWizard.

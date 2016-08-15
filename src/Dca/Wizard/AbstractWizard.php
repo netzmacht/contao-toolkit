@@ -12,7 +12,7 @@
 namespace Netzmacht\Contao\Toolkit\Dca\Wizard;
 
 use ContaoCommunityAlliance\Translator\TranslatorInterface;
-use Netzmacht\Contao\Toolkit\View\BackendTemplate;
+use Netzmacht\Contao\Toolkit\View\Template\BackendTemplate;
 
 /**
  * AbstractWizard is the base class for a wizard.

@@ -11,14 +11,12 @@
 
 namespace Netzmacht\Contao\Toolkit\View;
 
-use ContaoCommunityAlliance\Translator\TranslatorInterface;
-
 /**
  * Interface describes the templates being used in the toolkit.
  *
  * @package Netzmacht\Contao\Toolkit\View
  */
-interface Template extends TranslatorInterface
+interface Template
 {
     /**
      * Parse the template.
@@ -47,9 +45,18 @@ interface Template extends TranslatorInterface
     public function set($name, $value);
 
     /**
-     * Get the assets manager.
+     * Get all the template data.
      *
-     * @return AssetsManager
+     * @return array
      */
-    public function getAssetsManager();
+    public function getData();
+
+    /**
+     * Set all the template data.
+     *
+     * @param array $data Tempate data
+     *
+     * @return void
+     */
+    public function setData(array $data);
 }

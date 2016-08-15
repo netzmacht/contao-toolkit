@@ -9,7 +9,7 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\View;
+namespace Netzmacht\Contao\Toolkit\View\Assets;
 
 /**
  * Simple manager to handle assets registration.

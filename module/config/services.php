@@ -31,7 +31,9 @@ use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Netzmacht\Contao\Toolkit\DependencyInjection\ToolkitServices;
 use Netzmacht\Contao\Toolkit\InsertTag\IntegratedReplacer;
 use Netzmacht\Contao\Toolkit\ServiceContainer;
-use Netzmacht\Contao\Toolkit\View\AssetsManager;
+use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
+use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
+use Netzmacht\Contao\Toolkit\View\Helper\ViewHelper;
 
 global $container;
 
@@ -43,6 +45,42 @@ global $container;
 $container[ToolkitServices::CONTAINER] = $container->share(
     function ($container) {
         return new PimpleInterop($container);
+    }
+);
+
+/**
+ * Service definition of the template factory.
+ *
+ * @return TemplateFactory
+ */
+$container[ToolkitServices::TEMPLATE_FACTORY] = $container->share(
+    function ($container) {
+        return new TemplateFactory($container[ToolkitServices::VIEW_HELPER]);
+    }
+);
+
+/**
+ * Service definition of the view helper.
+ *
+ * @return ViewHelper
+ */
+$container[ToolkitServices::VIEW_HELPER] = $container->share(
+    function ($container) {
+        /** @var ArrayObject $map */
+        $map = $container[ToolkitServices::VIEW_HELPERS];
+
+        return new ViewHelper($map->getArrayCopy());
+    }
+);
+
+/**
+ * Service definition of the view helpers factory map.
+ *
+ * @return ArrayObject
+ */
+$container[ToolkitServices::VIEW_HELPERS] = $container->share(
+    function () {
+        return new ArrayObject();
     }
 );
 

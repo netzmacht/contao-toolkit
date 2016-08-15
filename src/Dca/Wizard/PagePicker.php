@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Wizard;
 
-use Netzmacht\Contao\Toolkit\View\BackendTemplate;
+use Netzmacht\Contao\Toolkit\View\Template\BackendTemplate;
 
 /**
  * Class PagePickerCallback.

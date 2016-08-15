@@ -9,10 +9,9 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\View;
+namespace Netzmacht\Contao\Toolkit\View\Template;
 
-use Contao\Template as ContaoTemplate;
-use Netzmacht\Contao\Toolkit\TranslatorTrait;
+use Netzmacht\Contao\Toolkit\View\Helper\ViewHelper;
 
 /**
  * Trait extends the default Contao template classes.
@@ -21,7 +20,26 @@ use Netzmacht\Contao\Toolkit\TranslatorTrait;
  */
 trait TemplateTrait
 {
-    use TranslatorTrait;
+    /**
+     * Template helper.
+     *
+     * @var ViewHelper
+     */
+    private $helper;
+
+    /**
+     * TemplateTrait constructor.
+     *
+     * @param string     $name        The template name.
+     * @param ViewHelper $helper      The template helper.
+     * @param string     $contentType The content type.
+     */
+    public function __construct($name, ViewHelper $helper, $contentType = 'text/html')
+    {
+        parent::__construct($name, $contentType);
+
+        $this->helper = $helper;
+    }
 
     /**
      * Get a template value.
@@ -51,6 +69,26 @@ trait TemplateTrait
     }
 
     /**
+     * Get the helper.
+     *
+     * @return ViewHelper
+     */
+    public function helper()
+    {
+        return $this->helper;
+    }
+
+    /**
+     * Shortcut to get the helper.
+     *
+     * @return ViewHelper
+     */
+    public function h()
+    {
+        return $this->helper;
+    }
+
+    /**
      * Insert a template.
      *
      * @param string $name The template name.
@@ -60,28 +98,12 @@ trait TemplateTrait
      */
     public function insert($name, array $data = null)
     {
-        if ($this instanceof ContaoTemplate) {
-            $template = new static($name);
-        } elseif (TL_MODE === 'BE') {
-            $template = new BackendTemplate($name);
-        } else {
-            $template = new FrontendTemplate($name);
-        }
+        $template = new static($name, $this->helper, $this->strContentType);
 
         if ($data !== null) {
             $template->setData($data);
         }
 
         echo $template->parse();
-    }
-
-    /**
-     * Get the assets manager.
-     *
-     * @return AssetsManager
-     */
-    public function getAssetsManager()
-    {
-        return $this->getServiceContainer()->getAssetsManager();
     }
 }

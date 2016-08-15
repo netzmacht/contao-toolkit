@@ -15,7 +15,7 @@ use Database\Result;
 use Model;
 use Model\Collection;
 use Netzmacht\Contao\Toolkit\Component\AbstractComponent;
-use Netzmacht\Contao\Toolkit\View\TemplateFactory;
+use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 
 /**
  * Class AbstractModule.
