@@ -9,6 +9,8 @@
  *
  */
 
+use Interop\Container\ContainerInterface;
+use Interop\Container\Pimple\PimpleInterop;
 use Netzmacht\Contao\Toolkit\Dca\DcaLoader;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\DateFormatter;
@@ -26,12 +28,23 @@ use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ReferenceFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\YesNoFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
+use Netzmacht\Contao\Toolkit\DependencyInjection\ToolkitServices;
 use Netzmacht\Contao\Toolkit\InsertTag\IntegratedReplacer;
-use Netzmacht\Contao\Toolkit\InsertTag\Replacer;
 use Netzmacht\Contao\Toolkit\ServiceContainer;
 use Netzmacht\Contao\Toolkit\View\AssetsManager;
 
 global $container;
+
+/**
+ * Get the container.
+ *
+ * @return ContainerInterface
+ */
+$container[ToolkitServices::CONTAINER] = $container->share(
+    function ($container) {
+        return new PimpleInterop($container);
+    }
+);
 
 $container['toolkit.production-mode.default'] = function ($container) {
     return !$container['config']->get('debugMode');
