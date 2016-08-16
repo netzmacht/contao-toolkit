@@ -15,6 +15,8 @@ namespace Netzmacht\Contao\Toolkit\Dca\Options;
  * Class ArrayListOptions extracts options from a list of associative arrays.
  *
  * @package Netzmacht\Contao\DevTools\Dca\Options
+ *
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class ArrayListOptions implements Options
 {

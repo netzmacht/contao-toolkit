@@ -17,6 +17,8 @@ use Model\Collection;
  * Class CollectionOptions maps a model collection to the option format.
  *
  * @package Netzmacht\Contao\DevTools\Dca\Options
+ *
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class CollectionOptions implements Options
 {
