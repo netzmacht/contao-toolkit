@@ -11,7 +11,6 @@
 namespace Netzmacht\Contao\Toolkit\Component\Hybrid;
 
 use ContaoCommunityAlliance\Translator\TranslatorInterface as Translator;
-use Netzmacht\Contao\Toolkit\Component\Component;
 use Netzmacht\Contao\Toolkit\Component\Module\AbstractModule;
 use Netzmacht\Contao\Toolkit\View\Template;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
@@ -21,7 +20,7 @@ use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
  *
  * @package Netzmacht\Contao\Toolkit\Component\Hybrid
  */
-class AbstractHybrid extends AbstractModule implements Component
+class AbstractHybrid extends AbstractModule implements Hybrid
 {
     /**
      * Hybrid key.
