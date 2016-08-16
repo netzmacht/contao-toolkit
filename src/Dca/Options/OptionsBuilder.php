@@ -32,12 +32,12 @@ class OptionsBuilder
      * Get Options builder for collection.
      *
      * @param Collection       $collection  Model collection.
-     * @param string           $valueColumn Value column.
      * @param string|\callable $labelColumn Label column or callback.
+     * @param string           $valueColumn Value column.
      *
      * @return OptionsBuilder
      */
-    public static function fromCollection(Collection $collection = null, $valueColumn = 'id', $labelColumn = null)
+    public static function fromCollection(Collection $collection = null, $labelColumn = null, $valueColumn = 'id')
     {
         if ($collection === null) {
             return new static(new ArrayOptions());
@@ -61,12 +61,12 @@ class OptionsBuilder
      * Get Options builder for collection.
      *
      * @param Result           $result      Database result.
-     * @param string           $valueColumn Value column.
      * @param string|\callable $labelColumn Label column or callback.
+     * @param string           $valueColumn Value column.
      *
      * @return OptionsBuilder
      */
-    public static function fromResult(Result $result = null, $valueColumn = 'id', $labelColumn = null)
+    public static function fromResult(Result $result = null, $labelColumn = null, $valueColumn = 'id')
     {
         if ($result->numRows < 1) {
             return  new static(new ArrayOptions());
