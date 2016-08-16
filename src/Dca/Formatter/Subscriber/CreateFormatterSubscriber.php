@@ -33,8 +33,8 @@ class CreateFormatterSubscriber
      * @var array
      */
     private $serviceNames = [
-        'formatter'    => [],
-        'pre-filters'  => [],
+        'formatter' => [],
+        'pre-filters' => [],
         'post-filters' => []
     ];
 

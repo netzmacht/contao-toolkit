@@ -79,7 +79,7 @@ class CreateFormatterEvent extends Event
      *
      * @return $this
      */
-    public function addFormatter(ValueFormatter $formatter)
+    public function addFormatter($formatter)
     {
         if (is_array($formatter)) {
             foreach ($formatter as $item) {
@@ -105,7 +105,7 @@ class CreateFormatterEvent extends Event
     /**
      * Add a pre filter.
      *
-     * @param ValueFormatter|ValueFormatter[] $formatter Formatter.
+     * @param ValueFormatter $formatter Formatter.
      *
      * @return $this
      */
@@ -119,7 +119,7 @@ class CreateFormatterEvent extends Event
     /**
      * Add pre filters.
      *
-     * @param ValueFormatter[] $preFilters Pre filters.
+     * @param array|ValueFormatter[] $preFilters Pre filters.
      *
      * @return $this
      */
@@ -135,7 +135,7 @@ class CreateFormatterEvent extends Event
     /**
      * Add a post filter.
      *
-     * @param ValueFormatter|ValueFormatter[] $formatter Formatter.
+     * @param ValueFormatter $formatter Formatter.
      *
      * @return $this
      */
@@ -149,7 +149,7 @@ class CreateFormatterEvent extends Event
     /**
      * Add post filters.
      *
-     * @param ValueFormatter[] $postFilters Post filters.
+     * @param array|ValueFormatter[] $postFilters Post filters.
      *
      * @return $this
      */

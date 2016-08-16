@@ -40,7 +40,7 @@ class ArrayOptions extends \ArrayIterator implements Options
     public function row()
     {
         return [
-            '__key__'   => $this->key(),
+            '__key__' => $this->key(),
             '__label__' => $this->current()
         ];
     }
