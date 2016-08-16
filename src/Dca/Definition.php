@@ -73,6 +73,10 @@ class Definition
         $dca =& $this->dca;
 
         foreach ($this->path($path) as $key) {
+            if (is_array($dca) && !array_key_exists($key, $dca) && $default !== null) {
+                $this->set($path, $default);
+            }
+
             if (!is_array($dca) || !array_key_exists($key, $dca)) {
                 return $default;
             }
