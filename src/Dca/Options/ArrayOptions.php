@@ -18,4 +18,30 @@ namespace Netzmacht\Contao\Toolkit\Dca\Options;
  */
 class ArrayOptions extends \ArrayIterator implements Options
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function getLabelKey()
+    {
+        return '__label__';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getValueKey()
+    {
+        return '__key__';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function row()
+    {
+        return [
+            '__key__'   => $this->key(),
+            '__label__' => $this->current()
+        ];
+    }
 }

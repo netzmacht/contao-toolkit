@@ -24,7 +24,7 @@ class OptionsBuilder
     /**
      * The options.
      *
-     * @var \Netzmacht\Contao\Toolkit\Dca\Options\Options
+     * @var Options
      */
     private $options;
 
@@ -40,19 +40,10 @@ class OptionsBuilder
     public static function fromCollection(Collection $collection = null, $labelColumn = null, $valueColumn = 'id')
     {
         if ($collection === null) {
-            return new static(new ArrayOptions());
+            return new static(new ArrayListOptions([], $valueColumn, $labelColumn));
         }
 
-        $options = new CollectionOptions($collection);
-        $options->setValueColumn($valueColumn);
-
-        if (is_callable($labelColumn)) {
-            $options->setLabelCallback($labelColumn);
-        } elseif ($labelColumn) {
-            $options->setLabelColumn($labelColumn);
-        } else {
-            $options->setLabelColumn($valueColumn);
-        }
+        $options = new CollectionOptions($collection, $labelColumn, $valueColumn);
 
         return new static($options);
     }
@@ -68,37 +59,22 @@ class OptionsBuilder
      */
     public static function fromResult(Result $result = null, $labelColumn = null, $valueColumn = 'id')
     {
-        if ($result->numRows < 1) {
-            return  new static(new ArrayOptions());
-        }
-
-        $options = new ArrayListOptions($result->fetchAllAssoc());
-        $options->setValueKey($valueColumn);
-
-        if (is_callable($labelColumn)) {
-            $options->setLabelCallback($labelColumn);
-        } elseif ($labelColumn) {
-            $options->setLabelKey($labelColumn);
-        } else {
-            $options->setLabelKey($valueColumn);
-        }
-
-        return new static($options);
+        return static::fromArrayList($result->fetchAllAssoc(), $valueColumn, $labelColumn);
     }
 
     /**
      * Create options from array list.
      *
-     * It expects an array which is a list of associatives arrays where the value column is part of the associative
+     * It expects an array which is a list of associative arrays where the value column is part of the associative
      * array and has to be extracted.
      *
      * @param array            $data     Raw data list.
-     * @param string           $valueKey Value key.
      * @param string|\callable $labelKey Label key or callback.
+     * @param string           $valueKey Value key.
      *
      * @return OptionsBuilder
      */
-    public static function fromArrayList(array $data, $valueKey = 'id', $labelKey = null)
+    public static function fromArrayList(array $data, $labelKey = null, $valueKey = 'id')
     {
         $options = new ArrayListOptions($data, $valueKey, $labelKey);
 
@@ -128,7 +104,8 @@ class OptionsBuilder
         $options = array();
 
         foreach ($this->options as $key => $value) {
-            $group = $this->groupValue($this->options[$key][$column], $callback);
+            $row   = $this->options->row();
+            $group = $this->groupValue($row[$column], $callback, $row);
 
             $options[$group][$key] = $value;
         }
@@ -154,12 +131,12 @@ class OptionsBuilder
         foreach ($this->options as $key => $value) {
             $pid = $this->options[$key][$parent];
 
-            $values[$pid][$key] = $value;
+            $values[$pid][$key] = array_merge($this->options->row(), ['__label__' => $value]);
         }
 
         $this->buildTree($values, $options, 0, $indentBy);
 
-        $this->options = new ArrayOptions($options);
+        $this->options = new ArrayListOptions($options, $this->options->getValueKey(), '__label__');
 
         return $this;
     }
@@ -179,13 +156,14 @@ class OptionsBuilder
      *
      * @param mixed          $value    Raw group value.
      * @param \callable|null $callback Optional callback.
+     * @param array          $row      Current data row.
      *
      * @return mixed
      */
-    private function groupValue($value, $callback)
+    private function groupValue($value, $callback, array $row)
     {
         if (is_callable($callback)) {
-            return $callback($value);
+            return $callback($value, $row);
         }
 
         return $value;

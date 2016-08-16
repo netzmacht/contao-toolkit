@@ -30,6 +30,7 @@ use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\YesNoFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
 use Netzmacht\Contao\Toolkit\InsertTag\IntegratedReplacer;
+use Netzmacht\Contao\Toolkit\InsertTag\Replacer;
 use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 
@@ -284,6 +285,11 @@ $container['toolkit.dca.formatter.factory'] = $container->share(
     }
 );
 
+/**
+ * Service definition of the insert tag replacer.
+ *
+ * @return Replacer
+ */
 $container[Services::INSERT_TAG_REPLACER] = $container->share(
     function () {
         if (version_compare(VERSION . '.' . BUILD, '3.5.3', '>=')) {
