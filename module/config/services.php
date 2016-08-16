@@ -14,14 +14,13 @@ use Interop\Container\ContainerInterface;
 use Interop\Container\Pimple\PimpleInterop;
 use Netzmacht\Contao\Toolkit\Dca\DcaLoader;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Subscriber\CreateFormatterSubscriber;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\DateFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\DeserializeFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\EncryptedFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FileUuidFormatter;
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FilterFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FlattenFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ForeignKeyFormatter;
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FormatterChain;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\HiddenValueFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\HtmlFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\OptionsFormatter;
@@ -31,7 +30,6 @@ use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\YesNoFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
 use Netzmacht\Contao\Toolkit\InsertTag\IntegratedReplacer;
-use Netzmacht\Contao\Toolkit\ServiceContainer;
 use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 
@@ -117,7 +115,10 @@ $container['toolkit.dca-loader'] = function () {
 
 $container[Services::DCA_MANAGER] = $container->share(
     function ($container) {
-        return new Manager($container['toolkit.dca-loader'], $container['toolkit.dca-formatter.factory']);
+        return new Manager(
+            $container['toolkit.dca-loader'],
+            $container['toolkit.dca.formatter.factory']
+        );
     }
 );
 
@@ -237,48 +238,35 @@ $container['toolkit.dca-formatter.flatten'] = function () {
  *
  * @param \Pimple $container Dependency container.
  *
- * @return ValueFormatter
+ * @return array
  */
-$container['toolkit.dca-formatter.pre-filter'] = function ($container) {
-    return new FilterFormatter(
-        [
-            $container['toolkit.dca-formatter.hidden'],
-            $container['toolkit.dca-formatter.deserialize'],
-            $container['toolkit.dca-formatter.encrypted'],
+$container['toolkit.dca-formatter.service-names'] = function () {
+    return [
+        'formatter' => [
+            'toolkit.dca-formatter.foreign-key',
+            'toolkit.dca-formatter.file-uuid',
+            'toolkit.dca-formatter.date',
+            'toolkit.dca-formatter.yes-no',
+            'toolkit.dca-formatter.html',
+            'toolkit.dca-formatter.reference',
+            'toolkit.dca-formatter.options',
+        ],
+        'pre-filters' => [
+            'toolkit.dca-formatter.hidden',
+            'toolkit.dca-formatter.deserialize',
+            'toolkit.dca-formatter.encrypted',
+        ],
+        'post-filters' => [
+            'toolkit.dca-formatter.flatten'
         ]
-    );
+    ];
 };
 
-/**
- * Post filter formatter factory.
- *
- * @param \Pimple $container Dependency container.
- *
- * @return ValueFormatter
- */
-$container['toolkit.dca-formatter.post-filter'] = function ($container) {
-    return new FilterFormatter([$container['toolkit.dca-formatter.flatten']]);
-};
-
-/**
- * Default formatter factory.
- *
- * @param \Pimple $container Dependency container.
- *
- * @return ValueFormatter
- */
-$container['toolkit.dca-formatter.default'] = $container->share(
+$container['toolkit.dca.formatter.create-subscriber'] = $container->share(
     function ($container) {
-        return new FormatterChain(
-            [
-                $container['toolkit.dca-formatter.foreign-key'],
-                $container['toolkit.dca-formatter.file-uuid'],
-                $container['toolkit.dca-formatter.date'],
-                $container['toolkit.dca-formatter.yes-no'],
-                $container['toolkit.dca-formatter.html'],
-                $container['toolkit.dca-formatter.reference'],
-                $container['toolkit.dca-formatter.options'],
-            ]
+        return new CreateFormatterSubscriber(
+            $container[Services::CONTAINER],
+            $container['toolkit.dca-formatter.service-names']
         );
     }
 );
@@ -290,7 +278,7 @@ $container['toolkit.dca-formatter.default'] = $container->share(
  *
  * @return FormatterFactory
  */
-$container['toolkit.dca-formatter.factory'] = $container->share(
+$container['toolkit.dca.formatter.factory'] = $container->share(
     function ($container) {
         return new FormatterFactory($container[Services::CONTAINER], $container[Services::EVENT_DISPATCHER]);
     }

@@ -16,7 +16,7 @@ use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FilterFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FormatterChain;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
-use Netzmacht\Contao\Toolkit\Event\CreateFormatterEvent;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Event\CreateFormatterEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -71,23 +71,27 @@ class FormatterFactory
      */
     public function createFormatterFor(Definition $definition)
     {
-        if ($this->serviceContainer->has('toolkit.dca-formatter.' . $definition->getName())) {
-            return $this->serviceContainer->get('toolkit.dca-formatter.' . $definition->getName());
-        }
-
         $event = new CreateFormatterEvent($definition);
         $this->eventDispatcher->dispatch($event::NAME, $event);
 
-        $preFilter  = $this->serviceContainer->get('toolkit.dca-formatter.pre-filter');
-        $postFilter = $this->serviceContainer->get('toolkit.dca-formatter.post-filter');
-        $formatter  = $this->getDefaultValueFormatter();
+        $chainFilters = [];
+        $preFilters   = $event->getPreFilters();
+        $formatter    = $event->getFormatter();
+        $postFilters  = $event->getPostFilters();
 
-        if ($event->getFormatters()) {
-            $local     = new FormatterChain($event->getFormatters());
-            $formatter = new FormatterChain([$local, $formatter]);
+        if ($preFilters) {
+            $chainFilters[] = new FilterFormatter($preFilters);
         }
 
-        $chain = new FilterFormatter([$preFilter, $formatter, $postFilter]);
+        if ($formatter) {
+            $chainFilters[] = new FormatterChain($formatter);
+        }
+
+        if ($preFilters) {
+            $chainFilters[] = new FilterFormatter($postFilters);
+        }
+
+        $chain = new FilterFormatter($chainFilters);
 
         return new Formatter($definition, $chain);
     }
