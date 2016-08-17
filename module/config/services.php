@@ -11,7 +11,6 @@
 
 use ContaoCommunityAlliance\Translator\TranslatorInterface;
 use Interop\Container\ContainerInterface;
-use Interop\Container\Pimple\PimpleInterop;
 use Netzmacht\Contao\Toolkit\Component\ComponentFactory;
 use Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElementDecorator;
 use Netzmacht\Contao\Toolkit\Component\FactoryToClassMapConverter;
@@ -31,6 +30,7 @@ use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ReferenceFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\YesNoFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
+use Netzmacht\Contao\Toolkit\DependencyInjection\PimpleAdapter;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
 use Netzmacht\Contao\Toolkit\InsertTag\IntegratedReplacer;
 use Netzmacht\Contao\Toolkit\InsertTag\Replacer;
@@ -46,7 +46,7 @@ global $container;
  */
 $container[Services::CONTAINER] = $container->share(
     function ($container) {
-        return new PimpleInterop($container);
+        return new PimpleAdapter($container);
     }
 );
 
