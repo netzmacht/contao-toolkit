@@ -67,28 +67,15 @@ $container[Services::TEMPLATE_FACTORY] = $container->share(
  * @return ArrayObject
  */
 $container[Services::VIEW_HELPERS] = $container->share(
-    function () {
-        return new ArrayObject();
+    function ($container) {
+        return new ArrayObject(
+            [
+                'translator' => $container[Services::TRANSLATOR],
+                'assets'     => $container[Services::ASSETS_MANAGER],
+            ]
+        );
     }
 );
-
-/**
- * Factory definition of the translator view helper.
- *
- * @return TranslatorInterface
- */
-$container[Services::VIEW_HELPERS]['translator'] = function () use ($container) {
-    return $container[Services::TRANSLATOR];
-};
-
-/**
- * Factory definition of the assets manager view helper.
- *
- * @return AssetsManager
- */
-$container[Services::VIEW_HELPERS]['assets'] = function () use ($container) {
-    return $container[Services::ASSETS_MANAGER];
-};
 
 /**
  * Service definition of the assets manager.
