@@ -49,7 +49,7 @@ abstract class AbstractComponent
      *
      * @var string
      */
-    private $templateName;
+    protected $templateName;
 
     /**
      * Template factory.
