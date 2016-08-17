@@ -61,16 +61,23 @@ abstract class Callbacks
     /**
      * Generate the callback definition.
      *
-     * @param string $name Callback method.
+     * The service name is only required if the default service name contao.dca.TL_TABLE is not used.
+     *
+     * @param string $serviceName Service name or callback method.
+     * @param string $methodName  Callback method name.
      *
      * @return callable
      */
-    public static function callback($name)
+    public static function callback($serviceName, $methodName = null)
     {
-        return function () use ($name) {
+        if (!$methodName) {
+            $methodName  = $serviceName;
             $serviceName = 'contao.dca.' . static::getName();
+        }
+
+        return function () use ($serviceName, $methodName) {
             $service     = static::getContainer()->get($serviceName);
-            $callback    = [$service, $name];
+            $callback    = [$service, $methodName];
             $arguments   = func_get_args();
 
             return call_user_func_array($callback, $arguments);
