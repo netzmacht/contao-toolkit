@@ -58,5 +58,5 @@ interface Template
      *
      * @return void
      */
-    public function setData(array $data);
+    public function setData($data);
 }
