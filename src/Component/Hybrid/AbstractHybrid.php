@@ -10,62 +10,17 @@
 
 namespace Netzmacht\Contao\Toolkit\Component\Hybrid;
 
-use ContaoCommunityAlliance\Translator\TranslatorInterface as Translator;
 use Netzmacht\Contao\Toolkit\Component\Module\AbstractModule;
-use Netzmacht\Contao\Toolkit\View\Template;
-use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 
 /**
- * Class AbstractHybrid.
+ * The abstract hybrid implementation allows to use a component as content element and/or module.
+ *
+ * It does not depend on an foreign element being loaded and merged as the Contao hybrid does.
  *
  * @package Netzmacht\Contao\Toolkit\Component\Hybrid
  */
 class AbstractHybrid extends AbstractModule implements Hybrid
 {
-    /**
-     * Hybrid key.
-     *
-     * @var string
-     */
-    protected $key;
-
-    /**
-     * Hybrid table.
-     *
-     * @var string
-     */
-    protected $table;
-
-    /**
-     * Hybrid data.
-     *
-     * @var array
-     */
-    private $hybrid = [];
-
-    /**
-     * Database connection.
-     *
-     * @var \Database
-     */
-    private $database;
-
-    /**
-     * {@inheritDoc}
-     */
-    public function __construct(
-        $model,
-        TemplateFactory $templateFactory,
-        Translator $translator,
-        \Database $database,
-        $column
-    ) {
-        parent::__construct($model, $templateFactory, $translator, $column);
-
-        $this->database = $database;
-        $this->loadHybrid();
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -80,26 +35,6 @@ class AbstractHybrid extends AbstractModule implements Hybrid
         }
 
         return parent::generate();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function compile(Template $template)
-    {
-        parent::compile($template);
-
-        $template->set('hybrid', $this->hybrid);
-    }
-
-    /**
-     * Get hybrid.
-     *
-     * @return array
-     */
-    protected function getHybrid()
-    {
-        return $this->hybrid;
     }
 
     /**
@@ -136,35 +71,5 @@ class AbstractHybrid extends AbstractModule implements Hybrid
     private function isContentElement()
     {
         return $this->getModel() instanceof \ContentModel;
-    }
-
-    /**
-     * Load the hybrid.
-     *
-     * @return void
-     */
-    private function loadHybrid()
-    {
-        if (!$this->table || !$this->key) {
-            return;
-        }
-
-        /** @var \Model $modelClass */
-        $modelClass = \Model::getClassFromTable($this->table);
-        if (class_exists($modelClass)) {
-            $hybridModel = $modelClass::findByPk($this->get($this->key));
-
-            if ($hybridModel) {
-                $this->hybrid = $hybridModel->row();
-            }
-        } else {
-            $result = $this->database
-                ->prepare(sprintf('SELECT * FROM %s WHERE id=?', $this->table))
-                ->execute($this->get($this->key));
-
-            if ($result->numRows) {
-                $this->hybrid = $result->row();
-            }
-        }
     }
 }
