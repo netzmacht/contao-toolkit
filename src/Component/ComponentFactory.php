@@ -63,6 +63,6 @@ final class ComponentFactory
             throw ComponentNotFound::forModel($model);
         }
 
-        return call_user_func($this->factories[$model->type], $column, $this->container);
+        return call_user_func($this->factories[$model->type], $model, $column, $this->container);
     }
 }
