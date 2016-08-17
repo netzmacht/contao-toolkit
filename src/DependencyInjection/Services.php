@@ -45,6 +45,24 @@ class Services
     const CONTAINER = 'toolkit.container';
 
     /**
+     * Content element factory.
+     *
+     * Instance of Netzmacht\Contao\Toolkit\Component\ComponentFactory
+     *
+     * @var string
+     */
+    const CONTENT_ELEMENT_FACTORY = 'toolkit.component.content-element-factory';
+
+    /**
+     * Content elements factories map.
+     *
+     * Instance of ArrayObject
+     *
+     * @var string
+     */
+    const CONTENT_ELEMENTS_MAP = 'toolkit.component.elements';
+
+    /**
      * Database connection service.
      *
      * Instance of \Database
@@ -106,6 +124,24 @@ class Services
      * @var string
      */
     const INSERT_TAG_REPLACER = 'toolkit.insert-tag.replacer';
+
+    /**
+     * Module factory.
+     *
+     * Instance of Netzmacht\Contao\Toolkit\Component\ComponentFactory
+     *
+     * @var string
+     */
+    const MODULE_FACTORY = 'toolkit.component.module-factory';
+
+    /**
+     * Module factories map.
+     *
+     * Instance of ArrayObject
+     *
+     * @var string
+     */
+    const MODULES_MAP = 'toolkit.component.modules';
 
     /**
      * Page provider Service.

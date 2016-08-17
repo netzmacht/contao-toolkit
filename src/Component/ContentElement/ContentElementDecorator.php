@@ -11,6 +11,7 @@
 namespace Netzmacht\Contao\Toolkit\Component\ContentElement;
 
 use Netzmacht\Contao\Toolkit\Component\ComponentDecoratorTrait;
+use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
 
 /**
  * Class ContentElementDecorator.
@@ -22,22 +23,10 @@ class ContentElementDecorator extends \ContentElement
     use ComponentDecoratorTrait;
 
     /**
-     * Get the content element factory.
-     *
-     * @param \ContentModel $model Component model.
-     *
-     * @return callable
-     * @throws ContentElementNotFound If element is not registered as a service.
+     * {@inheritDoc}
      */
-    protected function getFactory($model)
+    protected function getFactory()
     {
-        $container   = $this->getContainer();
-        $factoryName = 'contao.elements.' . $model->type;
-
-        if (!$container->has($factoryName)) {
-            throw ContentElementNotFound::forModel($model);
-        }
-
-        return $container->get($factoryName);
+        return $this->getContainer()->get(Services::CONTENT_ELEMENT_FACTORY);
     }
 }

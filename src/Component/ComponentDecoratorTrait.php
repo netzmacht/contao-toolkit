@@ -34,7 +34,7 @@ trait ComponentDecoratorTrait
     public function __construct($contentModel, $column)
     {
         $factory         = $this->getFactory($contentModel);
-        $this->component = $factory($contentModel, $column);
+        $this->component = $factory->create($contentModel, $column);
     }
 
     /**
@@ -88,9 +88,7 @@ trait ComponentDecoratorTrait
     /**
      * Get the content element factory.
      *
-     * @param \Model $model Component model.
-     *
-     * @return callable
+     * @return ComponentFactory
      */
-    abstract protected function getFactory($model);
+    abstract protected function getFactory();
 }

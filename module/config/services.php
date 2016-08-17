@@ -12,6 +12,9 @@
 use ContaoCommunityAlliance\Translator\TranslatorInterface;
 use Interop\Container\ContainerInterface;
 use Interop\Container\Pimple\PimpleInterop;
+use Netzmacht\Contao\Toolkit\Component\ComponentFactory;
+use Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElementDecorator;
+use Netzmacht\Contao\Toolkit\Component\FactoryToClassMapConverter;
 use Netzmacht\Contao\Toolkit\Dca\DcaLoader;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Subscriber\CreateFormatterSubscriber;
@@ -98,6 +101,88 @@ $container[Services::ASSETS_MANAGER] = $container->share(
             $GLOBALS['TL_CSS'],
             $GLOBALS['TL_JAVASCRIPT'],
             $container['toolkit.production-mode']
+        );
+    }
+);
+
+/**
+ * Module factory.
+ *
+ * @return ComponentFactory
+ */
+$container[Services::MODULE_FACTORY] = $container->share(
+    function ($container) {
+        return new ComponentFactory(
+            $container[Services::MODULES_MAP],
+            $container[Services::CONTAINER]
+        );
+    }
+);
+
+/**
+ * Modules map.
+ *
+ * @return ArrayObject
+ */
+$container[Services::MODULES_MAP] = $container->share(
+    function () {
+        return new ArrayObject();
+    }
+);
+
+/**
+ * Content element config converter
+ *
+ * @return ContentElementDecorator
+ */
+$container['toolkit.component.module-map-converter'] = $container->share(
+    function ($container) {
+        return new FactoryToClassMapConverter(
+            $GLOBALS['FE_MOD'],
+            $container[Services::MODULES_MAP],
+            'Netzmacht\Contao\Toolkit\Component\Module\ModuleDecorator'
+        );
+    }
+);
+
+/**
+ * Content element factory.
+ *
+ * @param $container
+ *
+ * @return bool
+ */
+$container[Services::CONTENT_ELEMENT_FACTORY] = $container->share(
+    function ($container) {
+        return new ComponentFactory(
+            $container[Services::CONTENT_ELEMENTS_MAP],
+            $container[Services::CONTAINER]
+        );
+    }
+);
+
+/**
+ * Content elements map.
+ *
+ * @return ArrayObject
+ */
+$container[Services::CONTENT_ELEMENTS_MAP] = $container->share(
+    function () {
+        return new ArrayObject();
+    }
+);
+
+/**
+ * Content element config converter
+ *
+ * @return ContentElementDecorator
+ */
+$container['toolkit.component.content-element-map-converter'] = $container->share(
+    function ($container) {
+        return new FactoryToClassMapConverter(
+            $GLOBALS['TL_CTE'],
+            $container[Services::CONTENT_ELEMENTS_MAP],
+            'Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElementDecorator'
         );
     }
 );

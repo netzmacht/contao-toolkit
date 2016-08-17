@@ -9,11 +9,16 @@
  */
 
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Event\CreateFormatterEvent;
+use Netzmacht\Contao\Toolkit\Event\InitializeSystemEvent;
 
 global $container;
 
 return [
     CreateFormatterEvent::NAME => [
         $container['toolkit.dca.formatter.create-subscriber']
+    ],
+    InitializeSystemEvent::NAME => [
+        [$container['toolkit.component.content-element-map-converter'], 'convert'],
+        [$container['toolkit.component.module-map-converter'], 'convert'],
     ]
 ];
