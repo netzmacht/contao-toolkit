@@ -15,7 +15,7 @@ global $container;
 
 return [
     CreateFormatterEvent::NAME => [
-        $container['toolkit.dca.formatter.create-subscriber']
+        [$container['toolkit.dca.formatter.create-subscriber'], 'handle']
     ],
     InitializeSystemEvent::NAME => [
         [$container['toolkit.component.content-element-map-converter'], 'convert'],
