@@ -48,7 +48,7 @@ final class FactoryToClassMapConverter
      */
     public function __construct(array &$classMap, \ArrayObject $factoryMap, $decoratorClass)
     {
-        $this->classMap       = $classMap;
+        $this->classMap       = &$classMap;
         $this->factoryMap     = $factoryMap;
         $this->decoratorClass = $decoratorClass;
     }
