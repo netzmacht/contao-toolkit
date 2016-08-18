@@ -28,7 +28,7 @@ trait ContainerTrait
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function getContainer()
+    protected static function getContainer()
     {
         return $GLOBALS['container'][Services::CONTAINER];
     }

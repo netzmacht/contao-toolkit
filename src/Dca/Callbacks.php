@@ -20,9 +20,7 @@ use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerTrait;
  */
 abstract class Callbacks
 {
-    use ContainerTrait {
-        getContainer as private;
-    }
+    use ContainerTrait;
 
     /**
      * Name of the data container.
@@ -76,7 +74,7 @@ abstract class Callbacks
         }
 
         return function () use ($serviceName, $methodName) {
-            $service     = static::getContainer()->get($serviceName);
+            $service     = self::getContainer()->get($serviceName);
             $callback    = [$service, $methodName];
             $arguments   = func_get_args();
 
