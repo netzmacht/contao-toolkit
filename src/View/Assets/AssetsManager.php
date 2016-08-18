@@ -62,7 +62,7 @@ class AssetsManager
      * @param string $static Register it as static entry.
      * @param null   $name   Optional assets name.
      *
-     * @return void
+     * @return $this
      */
     public function addJavascript($path, $static = self::STATIC_PRODUCTION, $name = null)
     {
@@ -75,6 +75,8 @@ class AssetsManager
         } else {
             $this->javascripts[] = $path;
         }
+
+        return $this;
     }
 
     /**
@@ -84,7 +86,7 @@ class AssetsManager
      * @param string $static Register it as static entry.
      * @param null   $name   Optional assets name.
      *
-     * @return void
+     * @return $this
      */
     public function addJavascripts(array $paths, $static = self::STATIC_PRODUCTION, $name = null)
     {
@@ -97,6 +99,8 @@ class AssetsManager
 
             static::addJavascript($path, $static, $name);
         }
+
+        return $this;
     }
 
     /**
@@ -107,7 +111,7 @@ class AssetsManager
      * @param string $static Register it as static entry.
      * @param null   $name   Optional assets name.
      *
-     * @return void
+     * @return $this
      */
     public function addStylesheet($path, $media = '', $static = self::STATIC_PRODUCTION, $name = null)
     {
@@ -126,6 +130,8 @@ class AssetsManager
         } else {
             $this->stylesheets[] = $path;
         }
+
+        return $this;
     }
 
     /**
@@ -136,7 +142,7 @@ class AssetsManager
      * @param string $static Register it as static entry.
      * @param null   $name   Optional assets name.
      *
-     * @return void
+     * @return $this
      */
     public function addStylesheets(array $paths, $media = '', $static = self::STATIC_PRODUCTION, $name = null)
     {
@@ -149,6 +155,8 @@ class AssetsManager
 
             static::addStylesheet($path, $media, $static, $name);
         }
+
+        return $this;
     }
 
     /**
