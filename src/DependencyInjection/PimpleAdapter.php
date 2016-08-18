@@ -46,7 +46,7 @@ class PimpleAdapter implements ContainerInterface
         try {
             return $this->pimple[$id];
         } catch (\InvalidArgumentException $previous) {
-            throw new NotFoundException(sprintf('Service with id "%s" not found.', $previous->getCode(), $previous));
+            throw new NotFoundException(sprintf('Service with id "%s" not found.', $id), $previous->getCode(), $previous);
         } catch (\Exception $previous) {
             throw new ContainerException('', $previous->getCode(), $previous);
         }
