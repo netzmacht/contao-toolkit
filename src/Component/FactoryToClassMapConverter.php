@@ -35,7 +35,9 @@ final class FactoryToClassMapConverter
     private $factoryMap;
 
     /**
-     * @var
+     * Decorator class name.
+     *
+     * @var string
      */
     private $decoratorClass;
 

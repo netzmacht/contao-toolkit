@@ -81,7 +81,7 @@ class PopupWizard extends AbstractWizard
     /**
      * Construct.
      *
-     * @param TemplateFactory $templateFactory Template Factory
+     * @param TemplateFactory $templateFactory Template Factory.
      * @param Translator      $translator      Translator.
      * @param RequestToken    $requestToken    Request token.
      * @param string          $href            Link href snippet.
@@ -91,6 +91,8 @@ class PopupWizard extends AbstractWizard
      * @param bool            $always          If true the button is generated always no matter if an value is given.
      * @param string|null     $linkPattern     Link pattern.
      * @param string          $template        Template name.
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         TemplateFactory $templateFactory,

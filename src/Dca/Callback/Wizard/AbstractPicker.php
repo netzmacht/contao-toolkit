@@ -44,8 +44,12 @@ abstract class AbstractPicker extends AbstractWizard
      * @param Input           $input           Input.
      * @param string          $template        Template name.
      */
-    public function __construct(TemplateFactory $templateFactory, Translator $translator, Input $input, $template = null)
-    {
+    public function __construct(
+        TemplateFactory $templateFactory,
+        Translator $translator,
+        Input $input,
+        $template = null
+    ) {
         parent::__construct($templateFactory, $translator, $template);
 
         $this->input = $input;

@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Callback
  */
-class PagePicker extends AbstractPicker
+class PagePicker extends AbstractFieldPicker
 {
     /**
      * {@inheritDoc}
@@ -57,11 +57,6 @@ class PagePicker extends AbstractPicker
      */
     public function __invoke($dataContainer)
     {
-        return $this->generate(
-            $dataContainer->table,
-            $dataContainer->field,
-            $dataContainer->id,
-            $dataContainer->value
-        );
+        return $this->generate($dataContainer->table, $dataContainer->field, $dataContainer->id, $dataContainer->value);
     }
 }

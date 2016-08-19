@@ -9,7 +9,6 @@
  *
  */
 
-use ContaoCommunityAlliance\Translator\TranslatorInterface;
 use Interop\Container\ContainerInterface;
 use Netzmacht\Contao\Toolkit\Component\ComponentFactory;
 use Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElementDecorator;

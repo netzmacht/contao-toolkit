@@ -40,13 +40,20 @@ class PimpleAdapter implements ContainerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws ServiceNotFound    When service id is not found.
+     * @throws ContainerException When an exception is thrown during fetching the service.
      */
-    public function get($id)
+    public function get($serviceId)
     {
         try {
-            return $this->pimple[$id];
+            return $this->pimple[$serviceId];
         } catch (\InvalidArgumentException $previous) {
-            throw new ServiceNotFound(sprintf('Service with id "%s" not found.', $id), $previous->getCode(), $previous);
+            throw new ServiceNotFound(
+                sprintf('Service with id "%s" not found.', $serviceId),
+                $previous->getCode(),
+                $previous
+            );
         } catch (\Exception $previous) {
             throw new ContainerException('', $previous->getCode(), $previous);
         }
@@ -55,8 +62,8 @@ class PimpleAdapter implements ContainerInterface
     /**
      * {@inheritdoc}
      */
-    public function has($id)
+    public function has($serviceId)
     {
-        return isset($this->pimple[$id]);
+        return isset($this->pimple[$serviceId]);
     }
 }

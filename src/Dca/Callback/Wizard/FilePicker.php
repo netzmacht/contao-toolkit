@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
  *
  * @package Netzmacht\Contao\Toolkit\View\Wizard
  */
-class FilePicker extends AbstractPicker
+class FilePicker extends AbstractFieldPicker
 {
     /**
      * {@inheritDoc}
@@ -50,18 +50,5 @@ class FilePicker extends AbstractPicker
             ->set('id', $cssId);
 
         return $template->parse();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function __invoke($dataContainer)
-    {
-        return $this->generate(
-            $dataContainer->table,
-            $dataContainer->field,
-            $dataContainer->id,
-            $dataContainer->value
-        );
     }
 }

@@ -23,7 +23,7 @@ use Model;
 final class ComponentFactory
 {
     /**
-     * Component factories.
+     * List of Component factories.
      *
      * @var ArrayObject|callable[]
      */
@@ -40,7 +40,7 @@ final class ComponentFactory
      * ComponentFactory constructor.
      *
      * @param ArrayObject|callable[] $factories Component factories.
-     * @param Container  $container  Service container.
+     * @param Container              $container Service container.
      */
     public function __construct(ArrayObject $factories, Container $container)
     {
@@ -55,7 +55,7 @@ final class ComponentFactory
      * @param string       $column Column in which the model is generated.
      *
      * @return mixed
-     * @throws ComponentNotFound
+     * @throws ComponentNotFound When no component factory is registered.
      */
     public function create($model, $column)
     {
