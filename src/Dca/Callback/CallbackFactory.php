@@ -14,6 +14,7 @@ use Controller;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Button\StateButtonCallback;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\ColorPicker;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\FilePicker;
+use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\PagePicker;
 use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerAware;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
 
@@ -123,6 +124,25 @@ class CallbackFactory
         $container = static::getContainer();
 
         return new FilePicker(
+            $container->get(Services::TEMPLATE_FACTORY),
+            $container->get(Services::TRANSLATOR),
+            $container->get(Services::INPUT),
+            $template
+        );
+    }
+
+    /**
+     * Create the page picker callback.
+     *
+     * @param string|null $template Template name.
+     *
+     * @return PagePicker
+     */
+    public static function pagePicker($template = null)
+    {
+        $container = static::getContainer();
+
+        return new PagePicker(
             $container->get(Services::TEMPLATE_FACTORY),
             $container->get(Services::TRANSLATOR),
             $container->get(Services::INPUT),

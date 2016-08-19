@@ -9,10 +9,7 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\Dca\Wizard;
-
-use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\AbstractPicker;
-use Netzmacht\Contao\Toolkit\View\Template\BackendTemplate;
+namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
 
 /**
  * Class PagePickerCallback.
@@ -43,7 +40,7 @@ class PagePicker extends AbstractPicker
             str_replace('\'', '\\\'', $this->translator->translate('MOD.page.0', 'modules'))
         );
 
-        $template = new BackendTemplate($this->template);
+        $template = $this->createTemplate();
         $template
             ->set('url', $url)
             ->set('title', $this->translator->translate('MSC.pagepicker'))
@@ -53,5 +50,18 @@ class PagePicker extends AbstractPicker
             ->set('id', $cssId);
 
         return $template->parse();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function __invoke($dataContainer)
+    {
+        return $this->generate(
+            $dataContainer->table,
+            $dataContainer->field,
+            $dataContainer->id,
+            $dataContainer->value
+        );
     }
 }
