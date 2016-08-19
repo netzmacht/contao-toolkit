@@ -9,18 +9,14 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\Dca\Button\Callback;
+namespace Netzmacht\Contao\Toolkit\Dca\Callback\Button;
 
-use Contao\Backend;
-use Contao\Controller;
-use Contao\Database;
-use Contao\Image;
-use Contao\Input;
+use \Backend;
+use \Controller;
+use \Image;
+use \Input;
 use Contao\System;
-use Contao\User;
-use Netzmacht\Contao\Toolkit\Data\State\StateToggler;
-use Netzmacht\Contao\Toolkit\Dca\Definition;
-use Netzmacht\Contao\Toolkit\Dca\Exception\BadDefinitionException;
+use Netzmacht\Contao\Toolkit\Data\State\StateToggle;
 use Netzmacht\Contao\Toolkit\Exception\AccessDeniedException;
 
 /**
@@ -31,13 +27,6 @@ use Netzmacht\Contao\Toolkit\Exception\AccessDeniedException;
 class StateButtonCallback
 {
     /**
-     * Contao user.
-     *
-     * @var User
-     */
-    private $user;
-
-    /**
      * The input.
      *
      * @var Input
@@ -45,65 +34,47 @@ class StateButtonCallback
     private $input;
 
     /**
-     * The database connection.
-     *
-     * @var Database
-     */
-    private $database;
-
-    /**
-     * Data container definition.
-     *
-     * @var Definition
-     */
-    private $definition;
-
-    /**
-     * Button name.
+     * State column.
      *
      * @var string
      */
-    private $buttonName;
+    private $stateColumn;
+
+    /**
+     * Disabled icon.
+     *
+     * @var string
+     */
+    private $disabledIcon;
+
+    /**
+     * If true state value is handled inverse.
+     *
+     * @var bool
+     */
+    private $inverse;
 
     /**
      * StateButtonCallback constructor.
      *
-     * @param User       $user       Contao user object.
-     * @param Input      $input      Request Input.
-     * @param Database   $database   Database connection.
-     * @param Definition $definition Data container definition.
-     * @param string     $buttonName Button name.
+     * @param Input       $input        Request Input.
+     * @param StateToggle $stateToggle  State toggle.
+     * @param string      $stateColumn  Column name of the state value.
+     * @param string|null $disabledIcon Disabled icon.
+     * @param bool        $inverse      If true state value is handled inverse.
      */
-    public function __construct(User $user, Input $input, Database $database, Definition $definition, $buttonName)
-    {
-        $this->user       = $user;
-        $this->input      = $input;
-        $this->database   = $database;
-        $this->definition = $definition;
-        $this->buttonName = $buttonName;
-        $this->config     = $this->definition->get(
-            ['list', 'operations', $this->buttonName, 'toolkit', 'state_button'],
-            []
-        );
-
-        $this->toggler = $this->createStateToggler();
-    }
-
-    /**
-     * Craete the state toggler.
-     *
-     * @return StateToggler
-     * @throws BadDefinitionException When no state column is defined.
-     */
-    private function createStateToggler()
-    {
-        if (!isset($this->config['column'])) {
-            throw new BadDefinitionException(
-                sprintf('No state column defined for state toggle button "%s"', $this->buttonName)
-            );
-        }
-
-        return new StateToggler($this->user, $this->database, $this->definition, $this->config['column']);
+    public function __construct(
+        Input $input,
+        StateToggle $stateToggle,
+        $stateColumn,
+        $disabledIcon = null,
+        $inverse = false
+    ) {
+        $this->input        = $input;
+        $this->toggler      = $stateToggle;
+        $this->stateColumn  = $stateColumn;
+        $this->disabledIcon = $disabledIcon;
+        $this->inverse      = $inverse;
     }
 
     /**
@@ -130,14 +101,13 @@ class StateButtonCallback
             }
         }
 
-
         if (!$this->toggler->hasUserAccess()) {
             return '';
         }
 
         $href .= '&amp;id='.$this->input->get('id').'&amp;tid='.$row['id'].'&amp;state='.$row[''];
 
-        if (!$row[$this->config['column']] || ($this->config['inverse'] && $row[$this->config['column']])) {
+        if (!$row[$this->stateColumn] || ($this->inverse && $row[$this->stateColumn])) {
             $icon = $this->disableIcon($icon);
         }
 
@@ -159,8 +129,8 @@ class StateButtonCallback
      */
     private function disableIcon($icon)
     {
-        if (isset($this->config['disabledIcon'])) {
-            return $this->config['disabledIcon'];
+        if ($this->disabledIcon) {
+            return $this->disabledIcon;
         }
 
         if ($icon === 'visible.gif') {
