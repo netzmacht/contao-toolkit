@@ -32,7 +32,7 @@ class CallbackFactory
      *
      * @return \Closure
      */
-    public static function getTemplatesCallback($prefix = '', array $exclude = null)
+    public static function getTemplates($prefix = '', array $exclude = null)
     {
         return function () use ($prefix, $exclude) {
             $templates = Controller::getTemplateGroup($prefix);
@@ -55,7 +55,7 @@ class CallbackFactory
      *
      * @return StateButtonCallback
      */
-    public static function stateButtonCallback($dataContainerName, $column, $disabledIcon = null, $inverse = false)
+    public static function stateButton($dataContainerName, $column, $disabledIcon = null, $inverse = false)
     {
         $container          = static::getContainer();
         $stateToggleFactory = $container->get(Services::STATE_TOGGLE_FACTORY);
