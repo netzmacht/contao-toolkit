@@ -13,6 +13,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Callback;
 use Controller;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Button\StateButtonCallback;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\ColorPicker;
+use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\FilePicker;
 use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerAware;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
 
@@ -106,6 +107,25 @@ class CallbackFactory
             $container->get(Services::INPUT),
             COLORPICKER,
             $replaceHex,
+            $template
+        );
+    }
+
+    /**
+     * Create the file picker callback.
+     *
+     * @param string|null $template Template name.
+     *
+     * @return FilePicker
+     */
+    public static function filePicker($template = null)
+    {
+        $container = static::getContainer();
+
+        return new FilePicker(
+            $container->get(Services::TEMPLATE_FACTORY),
+            $container->get(Services::TRANSLATOR),
+            $container->get(Services::INPUT),
             $template
         );
     }

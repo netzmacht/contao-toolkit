@@ -11,10 +11,8 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
 
-use DataContainer;
 use Input;
 use ContaoCommunityAlliance\Translator\TranslatorInterface as Translator;
-use Netzmacht\Contao\Toolkit\View\Template\BackendTemplate;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 
 /**
@@ -86,11 +84,7 @@ class ColorPicker extends AbstractPicker
     }
 
     /**
-     * Invoke the callback.
-     *
-     * @param DataContainer $dataContainer Data container driver.
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function __invoke($dataContainer)
     {

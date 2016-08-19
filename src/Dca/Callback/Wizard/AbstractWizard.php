@@ -12,6 +12,7 @@
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
 
 use ContaoCommunityAlliance\Translator\TranslatorInterface as Translator;
+use DataContainer;
 use Netzmacht\Contao\Toolkit\View\Template;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 
@@ -71,4 +72,13 @@ abstract class AbstractWizard
     {
         return $this->templateFactory->createBackendTemplate($name ?: $this->template);
     }
+
+    /**
+     * Invoke by the callback.
+     *
+     * @param DataContainer $dataContainer Data container driver.
+     *
+     * @return string
+     */
+    abstract public function __invoke($dataContainer);
 }
