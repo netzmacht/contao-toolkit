@@ -101,7 +101,7 @@ final class CallbackFactory
      *
      * @return ColorPicker
      */
-    public static function colorPicker($replaceHex = true, $template = null)
+    public static function colorPicker($replaceHex = false, $template = null)
     {
         $container = static::getContainer();
 
