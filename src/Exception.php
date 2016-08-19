@@ -9,7 +9,7 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\Exception;
+namespace Netzmacht\Contao\Toolkit;
 
 use Exception as PhpException;
 
