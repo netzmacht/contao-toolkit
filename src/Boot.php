@@ -13,7 +13,7 @@ namespace Netzmacht\Contao\Toolkit;
 
 use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerAware;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
-use Netzmacht\Contao\Toolkit\Event\InitializeSystemEvent;
+use Netzmacht\Contao\Toolkit\Boot\Event\InitializeSystemEvent;
 
 /**
  * Boot the environment.

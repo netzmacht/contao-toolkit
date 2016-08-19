@@ -9,7 +9,7 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\Event;
+namespace Netzmacht\Contao\Toolkit\Boot\Event;
 
 use Interop\Container\ContainerInterface as Container;
 use Symfony\Component\EventDispatcher\Event;
