@@ -19,7 +19,7 @@ use Interop\Container\ContainerInterface;
  *
  * @package Netzmacht\Contao\Toolkit\DependencyInjection
  */
-trait ContainerTrait
+trait ContainerAware
 {
     /**
      * Get the container.

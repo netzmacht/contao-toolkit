@@ -27,6 +27,15 @@ class Services
     const ASSETS_MANAGER = 'toolkit.view.assets-manager';
 
     /**
+     * Callback invoker service.
+     *
+     * Instance of Netzmacht\Contao\Toolkit\Dca\Callback\Invoker
+     *
+     * @var string
+     */
+    const CALLBACK_INVOKER = 'toolkit.dca.callback-invoker';
+
+    /**
      * Config service.
      *
      * Instance of \Config.
