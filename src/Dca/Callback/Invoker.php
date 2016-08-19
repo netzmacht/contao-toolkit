@@ -34,4 +34,29 @@ class Invoker
 
         return call_user_func_array($callback, $arguments);
     }
+
+    /**
+     * Invoke a set of callbacks.
+     *
+     * @param array|callable[] $callbacks        List of callbacks.
+     * @param array            $arguments        Callback arguments.
+     * @param int|string|bool  $returnValueIndex If the callback return value should be reused as an argument, give the
+     *                                           index.
+     *
+     * @return mixed
+     */
+    public function invokeAll(array $callbacks, array $arguments = [], $returnValueIndex = false)
+    {
+        $value = null;
+
+        foreach ($callbacks as $callback) {
+            $value = $this->invoke($callback, $arguments);
+
+            if ($returnValueIndex !== false) {
+                $arguments[$returnValueIndex] = $value;
+            }
+        }
+
+        return $value;
+    }
 }

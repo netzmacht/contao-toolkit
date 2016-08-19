@@ -15,7 +15,7 @@ use Contao\BackendUser;
 use Contao\Database;
 use Contao\User;
 use Contao\Versions;
-use Netzmacht\Contao\Toolkit\Dca\Callback\CallbackExecutor;
+use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Exception\AccessDeniedException;
 
@@ -55,18 +55,27 @@ class StateToggler
     private $stateColumn;
 
     /**
+     * Callback invoker.
+     *
+     * @var Invoker
+     */
+    private $invoker;
+
+    /**
      * StateToggler constructor.
      *
      * @param User       $user        Contao user object.
      * @param Database   $database    Database connection.
      * @param Definition $definition  Data container definition.
+     * @param Invoker    $invoker     Callback invoker.
      * @param string     $stateColumn State column.
      */
-    public function __construct(User $user, Database $database, Definition $definition, $stateColumn)
+    public function __construct(User $user, Database $database, Definition $definition, Invoker $invoker, $stateColumn)
     {
         $this->user        = $user;
         $this->database    = $database;
         $this->definition  = $definition;
+        $this->invoker     = $invoker;
         $this->stateColumn = $stateColumn;
     }
 
@@ -159,10 +168,7 @@ class StateToggler
         $callbacks = $this->definition->get(['fields', $this->stateColumn, 'save_callback']);
 
         if (is_array($callbacks)) {
-            foreach ($callbacks as $callback) {
-                $executor = new CallbackExecutor($callback);
-                $newState = $executor->execute($newState, $context);
-            }
+            $newState = $this->invoker->invokeAll($callbacks, [$newState, $context], 0);
         }
 
         return $newState;
