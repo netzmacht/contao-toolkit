@@ -9,10 +9,11 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\Dca\Wizard;
+namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
 
-use Contao\Input;
-use ContaoCommunityAlliance\Translator\TranslatorInterface;
+use Input;
+use ContaoCommunityAlliance\Translator\TranslatorInterface as Translator;
+use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 
 /**
  * AbstractPicker is the base class for a picker wizard.
@@ -29,13 +30,6 @@ abstract class AbstractPicker extends AbstractWizard
     protected $template = 'be_wizard_picker';
 
     /**
-     * Translator.
-     *
-     * @var TranslatorInterface
-     */
-    protected $translator;
-
-    /**
      * Request Input.
      *
      * @var Input
@@ -45,13 +39,14 @@ abstract class AbstractPicker extends AbstractWizard
     /**
      * PagePickerCallback constructor.
      *
-     * @param TranslatorInterface $translator Translator.
-     * @param Input               $input      Input.
-     * @param string              $template   Template name.
+     * @param TemplateFactory $templateFactory Template factory.
+     * @param Translator      $translator      Translator.
+     * @param Input           $input           Input.
+     * @param string          $template        Template name.
      */
-    public function __construct(TranslatorInterface $translator, Input $input, $template = null)
+    public function __construct(TemplateFactory $templateFactory, Translator $translator, Input $input, $template = null)
     {
-        parent::__construct($translator, $template);
+        parent::__construct($templateFactory, $translator, $template);
 
         $this->input = $input;
     }

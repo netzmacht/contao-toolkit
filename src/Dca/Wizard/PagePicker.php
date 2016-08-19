@@ -11,6 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Wizard;
 
+use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\AbstractPicker;
 use Netzmacht\Contao\Toolkit\View\Template\BackendTemplate;
 
 /**

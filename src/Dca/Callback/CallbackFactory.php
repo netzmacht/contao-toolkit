@@ -12,6 +12,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Callback;
 
 use Controller;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Button\StateButtonCallback;
+use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\ColorPicker;
 use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerAware;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
 
@@ -85,5 +86,27 @@ class CallbackFactory
 
             return call_user_func_array([$service, $methodName], func_get_args());
         };
+    }
+
+    /**
+     * Create the color picker callback.
+     *
+     * @param bool        $replaceHex Replace hex char of rgb notation.
+     * @param string|null $template   Template name.
+     *
+     * @return ColorPicker
+     */
+    public static function colorPicker($replaceHex = true, $template = null)
+    {
+        $container = static::getContainer();
+
+        return new ColorPicker(
+            $container->get(Services::TEMPLATE_FACTORY),
+            $container->get(Services::TRANSLATOR),
+            $container->get(Services::INPUT),
+            COLORPICKER,
+            $replaceHex,
+            $template
+        );
     }
 }

@@ -13,6 +13,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Wizard;
 
 use Contao\RequestToken;
 use ContaoCommunityAlliance\Translator\TranslatorInterface;
+use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\AbstractWizard;
 use Netzmacht\Contao\Toolkit\View\Template\BackendTemplate;
 
 /**
