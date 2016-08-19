@@ -11,8 +11,6 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca;
 
-use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerAware;
-
 /**
  * Base class for data container callback classes.
  *
@@ -20,14 +18,19 @@ use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerAware;
  */
 abstract class Callbacks
 {
-    use ContainerAware;
-
     /**
      * Name of the data container.
      *
      * @var string
      */
     protected static $name;
+
+    /**
+     * Name of the callback service.
+     *
+     * @var string
+     */
+    protected static $serviceName;
 
     /**
      * Data container manager.
@@ -70,16 +73,10 @@ abstract class Callbacks
     {
         if (!$methodName) {
             $methodName  = $serviceName;
-            $serviceName = 'contao.dca.' . static::getName();
+            $serviceName = static::$serviceName ?: 'contao.dca.' . static::getName();
         }
 
-        return function () use ($serviceName, $methodName) {
-            $service     = self::getContainer()->get($serviceName);
-            $callback    = [$service, $methodName];
-            $arguments   = func_get_args();
-
-            return call_user_func_array($callback, $arguments);
-        };
+        return CallbackFactory::service($serviceName, $methodName);
     }
 
     /**

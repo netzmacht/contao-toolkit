@@ -69,4 +69,21 @@ class CallbackFactory
             $inverse
         );
     }
+
+    /**
+     * Create a callback by fetching a service.
+     *
+     * @param string $serviceName Name of the service.
+     * @param string $methodName  Callback method name.
+     *
+     * @return \Closure
+     */
+    public static function service($serviceName, $methodName)
+    {
+        return function () use ($serviceName, $methodName) {
+            $service = self::getContainer()->get($serviceName);
+
+            return call_user_func_array([$service, $methodName], func_get_args());
+        };
+    }
 }
