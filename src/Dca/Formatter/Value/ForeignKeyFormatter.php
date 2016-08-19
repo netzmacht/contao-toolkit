@@ -18,7 +18,7 @@ use Database;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
-class ForeignKeyFormatter implements ValueFormatter
+final class ForeignKeyFormatter implements ValueFormatter
 {
     /**
      * Database connection.

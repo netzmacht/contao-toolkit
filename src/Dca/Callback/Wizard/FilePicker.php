@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
  *
  * @package Netzmacht\Contao\Toolkit\View\Wizard
  */
-class FilePicker extends AbstractFieldPicker
+final class FilePicker extends AbstractFieldPicker
 {
     /**
      * {@inheritDoc}

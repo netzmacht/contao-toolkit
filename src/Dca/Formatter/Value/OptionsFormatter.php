@@ -19,7 +19,7 @@ use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
-class OptionsFormatter implements ValueFormatter
+final class OptionsFormatter implements ValueFormatter
 {
     /**
      * Callback invoker.

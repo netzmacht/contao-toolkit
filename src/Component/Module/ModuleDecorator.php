@@ -18,7 +18,7 @@ use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
  *
  * @package Netzmacht\Contao\Toolkit\Component\ContentElement
  */
-class ModuleDecorator extends \ContentElement
+final class ModuleDecorator extends \ContentElement
 {
     use ComponentDecoratorTrait;
 

@@ -24,7 +24,7 @@ use Netzmacht\Contao\Toolkit\Data\Exception\AccessDenied;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Button\Callback
  */
-class StateButtonCallback
+final class StateButtonCallback
 {
     /**
      * The input.

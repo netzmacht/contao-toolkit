@@ -15,9 +15,9 @@ use Prophecy\Argument;
  */
 class OptionsFormatterSpec extends ObjectBehavior
 {
-    function let(Invoker $invoker)
+    function let()
     {
-        $this->beConstructedWith($invoker);
+        $this->beConstructedWith(new Invoker());
     }
 
     function it_is_initializable()
@@ -79,9 +79,10 @@ class OptionsFormatterSpec extends ObjectBehavior
         $this->format(1, 'test', $definition)->shouldReturn('foo');
     }
 
-    function it_formats_option_calling_options_callback(MockableOptionsCallback $callback, Invoker $invoker)
+    function it_formats_option_calling_options_callback(MockableOptionsCallback $callback)
     {
-        $invoker->invoke($callback)
+        $callback
+            ->__invoke()
             ->shouldBeCalled()
             ->willReturn(['foo' => 'bar']);
 

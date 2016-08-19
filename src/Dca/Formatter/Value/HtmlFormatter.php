@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
-class HtmlFormatter implements ValueFormatter
+final class HtmlFormatter implements ValueFormatter
 {
     /**
      * {@inheritDoc}

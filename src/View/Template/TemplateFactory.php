@@ -16,7 +16,7 @@ use Netzmacht\Contao\Toolkit\View\Template;
 /**
  * TemplateFactory creates a template with some predefined helpers.
  */
-class TemplateFactory
+final class TemplateFactory
 {
     /**
      * Template helper.

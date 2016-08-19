@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
-class EncryptedFormatter implements ValueFormatter
+final class EncryptedFormatter implements ValueFormatter
 {
     /**
      * {@inheritDoc}

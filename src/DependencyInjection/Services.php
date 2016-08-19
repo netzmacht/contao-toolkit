@@ -15,7 +15,7 @@ namespace Netzmacht\Contao\Toolkit\DependencyInjection;
  *
  * @package Netzmacht\Contao\Toolkit\DependencyInjection
  */
-class Services
+final class Services
 {
     /**
      * Assets manager service.

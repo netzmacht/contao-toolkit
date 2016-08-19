@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
-class FormatterChain implements ValueFormatter
+final class FormatterChain implements ValueFormatter
 {
     /**
      * List of value formatters.

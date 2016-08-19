@@ -19,7 +19,7 @@ use Model;
  *
  * @package Netzmacht\Contao\Toolkit\Data
  */
-class ModelArrayAccess implements \ArrayAccess
+final class ModelArrayAccess implements \ArrayAccess
 {
     /**
      * Data model.

@@ -18,7 +18,7 @@ use Interop\Container\ContainerInterface as Container;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Subscriber
  */
-class CreateFormatterSubscriber
+final class CreateFormatterSubscriber
 {
     /**
      * Service Container.

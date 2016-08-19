@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\View\Assets;
  *
  * @package Netzmacht\Contao\Toolkit
  */
-class AssetsManager
+final class AssetsManager
 {
     const STATIC_PRODUCTION = 'prod';
 

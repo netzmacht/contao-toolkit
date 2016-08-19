@@ -19,7 +19,7 @@ use Model\Collection;
  *
  * @package Netzmacht\Contao\DevTools\Dca
  */
-class OptionsBuilder
+final class OptionsBuilder
 {
     /**
      * The options.

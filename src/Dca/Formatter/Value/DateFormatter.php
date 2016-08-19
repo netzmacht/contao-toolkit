@@ -18,7 +18,7 @@ use Config;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
-class DateFormatter implements ValueFormatter
+final class DateFormatter implements ValueFormatter
 {
     /**
      * Contao config.

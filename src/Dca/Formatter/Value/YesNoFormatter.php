@@ -18,7 +18,7 @@ use ContaoCommunityAlliance\Translator\TranslatorInterface;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
-class YesNoFormatter implements ValueFormatter
+final class YesNoFormatter implements ValueFormatter
 {
     /**
      * Translator.

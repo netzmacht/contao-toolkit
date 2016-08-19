@@ -19,7 +19,7 @@ use Symfony\Component\EventDispatcher\Event;
  *
  * @package Netzmacht\Contao\Toolkit\Event
  */
-class InitializeSystemEvent extends Event
+final class InitializeSystemEvent extends Event
 {
     const NAME = 'toolkit.initialize-system';
 

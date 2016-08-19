@@ -19,7 +19,7 @@ use Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory;
  *
  * @package Netzmacht\Contao\Toolkit\Dca
  */
-class Manager
+final class Manager
 {
     /**
      * Data definition cache.

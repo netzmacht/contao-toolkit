@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Options;
  *
  * @package Netzmacht\Contao\DevTools\Dca\Options
  */
-class ArrayOptions extends \ArrayIterator implements Options
+final class ArrayOptions extends \ArrayIterator implements Options
 {
     /**
      * {@inheritdoc}

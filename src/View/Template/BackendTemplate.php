@@ -16,7 +16,7 @@ use Netzmacht\Contao\Toolkit\View\Template;
 /**
  * BackendTemplate with extended features.
  */
-class BackendTemplate extends \Contao\BackendTemplate implements Template
+final class BackendTemplate extends \Contao\BackendTemplate implements Template
 {
     use TemplateTrait;
 }

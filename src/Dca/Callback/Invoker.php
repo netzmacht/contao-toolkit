@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Callback;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Callback
  */
-class Invoker
+final class Invoker
 {
     /**
      * Handle the callback.

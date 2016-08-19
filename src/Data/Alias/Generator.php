@@ -21,7 +21,7 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException;
  *
  * @package Netzmacht\Contao\Toolkit\Data\Alias
  */
-class Generator
+final class Generator
 {
     /**
      * Alias validator.

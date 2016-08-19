@@ -18,7 +18,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Options;
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class ArrayListOptions implements Options
+final class ArrayListOptions implements Options
 {
     /**
      * The array list.

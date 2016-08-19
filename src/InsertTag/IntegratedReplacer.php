@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\InsertTag;
  *
  * @package Netzmacht\Contao\I18n\InsertTag
  */
-class IntegratedReplacer implements Replacer
+final class IntegratedReplacer implements Replacer
 {
     /**
      * Insert tag map.

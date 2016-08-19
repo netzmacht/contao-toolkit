@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
-class FileUuidFormatter implements ValueFormatter
+final class FileUuidFormatter implements ValueFormatter
 {
     /**
      * {@inheritDoc}

@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Callback
  */
-class PagePicker extends AbstractFieldPicker
+final class PagePicker extends AbstractFieldPicker
 {
     /**
      * {@inheritDoc}

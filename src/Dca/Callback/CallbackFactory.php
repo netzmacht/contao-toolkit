@@ -24,7 +24,7 @@ use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
  *
  * @package Netzmacht\Contao\Toolkit\Dca
  */
-class CallbackFactory
+final class CallbackFactory
 {
     use ContainerAware;
 

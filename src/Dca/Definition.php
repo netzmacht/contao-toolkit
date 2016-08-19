@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca;
  *
  * @package Netzmacht\Contao\Toolkit\Dca
  */
-class Definition
+final class Definition
 {
     /**
      * The dca definition.

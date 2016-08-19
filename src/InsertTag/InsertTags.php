@@ -22,7 +22,7 @@ use Controller;
  * @internal
  * @package Netzmacht\Contao\Toolkit\InsertTag
  */
-class InsertTags extends Controller
+final class InsertTags extends Controller
 {
     /**
      * Construct.

@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
-class HiddenValueFormatter implements ValueFormatter
+final class HiddenValueFormatter implements ValueFormatter
 {
     /**
      * Mask representation of a password.

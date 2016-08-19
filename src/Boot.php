@@ -20,7 +20,7 @@ use Netzmacht\Contao\Toolkit\Boot\Event\InitializeSystemEvent;
  *
  * @package Netzmacht\Contao\Toolkit
  */
-class Boot
+final class Boot
 {
     use ContainerAware;
 

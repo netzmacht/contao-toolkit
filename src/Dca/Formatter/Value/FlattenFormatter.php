@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
-class FlattenFormatter implements ValueFormatter
+final class FlattenFormatter implements ValueFormatter
 {
     /**
      * {@inheritDoc}

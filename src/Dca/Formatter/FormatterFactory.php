@@ -11,42 +11,42 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter;
 
-use Interop\Container\ContainerInterface;
+use Interop\Container\ContainerInterface as Container;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FilterFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FormatterChain;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Event\CreateFormatterEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 
 /**
- * FormatterFactory creates the formatters for the data container definitions.
+ * FormatterFactory creates the formatter for the data container definitions.
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter
  */
-class FormatterFactory
+final class FormatterFactory
 {
     /**
      * Event dispatcher.
      *
-     * @var EventDispatcherInterface
+     * @var EventDispatcher
      */
     private $eventDispatcher;
 
     /**
      * Service container.
      *
-     * @var ContainerInterface
+     * @var Container
      */
     private $serviceContainer;
 
     /**
      * FormatterFactory constructor.
      *
-     * @param ContainerInterface       $serviceContainer Event dispatcher.
-     * @param EventDispatcherInterface $eventDispatcher  Service container.
+     * @param Container       $serviceContainer Event dispatcher.
+     * @param EventDispatcher $eventDispatcher  Service container.
      */
-    public function __construct(ContainerInterface $serviceContainer, EventDispatcherInterface $eventDispatcher)
+    public function __construct(Container $serviceContainer, EventDispatcher $eventDispatcher)
     {
         $this->serviceContainer = $serviceContainer;
         $this->eventDispatcher  = $eventDispatcher;

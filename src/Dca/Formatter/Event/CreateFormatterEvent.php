@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\Event;
  *
  * @package Netzmacht\Contao\Toolkit\Event
  */
-class CreateFormatterEvent extends Event
+final class CreateFormatterEvent extends Event
 {
     const NAME = 'toolkit.dca.create-formatter';
 

@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
  *
  * @package Netzmacht\Contao\Toolkit\Data\Alias\Filter
  */
-class RawValueFilter extends AbstractValueFilter
+final class RawValueFilter extends AbstractValueFilter
 {
     /**
      * {@inheritdoc}

@@ -18,7 +18,7 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Filter;
  *
  * @package Netzmacht\Contao\Toolkit\Data\Alias\Filter
  */
-class ExistingAliasFilter implements Filter
+final class ExistingAliasFilter implements Filter
 {
     /**
      * {@inheritDoc}

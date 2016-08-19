@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
  *
  * @package Netzmacht\Contao\Toolkit\Data\Alias\Filter
  */
-class SuffixFilter extends AbstractFilter
+final class SuffixFilter extends AbstractFilter
 {
     /**
      * The internal index counter.

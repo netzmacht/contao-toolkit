@@ -18,7 +18,7 @@ namespace Netzmacht\Contao\Toolkit\Dca;
  *
  * @package Netzmacht\Contao\DevTools\Dca
  */
-class DcaLoader extends \Controller
+final class DcaLoader extends \Controller
 {
     /**
      * Construct.

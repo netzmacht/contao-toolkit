@@ -19,7 +19,7 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Validator;
  *
  * @package Netzmacht\Contao\Toolkit\Data\Alias\Validator
  */
-class UniqueDatabaseValueValidator implements Validator
+final class UniqueDatabaseValueValidator implements Validator
 {
     /**
      * Database connection.

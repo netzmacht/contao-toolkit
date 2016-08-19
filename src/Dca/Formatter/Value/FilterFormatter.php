@@ -19,7 +19,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
-class FilterFormatter implements ValueFormatter
+final class FilterFormatter implements ValueFormatter
 {
     /**
      * List of filters.

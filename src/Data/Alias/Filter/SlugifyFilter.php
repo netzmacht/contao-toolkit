@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
  *
  * @package Netzmacht\Contao\Toolkit\Data\Alias\Filter
  */
-class SlugifyFilter extends AbstractValueFilter
+final class SlugifyFilter extends AbstractValueFilter
 {
     /**
      * Preserve uppercase.

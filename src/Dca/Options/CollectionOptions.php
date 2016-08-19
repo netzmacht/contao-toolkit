@@ -20,7 +20,7 @@ use Model\Collection;
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class CollectionOptions implements Options
+final class CollectionOptions implements Options
 {
     /**
      * The database result.

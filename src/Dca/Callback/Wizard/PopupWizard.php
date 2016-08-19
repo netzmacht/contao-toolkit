@@ -20,7 +20,7 @@ use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Wizard
  */
-class PopupWizard extends AbstractWizard
+final class PopupWizard extends AbstractWizard
 {
     /**
      * Template name.

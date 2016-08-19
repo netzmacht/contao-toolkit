@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\Event;
  * provide extra queries conditions.
  *
  */
-class BuildModelQueryOptionsEvent extends Event
+final class BuildModelQueryOptionsEvent extends Event
 {
     const NAME = 'toolkit.model.build-query-options';
 

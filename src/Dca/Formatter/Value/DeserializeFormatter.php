@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
-class DeserializeFormatter implements ValueFormatter
+final class DeserializeFormatter implements ValueFormatter
 {
     /**
      * {@inheritDoc}

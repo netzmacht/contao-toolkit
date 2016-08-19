@@ -20,7 +20,7 @@ use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Wizard
  */
-class ColorPicker extends AbstractPicker
+final class ColorPicker extends AbstractPicker
 {
     /**
      * Template name.
