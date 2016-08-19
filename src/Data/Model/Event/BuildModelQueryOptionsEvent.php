@@ -9,7 +9,7 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\Event;
+namespace Netzmacht\Contao\Toolkit\Data\Model\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 
