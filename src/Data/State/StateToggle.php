@@ -85,11 +85,11 @@ final class StateToggle
      */
     public function toggle($tableName, $columnName, $recordId, $newState, $context)
     {
-        $definition = $this->dcaManager->getDefinition($tableName);
         $this->guardUserHasAccess($tableName, $columnName, $recordId);
 
-        $versions = $this->initializeVersions($definition, $recordId);
-        $newState = $this->executeSaveCallbacks($definition, $columnName, $newState, $context);
+        $definition = $this->dcaManager->getDefinition($tableName);
+        $versions   = $this->initializeVersions($definition, $recordId);
+        $newState   = $this->executeSaveCallbacks($definition, $columnName, $newState, $context);
 
         $this->saveValue($tableName, $columnName, $recordId, $newState);
 
