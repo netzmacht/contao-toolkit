@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca;
 
-use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerTrait;
+use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerAware;
 
 /**
  * Base class for data container callback classes.
@@ -20,7 +20,7 @@ use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerTrait;
  */
 abstract class Callbacks
 {
-    use ContainerTrait;
+    use ContainerAware;
 
     /**
      * Name of the data container.
