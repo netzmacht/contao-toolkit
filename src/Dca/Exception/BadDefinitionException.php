@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Exception;
 
-use Netzmacht\Contao\Toolkit\Exception\Exception;
+use Netzmacht\Contao\Toolkit\Exception;
 
 /**
  * Class BadDefinitionException is thrown than an expected definition is not given.

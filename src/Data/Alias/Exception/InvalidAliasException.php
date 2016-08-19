@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Exception;
 
-use Netzmacht\Contao\Toolkit\Exception\Exception;
+use Netzmacht\Contao\Toolkit\Exception;
 
 /**
  * Class InvalidAliasException.
