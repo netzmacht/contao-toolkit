@@ -131,7 +131,7 @@ final class StateToggle
     {
         if (!$this->hasUserAccess($tableName, $columnName)) {
             throw new AccessDenied(
-                sprintf('Not enough permission to show/shide record ID "%s::%s"', $tableName, $recordId)
+                sprintf('Not enough permission to toggle record ID "%s::%s"', $tableName, $recordId)
             );
         }
     }
