@@ -24,7 +24,7 @@ use Netzmacht\Contao\Toolkit\Exception\AccessDeniedException;
  *
  * @package Netzmacht\Contao\Toolkit\Data\State
  */
-class StateToggler
+class StateToggle
 {
     /**
      * Contao user.
