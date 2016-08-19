@@ -14,6 +14,7 @@ use Interop\Container\ContainerInterface;
 use Netzmacht\Contao\Toolkit\Component\ComponentFactory;
 use Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElementDecorator;
 use Netzmacht\Contao\Toolkit\Component\FactoryToClassMapConverter;
+use Netzmacht\Contao\Toolkit\Data\State\StateToggle;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\DcaLoader;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory;
@@ -205,6 +206,29 @@ $container[Services::CALLBACK_INVOKER] = $container->share(
 $container[Services::FILE_SYSTEM] = $container->share(
     function () {
         return \Files::getInstance();
+    }
+);
+
+/**
+ * State toggle factory.
+ *
+ * @return callable
+ */
+$container[Services::STATE_TOGGLE_FACTORY] = $container->share(
+    function ($container) {
+        return function ($dataContainerName, $stateColumn) use ($container) {
+            /** @var Manager $dcaManager */
+            $dcaManager = $container[Services::DCA_MANAGER];
+            $definition = $dcaManager->getDefinition($dataContainerName);
+
+            return new StateToggle(
+                $container[Services::USER],
+                $container[Services::DATABASE_CONNECTION],
+                $definition,
+                $container[Services::CALLBACK_INVOKER],
+                $stateColumn
+            );
+        };
     }
 );
 
