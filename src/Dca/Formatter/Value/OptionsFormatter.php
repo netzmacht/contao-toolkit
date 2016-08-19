@@ -12,7 +12,7 @@
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Contao\DataContainer;
-use Netzmacht\Contao\Toolkit\Dca\Callback\CallbackExecutor;
+use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
 
 /**
  * OptionsFormatter fetches the value from the options or options callback.
@@ -21,6 +21,23 @@ use Netzmacht\Contao\Toolkit\Dca\Callback\CallbackExecutor;
  */
 class OptionsFormatter implements ValueFormatter
 {
+    /**
+     * Callback invoker.
+     *
+     * @var Invoker
+     */
+    private $invoker;
+
+    /**
+     * OptionsFormatter constructor.
+     *
+     * @param Invoker $invoker Callback invoker.
+     */
+    public function __construct(Invoker $invoker)
+    {
+        $this->invoker = $invoker;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -45,12 +62,10 @@ class OptionsFormatter implements ValueFormatter
                 $value = $fieldDefinition['options'][$value];
             }
         } elseif (!empty($fieldDefinition['options_callback'])) {
-            $callback = new CallbackExecutor($fieldDefinition['options_callback']);
-
             if ($context instanceof DataContainer) {
-                $options = $callback->execute($context);
+                $options = $this->invoker->invoke($fieldDefinition['options_callback'], [$context]);
             } else {
-                $options = $callback->execute();
+                $options = $this->invoker->invoke($fieldDefinition['options_callback']);
             }
 
             if (!empty($options[$value])) {

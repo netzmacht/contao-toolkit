@@ -260,10 +260,12 @@ $container['toolkit.dca-formatter.hidden'] = function () {
 /**
  * Options formatter factory.
  *
+ * @param \Pimple $container Container invoker.
+ *
  * @return ValueFormatter
  */
-$container['toolkit.dca-formatter.options'] = function () {
-    return new OptionsFormatter();
+$container['toolkit.dca-formatter.options'] = function ($container) {
+    return new OptionsFormatter($container[Services::CALLBACK_INVOKER]);
 };
 
 /**
