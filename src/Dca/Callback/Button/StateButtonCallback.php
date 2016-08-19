@@ -17,7 +17,7 @@ use \Image;
 use \Input;
 use Contao\System;
 use Netzmacht\Contao\Toolkit\Data\State\StateToggle;
-use Netzmacht\Contao\Toolkit\Exception\AccessDeniedException;
+use Netzmacht\Contao\Toolkit\Data\Exception\AccessDenied;
 
 /**
  * StateButtonCallback creates the state toggle button known in Contao.
@@ -95,7 +95,7 @@ class StateButtonCallback
             try {
                 $this->toggler->toggle($this->input->get('tid'), ($this->input->get('state') == 1), $this);
                 Controller::redirect(Controller::getReferer());
-            } catch (AccessDeniedException $e) {
+            } catch (AccessDenied $e) {
                 System::log($e->getMessage(), __METHOD__, TL_ERROR);
                 Controller::redirect('contao/main.php?act=error');
             }
