@@ -9,7 +9,11 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\Dca;
+namespace Netzmacht\Contao\Toolkit\Dca\Callback;
+
+use Netzmacht\Contao\Toolkit\Dca\Definition;
+use Netzmacht\Contao\Toolkit\Dca\Formatter;
+use Netzmacht\Contao\Toolkit\Dca\Manager;
 
 /**
  * Base class for data container callback classes.

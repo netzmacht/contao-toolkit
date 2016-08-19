@@ -9,7 +9,7 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\Dca\Callback;
+namespace Netzmacht\Contao\Toolkit\Dca\Callback\Save;
 
 use Netzmacht\Contao\Toolkit\Data\AliasGenerator;
 

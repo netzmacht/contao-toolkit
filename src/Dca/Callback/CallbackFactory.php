@@ -8,7 +8,7 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\Dca;
+namespace Netzmacht\Contao\Toolkit\Dca\Callback;
 
 use Controller;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Button\StateButtonCallback;
