@@ -17,7 +17,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Callback;
  * @package Netzmacht\Contao\DevTools\Dca
  * @deprecated Netzmacht\Contao\Toolkit\Button\Callback\StateButtonCallback instead.
  */
-class ToggleIconCallback extends \Controller
+class ToggleIconCallback
 {
     /**
      * Contao user.
@@ -113,7 +113,7 @@ class ToggleIconCallback extends \Controller
     {
         if ($this->input->get('tid')) {
             $this->toggleVisibility($this->input->get('tid'), ($this->input->get('state') == 1));
-            $this->redirect($this->getReferer());
+            \Controller::redirect(\Controller::getReferer());
         }
 
         if (!$this->hasAccess()) {
@@ -128,7 +128,7 @@ class ToggleIconCallback extends \Controller
 
         return sprintf(
             '<a href="%s" title="%s"%s>%s</a> ',
-            $this->addToUrl($href),
+            \Controller::addToUrl($href),
             specialchars($title),
             $attributes,
             \Image::getHtml($icon, $label)
@@ -154,7 +154,7 @@ class ToggleIconCallback extends \Controller
                 TL_ERROR
             );
 
-            $this->redirect('contao/main.php?act=error');
+            \Controller::redirect('contao/main.php?act=error');
         }
 
         $versions = new \Versions($this->table, $recordId);
