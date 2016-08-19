@@ -13,6 +13,7 @@ namespace Netzmacht\Contao\Toolkit\Data\State;
 
 use BackendUser;
 use Database;
+use Netzmacht\Contao\Toolkit\Dca\Manager;
 use User;
 use Versions;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
@@ -41,20 +42,6 @@ final class StateToggle
     private $database;
 
     /**
-     * Data container definition.
-     *
-     * @var Definition
-     */
-    private $definition;
-
-    /**
-     * State column.
-     *
-     * @var string
-     */
-    private $stateColumn;
-
-    /**
      * Callback invoker.
      *
      * @var Invoker
@@ -62,41 +49,49 @@ final class StateToggle
     private $invoker;
 
     /**
+     * Data container manager.
+     *
+     * @var Manager
+     */
+    private $dcaManager;
+
+    /**
      * StateToggler constructor.
      *
-     * @param User       $user        Contao user object.
-     * @param Database   $database    Database connection.
-     * @param Definition $definition  Data container definition.
-     * @param Invoker    $invoker     Callback invoker.
-     * @param string     $stateColumn State column.
+     * @param User     $user       User object.
+     * @param Database $database   Database connection.
+     * @param Manager  $dcaManager Data container manager.
+     * @param Invoker  $invoker    Callback invoker.
      */
-    public function __construct(User $user, Database $database, Definition $definition, Invoker $invoker, $stateColumn)
+    public function __construct(User $user, Database $database, Manager $dcaManager, Invoker $invoker)
     {
-        $this->user        = $user;
-        $this->database    = $database;
-        $this->definition  = $definition;
-        $this->invoker     = $invoker;
-        $this->stateColumn = $stateColumn;
+        $this->user       = $user;
+        $this->database   = $database;
+        $this->invoker    = $invoker;
+        $this->dcaManager = $dcaManager;
     }
 
     /**
      * Toggle the state.
      *
-     * @param int   $recordId Data record id.
-     * @param mixed $newState New state value.
-     * @param mixed $context  Context, usually the data container driver.
+     * @param string $tableName  Data container name.
+     * @param string $columnName Column name.
+     * @param int    $recordId   Data record id.
+     * @param mixed  $newState   New state value.
+     * @param mixed  $context    Context, usually the data container driver.
      *
      * @return mixed
      * @throws AccessDenied When user has no access.
      */
-    public function toggle($recordId, $newState, $context)
+    public function toggle($tableName, $columnName, $recordId, $newState, $context)
     {
-        $this->guardUserHasAccess($recordId);
+        $definition = $this->dcaManager->getDefinition($tableName);
+        $this->guardUserHasAccess($tableName, $columnName, $recordId);
 
-        $versions = $this->initializeVersions($recordId);
-        $newState = $this->executeSaveCallbacks($newState, $context);
+        $versions = $this->initializeVersions($definition, $recordId);
+        $newState = $this->executeSaveCallbacks($definition, $columnName, $newState, $context);
 
-        $this->saveValue($recordId, $newState);
+        $this->saveValue($tableName, $columnName, $recordId, $newState);
 
         if ($versions) {
             $versions->create();
@@ -108,12 +103,15 @@ final class StateToggle
     /**
      * Check if user has access.
      *
+     * @param string $tableName  Data container name.
+     * @param string $columnName Column name.
+     *
      * @return bool
      */
-    public function hasUserAccess()
+    public function hasUserAccess($tableName, $columnName)
     {
         if ($this->user instanceof BackendUser) {
-            return $this->user->hasAccess($this->definition->getName() . '::' . $this->stateColumn, 'alexf');
+            return $this->user->hasAccess($tableName . '::' . $columnName, 'alexf');
         }
 
         return false;
@@ -122,16 +120,18 @@ final class StateToggle
     /**
      * Guard that user has access.
      *
-     * @param int $recordId Record id.
+     * @param string $tableName  Data container name.
+     * @param string $columnName Column name.
+     * @param int    $recordId   Record id.
      *
      * @return void
      * @throws AccessDenied When user has no access.
      */
-    private function guardUserHasAccess($recordId)
+    private function guardUserHasAccess($tableName, $columnName, $recordId)
     {
-        if (!$this->hasUserAccess()) {
+        if (!$this->hasUserAccess($tableName, $columnName)) {
             throw new AccessDenied(
-                sprintf('Not enough permission to show/shide record ID "%s"', $recordId)
+                sprintf('Not enough permission to show/shide record ID "%s::%s"', $tableName, $recordId)
             );
         }
     }
@@ -139,14 +139,15 @@ final class StateToggle
     /**
      * Initialize versions if data container support versioning.
      *
-     * @param int $recordId Record id.
+     * @param Definition $definition Data container definition.
+     * @param int        $recordId   Record id.
      *
      * @return Versions|null
      */
-    private function initializeVersions($recordId)
+    private function initializeVersions(Definition $definition, $recordId)
     {
-        if ($this->definition->get(['config', 'enableVersioning'])) {
-            $versions = new Versions($this->definition->getName(), $recordId);
+        if ($definition->get(['config', 'enableVersioning'])) {
+            $versions = new Versions($definition->getName(), $recordId);
             $versions->initialize();
 
             return $versions;
@@ -158,14 +159,16 @@ final class StateToggle
     /**
      * Execute save callbacks.
      *
-     * @param mixed $newState New state value.
-     * @param mixed $context  Context, usually the data container driver.
+     * @param Definition $definition Data container definition.
+     * @param string     $columnName State column name.
+     * @param mixed      $newState   New state value.
+     * @param mixed      $context    Context, usually the data container driver.
      *
      * @return mixed
      */
-    private function executeSaveCallbacks($newState, $context)
+    private function executeSaveCallbacks(Definition $definition, $columnName, $newState, $context)
     {
-        $callbacks = $this->definition->get(['fields', $this->stateColumn, 'save_callback']);
+        $callbacks = $definition->get(['fields', $columnName, 'save_callback']);
 
         if (is_array($callbacks)) {
             $newState = $this->invoker->invokeAll($callbacks, [$newState, $context], 0);
@@ -177,16 +180,18 @@ final class StateToggle
     /**
      * Save new state in database.
      *
-     * @param int   $recordId Data record id.
-     * @param mixed $newState New state value.
+     * @param string $tableName  Data container name.
+     * @param string $columnName Column name.
+     * @param int    $recordId   Data record id.
+     * @param mixed  $newState   New state value.
      *
      * @return void
      */
-    private function saveValue($recordId, $newState)
+    private function saveValue($tableName, $columnName, $recordId, $newState)
     {
         $this->database
-            ->prepare(sprintf('UPDATE %s %s WHERE id=?', $this->definition->getName(), '%s'))
-            ->set(array('tstamp' => time(), $this->stateColumn => $newState ? '1' : ''))
+            ->prepare(sprintf('UPDATE %s %s WHERE id=?', $tableName, '%s'))
+            ->set(array('tstamp' => time(), $columnName => $newState ? '1' : ''))
             ->execute($recordId);
     }
 }

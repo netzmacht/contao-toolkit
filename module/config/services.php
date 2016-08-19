@@ -217,21 +217,14 @@ $container[Services::FILE_SYSTEM] = $container->share(
  *
  * @return callable
  */
-$container[Services::STATE_TOGGLE_FACTORY] = $container->share(
+$container[Services::STATE_TOGGLE] = $container->share(
     function ($container) {
-        return function ($dataContainerName, $stateColumn) use ($container) {
-            /** @var Manager $dcaManager */
-            $dcaManager = $container[Services::DCA_MANAGER];
-            $definition = $dcaManager->getDefinition($dataContainerName);
-
-            return new StateToggle(
-                $container[Services::USER],
-                $container[Services::DATABASE_CONNECTION],
-                $definition,
-                $container[Services::CALLBACK_INVOKER],
-                $stateColumn
-            );
-        };
+        return new StateToggle(
+            $container[Services::USER],
+            $container[Services::DATABASE_CONNECTION],
+            $container[Services::DCA_MANAGER],
+            $container[Services::CALLBACK_INVOKER]
+        );
     }
 );
 

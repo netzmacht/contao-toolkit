@@ -35,6 +35,13 @@ final class StateButtonCallback
     private $input;
 
     /**
+     * Data container name.
+     *
+     * @var string
+     */
+    private $tableName;
+
+    /**
      * State column.
      *
      * @var string
@@ -60,6 +67,7 @@ final class StateButtonCallback
      *
      * @param Input       $input        Request Input.
      * @param StateToggle $stateToggle  State toggle.
+     * @param string      $tableName    Data container name.
      * @param string      $stateColumn  Column name of the state value.
      * @param string|null $disabledIcon Disabled icon.
      * @param bool        $inverse      If true state value is handled inverse.
@@ -67,12 +75,14 @@ final class StateButtonCallback
     public function __construct(
         Input $input,
         StateToggle $stateToggle,
+        $tableName,
         $stateColumn,
         $disabledIcon = null,
         $inverse = false
     ) {
         $this->input        = $input;
         $this->toggler      = $stateToggle;
+        $this->tableName    = $tableName;
         $this->stateColumn  = $stateColumn;
         $this->disabledIcon = $disabledIcon;
         $this->inverse      = $inverse;
@@ -117,7 +127,14 @@ final class StateButtonCallback
     ) {
         if ($this->input->get('tid')) {
             try {
-                $this->toggler->toggle($this->input->get('tid'), ($this->input->get('state') == 1), $dataContainer);
+                $this->toggler->toggle(
+                    $this->tableName,
+                    $this->stateColumn,
+                    $this->input->get('tid'),
+                    ($this->input->get('state') == 1),
+                    $dataContainer
+                );
+
                 Controller::redirect(Controller::getReferer());
             } catch (AccessDenied $e) {
                 System::log($e->getMessage(), __METHOD__, TL_ERROR);
@@ -125,7 +142,7 @@ final class StateButtonCallback
             }
         }
 
-        if (!$this->toggler->hasUserAccess()) {
+        if (!$this->toggler->hasUserAccess($this->tableName, $this->stateColumn)) {
             return '';
         }
 

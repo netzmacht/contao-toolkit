@@ -187,11 +187,13 @@ final class Services
     const SESSION = 'session';
 
     /**
-     * State toggle factory.
+     * State toggle service.
+     *
+     * Instance of Netzmacht\Contao\Toolkit\Data\State\StateToggle
      *
      * @var string
      */
-    const STATE_TOGGLE_FACTORY = 'toolkit.data.state-toggle-factory';
+    const STATE_TOGGLE = 'toolkit.data.state-toggle-factory';
 
     /**
      * Template factory service.
