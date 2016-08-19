@@ -15,6 +15,7 @@ use Netzmacht\Contao\Toolkit\Dca\Callback\Button\StateButtonCallback;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\ColorPicker;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\FilePicker;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\PagePicker;
+use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\PopupWizard;
 use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerAware;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
 
@@ -146,6 +147,44 @@ class CallbackFactory
             $container->get(Services::TEMPLATE_FACTORY),
             $container->get(Services::TRANSLATOR),
             $container->get(Services::INPUT),
+            $template
+        );
+    }
+
+    /**
+     * Create the popup wizard.
+     *
+     * @param string $href        Link href snippet.
+     * @param string $label       Button label.
+     * @param string $title       Button title.
+     * @param string $icon        Button icon.
+     * @param bool   $always      If true the button is generated always no matter if an value is given.
+     * @param string $linkPattern Link pattern.
+     * @param string $template    Template name.
+     *
+     * @return PopupWizard
+     */
+    public static function popupWizard(
+        $href,
+        $label,
+        $title,
+        $icon,
+        $always = false,
+        $linkPattern = null,
+        $template = null
+    ) {
+        $container = static::getContainer();
+
+        return new PopupWizard(
+            $container->get(Services::TEMPLATE_FACTORY),
+            $container->get(Services::TRANSLATOR),
+            $container->get(Services::REQUEST_TOKEN),
+            $href,
+            $label,
+            $title,
+            $icon,
+            $always,
+            $linkPattern,
             $template
         );
     }

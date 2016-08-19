@@ -9,12 +9,11 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\Dca\Wizard;
+namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
 
 use RequestToken;
-use ContaoCommunityAlliance\Translator\TranslatorInterface;
-use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\AbstractWizard;
-use Netzmacht\Contao\Toolkit\View\Template\BackendTemplate;
+use ContaoCommunityAlliance\Translator\TranslatorInterface as Translator;
+use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 
 /**
  * Class PopupWizard.
@@ -82,26 +81,30 @@ class PopupWizard extends AbstractWizard
     /**
      * Construct.
      *
-     * @param TranslatorInterface $translator   Translator.
-     * @param RequestToken        $requestToken Request token.
-     * @param string              $href         Link href snippet.
-     * @param string              $label        Button label.
-     * @param string              $title        Button title.
-     * @param string              $icon         Button icon.
-     * @param bool                $always       If true the button is generated always no matter if an value is given.
-     * @param string              $template     Template name.
+     * @param TemplateFactory $templateFactory Template Factory
+     * @param Translator      $translator      Translator.
+     * @param RequestToken    $requestToken    Request token.
+     * @param string          $href            Link href snippet.
+     * @param string          $label           Button label.
+     * @param string          $title           Button title.
+     * @param string          $icon            Button icon.
+     * @param bool            $always          If true the button is generated always no matter if an value is given.
+     * @param string|null     $linkPattern     Link pattern.
+     * @param string          $template        Template name.
      */
     public function __construct(
-        TranslatorInterface $translator,
+        TemplateFactory $templateFactory,
+        Translator $translator,
         RequestToken $requestToken,
         $href,
         $label,
         $title,
         $icon,
         $always = false,
+        $linkPattern = null,
         $template = null
     ) {
-        parent::__construct($translator, $template);
+        parent::__construct($templateFactory, $translator, $template);
 
         $this->requestToken = $requestToken;
         $this->always       = $always;
@@ -109,64 +112,10 @@ class PopupWizard extends AbstractWizard
         $this->href         = $href;
         $this->label        = $label;
         $this->title        = $title;
-    }
 
-    /**
-     * Get always.
-     *
-     * @return boolean
-     */
-    public function isAlways()
-    {
-        return $this->always;
-    }
-
-    /**
-     * Get the link pattern.
-     *
-     * @return string
-     */
-    public function getLinkPattern()
-    {
-        return $this->linkPattern;
-    }
-
-    /**
-     * Set the link pattern.
-     *
-     * @param string $linkPattern Link pattern.
-     *
-     * @return $this
-     */
-    public function setLinkPattern($linkPattern)
-    {
-        $this->linkPattern = $linkPattern;
-
-        return $this;
-    }
-
-    /**
-     * Get icon.
-     *
-     * @return string
-     */
-    public function getIcon()
-    {
-        return $this->icon;
-    }
-
-    /**
-     * Set icon.
-     *
-     * @param string $icon Icon.
-     *
-     * @return $this
-     */
-    public function setIcon($icon)
-    {
-        $this->icon = $icon;
-
-        return $this;
+        if ($linkPattern) {
+            $this->linkPattern = $linkPattern;
+        }
     }
 
     /**
@@ -182,7 +131,7 @@ class PopupWizard extends AbstractWizard
             $href    = sprintf($this->requestToken, $this->href, $value, $this->requestToken->get());
             $jsTitle = specialchars(str_replace('\'', '\\\'', $this->title));
 
-            $template = new BackendTemplate($this->template);
+            $template = $this->createTemplate();
             $template
                 ->set('href', $href)
                 ->set('label', specialchars($this->label))
@@ -194,5 +143,13 @@ class PopupWizard extends AbstractWizard
         }
 
         return '';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function __invoke($dataContainer)
+    {
+        return $this->generate($dataContainer->value);
     }
 }

@@ -162,6 +162,15 @@ class Services
     const PAGE_PROVIDER = 'page-provider';
 
     /**
+     * Request token service.
+     *
+     * Instnace of \RequestToken.
+     *
+     * @var string
+     */
+    const REQUEST_TOKEN = 'request-token';
+
+    /**
      * Session service.
      *
      * Instance of \Session.
