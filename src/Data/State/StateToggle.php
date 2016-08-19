@@ -17,7 +17,7 @@ use Contao\User;
 use Contao\Versions;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
-use Netzmacht\Contao\Toolkit\Exception\AccessDeniedException;
+use Netzmacht\Contao\Toolkit\Data\Exception\AccessDenied;
 
 /**
  * Class StateToggler.
@@ -87,7 +87,7 @@ class StateToggle
      * @param mixed $context  Context, usually the data container driver.
      *
      * @return mixed
-     * @throws AccessDeniedException When user has no access.
+     * @throws AccessDenied When user has no access.
      */
     public function toggle($recordId, $newState, $context)
     {
@@ -125,12 +125,12 @@ class StateToggle
      * @param int $recordId Record id.
      *
      * @return void
-     * @throws AccessDeniedException When user has no access.
+     * @throws AccessDenied When user has no access.
      */
     private function guardUserHasAccess($recordId)
     {
         if (!$this->hasUserAccess()) {
-            throw new AccessDeniedException(
+            throw new AccessDenied(
                 sprintf('Not enough permission to show/shide record ID "%s"', $recordId)
             );
         }

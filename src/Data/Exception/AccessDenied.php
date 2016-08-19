@@ -9,13 +9,13 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\Exception;
+namespace Netzmacht\Contao\Toolkit\Data\Exception;
 
 /**
  * Class AccessDeniedException.
  *
  * @package Netzmacht\Contao\Toolkit\Exception
  */
-class AccessDeniedException extends \Exception
+class AccessDenied extends \Exception
 {
 }
