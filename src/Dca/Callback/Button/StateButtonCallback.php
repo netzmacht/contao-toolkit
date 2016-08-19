@@ -12,6 +12,7 @@
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Button;
 
 use Backend;
+use Contao\DataContainer;
 use Controller;
 use Image;
 use Input;
@@ -80,20 +81,43 @@ final class StateButtonCallback
     /**
      * Invoke the callback.
      *
-     * @param array  $row        Current data row.
-     * @param string $href       Button link.
-     * @param string $label      Button label.
-     * @param string $title      Button title.
-     * @param string $icon       Enabled button icon.
-     * @param string $attributes Html attributes as string.
+     * @param array         $row               Current data row.
+     * @param string        $href              Button link.
+     * @param string        $label             Button label.
+     * @param string        $title             Button title.
+     * @param string        $icon              Enabled button icon.
+     * @param string        $attributes        Html attributes as string.
+     * @param string        $tableName         Table name.
+     * @param array         $rootIds           Root ids.
+     * @param array         $childRecordIds    Child record ids.
+     * @param bool          $circularReference Circular reference flag.
+     * @param string        $previous          Previous button name.
+     * @param string        $next              Next button name.
+     * @param DataContainer $dataContainer     Data container driver.
      *
      * @return string
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
-    public function __invoke($row, $href, $label, $title, $icon, $attributes)
-    {
+    public function __invoke(
+        $row,
+        $href,
+        $label,
+        $title,
+        $icon,
+        $attributes,
+        $tableName,
+        $rootIds,
+        $childRecordIds,
+        $circularReference,
+        $previous,
+        $next,
+        $dataContainer
+    ) {
         if ($this->input->get('tid')) {
             try {
-                $this->toggler->toggle($this->input->get('tid'), ($this->input->get('state') == 1), $this);
+                $this->toggler->toggle($this->input->get('tid'), ($this->input->get('state') == 1), $dataContainer);
                 Controller::redirect(Controller::getReferer());
             } catch (AccessDenied $e) {
                 System::log($e->getMessage(), __METHOD__, TL_ERROR);
