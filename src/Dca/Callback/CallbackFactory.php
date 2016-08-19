@@ -202,10 +202,10 @@ final class CallbackFactory
     /**
      * Generate the alias generator callback.
      *
-     * @param string  $dataContainerName Data Container name.
-     * @param string  $aliasField        Alias field.
-     * @param array   $fields            List of fields being combined as alias. If empty ['id'] is used.
-     * @param string  $factoryService    Custom alias generator factory service.
+     * @param string $dataContainerName Data Container name.
+     * @param string $aliasField        Alias field.
+     * @param array  $fields            List of fields being combined as alias. If empty ['id'] is used.
+     * @param string $factoryService    Custom alias generator factory service.
      *
      * @return callable
      */
