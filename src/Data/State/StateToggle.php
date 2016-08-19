@@ -11,10 +11,10 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\State;
 
-use Contao\BackendUser;
-use Contao\Database;
-use Contao\User;
-use Contao\Versions;
+use BackendUser;
+use Database;
+use User;
+use Versions;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Data\Exception\AccessDenied;

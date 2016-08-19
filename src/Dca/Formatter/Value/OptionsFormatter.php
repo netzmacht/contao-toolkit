@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Contao\DataContainer;
+use DataContainer;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
 
 /**

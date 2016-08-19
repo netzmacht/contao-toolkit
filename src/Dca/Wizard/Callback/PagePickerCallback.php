@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Wizard\Callback;
 
-use Contao\DataContainer;
+use DataContainer;
 use Netzmacht\Contao\Toolkit\Dca\Wizard\PagePicker;
 
 /**

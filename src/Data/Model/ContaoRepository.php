@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Model;
 
-use Contao\Model;
+use Model;
 
 /**
  * Class ContaoRepository.

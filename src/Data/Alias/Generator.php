@@ -11,11 +11,10 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
-use Contao\Database;
-use Contao\Database\Result;
-use Contao\Model;
+use Database;
+use Database\Result;
+use Model;
 use Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException;
-use Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
 /**
  * Alias generator.

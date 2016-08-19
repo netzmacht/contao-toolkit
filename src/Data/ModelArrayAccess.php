@@ -11,8 +11,8 @@
 
 namespace Netzmacht\Contao\Toolkit\Data;
 
-use Contao\Database\Result;
-use Contao\Model;
+use Database\Result;
+use Model;
 
 /**
  * ModelArrayAccess decorates a Contao data model to provide array access.

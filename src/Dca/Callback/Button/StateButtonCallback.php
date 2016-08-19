@@ -11,11 +11,11 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Button;
 
-use \Backend;
-use \Controller;
-use \Image;
-use \Input;
-use Contao\System;
+use Backend;
+use Controller;
+use Image;
+use Input;
+use System;
 use Netzmacht\Contao\Toolkit\Data\State\StateToggle;
 use Netzmacht\Contao\Toolkit\Data\Exception\AccessDenied;
 

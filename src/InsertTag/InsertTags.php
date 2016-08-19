@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\InsertTag;
 
-use Contao\Controller;
+use Controller;
 
 /**
  * Class InsertTags allows to replace insert tags.

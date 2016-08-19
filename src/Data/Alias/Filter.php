@@ -11,8 +11,8 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
-use Contao\Database\Result;
-use Contao\Model;
+use Database\Result;
+use Model;
 
 /**
  * Filter modifies a value for the alias generator.

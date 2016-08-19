@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Validator;
 
-use Contao\Database;
+use Database;
 use Netzmacht\Contao\Toolkit\Data\Alias\Validator;
 
 /**

@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Contao\Database;
+use Database;
 
 /**
  * ForeignKeyFormatter formats fields which defines a foreign key.
