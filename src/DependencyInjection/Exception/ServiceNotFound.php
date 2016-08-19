@@ -12,7 +12,11 @@ namespace Netzmacht\Contao\Toolkit\DependencyInjection\Exception;
 
 use Interop\Container\Exception\NotFoundException as InteropNotFoundException;
 
-class NotFoundException extends ContainerException implements InteropNotFoundException
+/**
+ * ServiceNotFound exception is thrown when the Container can't locate a service.
+ *
+ * @package Netzmacht\Contao\Toolkit\DependencyInjection\Exception
+ */
+class ServiceNotFound extends ContainerException implements InteropNotFoundException
 {
-
 }

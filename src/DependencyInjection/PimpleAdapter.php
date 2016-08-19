@@ -12,7 +12,7 @@ namespace Netzmacht\Contao\Toolkit\DependencyInjection;
 
 use Interop\Container\ContainerInterface;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Exception\ContainerException;
-use Netzmacht\Contao\Toolkit\DependencyInjection\Exception\NotFoundException;
+use Netzmacht\Contao\Toolkit\DependencyInjection\Exception\ServiceNotFound;
 
 /**
  * Class PimpleAdapter.
@@ -46,7 +46,7 @@ class PimpleAdapter implements ContainerInterface
         try {
             return $this->pimple[$id];
         } catch (\InvalidArgumentException $previous) {
-            throw new NotFoundException(sprintf('Service with id "%s" not found.', $id), $previous->getCode(), $previous);
+            throw new ServiceNotFound(sprintf('Service with id "%s" not found.', $id), $previous->getCode(), $previous);
         } catch (\Exception $previous) {
             throw new ContainerException('', $previous->getCode(), $previous);
         }
