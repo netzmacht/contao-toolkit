@@ -59,21 +59,29 @@ final class CallbackFactory
      * @param null   $disabledIcon      Optional disabled icon.
      * @param bool   $inverse           If true the state value gets inversed.
      *
-     * @return StateButtonCallback
+     * @return callable
      */
     public static function stateButton($dataContainerName, $column, $disabledIcon = null, $inverse = false)
     {
-        $container          = static::getContainer();
-        $stateToggleFactory = $container->get(Services::STATE_TOGGLE_FACTORY);
-        $stateToggle        = $stateToggleFactory($dataContainerName, $column);
+        return function () use ($dataContainerName, $column, $disabledIcon, $inverse) {
+            static $callback;
 
-        return new StateButtonCallback(
-            $container->get(Services::INPUT),
-            $stateToggle,
-            $column,
-            $disabledIcon,
-            $inverse
-        );
+            if (!$callback) {
+                $container          = static::getContainer();
+                $stateToggleFactory = $container->get(Services::STATE_TOGGLE_FACTORY);
+                $stateToggle        = $stateToggleFactory($dataContainerName, $column);
+
+                $callback = new StateButtonCallback(
+                    $container->get(Services::INPUT),
+                    $stateToggle,
+                    $column,
+                    $disabledIcon,
+                    $inverse
+                );
+            }
+
+            return call_user_func_array($callback, func_get_args());
+        };
     }
 
     /**
@@ -199,18 +207,26 @@ final class CallbackFactory
      * @param array   $fields            List of fields being combined as alias. If empty ['id'] is used.
      * @param string  $factoryService    Custom alias generator factory service.
      *
-     * @return GenerateAliasCallback
+     * @return callable
      */
     public static function aliasGenerator($dataContainerName, $aliasField, array $fields = null, $factoryService = null)
     {
-        $container      = static::getContainer();
-        $factoryService = $factoryService ?: Services::DEFAULT_ALIAS_GENERATOR_FACTORY;
-        $factory        = $container->get($factoryService);
-        $fields         = $fields ?: ['id'];
+        return function () use ($dataContainerName, $aliasField, $fields, $factoryService) {
+            static $callback;
 
-        /** @var Generator $aliasGenerator */
-        $aliasGenerator = $factory($dataContainerName, $aliasField, $fields);
+            if (!$callback) {
+                $container      = static::getContainer();
+                $factoryService = $factoryService ?: Services::DEFAULT_ALIAS_GENERATOR_FACTORY;
+                $factory        = $container->get($factoryService);
+                $fields         = $fields ?: ['id'];
 
-        return new GenerateAliasCallback($aliasGenerator);
+                /** @var Generator $aliasGenerator */
+                $aliasGenerator = $factory($dataContainerName, $aliasField, $fields);
+
+                $callback = new GenerateAliasCallback($aliasGenerator);
+            }
+
+            return call_user_func_array($callback, func_get_args());
+        };
     }
 }
