@@ -2,9 +2,9 @@
 
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
+use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\OptionsFormatter;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 /**
  * Class OptionsFormatterSpec
@@ -14,6 +14,11 @@ use Prophecy\Argument;
  */
 class OptionsFormatterSpec extends ObjectBehavior
 {
+    function let(Invoker $invoker)
+    {
+        $this->beConstructedWith($invoker);
+    }
+
     function it_is_initializable()
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\OptionsFormatter');
