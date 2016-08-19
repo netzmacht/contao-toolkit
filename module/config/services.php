@@ -409,3 +409,14 @@ $container[Services::INSERT_TAG_REPLACER] = $container->share(
         return $replacer;
     }
 );
+
+/**
+ * Request token as service.
+ *
+ * @return RequestToken
+ */
+$container[Services::REQUEST_TOKEN] = $container->share(
+    function () {
+        return RequestToken::getInstance();
+    }
+);
