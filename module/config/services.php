@@ -14,6 +14,7 @@ use Interop\Container\ContainerInterface;
 use Netzmacht\Contao\Toolkit\Component\ComponentFactory;
 use Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElementDecorator;
 use Netzmacht\Contao\Toolkit\Component\FactoryToClassMapConverter;
+use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\DcaLoader;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Subscriber\CreateFormatterSubscriber;
@@ -192,6 +193,12 @@ $container[Services::DCA_MANAGER] = $container->share(
             $container['toolkit.dca-loader'],
             $container['toolkit.dca.formatter.factory']
         );
+    }
+);
+
+$container[Services::CALLBACK_INVOKER] = $container->share(
+    function () {
+        return new Invoker();
     }
 );
 
