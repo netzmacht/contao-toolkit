@@ -9,7 +9,7 @@
  */
 
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Event\CreateFormatterEvent;
-use Netzmacht\Contao\Toolkit\Event\InitializeSystemEvent;
+use Netzmacht\Contao\Toolkit\Boot\Event\InitializeSystemEvent;
 
 global $container;
 
