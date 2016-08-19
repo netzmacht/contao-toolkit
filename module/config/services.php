@@ -13,6 +13,10 @@ use Interop\Container\ContainerInterface;
 use Netzmacht\Contao\Toolkit\Component\ComponentFactory;
 use Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElementDecorator;
 use Netzmacht\Contao\Toolkit\Component\FactoryToClassMapConverter;
+use Netzmacht\Contao\Toolkit\Data\Alias\Filter\ExistingAliasFilter;
+use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SlugifyFilter;
+use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SuffixFilter;
+use Netzmacht\Contao\Toolkit\Data\Alias\Validator\UniqueDatabaseValueValidator;
 use Netzmacht\Contao\Toolkit\Data\State\StateToggle;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\DcaLoader;
@@ -417,5 +421,30 @@ $container[Services::INSERT_TAG_REPLACER] = $container->share(
 $container[Services::REQUEST_TOKEN] = $container->share(
     function () {
         return RequestToken::getInstance();
+    }
+);
+
+/**
+ * Get the default alias generator factory.
+ *
+ * @return callable
+ */
+$container[Services::DEFAULT_ALIAS_GENERATOR_FACTORY] = $container->share(
+    function ($container) {
+        return function ($dataContainerName, $aliasField, $fields) use ($container) {
+            $filters = [
+                new ExistingAliasFilter(),
+                new SlugifyFilter($fields),
+                new SuffixFilter()
+            ];
+
+            $validator = new UniqueDatabaseValueValidator(
+                $container[Services::DATABASE_CONNECTION],
+                $dataContainerName,
+                $aliasField
+            );
+
+            return new Generator($filters, $validator, $dataContainerName, $aliasField);
+        };
     }
 );

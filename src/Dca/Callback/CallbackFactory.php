@@ -11,7 +11,9 @@
 namespace Netzmacht\Contao\Toolkit\Dca\Callback;
 
 use Controller;
+use Netzmacht\Contao\Toolkit\Data\Alias\Generator;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Button\StateButtonCallback;
+use Netzmacht\Contao\Toolkit\Dca\Callback\Save\GenerateAliasCallback;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\ColorPicker;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\FilePicker;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\PagePicker;
@@ -187,5 +189,28 @@ final class CallbackFactory
             $linkPattern,
             $template
         );
+    }
+
+    /**
+     * Generate the alias generator callback.
+     *
+     * @param string  $dataContainerName Data Container name.
+     * @param string  $aliasField        Alias field.
+     * @param array   $fields            List of fields being combined as alias. If empty ['id'] is used.
+     * @param string  $factoryService    Custom alias generator factory service.
+     *
+     * @return GenerateAliasCallback
+     */
+    public static function aliasGenerator($dataContainerName, $aliasField, array $fields = null, $factoryService = null)
+    {
+        $container      = static::getContainer();
+        $factoryService = $factoryService ?: Services::DEFAULT_ALIAS_GENERATOR_FACTORY;
+        $factory        = $container->get($factoryService);
+        $fields         = $fields ?: ['id'];
+
+        /** @var Generator $aliasGenerator */
+        $aliasGenerator = $factory($dataContainerName, $aliasField, $fields);
+
+        return new GenerateAliasCallback($aliasGenerator);
     }
 }

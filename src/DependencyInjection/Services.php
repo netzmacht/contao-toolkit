@@ -90,6 +90,13 @@ final class Services
     const DCA_MANAGER = 'toolkit.dca.manager';
 
     /**
+     * Default alias generator factory.
+     *
+     * @var string
+     */
+    const DEFAULT_ALIAS_GENERATOR_FACTORY = 'toolkit.data.alias-generator.factory.default';
+
+    /**
      * Environment service.
      *
      * Instance of \Environment.
