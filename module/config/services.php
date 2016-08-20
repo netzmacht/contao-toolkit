@@ -387,12 +387,23 @@ $container['toolkit.dca.formatter.factory'] = $container->share(
 );
 
 /**
+ * Insert tag parser factories.
+ *
+ * @return ArrayObject
+ */
+$container[Services::INSERT_TAG_PARSERS] = $container->share(
+    function () {
+        return new ArrayObject();
+    }
+);
+
+/**
  * Service definition of the insert tag replacer.
  *
  * @return Replacer
  */
 $container[Services::INSERT_TAG_REPLACER] = $container->share(
-    function () {
+    function ($container) {
         if (version_compare(VERSION . '.' . BUILD, '3.5.3', '>=')) {
             $insertTags = new \Contao\InsertTags();
         } else {
@@ -401,6 +412,10 @@ $container[Services::INSERT_TAG_REPLACER] = $container->share(
 
         $replacer                                   = new IntegratedReplacer($insertTags);
         $GLOBALS['TL_HOOKS']['replaceInsertTags'][] = [get_class($replacer), 'replaceTag'];
+
+        foreach ($container[Services::INSERT_TAG_PARSERS] as $factory) {
+            $replacer->registerParser($factory());
+        }
 
         return $replacer;
     }

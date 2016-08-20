@@ -133,6 +133,15 @@ final class Services
     const INPUT = 'input';
 
     /**
+     * Insert tag parser factories.
+     *
+     * Instance of \ArrayObject
+     *
+     * @var string
+     */
+    const INSERT_TAG_PARSERS = 'toolkit.insert-tag.parsers';
+
+    /**
      * Insert tag replacer service.
      *
      * Instance of Netzmacht\Contao\Toolkit\InsertTag\Replacer.
