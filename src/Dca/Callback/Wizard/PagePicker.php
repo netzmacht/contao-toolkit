@@ -51,12 +51,4 @@ final class PagePicker extends AbstractFieldPicker
 
         return $template->parse();
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function __invoke($dataContainer)
-    {
-        return $this->generate($dataContainer->table, $dataContainer->field, $dataContainer->id, $dataContainer->value);
-    }
 }
