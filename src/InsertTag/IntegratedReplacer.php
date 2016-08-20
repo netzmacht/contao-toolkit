@@ -11,6 +11,9 @@
 
 namespace Netzmacht\Contao\Toolkit\InsertTag;
 
+use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerAware;
+use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
+
 /**
  * IntegratedReplacer is the insert tag replacer implementation which integrates into the Contao replacement way.
  *
@@ -18,6 +21,8 @@ namespace Netzmacht\Contao\Toolkit\InsertTag;
  */
 final class IntegratedReplacer implements Replacer
 {
+    use ContainerAware;
+
     /**
      * Insert tag map.
      *
@@ -61,12 +66,10 @@ final class IntegratedReplacer implements Replacer
      *
      * @return static
      * @internal
-     *
-     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public static function getInstance()
     {
-        return $GLOBALS['container']['toolkit.insert-tag-replacer'];
+        return static::getContainer()->get(Services::INSERT_TAG_REPLACER);
     }
 
     /**
