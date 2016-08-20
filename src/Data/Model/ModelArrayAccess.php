@@ -9,7 +9,7 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\Data;
+namespace Netzmacht\Contao\Toolkit\Data\Model;
 
 use Database\Result;
 use Model;
