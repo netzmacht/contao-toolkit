@@ -158,6 +158,7 @@ abstract class AbstractComponent
         $this->preGenerate();
 
         $template = $this->templateFactory->createFrontendTemplate($this->getTemplateName(), $this->getData());
+        $this->prepareTemplate($template);
         $this->compile($template);
 
         $buffer = $template->parse();
@@ -188,13 +189,13 @@ abstract class AbstractComponent
     }
 
     /**
-     * Compile the template.
+     * Prepare the template.
      *
      * @param Template $template Template name.
      *
-     * @return mixed
+     * @return void
      */
-    protected function compile(Template $template)
+    private function prepareTemplate(Template $template)
     {
         $style = [];
         $space = $this->get('space');
@@ -215,6 +216,17 @@ abstract class AbstractComponent
         $template->set('class', $cssClass);
         $template->set('cssID', ($cssID[0] != '') ? ' id="' . $cssID[0] . '"' : '');
         $template->set('inColumn', $this->getColumn());
+    }
+
+    /**
+     * Compile the component.
+     *
+     * @param Template $template Component template.
+     *
+     * @return void
+     */
+    protected function compile(Template $template)
+    {
     }
 
     /**
