@@ -146,12 +146,4 @@ final class PopupWizard extends AbstractWizard
 
         return '';
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function __invoke($dataContainer)
-    {
-        return $this->generate($dataContainer->value);
-    }
 }
