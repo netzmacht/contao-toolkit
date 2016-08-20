@@ -69,21 +69,6 @@ final class Manager
      *
      * @return Definition
      *
-     * @deprecated Use getDefinition().
-     */
-    public function get($name, $noCache = false)
-    {
-        return $this->getDefinition($name, $noCache);
-    }
-
-    /**
-     * Get a data container definition.
-     *
-     * @param string $name    The data definition name.
-     * @param bool   $noCache If true not the cached version is loaded.
-     *
-     * @return Definition
-     *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function getDefinition($name, $noCache = false)
