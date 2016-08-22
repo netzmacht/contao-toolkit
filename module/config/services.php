@@ -40,6 +40,7 @@ use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
 use Netzmacht\Contao\Toolkit\InsertTag\IntegratedReplacer;
 use Netzmacht\Contao\Toolkit\InsertTag\Replacer;
 use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
+use Netzmacht\Contao\Toolkit\View\Assets\GlobalsAssetsManager;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 
 global $container;
@@ -89,7 +90,7 @@ $container[Services::VIEW_HELPERS] = $container->share(
  */
 $container[Services::ASSETS_MANAGER] = $container->share(
     function ($container) {
-        return new AssetsManager(
+        return new GlobalsAssetsManager(
             $GLOBALS['TL_CSS'],
             $GLOBALS['TL_JAVASCRIPT'],
             $container['toolkit.production-mode']

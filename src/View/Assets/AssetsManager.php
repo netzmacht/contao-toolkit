@@ -12,48 +12,13 @@
 namespace Netzmacht\Contao\Toolkit\View\Assets;
 
 /**
- * Simple manager to handle assets registration.
+ * Assets manager describes an asset manager which handles assets being added by components.
  *
  * @package Netzmacht\Contao\Toolkit
  */
-final class AssetsManager
+interface AssetsManager
 {
     const STATIC_PRODUCTION = 'prod';
-
-    /**
-     * The registered stylesheets.
-     *
-     * @var array
-     */
-    private $javascripts;
-
-    /**
-     * The registered javascripts.
-     *
-     * @var array
-     */
-    private $stylesheets;
-
-    /**
-     * Production mode of the environment.
-     *
-     * @var bool
-     */
-    private $productionMode;
-
-    /**
-     * AssetsManager constructor.
-     *
-     * @param array $stylesheets    The registered stylesheets.
-     * @param array $javascripts    The registered javascripts.
-     * @param bool  $productionMode Production mode of the environment.
-     */
-    public function __construct(&$stylesheets, &$javascripts, $productionMode = false)
-    {
-        $this->stylesheets    =& $stylesheets;
-        $this->javascripts    =& $javascripts;
-        $this->productionMode = $productionMode;
-    }
 
     /**
      * Add a javascript file to Contao assets.
@@ -64,20 +29,7 @@ final class AssetsManager
      *
      * @return $this
      */
-    public function addJavascript($path, $static = self::STATIC_PRODUCTION, $name = null)
-    {
-        if (static::isStatic($static)) {
-            $path .= '|static';
-        }
-
-        if ($name) {
-            $this->javascripts[$name] = $path;
-        } else {
-            $this->javascripts[] = $path;
-        }
-
-        return $this;
-    }
+    public function addJavascript($path, $static = self::STATIC_PRODUCTION, $name = null);
 
     /**
      * Add javascript files to Contao assets.
@@ -88,20 +40,7 @@ final class AssetsManager
      *
      * @return $this
      */
-    public function addJavascripts(array $paths, $static = self::STATIC_PRODUCTION, $name = null)
-    {
-        foreach ($paths as $identifier => $path) {
-            if ($name) {
-                $name .= '_' . $identifier;
-            } elseif (!is_numeric($identifier)) {
-                $name = $identifier;
-            }
-
-            static::addJavascript($path, $static, $name);
-        }
-
-        return $this;
-    }
+    public function addJavascripts(array $paths, $static = self::STATIC_PRODUCTION, $name = null);
 
     /**
      * Add a javascript file to Contao assets.
@@ -113,26 +52,7 @@ final class AssetsManager
      *
      * @return $this
      */
-    public function addStylesheet($path, $media = '', $static = self::STATIC_PRODUCTION, $name = null)
-    {
-        $static = static::isStatic($static);
-
-        if ($media || $static) {
-            $path .= '|' . $media;
-
-            if ($static) {
-                $path .= '|static';
-            }
-        }
-
-        if ($name) {
-            $this->stylesheets[$name] = $path;
-        } else {
-            $this->stylesheets[] = $path;
-        }
-
-        return $this;
-    }
+    public function addStylesheet($path, $media = '', $static = self::STATIC_PRODUCTION, $name = null);
 
     /**
      * Add stylesheet files to Contao assets.
@@ -144,34 +64,5 @@ final class AssetsManager
      *
      * @return $this
      */
-    public function addStylesheets(array $paths, $media = '', $static = self::STATIC_PRODUCTION, $name = null)
-    {
-        foreach ($paths as $identifier => $path) {
-            if ($name) {
-                $name .= '_' . $identifier;
-            } elseif (!is_numeric($identifier)) {
-                $name = $identifier;
-            }
-
-            static::addStylesheet($path, $media, $static, $name);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Evaluate the static flag by recognizing the debug mode setting.
-     *
-     * @param mixed $flag The static flag.
-     *
-     * @return bool
-     */
-    private function isStatic($flag)
-    {
-        if ($flag === static::STATIC_PRODUCTION) {
-            return $this->productionMode;
-        }
-
-        return $flag;
-    }
+    public function addStylesheets(array $paths, $media = '', $static = self::STATIC_PRODUCTION, $name = null);
 }
