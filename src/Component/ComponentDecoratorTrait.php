@@ -31,7 +31,7 @@ trait ComponentDecoratorTrait
     /**
      * {@inheritDoc}
      */
-    public function __construct($contentModel, $column)
+    public function __construct($contentModel, $column = 'main')
     {
         $factory         = $this->getFactory($contentModel);
         $this->component = $factory->create($contentModel, $column);
