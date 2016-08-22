@@ -19,13 +19,6 @@ namespace Netzmacht\Contao\Toolkit\InsertTag;
 interface Parser
 {
     /**
-     * Get the supported tags.
-     *
-     * @return array
-     */
-    public static function getTags();
-
-    /**
      * Parse an insert tag.
      *
      * @param string    $raw    Raw insert tag.
