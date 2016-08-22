@@ -52,7 +52,7 @@ interface Template
      * @param string $name Name of the helper.
      *
      * @return mixed
-     * @throws HelperNotFound if helper not exists.
+     * @throws HelperNotFound If helper not exists.
      */
     public function helper($name);
 
