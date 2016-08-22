@@ -80,8 +80,10 @@ final class CreateFormatterSubscriber
             ),
             new FileUuidFormatter(),
             new DateFormatter(
-                $this->container->get(Services::CONFIG)),
-            new YesNoFormatter($this->container->get(Services::TRANSLATOR)
+                $this->container->get(Services::CONFIG)
+            ),
+            new YesNoFormatter(
+                $this->container->get(Services::TRANSLATOR)
             ),
             new HtmlFormatter(),
             new ReferenceFormatter(),
