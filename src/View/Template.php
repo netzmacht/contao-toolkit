@@ -11,6 +11,8 @@
 
 namespace Netzmacht\Contao\Toolkit\View;
 
+use Netzmacht\Contao\Toolkit\View\Template\HelperNotFound;
+
 /**
  * Interface describes the templates being used in the toolkit.
  *
@@ -43,6 +45,16 @@ interface Template
      * @return $this
      */
     public function set($name, $value);
+
+    /**
+     * Get an helper.
+     *
+     * @param string $name Name of the helper.
+     *
+     * @return mixed
+     * @throws HelperNotFound if helper not exists.
+     */
+    public function helper($name);
 
     /**
      * Get all the template data.

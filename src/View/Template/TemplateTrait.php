@@ -84,21 +84,6 @@ trait TemplateTrait
     }
 
     /**
-     * Shortcut to get the helper.
-     *
-     * @param string $name Name of the view helper.
-     *
-     * @return mixed
-     * @throws HelperNotFound If helper is not registered.
-     *
-     * @SuppressWarnings(PHPMD.ShortMethodName)
-     */
-    public function h($name)
-    {
-        return $this->helper($name);
-    }
-
-    /**
      * Insert a template.
      *
      * @param string $name The template name.
