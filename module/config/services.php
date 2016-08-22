@@ -16,6 +16,7 @@ use Netzmacht\Contao\Toolkit\Component\FactoryToClassMapConverter;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\ExistingAliasFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SlugifyFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SuffixFilter;
+use Netzmacht\Contao\Toolkit\Data\Alias\FilterBasedAliasGenerator;
 use Netzmacht\Contao\Toolkit\Data\Alias\Validator\UniqueDatabaseValueValidator;
 use Netzmacht\Contao\Toolkit\Data\State\StateToggle;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
@@ -360,7 +361,7 @@ $container[Services::DEFAULT_ALIAS_GENERATOR_FACTORY] = $container->share(
                 $aliasField
             );
 
-            return new Generator($filters, $validator, $dataContainerName, $aliasField);
+            return new FilterBasedAliasGenerator($filters, $validator, $dataContainerName, $aliasField);
         };
     }
 );

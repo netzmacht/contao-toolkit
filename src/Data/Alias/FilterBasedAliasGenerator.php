@@ -21,7 +21,7 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException;
  *
  * @package Netzmacht\Contao\Toolkit\Data\Alias
  */
-final class Generator
+final class FilterBasedAliasGenerator
 {
     /**
      * Alias validator.
@@ -172,12 +172,7 @@ final class Generator
     }
 
     /**
-     * Generate the alias.
-     *
-     * @param Result|Model $result The database result.
-     * @param mixed        $value  The current value.
-     *
-     * @return mixed|null|string
+     * {@inheritDoc}
      */
     public function generate($result, $value = null)
     {

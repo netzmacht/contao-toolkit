@@ -3,7 +3,7 @@
 namespace spec\Netzmacht\Contao\Toolkit\Data\Alias;
 
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter;
-use Netzmacht\Contao\Toolkit\Data\Alias\Generator;
+use Netzmacht\Contao\Toolkit\Data\Alias\FilterBasedAliasGenerator;
 use Netzmacht\Contao\Toolkit\Data\Alias\Validator;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -12,9 +12,9 @@ use Prophecy\Argument;
  * Class GeneratorSpec
  *
  * @package spec\Netzmacht\Contao\Toolkit\Data\Alias
- * @mixin Generator
+ * @mixin FilterBasedAliasGenerator
  */
-class GeneratorSpec extends ObjectBehavior
+class FilterBasedAliasGeneratorSpec extends ObjectBehavior
 {
     const TABLE_NAME = 'table_name';
 
@@ -23,7 +23,8 @@ class GeneratorSpec extends ObjectBehavior
     function it_is_initializable(Filter $filter, Validator $validator)
     {
         $this->beConstructedWith([$filter], $validator, static::TABLE_NAME);
-        $this->shouldHaveType('Netzmacht\Contao\Toolkit\Data\Alias\Generator');
+        $this->shouldHaveType('Netzmacht\Contao\Toolkit\Data\Alias\FilterBasedAliasGenerator');
+        $this->shouldHaveType('Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator');
     }
 
     function it_applies_filter(Filter $filter, Validator $validator)

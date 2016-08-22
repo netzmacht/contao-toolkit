@@ -11,7 +11,7 @@
 namespace Netzmacht\Contao\Toolkit\Dca\Callback;
 
 use Controller;
-use Netzmacht\Contao\Toolkit\Data\Alias\Generator;
+use Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Button\StateButtonCallback;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Save\GenerateAliasCallback;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\ColorPicker;
@@ -207,7 +207,7 @@ final class CallbackFactory
         $factory        = $container->get($factoryService);
         $fields         = $fields ?: ['id'];
 
-        /** @var Generator $aliasGenerator */
+        /** @var AliasGenerator $aliasGenerator */
         $aliasGenerator = $factory($dataContainerName, $aliasField, $fields);
 
         return new GenerateAliasCallback($aliasGenerator);

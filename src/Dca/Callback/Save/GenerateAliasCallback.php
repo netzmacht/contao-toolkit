@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Save;
 
-use Netzmacht\Contao\Toolkit\Data\Alias\Generator;
+use Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator;
 
 /**
  * Class GenerateAliasCallback is designed to create an alias of a column.
@@ -23,16 +23,16 @@ class GenerateAliasCallback
     /**
      * The alias generator.
      *
-     * @var Generator
+     * @var AliasGenerator
      */
     private $generator;
 
     /**
      * Construct.
      *
-     * @param Generator $generator The alias generator.
+     * @param AliasGenerator $generator The alias generator.
      */
-    public function __construct(Generator $generator)
+    public function __construct(AliasGenerator $generator)
     {
         $this->generator = $generator;
     }
