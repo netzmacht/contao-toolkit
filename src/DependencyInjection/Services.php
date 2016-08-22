@@ -97,6 +97,15 @@ final class Services
     const DEFAULT_ALIAS_GENERATOR_FACTORY = 'toolkit.data.alias-generator.factory.default';
 
     /**
+     * Contao encryption as a service.
+     *
+     * Instance of Encryption.
+     *
+     * @var string
+     */
+    const ENCRYPTION = 'toolkit.contao.encryption';
+
+    /**
      * Environment service.
      *
      * Instance of \Environment.
