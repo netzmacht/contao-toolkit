@@ -12,6 +12,18 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Subscriber;
 
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Event\CreateFormatterEvent;
 use Interop\Container\ContainerInterface as Container;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\DateFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\DeserializeFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\EncryptedFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FileUuidFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FlattenFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ForeignKeyFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\HiddenValueFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\HtmlFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\OptionsFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ReferenceFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\YesNoFormatter;
+use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
 
 /**
  * Class CreateFormatterSubscriber handles the create formatter event.
@@ -28,26 +40,13 @@ final class CreateFormatterSubscriber
     private $container;
 
     /**
-     * List of service names which should be used as formatter and filters.
-     *
-     * @var array
-     */
-    private $serviceNames = [
-        'formatter' => [],
-        'pre-filters' => [],
-        'post-filters' => []
-    ];
-
-    /**
      * CreateFormatterSubscriber constructor.
      *
-     * @param Container $container    Service container.
-     * @param array     $serviceNames Service names.
+     * @param Container $container Service container.
      */
-    public function __construct(Container $container, array $serviceNames)
+    public function __construct(Container $container)
     {
-        $this->container    = $container;
-        $this->serviceNames = array_merge($this->serviceNames, $serviceNames);
+        $this->container = $container;
     }
 
     /**
@@ -75,7 +74,21 @@ final class CreateFormatterSubscriber
      */
     private function createFormatter()
     {
-        return $this->createFromServiceNames('formatter');
+        return [
+            new ForeignKeyFormatter(
+                $this->container->get(Services::DATABASE_CONNECTION)
+            ),
+            new FileUuidFormatter(),
+            new DateFormatter(
+                $this->container->get(Services::CONFIG)),
+            new YesNoFormatter($this->container->get(Services::TRANSLATOR)
+            ),
+            new HtmlFormatter(),
+            new ReferenceFormatter(),
+            new OptionsFormatter(
+                $this->container->get(Services::CALLBACK_INVOKER)
+            )
+        ];
     }
 
     /**
@@ -85,7 +98,13 @@ final class CreateFormatterSubscriber
      */
     private function createPreFilters()
     {
-        return $this->createFromServiceNames('pre-filters');
+        return [
+            new HiddenValueFormatter(),
+            new DeserializeFormatter(),
+            new EncryptedFormatter(
+                $this->container->get(Services::ENCRYPTION)
+            )
+        ];
     }
 
     /**
@@ -95,24 +114,8 @@ final class CreateFormatterSubscriber
      */
     private function createPostFilters()
     {
-        return $this->createFromServiceNames('post-filters');
-    }
-
-    /**
-     * Create the list of formatter by fetching the formatter from the service container.
-     *
-     * @param string $category Name of the category.
-     *
-     * @return array
-     */
-    private function createFromServiceNames($category)
-    {
-        $formatter = [];
-
-        foreach ($this->serviceNames[$category] as $serviceName) {
-            $formatter[] = $this->container->get($serviceName);
-        }
-
-        return $formatter;
+        return [
+            new FlattenFormatter()
+        ];
     }
 }

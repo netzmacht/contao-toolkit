@@ -212,6 +212,10 @@ $container[Services::FILE_SYSTEM] = $container->share(
     }
 );
 
+$container[Services::ENCRYPTION] = function () {
+    return Encryption::getInstance();
+};
+
 /**
  * State toggle factory.
  *
@@ -227,142 +231,6 @@ $container[Services::STATE_TOGGLE] = $container->share(
         );
     }
 );
-
-/**
- * Date formatter factory.
- *
- * @param \Pimple $container Dependency container.
- *
- * @return ValueFormatter
- */
-$container['toolkit.dca-formatter.date'] = function ($container) {
-    return new DateFormatter($container['config']);
-};
-
-/**
- * Encyrpted formatter factory.
- *
- * @return ValueFormatter
- */
-$container['toolkit.dca-formatter.encrypted'] = function () {
-    return new EncryptedFormatter();
-};
-
-/**
- * FileUuid formatter factory.
- *
- * @return ValueFormatter
- */
-$container['toolkit.dca-formatter.file-uuid'] = function () {
-    return new FileUuidFormatter();
-};
-
-/**
- * ForeignKey formatter factory.
- *
- * @param \Pimple $container Dependency container.
- *
- * @return ValueFormatter
- */
-$container['toolkit.dca-formatter.foreign-key'] = function ($container) {
-    return new ForeignKeyFormatter($container['database.connection']);
-};
-
-/**
- * Hidden formatter factory.
- *
- * @return ValueFormatter
- */
-$container['toolkit.dca-formatter.hidden'] = function () {
-    return new HiddenValueFormatter();
-};
-
-/**
- * Options formatter factory.
- *
- * @param \Pimple $container Container invoker.
- *
- * @return ValueFormatter
- */
-$container['toolkit.dca-formatter.options'] = function ($container) {
-    return new OptionsFormatter($container[Services::CALLBACK_INVOKER]);
-};
-
-/**
- * Reference formatter factory.
- *
- * @return ValueFormatter
- */
-$container['toolkit.dca-formatter.reference'] = function () {
-    return new ReferenceFormatter();
-};
-
-/**
- * YesNo formatter factory.
- *
- * @param \Pimple $container Dependency container.
- *
- * @return ValueFormatter
- */
-$container['toolkit.dca-formatter.yes-no'] = function ($container) {
-    return new YesNoFormatter($container['translator']);
-};
-
-/**
- * HTML formatter factory.
- *
- * @return ValueFormatter
- */
-$container['toolkit.dca-formatter.html'] = function () {
-    return new HtmlFormatter();
-};
-
-/**
- * Deserialize formatter factory.
- *
- * @return ValueFormatter
- */
-$container['toolkit.dca-formatter.deserialize'] = function () {
-    return new DeserializeFormatter();
-};
-
-/**
- * Flatter formatter factory.
- *
- * @return ValueFormatter
- */
-$container['toolkit.dca-formatter.flatten'] = function () {
-    return new FlattenFormatter();
-};
-
-/**
- * Pre filter formatter factory.
- *
- * @param \Pimple $container Dependency container.
- *
- * @return array
- */
-$container['toolkit.dca-formatter.service-names'] = function () {
-    return [
-        'formatter' => [
-            'toolkit.dca-formatter.foreign-key',
-            'toolkit.dca-formatter.file-uuid',
-            'toolkit.dca-formatter.date',
-            'toolkit.dca-formatter.yes-no',
-            'toolkit.dca-formatter.html',
-            'toolkit.dca-formatter.reference',
-            'toolkit.dca-formatter.options',
-        ],
-        'pre-filters' => [
-            'toolkit.dca-formatter.hidden',
-            'toolkit.dca-formatter.deserialize',
-            'toolkit.dca-formatter.encrypted',
-        ],
-        'post-filters' => [
-            'toolkit.dca-formatter.flatten'
-        ]
-    ];
-};
 
 $container['toolkit.dca.formatter.create-subscriber'] = $container->share(
     function ($container) {
