@@ -36,14 +36,14 @@ final class FileUuidFormatter implements ValueFormatter
                 array_filter(
                     array_map(
                         function ($value) {
-                            return $value ? \String::binToUuid($value) : '';
+                            return $value ? \StringUtil::binToUuid($value) : '';
                         },
                         $value
                     )
                 )
             );
         } else {
-            $value = $value ? \String::binToUuid($value) : '';
+            $value = $value ? \StringUtil::binToUuid($value) : '';
         }
 
         return $value;
