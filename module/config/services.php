@@ -9,9 +9,9 @@
  *
  */
 
+use Contao\InsertTags as ContaoInsertTags;
 use Interop\Container\ContainerInterface;
 use Netzmacht\Contao\Toolkit\Component\ComponentFactory;
-use Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElementDecorator;
 use Netzmacht\Contao\Toolkit\Component\FactoryToClassMapConverter;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\ExistingAliasFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SlugifyFilter;
@@ -25,6 +25,7 @@ use Netzmacht\Contao\Toolkit\Dca\Formatter\Subscriber\CreateFormatterSubscriber;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Netzmacht\Contao\Toolkit\DependencyInjection\PimpleAdapter;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
+use Netzmacht\Contao\Toolkit\InsertTag\InsertTags;
 use Netzmacht\Contao\Toolkit\InsertTag\IntegratedReplacer;
 use Netzmacht\Contao\Toolkit\InsertTag\Replacer;
 use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
@@ -33,6 +34,52 @@ use Netzmacht\Contao\Toolkit\View\Template\Subscriber\GetTemplateHelpersListener
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 
 global $container;
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Contao services
+//
+// Toolkit provides Contao singletons as service. In addition to contao-community-alliance/dependency-container missing
+// classes are registered in the container.
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Contao Files as file system service.
+ *
+ * @return \Files
+ */
+$container[Services::FILE_SYSTEM] = function () {
+    return \Files::getInstance();
+};
+
+/**
+ * Contao Encryption class as a service.
+ *
+ * @return Encryption
+ */
+$container[Services::ENCRYPTION] = function () {
+    return Encryption::getInstance();
+};
+
+/**
+ * Request token as service.
+ *
+ * @return RequestToken
+ */
+$container[Services::REQUEST_TOKEN] = $container->share(
+    function () {
+        return RequestToken::getInstance();
+    }
+);
+
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Toolkit Dependency injection
+//
+// Toolkit provides an container implementation which based on container-interop/container-interop ContainerInterface.
+// Instead of access Pimple in user land code it's recommend to depend on ContainerInterface. Since Contao 4.x is
+// supported, an adapter to Symfony container based on ContainerInterface or the updated
+// contao-community-alliance/dependency-injection implementation will be provided.
+// ---------------------------------------------------------------------------------------------------------------------
 
 /**
  * Get the container.
@@ -44,6 +91,40 @@ $container[Services::CONTAINER] = $container->share(
         return new PimpleAdapter($container);
     }
 );
+
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Toolkit configuration
+//
+// Toolkit defines it's own production mode setting. You can override it to toggle some debuge features without using
+// the ugly debug toolbar of Contao.
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * The default production mode is based on the debug mode config.
+ *
+ * @param Pimple $container Pimple container.
+ *
+ * @return bool
+ */
+$container['toolkit.production-mode.default'] = function ($container) {
+    return !$container['config']->get('debugMode');
+};
+
+/**
+ * The production mode. If not set before the default value is used.
+ * @var bool
+ */
+if (!isset($container[Services::PRODUCTION_MODE])) {
+    $container[Services::PRODUCTION_MODE] = $container['toolkit.production-mode.default'];
+}
+
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Toolkit View system
+//
+// Toolkit provides several tools for the view component like a template factory and an assets manager.
+// ---------------------------------------------------------------------------------------------------------------------
 
 /**
  * Service definition of the template factory.
@@ -82,6 +163,14 @@ $container[Services::ASSETS_MANAGER] = $container->share(
     }
 );
 
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Toolkit components
+//
+// Toolkit provides an handy way to create decoupled components. Therefor required services are defined. Typically you
+// don't have to use them. The toolkit system works out of the box. Please consider the documentation for more details.
+// ---------------------------------------------------------------------------------------------------------------------
+
 /**
  * Module factory.
  *
@@ -108,9 +197,9 @@ $container[Services::MODULES_MAP] = $container->share(
 );
 
 /**
- * Content element config converter
+ * Content element config converter.
  *
- * @return ContentElementDecorator
+ * @return FactoryToClassMapConverter
  */
 $container['toolkit.component.module-map-converter'] = $container->share(
     function ($container) {
@@ -152,7 +241,7 @@ $container[Services::CONTENT_ELEMENTS_MAP] = $container->share(
 /**
  * Content element config converter
  *
- * @return ContentElementDecorator
+ * @return FactoryToClassMapConverter
  */
 $container['toolkit.component.content-element-map-converter'] = $container->share(
     function ($container) {
@@ -164,18 +253,19 @@ $container['toolkit.component.content-element-map-converter'] = $container->shar
     }
 );
 
-$container['toolkit.production-mode.default'] = function ($container) {
-    return !$container['config']->get('debugMode');
-};
 
-if (!isset($container['toolkit.production-mode'])) {
-    $container['toolkit.production-mode'] = $container['toolkit.production-mode.default'];
-}
+// ---------------------------------------------------------------------------------------------------------------------
+// Toolkit dca system
+//
+// Toolkit provides useful tools to ease working with dca files. There's an dca manager which provides access to dca
+// definitions and dca based formatter.
+// ---------------------------------------------------------------------------------------------------------------------
 
-$container['toolkit.dca-loader'] = function () {
-    return new DcaLoader();
-};
-
+/**
+ * Dca manager.
+ *
+ * @return Manager
+ */
 $container[Services::DCA_MANAGER] = $container->share(
     function ($container) {
         return new Manager(
@@ -185,26 +275,30 @@ $container[Services::DCA_MANAGER] = $container->share(
     }
 );
 
+/**
+ * Callback invoker.
+ *
+ * @return Invoker
+ */
 $container[Services::CALLBACK_INVOKER] = $container->share(
     function () {
         return new Invoker();
     }
 );
 
-$container[Services::FILE_SYSTEM] = $container->share(
-    function () {
-        return \Files::getInstance();
-    }
-);
-
-$container[Services::ENCRYPTION] = function () {
-    return Encryption::getInstance();
+/**
+ * Dca loader for loading dca files.
+ *
+ * @return DcaLoader
+ */
+$container['toolkit.dca-loader'] = function () {
+    return new DcaLoader();
 };
 
 /**
  * State toggle factory.
  *
- * @return callable
+ * @return StateToggle
  */
 $container[Services::STATE_TOGGLE] = $container->share(
     function ($container) {
@@ -217,6 +311,13 @@ $container[Services::STATE_TOGGLE] = $container->share(
     }
 );
 
+/**
+ * Event listener to create all default formatter.
+ *
+ * @param \Pimple $container Dependency container.
+ *
+ * @return CreateFormatterSubscriber
+ */
 $container['toolkit.dca.formatter.create-subscriber'] = $container->share(
     function ($container) {
         return new CreateFormatterSubscriber(
@@ -236,37 +337,6 @@ $container['toolkit.dca.formatter.create-subscriber'] = $container->share(
 $container['toolkit.dca.formatter.factory'] = $container->share(
     function ($container) {
         return new FormatterFactory($container[Services::CONTAINER], $container[Services::EVENT_DISPATCHER]);
-    }
-);
-
-/**
- * Service definition of the insert tag replacer.
- *
- * @return Replacer
- */
-$container[Services::INSERT_TAG_REPLACER] = $container->share(
-    function () {
-        if (version_compare(VERSION . '.' . BUILD, '3.5.3', '>=')) {
-            $insertTags = new \Contao\InsertTags();
-        } else {
-            $insertTags = new \Netzmacht\Contao\Toolkit\InsertTag\InsertTags();
-        }
-
-        $replacer                                   = new IntegratedReplacer($insertTags);
-        $GLOBALS['TL_HOOKS']['replaceInsertTags'][] = [get_class($replacer), 'replaceTag'];
-
-        return $replacer;
-    }
-);
-
-/**
- * Request token as service.
- *
- * @return RequestToken
- */
-$container[Services::REQUEST_TOKEN] = $container->share(
-    function () {
-        return RequestToken::getInstance();
     }
 );
 
@@ -292,5 +362,43 @@ $container[Services::DEFAULT_ALIAS_GENERATOR_FACTORY] = $container->share(
 
             return new Generator($filters, $validator, $dataContainerName, $aliasField);
         };
+    }
+);
+
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Toolkit insert tag system
+//
+// Toolkit provides an interface for insert tag parsers and an insert tag replacer service.
+// ---------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Service definition of the insert tag replacer.
+ *
+ * @return Replacer
+ */
+$container[Services::INSERT_TAG_REPLACER] = $container->share(
+    function ($container) {
+        $insertTags = $container['toolkit.insert-tag.insert-tags'];
+        $replacer   = new IntegratedReplacer($insertTags);
+
+        $GLOBALS['TL_HOOKS']['replaceInsertTags'][] = [get_class($replacer), 'replaceTag'];
+
+        return $replacer;
+    }
+);
+
+/**
+ * Get insert tag replace of Contao.
+ *
+ * @return InsertTags|ContaoInsertTags
+ */
+$container['toolkit.insert-tag.insert-tags'] = $container->share(
+    function () {
+        if (version_compare(VERSION . '.' . BUILD, '3.5.3', '>=')) {
+            return new ContaoInsertTags();
+        }
+
+        return new InsertTags();
     }
 );

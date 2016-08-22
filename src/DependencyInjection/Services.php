@@ -178,6 +178,15 @@ final class Services
     const PAGE_PROVIDER = 'page-provider';
 
     /**
+     * Production mode setting.
+     *
+     * Boolean.
+     *
+     * @var string
+     */
+    const PRODUCTION_MODE = 'toolkit.production-mode';
+
+    /**
      * Request token service.
      *
      * Instnace of \RequestToken.
