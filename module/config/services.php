@@ -29,6 +29,7 @@ use Netzmacht\Contao\Toolkit\InsertTag\IntegratedReplacer;
 use Netzmacht\Contao\Toolkit\InsertTag\Replacer;
 use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
 use Netzmacht\Contao\Toolkit\View\Assets\GlobalsAssetsManager;
+use Netzmacht\Contao\Toolkit\View\Template\Subscriber\GetTemplateHelpersListener;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 
 global $container;
@@ -51,25 +52,20 @@ $container[Services::CONTAINER] = $container->share(
  */
 $container[Services::TEMPLATE_FACTORY] = $container->share(
     function ($container) {
-        return new TemplateFactory($container[Services::VIEW_HELPERS]);
+        return new TemplateFactory($container[Services::EVENT_DISPATCHER]);
     }
 );
 
 /**
- * Service definition of the view helpers factory map.
+ * Get the template helpers listener.
  *
- * @return ArrayObject
+ * @param \Pimple $container Pimple container.
+ *
+ * @return GetTemplateHelpersListener
  */
-$container[Services::VIEW_HELPERS] = $container->share(
-    function ($container) {
-        return new ArrayObject(
-            [
-                'translator' => $container[Services::TRANSLATOR],
-                'assets'     => $container[Services::ASSETS_MANAGER],
-            ]
-        );
-    }
-);
+$container['toolkit.view.get-template-helpers-listener'] = function ($container) {
+    return new GetTemplateHelpersListener($container[Services::CONTAINER]);
+};
 
 /**
  * Service definition of the assets manager.

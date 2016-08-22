@@ -12,6 +12,8 @@
 namespace Netzmacht\Contao\Toolkit\View\Template;
 
 use Netzmacht\Contao\Toolkit\View\Template;
+use Netzmacht\Contao\Toolkit\View\Template\Event\GetTemplateHelpersEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 
 /**
  * TemplateFactory creates a template with some predefined helpers.
@@ -19,20 +21,20 @@ use Netzmacht\Contao\Toolkit\View\Template;
 final class TemplateFactory
 {
     /**
-     * Template helper.
+     * Event dispatcher.
      *
-     * @var callable[]
+     * @var EventDispatcher
      */
-    private $helpers;
+    private $eventDispatcher;
 
     /**
      * TemplateFactory constructor.
      *
-     * @param callable[] $helpers View helpers.
+     * @param EventDispatcher $eventDispatcher Event dispatcher.
      */
-    public function __construct($helpers)
+    public function __construct(EventDispatcher $eventDispatcher)
     {
-        $this->helpers = $helpers;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -46,7 +48,8 @@ final class TemplateFactory
      */
     public function createFrontendTemplate($name, array $data = null, $contentType = 'text/html')
     {
-        $template = new FrontendTemplate($name, $this->helpers, $contentType);
+        $helpers  = $this->getTemplateHelpers($name, $contentType);
+        $template = new FrontendTemplate($name, $helpers, $contentType);
 
         if ($data) {
             $template->setData($data);
@@ -66,12 +69,29 @@ final class TemplateFactory
      */
     public function createBackendTemplate($name, array $data = null, $contentType = 'text/html')
     {
-        $template = new BackendTemplate($name, $this->helpers, $contentType);
+        $helpers  = $this->getTemplateHelpers($name, $contentType);
+        $template = new BackendTemplate($name, $helpers, $contentType);
 
         if ($data) {
             $template->setData($data);
         }
 
         return $template;
+    }
+
+    /**
+     * Get template helpers for an template.
+     *
+     * @param string $name        Template name.
+     * @param string $contentType Template content type.
+     *
+     * @return array
+     */
+    private function getTemplateHelpers($name, $contentType)
+    {
+        $event = new GetTemplateHelpersEvent($name, $contentType);
+        $this->eventDispatcher->dispatch($event::NAME, $event);
+
+        return $event->getHelpers();
     }
 }
