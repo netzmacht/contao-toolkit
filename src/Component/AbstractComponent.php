@@ -59,6 +59,13 @@ abstract class AbstractComponent
     private $templateFactory;
 
     /**
+     * Template instance.
+     *
+     * @var Template
+     */
+    protected $template;
+
+    /**
      * AbstractContentElement constructor.
      *
      * @param Model|Collection|Result $model           Object model or result.
@@ -157,11 +164,11 @@ abstract class AbstractComponent
     {
         $this->preGenerate();
 
-        $template = $this->templateFactory->createFrontendTemplate($this->getTemplateName(), $this->getData());
-        $this->prepareTemplate($template);
-        $this->compile($template);
+        $this->template = $this->templateFactory->createFrontendTemplate($this->getTemplateName(), $this->getData());
+        $this->prepareTemplate($this->template);
+        $this->compile();
 
-        $buffer = $template->parse();
+        $buffer = $this->template->parse();
         $buffer = $this->postGenerate($buffer);
 
         return $buffer;
@@ -221,11 +228,9 @@ abstract class AbstractComponent
     /**
      * Compile the component.
      *
-     * @param Template $template Component template.
-     *
      * @return void
      */
-    protected function compile(Template $template)
+    protected function compile()
     {
     }
 
