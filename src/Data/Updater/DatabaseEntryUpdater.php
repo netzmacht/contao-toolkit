@@ -14,11 +14,11 @@ namespace Netzmacht\Contao\Toolkit\Data\Updater;
 use BackendUser;
 use Database;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
-use User;
-use Versions;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Data\Exception\AccessDenied;
+use User;
+use Versions;
 
 /**
  * Class StateToggler.
@@ -79,7 +79,7 @@ final class DatabaseEntryUpdater implements Updater
      * @param array  $data      Data of the row which should be changed.
      * @param mixed  $context   Context, usually the data container driver.
      *
-     * @return mixed
+     * @return array
      */
     public function update($tableName, $recordId, array $data, $context)
     {
@@ -87,7 +87,7 @@ final class DatabaseEntryUpdater implements Updater
 
         $definition = $this->dcaManager->getDefinition($tableName);
         $versions   = $this->initializeVersions($definition, $recordId);
-        $newState   = $this->executeSaveCallbacks($definition, $data, $context);
+        $data       = $this->executeSaveCallbacks($definition, $data, $context);
 
         $this->save($definition, $recordId, $data);
 
@@ -95,7 +95,7 @@ final class DatabaseEntryUpdater implements Updater
             $versions->create();
         }
 
-        return $newState;
+        return $data;
     }
 
     /**
