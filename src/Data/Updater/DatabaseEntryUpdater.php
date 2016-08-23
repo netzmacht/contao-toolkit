@@ -192,8 +192,8 @@ final class DatabaseEntryUpdater implements Updater
         // Filter empty values which should not be saved.
         foreach ($data as $column => $value) {
             if ($value == '') {
-                if ($definition->get(['fields', $column, 'eval', 'alwaysSave'], false) &&
-                    $definition->get(['fields', $column, 'eval', 'doNotSaveEmpty'], false)
+                if ($definition->get(['fields', $column, 'eval', 'alwaysSave'], false)
+                    && $definition->get(['fields', $column, 'eval', 'doNotSaveEmpty'], false)
                 ) {
                     unset ($data[$column]);
                 }
