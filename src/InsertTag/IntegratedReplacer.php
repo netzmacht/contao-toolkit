@@ -84,7 +84,12 @@ final class IntegratedReplacer implements Replacer
      */
     public function replaceTag($raw, $cache = true)
     {
-        list($tag, $params) = explode('::', $raw, 2);
+        if (strpos($raw, '::')) {
+            list($tag, $params) = explode('::', $raw, 2);
+        } else {
+            $tag    = $raw;
+            $params = null;
+        }
 
         foreach ($this->parsers as $parser) {
             if ($parser->supports($tag)) {
