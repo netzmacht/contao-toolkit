@@ -67,7 +67,7 @@ final class CallbackFactory
 
         return new StateButtonCallback(
             $container->get(Services::INPUT),
-            $container->get(Services::STATE_TOGGLE),
+            $container->get(Services::DATABASE_ROW_UPDATER),
             $dataContainerName,
             $column,
             $disabledIcon,

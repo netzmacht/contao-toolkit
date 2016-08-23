@@ -12,13 +12,13 @@
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Button;
 
 use Backend;
-use Contao\DataContainer;
+use DataContainer;
 use Controller;
 use Image;
 use Input;
-use System;
-use Netzmacht\Contao\Toolkit\Data\State\StateToggle;
+use Netzmacht\Contao\Toolkit\Data\Updater\Updater;
 use Netzmacht\Contao\Toolkit\Data\Exception\AccessDenied;
+use System;
 
 /**
  * StateButtonCallback creates the state toggle button known in Contao.
@@ -63,10 +63,17 @@ final class StateButtonCallback
     private $inverse;
 
     /**
+     * Data row updater.
+     *
+     * @var Updater
+     */
+    private $updater;
+
+    /**
      * StateButtonCallback constructor.
      *
      * @param Input       $input        Request Input.
-     * @param StateToggle $stateToggle  State toggle.
+     * @param Updater     $updater      Data record updater.
      * @param string      $tableName    Data container name.
      * @param string      $stateColumn  Column name of the state value.
      * @param string|null $disabledIcon Disabled icon.
@@ -74,14 +81,14 @@ final class StateButtonCallback
      */
     public function __construct(
         Input $input,
-        StateToggle $stateToggle,
+        Updater $updater,
         $tableName,
         $stateColumn,
         $disabledIcon = null,
         $inverse = false
     ) {
         $this->input        = $input;
-        $this->toggler      = $stateToggle;
+        $this->updater      = $updater;
         $this->tableName    = $tableName;
         $this->stateColumn  = $stateColumn;
         $this->disabledIcon = $disabledIcon;
@@ -127,11 +134,10 @@ final class StateButtonCallback
     ) {
         if ($this->input->get('tid')) {
             try {
-                $this->toggler->toggle(
+                $this->updater->update(
                     $this->tableName,
-                    $this->stateColumn,
                     $this->input->get('tid'),
-                    ($this->input->get('state') == 1),
+                    [$this->stateColumn => ($this->input->get('state') == 1)],
                     $dataContainer
                 );
 
@@ -142,7 +148,7 @@ final class StateButtonCallback
             }
         }
 
-        if (!$this->toggler->hasUserAccess($this->tableName, $this->stateColumn)) {
+        if (!$this->updater->hasUserAccess($this->tableName, $this->stateColumn)) {
             return '';
         }
 

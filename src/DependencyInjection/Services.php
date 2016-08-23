@@ -81,6 +81,15 @@ final class Services
     const DATABASE_CONNECTION = 'database.connection';
 
     /**
+     * Updater service for database rows.
+     *
+     * Instance of Netzmacht\Contao\Toolkit\Data\Updater\Updater
+     *
+     * @var string
+     */
+    const DATABASE_ROW_UPDATER = 'toolkit.data.database-row-updater';
+
+    /**
      * Data container manager service.
      *
      * Instance of Netzmacht\Contao\Toolkit\Dca\Manager.
@@ -203,15 +212,6 @@ final class Services
      * @var string
      */
     const SESSION = 'session';
-
-    /**
-     * State toggle service.
-     *
-     * Instance of Netzmacht\Contao\Toolkit\Data\State\StateToggle
-     *
-     * @var string
-     */
-    const STATE_TOGGLE = 'toolkit.data.state-toggle-factory';
 
     /**
      * Template factory service.

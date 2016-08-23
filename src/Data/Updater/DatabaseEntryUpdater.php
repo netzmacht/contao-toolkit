@@ -9,7 +9,7 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\Data\State;
+namespace Netzmacht\Contao\Toolkit\Data\Updater;
 
 use BackendUser;
 use Database;
@@ -25,7 +25,7 @@ use Netzmacht\Contao\Toolkit\Data\Exception\AccessDenied;
  *
  * @package Netzmacht\Contao\Toolkit\Data\State
  */
-final class StateToggle
+final class DatabaseEntryUpdater implements Updater
 {
     /**
      * Contao user.
@@ -74,24 +74,22 @@ final class StateToggle
     /**
      * Toggle the state.
      *
-     * @param string $tableName  Data container name.
-     * @param string $columnName Column name.
-     * @param int    $recordId   Data record id.
-     * @param mixed  $newState   New state value.
-     * @param mixed  $context    Context, usually the data container driver.
+     * @param string $tableName Data container name.
+     * @param int    $recordId  Data record id.
+     * @param array  $data      Data of the row which should be changed.
+     * @param mixed  $context   Context, usually the data container driver.
      *
      * @return mixed
-     * @throws AccessDenied When user has no access.
      */
-    public function toggle($tableName, $columnName, $recordId, $newState, $context)
+    public function update($tableName, $recordId, array $data, $context)
     {
-        $this->guardUserHasAccess($tableName, $columnName, $recordId);
+        $this->guardUserHasAccess($tableName, $recordId, $data);
 
         $definition = $this->dcaManager->getDefinition($tableName);
         $versions   = $this->initializeVersions($definition, $recordId);
-        $newState   = $this->executeSaveCallbacks($definition, $columnName, $newState, $context);
+        $newState   = $this->executeSaveCallbacks($definition, $data, $context);
 
-        $this->saveValue($tableName, $columnName, $recordId, $newState);
+        $this->save($definition, $recordId, $data);
 
         if ($versions) {
             $versions->create();
@@ -120,19 +118,21 @@ final class StateToggle
     /**
      * Guard that user has access.
      *
-     * @param string $tableName  Data container name.
-     * @param string $columnName Column name.
-     * @param int    $recordId   Record id.
+     * @param string $tableName Data container name.
+     * @param int    $recordId  Record id.
+     * @param array  $data      Data row.
      *
      * @return void
      * @throws AccessDenied When user has no access.
      */
-    private function guardUserHasAccess($tableName, $columnName, $recordId)
+    private function guardUserHasAccess($tableName, $recordId, array $data)
     {
-        if (!$this->hasUserAccess($tableName, $columnName)) {
-            throw new AccessDenied(
-                sprintf('Not enough permission to toggle record ID "%s::%s"', $tableName, $recordId)
-            );
+        foreach (array_keys($data) as $columnName) {
+            if (!$this->hasUserAccess($tableName, $columnName)) {
+                throw new AccessDenied(
+                    sprintf('Not enough permission to toggle record ID "%s::%s"', $tableName, $recordId)
+                );
+            }
         }
     }
 
@@ -160,38 +160,55 @@ final class StateToggle
      * Execute save callbacks.
      *
      * @param Definition $definition Data container definition.
-     * @param string     $columnName State column name.
-     * @param mixed      $newState   New state value.
+     * @param array      $data       Data row.
      * @param mixed      $context    Context, usually the data container driver.
      *
-     * @return mixed
+     * @return array
      */
-    private function executeSaveCallbacks(Definition $definition, $columnName, $newState, $context)
+    private function executeSaveCallbacks(Definition $definition, array $data, $context)
     {
-        $callbacks = $definition->get(['fields', $columnName, 'save_callback']);
+        foreach ($data as $column => $value) {
+            $callbacks = $definition->get(['fields', $column, 'save_callback']);
 
-        if (is_array($callbacks)) {
-            $newState = $this->invoker->invokeAll($callbacks, [$newState, $context], 0);
+            if (is_array($callbacks)) {
+                $data[$column] = $this->invoker->invokeAll($callbacks, [$value, $context], 0);
+            }
         }
 
-        return $newState;
+        return $data;
     }
 
     /**
      * Save new state in database.
      *
-     * @param string $tableName  Data container name.
-     * @param string $columnName Column name.
-     * @param int    $recordId   Data record id.
-     * @param mixed  $newState   New state value.
+     * @param Definition $definition Data container definition.
+     * @param int        $recordId   Data record id.
+     * @param array      $data       Change data set.
      *
      * @return void
      */
-    private function saveValue($tableName, $columnName, $recordId, $newState)
+    private function save(Definition $definition, $recordId, array $data)
     {
+        // Filter empty values which should not be saved.
+        foreach ($data as $column => $value) {
+            if ($value == '') {
+                if ($definition->get(['fields', $column, 'eval', 'alwaysSave'], false) &&
+                    $definition->get(['fields', $column, 'eval', 'doNotSaveEmpty'], false)
+                ) {
+                    unset ($data[$column]);
+                }
+            }
+        }
+
+        // Add tstamp if field exists.
+        if (empty($data['tstamp'] && $this->database->fieldExists('tstamp', $definition->getName()))) {
+            $data['tstamp'] = time();
+        }
+
+        // Store the data.
         $this->database
-            ->prepare(sprintf('UPDATE %s %s WHERE id=?', $tableName, '%s'))
-            ->set(array('tstamp' => time(), $columnName => $newState ? '1' : ''))
+            ->prepare(sprintf('UPDATE %s %s WHERE id=?', $definition->getName(), '%s'))
+            ->set($data)
             ->execute($recordId);
     }
 }

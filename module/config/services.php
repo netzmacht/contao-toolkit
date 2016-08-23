@@ -18,7 +18,8 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SlugifyFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SuffixFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\FilterBasedAliasGenerator;
 use Netzmacht\Contao\Toolkit\Data\Alias\Validator\UniqueDatabaseValueValidator;
-use Netzmacht\Contao\Toolkit\Data\State\StateToggle;
+use Netzmacht\Contao\Toolkit\Data\Updater\DatabaseEntryUpdater;
+use Netzmacht\Contao\Toolkit\Data\Updater\Updater;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\DcaLoader;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory;
@@ -297,13 +298,13 @@ $container['toolkit.dca-loader'] = function () {
 };
 
 /**
- * State toggle factory.
+ * Database row updater.
  *
- * @return StateToggle
+ * @return Updater
  */
-$container[Services::STATE_TOGGLE] = $container->share(
+$container[Services::DATABASE_ROW_UPDATER] = $container->share(
     function ($container) {
-        return new StateToggle(
+        return new DatabaseEntryUpdater(
             $container[Services::USER],
             $container[Services::DATABASE_CONNECTION],
             $container[Services::DCA_MANAGER],
