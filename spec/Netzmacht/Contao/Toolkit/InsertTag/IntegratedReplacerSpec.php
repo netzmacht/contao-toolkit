@@ -4,9 +4,7 @@ namespace spec\Netzmacht\Contao\Toolkit\InsertTag;
 
 use Netzmacht\Contao\Toolkit\InsertTag\IntegratedReplacer;
 use Netzmacht\Contao\Toolkit\InsertTag\Parser;
-use Netzmacht\Contao\Toolkit\InsertTag\Replacer;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 /**
  * Class IntegratedReplacerSpec

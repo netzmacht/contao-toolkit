@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @package    netzmacht
+ * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2016 netzmacht David Molineus. All rights reserved.
+ * @copyright  2015-2016 netzmacht David Molineus.
  * @filesource
  *
  */
