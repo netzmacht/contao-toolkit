@@ -63,17 +63,18 @@ final class Definition
     /**
      * Get from the dca.
      *
-     * @param array|string $path    The path.
-     * @param mixed        $default The default value.
+     * @param array|string $path              The path.
+     * @param mixed        $default           The default value.
+     * @param bool         $createIfNotExists Create definition if not exists.
      *
-     * @return mixed.
+     * @return mixed .
      */
-    public function &get($path, $default = null)
+    public function &get($path, $default = null, $createIfNotExists = false)
     {
         $dca =& $this->dca;
 
         foreach ($this->path($path) as $key) {
-            if (is_array($dca) && !array_key_exists($key, $dca) && $default !== null) {
+            if ($createIfNotExists && is_array($dca) && !array_key_exists($key, $dca) && $default !== null) {
                 $this->set($path, $default);
             }
 
