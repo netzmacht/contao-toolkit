@@ -15,7 +15,6 @@ use Interop\Container\ContainerInterface as Container;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FilterFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FormatterChain;
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Event\CreateFormatterEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 
@@ -84,6 +83,6 @@ final class FormatterFactory
 
         $chain = new FilterFormatter($chainFilters);
 
-        return new Formatter($definition, $chain, $optionsFormatter);
+        return new ValueFormatterBasedFormatter($definition, $chain, $optionsFormatter);
     }
 }

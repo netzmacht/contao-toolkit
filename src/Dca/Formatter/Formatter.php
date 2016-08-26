@@ -11,54 +11,13 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter;
 
-use Netzmacht\Contao\Toolkit\Dca\Definition;
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
-
 /**
  * Formatter handles the formatting of data container labels.
  *
  * @package Netzmacht\Contao\Toolkit\Dca
  */
-class Formatter
+interface Formatter
 {
-    /**
-     * Data container definition.
-     *
-     * @var Definition
-     */
-    private $definition;
-
-    /**
-     * Value formatter.
-     *
-     * @var ValueFormatter
-     */
-    private $valueFormatter;
-
-    /**
-     * Options formatter.
-     *
-     * @var ValueFormatter
-     */
-    private $optionsFormatter;
-
-    /**
-     * Formatter constructor.
-     *
-     * @param Definition     $definition       Data container definition.
-     * @param ValueFormatter $valueFormatter   Value formatter.
-     * @param ValueFormatter $optionsFormatter Options formatter.
-     */
-    public function __construct(
-        Definition $definition,
-        ValueFormatter $valueFormatter,
-        ValueFormatter $optionsFormatter
-    ) {
-        $this->definition       = $definition;
-        $this->valueFormatter   = $valueFormatter;
-        $this->optionsFormatter = $optionsFormatter;
-    }
-
     /**
      * Format a field value.
      *
@@ -68,21 +27,7 @@ class Formatter
      *
      * @return array|null|string
      */
-    public function formatValue($field, $value, $context = null)
-    {
-        $fieldDefinition = $this->definition->get(['fields', $field]);
-
-        // Not found.
-        if (!is_array($fieldDefinition)) {
-            return '';
-        }
-
-        if ($this->valueFormatter->accepts($field, $fieldDefinition)) {
-            $value = $this->valueFormatter->format($value, $field, $fieldDefinition, $context);
-        }
-
-        return $value;
-    }
+    public function formatValue($field, $value, $context = null);
 
     /**
      * Format the field label.
@@ -91,10 +36,7 @@ class Formatter
      *
      * @return string
      */
-    public function formatFieldLabel($field)
-    {
-        return $this->definition->get(['fields', $field, 'label', 0], $field);
-    }
+    public function formatFieldLabel($field);
 
     /**
      * Format the field description.
@@ -103,10 +45,7 @@ class Formatter
      *
      * @return mixed
      */
-    public function formatFieldDescription($field)
-    {
-        return $this->definition->get(['fields', $field, 'label', 1], $field);
-    }
+    public function formatFieldDescription($field);
 
     /**
      * Format field options.
@@ -117,10 +56,5 @@ class Formatter
      *
      * @return array
      */
-    public function formatOptions($field, array $values, $context = null)
-    {
-        $definition = $this->definition->get(['fields', $field]);
-
-        return $this->optionsFormatter->format($values, $field, $definition, $context);
-    }
+    public function formatOptions($field, array $values, $context = null);
 }
