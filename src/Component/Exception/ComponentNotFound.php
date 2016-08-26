@@ -8,7 +8,7 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\Component;
+namespace Netzmacht\Contao\Toolkit\Component\Exception;
 
 use Database\Result;
 use Netzmacht\Contao\Toolkit\Exception;

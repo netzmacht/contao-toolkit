@@ -14,6 +14,7 @@ use ArrayObject;
 use Database\Result;
 use Interop\Container\ContainerInterface as Container;
 use Model;
+use Netzmacht\Contao\Toolkit\Component\Exception\ComponentNotFound;
 
 /**
  * Class ComponentFactory.
