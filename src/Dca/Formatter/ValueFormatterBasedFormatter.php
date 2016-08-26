@@ -13,7 +13,6 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter;
 
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
-use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 
 /**
  * Formatter handles the formatting of data container labels.
