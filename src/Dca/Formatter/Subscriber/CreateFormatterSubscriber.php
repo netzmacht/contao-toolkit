@@ -65,6 +65,10 @@ final class CreateFormatterSubscriber
         $event->addFormatter($formatter);
         $event->addPreFilters($preFilters);
         $event->addPostFilters($postFilters);
+
+        if (!$event->getOptionsFormatter()) {
+            $event->setOptionsFormatter($this->container->get('toolkit.dca.formatter.options'));
+        }
     }
 
     /**
@@ -75,21 +79,13 @@ final class CreateFormatterSubscriber
     private function createFormatter()
     {
         return [
-            new ForeignKeyFormatter(
-                $this->container->get(Services::DATABASE_CONNECTION)
-            ),
-            new FileUuidFormatter(),
-            new DateFormatter(
-                $this->container->get(Services::CONFIG)
-            ),
-            new YesNoFormatter(
-                $this->container->get(Services::TRANSLATOR)
-            ),
-            new HtmlFormatter(),
-            new ReferenceFormatter(),
-            new OptionsFormatter(
-                $this->container->get(Services::CALLBACK_INVOKER)
-            )
+            $this->container->get('toolkit.dca.formatter.foreign-key'),
+            $this->container->get('toolkit.dca.formatter.file-uuid'),
+            $this->container->get('toolkit.dca.formatter.date'),
+            $this->container->get('toolkit.dca.formatter.yes-no'),
+            $this->container->get('toolkit.dca.formatter.html'),
+            $this->container->get('toolkit.dca.formatter.reference'),
+            $this->container->get('toolkit.dca.formatter.options'),
         ];
     }
 
@@ -101,11 +97,9 @@ final class CreateFormatterSubscriber
     private function createPreFilters()
     {
         return [
-            new HiddenValueFormatter(),
-            new DeserializeFormatter(),
-            new EncryptedFormatter(
-                $this->container->get(Services::ENCRYPTION)
-            )
+            $this->container->get('toolkit.dca.formatter.hidden'),
+            $this->container->get('toolkit.dca.formatter.deserialize'),
+            $this->container->get('toolkit.dca.formatter.encrypted'),
         ];
     }
 
@@ -117,7 +111,7 @@ final class CreateFormatterSubscriber
     private function createPostFilters()
     {
         return [
-            new FlattenFormatter()
+            $this->container->get('toolkit.dca.formatter.flatten'),
         ];
     }
 }

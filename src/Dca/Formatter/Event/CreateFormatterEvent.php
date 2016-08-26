@@ -53,6 +53,13 @@ final class CreateFormatterEvent extends Event
     private $postFilters = [];
 
     /**
+     * Options formatter.
+     *
+     * @var ValueFormatter
+     */
+    private $optionsFormatter;
+
+    /**
      * CreateFormatterEvent constructor.
      *
      * @param Definition $definition Data container definition.
@@ -180,5 +187,29 @@ final class CreateFormatterEvent extends Event
     public function getPostFilters()
     {
         return $this->postFilters;
+    }
+
+    /**
+     * Get options formatter.
+     *
+     * @return ValueFormatter
+     */
+    public function getOptionsFormatter()
+    {
+        return $this->optionsFormatter;
+    }
+
+    /**
+     * Set options formatter.
+     *
+     * @param ValueFormatter $optionsFormatter Options formatter.
+     *
+     * @return $this
+     */
+    public function setOptionsFormatter(ValueFormatter $optionsFormatter)
+    {
+        $this->optionsFormatter = $optionsFormatter;
+
+        return $this;
     }
 }

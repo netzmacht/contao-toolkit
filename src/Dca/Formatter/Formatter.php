@@ -36,26 +36,39 @@ class Formatter
     private $valueFormatter;
 
     /**
+     * Options formatter.
+     *
+     * @var ValueFormatter
+     */
+    private $optionsFormatter;
+
+    /**
      * Formatter constructor.
      *
-     * @param Definition     $definition     Data container definition.
-     * @param ValueFormatter $valueFormatter Value formatter.
+     * @param Definition     $definition       Data container definition.
+     * @param ValueFormatter $valueFormatter   Value formatter.
+     * @param ValueFormatter $optionsFormatter Options formatter.
      */
-    public function __construct(Definition $definition, ValueFormatter $valueFormatter)
-    {
-        $this->definition     = $definition;
-        $this->valueFormatter = $valueFormatter;
+    public function __construct(
+        Definition $definition,
+        ValueFormatter $valueFormatter,
+        ValueFormatter $optionsFormatter
+    ) {
+        $this->definition       = $definition;
+        $this->valueFormatter   = $valueFormatter;
+        $this->optionsFormatter = $optionsFormatter;
     }
 
     /**
      * Format a field value.
      *
-     * @param string $field Field name.
-     * @param mixed  $value Field value.
+     * @param string $field   Field name.
+     * @param mixed  $value   Field value.
+     * @param mixed  $context Context object, usually the data container driver.
      *
      * @return array|null|string
      */
-    public function formatValue($field, $value)
+    public function formatValue($field, $value, $context = null)
     {
         $fieldDefinition = $this->definition->get(['fields', $field]);
 
@@ -65,7 +78,7 @@ class Formatter
         }
 
         if ($this->valueFormatter->accepts($field, $fieldDefinition)) {
-            $value = $this->valueFormatter->format($value, $field, $fieldDefinition);
+            $value = $this->valueFormatter->format($value, $field, $fieldDefinition, $context);
         }
 
         return $value;
@@ -98,26 +111,16 @@ class Formatter
     /**
      * Format field options.
      *
-     * @param string $field  Field name.
-     * @param array  $values Field values.
+     * @param string $field   Field name.
+     * @param array  $values  Field values.
+     * @param mixed  $context Data container object.
      *
      * @return array
      */
-    public function formatOptions($field, array $values)
+    public function formatOptions($field, array $values, $context = null)
     {
-        $labels = $this->definition->get(['fields', $field, 'reference']);
-        if (!$labels) {
-            return $values;
-        }
+        $definition = $this->definition->get(['fields', $field]);
 
-        $options = array();
-
-        foreach (array_keys($values) as $key) {
-            if (array_key_exists($key, $labels)) {
-                $options[$key] = !empty($labels[$key]);
-            }
-        }
-
-        return $options;
+        return $this->optionsFormatter->format($values, $field, $definition, $context);
     }
 }

@@ -24,6 +24,18 @@ use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\DcaLoader;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Subscriber\CreateFormatterSubscriber;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\DateFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\DeserializeFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\EncryptedFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FileUuidFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FlattenFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ForeignKeyFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\HiddenValueFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\HtmlFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\OptionsFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ReferenceFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\YesNoFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Netzmacht\Contao\Toolkit\DependencyInjection\PimpleAdapter;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
@@ -323,8 +335,7 @@ $container[Services::DATABASE_ROW_UPDATER] = $container->share(
 $container['toolkit.dca.formatter.create-subscriber'] = $container->share(
     function ($container) {
         return new CreateFormatterSubscriber(
-            $container[Services::CONTAINER],
-            $container['toolkit.dca-formatter.service-names']
+            $container[Services::CONTAINER]
         );
     }
 );
@@ -339,6 +350,135 @@ $container['toolkit.dca.formatter.create-subscriber'] = $container->share(
 $container['toolkit.dca.formatter.factory'] = $container->share(
     function ($container) {
         return new FormatterFactory($container[Services::CONTAINER], $container[Services::EVENT_DISPATCHER]);
+    }
+);
+
+/**
+ * Date formatter factory.
+ *
+ * @param \Pimple $container Dependency container.
+ *
+ * @return ValueFormatter
+ */
+$container['toolkit.dca.formatter.date'] = $container->share(
+    function ($container) {
+        return new DateFormatter($container['config']);
+    }
+);
+
+/**
+ * Encyrpted formatter factory.
+ *
+ * @return ValueFormatter
+ */
+$container['toolkit.dca.formatter.encrypted'] = $container->share(
+    function ($container) {
+        return new EncryptedFormatter($container[Services::ENCRYPTION]);
+    }
+);
+
+/**
+ * FileUuid formatter factory.
+ *
+ * @return ValueFormatter
+ */
+$container['toolkit.dca.formatter.file-uuid'] = $container->share(
+    function () {
+        return new FileUuidFormatter();
+    }
+);
+
+/**
+ * ForeignKey formatter factory.
+ *
+ * @param \Pimple $container Dependency container.
+ *
+ * @return ValueFormatter
+ */
+$container['toolkit.dca.formatter.foreign-key'] = $container->share(
+    function ($container) {
+        return new ForeignKeyFormatter($container['database.connection']);
+    }
+);
+
+/**
+ * Hidden formatter factory.
+ *
+ * @return ValueFormatter
+ */
+$container['toolkit.dca.formatter.hidden'] = $container->share(
+    function () {
+        return new HiddenValueFormatter();
+    }
+);
+
+/**
+ * Options formatter factory.
+ *
+ * @param \Pimple $container Container invoker.
+ *
+ * @return ValueFormatter
+ */
+$container['toolkit.dca.formatter.options'] = $container->share(
+    function ($container) {
+        return new OptionsFormatter($container[Services::CALLBACK_INVOKER]);
+    }
+);
+
+/**
+ * Reference formatter factory.
+ *
+ * @return ValueFormatter
+ */
+$container['toolkit.dca.formatter.reference'] = $container->share(
+    function () {
+        return new ReferenceFormatter();
+    }
+);
+
+/**
+ * YesNo formatter factory.
+ *
+ * @param \Pimple $container Dependency container.
+ *
+ * @return ValueFormatter
+ */
+$container['toolkit.dca.formatter.yes-no'] = $container->share(
+    function ($container) {
+        return new YesNoFormatter($container['translator']);
+    }
+);
+
+/**
+ * HTML formatter factory.
+ *
+ * @return ValueFormatter
+ */
+$container['toolkit.dca.formatter.html'] = $container->share(
+    function () {
+        return new HtmlFormatter();
+    }
+);
+
+/**
+ * Deserialize formatter factory.
+ *
+ * @return ValueFormatter
+ */
+$container['toolkit.dca.formatter.deserialize'] = $container->share(
+    function () {
+        return new DeserializeFormatter();
+    }
+);
+
+/**
+ * Flatter formatter factory.
+ *
+ * @return ValueFormatter
+ */
+$container['toolkit.dca.formatter.flatten'] = $container->share(
+    function () {
+        return new FlattenFormatter();
     }
 );
 

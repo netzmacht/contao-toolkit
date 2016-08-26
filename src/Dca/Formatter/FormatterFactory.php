@@ -53,16 +53,6 @@ final class FormatterFactory
     }
 
     /**
-     * Get the default formatter.
-     *
-     * @return ValueFormatter
-     */
-    public function getDefaultValueFormatter()
-    {
-        return $this->serviceContainer->get('toolkit.dca-formatter.default');
-    }
-
-    /**
      * Create a formatter for a definition.
      *
      * @param Definition $definition Data container definition.
@@ -74,10 +64,11 @@ final class FormatterFactory
         $event = new CreateFormatterEvent($definition);
         $this->eventDispatcher->dispatch($event::NAME, $event);
 
-        $chainFilters = [];
-        $preFilters   = $event->getPreFilters();
-        $formatter    = $event->getFormatter();
-        $postFilters  = $event->getPostFilters();
+        $chainFilters     = [];
+        $preFilters       = $event->getPreFilters();
+        $formatter        = $event->getFormatter();
+        $postFilters      = $event->getPostFilters();
+        $optionsFormatter = $event->getOptionsFormatter();
 
         if ($preFilters) {
             $chainFilters[] = new FilterFormatter($preFilters);
@@ -93,6 +84,6 @@ final class FormatterFactory
 
         $chain = new FilterFormatter($chainFilters);
 
-        return new Formatter($definition, $chain);
+        return new Formatter($definition, $chain, $optionsFormatter);
     }
 }
