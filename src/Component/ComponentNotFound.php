@@ -11,13 +11,14 @@
 namespace Netzmacht\Contao\Toolkit\Component;
 
 use Database\Result;
+use Netzmacht\Contao\Toolkit\Exception;
 
 /**
  * Exception class ContentElementNotFound is thrown if a content element could not be created.
  *
  * @package Netzmacht\Contao\Toolkit\Component\ContentElement
  */
-class ComponentNotFound extends \Exception
+class ComponentNotFound extends Exception
 {
     /**
      * Create exception for the given model.
