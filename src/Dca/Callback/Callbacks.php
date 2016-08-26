@@ -106,18 +106,4 @@ abstract class Callbacks
     {
         return $this->dcaManager->getFormatter($name ?: static::getName());
     }
-
-    /**
-     * Format a value.
-     *
-     * @param string             $name      Column name.
-     * @param array|\ArrayAccess $data      Given data.
-     * @param string|null        $tableName Name of the data container.
-     *
-     * @return array|null|string
-     */
-    protected function formatValue($name, $data, $tableName = null)
-    {
-        return $this->getFormatter($tableName)->formatValue($name, $data[$name]);
-    }
 }
