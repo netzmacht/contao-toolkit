@@ -46,7 +46,7 @@ final class GlobalsAssetsManager implements AssetsManager
      * @param array $javascripts    The registered javascripts.
      * @param bool  $productionMode Production mode of the environment.
      */
-    public function __construct(&$stylesheets, &$javascripts, $productionMode = false)
+    public function __construct(array &$stylesheets, array &$javascripts, $productionMode = false)
     {
         $this->stylesheets    =& $stylesheets;
         $this->javascripts    =& $javascripts;

@@ -57,7 +57,7 @@ final class CollectionOptions implements Options
      * @param string|callable $labelColumn Name of label column.
      * @param string          $valueColumn Name of value column.
      */
-    public function __construct($collection, $labelColumn = null, $valueColumn = 'id')
+    public function __construct(Collection $collection, $labelColumn = null, $valueColumn = 'id')
     {
         $this->collection  = $collection;
         $this->valueColumn = $valueColumn;

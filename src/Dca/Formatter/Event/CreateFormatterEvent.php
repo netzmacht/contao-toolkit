@@ -14,6 +14,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Event;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
 use Symfony\Component\EventDispatcher\Event;
+use Webmozart\Assert\Assert;
 
 /**
  * Class CreateFormatterEvent.
@@ -93,6 +94,8 @@ final class CreateFormatterEvent extends Event
                 $this->addFormatter($item);
             }
         } else {
+            Assert::isInstanceOf($formatter, 'Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
+
             $this->formatter[] = $formatter;
         }
 

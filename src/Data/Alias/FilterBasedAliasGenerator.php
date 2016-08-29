@@ -12,9 +12,9 @@
 namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
 use Database;
-use Database\Result;
 use Model;
 use Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException;
+use Webmozart\Assert\Assert;
 
 /**
  * Alias generator.
@@ -69,6 +69,8 @@ final class FilterBasedAliasGenerator
      */
     public function __construct($filters, Validator $validator, $tableName, $aliasField = 'alias', $separator = '-')
     {
+        Assert::allIsInstanceOf($filters, 'Netzmacht\Contao\Toolkit\Data\Alias\Filter');
+
         $this->validator  = $validator;
         $this->aliasField = $aliasField;
         $this->tableName  = $tableName;

@@ -12,6 +12,7 @@
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Save;
 
 use Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator;
+use Webmozart\Assert\Assert;
 
 /**
  * Class GenerateAliasCallback is designed to create an alias of a column.
@@ -47,6 +48,9 @@ class GenerateAliasCallback
      */
     public function __invoke($value, $dataContainer)
     {
+        Assert::isInstanceOf($dataContainer, 'DataContainer');
+        Assert::isInstanceOf($dataContainer->activeRecord, 'Database\Result');
+
         return $this->generator->generate($dataContainer->activeRecord, $value);
     }
 }

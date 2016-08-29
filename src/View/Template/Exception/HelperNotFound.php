@@ -8,9 +8,8 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\View\Template;
+namespace Netzmacht\Contao\Toolkit\View\Template\Exception;
 
-use Exception as PhpException;
 use Netzmacht\Contao\Toolkit\Exception;
 
 /**
@@ -23,11 +22,11 @@ class HelperNotFound extends Exception
     /**
      * HelperNotFound constructor.
      *
-     * @param string       $helperName Name of the helper.
-     * @param int          $code       Error code.
-     * @param PhpException $previous   Previous exception.
+     * @param string    $helperName Name of the helper.
+     * @param int       $code       Error code.
+     * @param Exception $previous   Previous exception.
      */
-    public function __construct($helperName, $code = 0, PhpException $previous = null)
+    public function __construct($helperName, $code = 0, Exception $previous = null)
     {
         $message = sprintf('No helper with name "%s" found.', $helperName);
 

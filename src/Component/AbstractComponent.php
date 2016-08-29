@@ -10,11 +10,13 @@
 
 namespace Netzmacht\Contao\Toolkit\Component;
 
+use InvalidArgumentException;
 use Database\Result;
 use Model;
 use Model\Collection;
 use Netzmacht\Contao\Toolkit\View\Template;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
+use Webmozart\Assert\Assert;
 
 /**
  * Base element.
@@ -71,6 +73,8 @@ abstract class AbstractComponent
      * @param Model|Collection|Result $model           Object model or result.
      * @param TemplateFactory         $templateFactory Template factory.
      * @param string                  $column          Column.
+     *
+     * @throws InvalidArgumentException When model does not have a row method.
      */
     public function __construct($model, TemplateFactory $templateFactory, $column = 'main')
     {
@@ -81,6 +85,8 @@ abstract class AbstractComponent
         if ($model instanceof Model) {
             $this->model = $model;
         }
+
+        Assert::methodExists($model, 'row');
 
         $this->templateFactory = $templateFactory;
         $this->column          = $column;

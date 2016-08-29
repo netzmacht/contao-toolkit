@@ -13,6 +13,7 @@ namespace Netzmacht\Contao\Toolkit\Dca;
 
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory;
+use Webmozart\Assert\Assert;
 
 /**
  * Data container definition manager.
@@ -33,7 +34,7 @@ final class Manager
      *
      * @var Formatter[]
      */
-    private $formatters = array();
+    private $formatter = array();
 
     /**
      * The data definition array loader.
@@ -76,6 +77,8 @@ final class Manager
         if ($noCache) {
             $this->loader->loadDataContainer($name, $noCache);
 
+            $this->assertValidDca($name);
+
             return new Definition($name, $GLOBALS['TL_DCA'][$name]);
         }
 
@@ -98,17 +101,32 @@ final class Manager
     public function getFormatter($definition)
     {
         if (!$definition instanceof Definition) {
-            if (isset($this->formatters[$definition])) {
-                return $this->formatters[$definition];
+            if (isset($this->formatter[$definition])) {
+                return $this->formatter[$definition];
             }
 
             $definition = $this->getDefinition($definition);
         }
 
-        if (!isset($this->formatters[$definition->getName()])) {
-            $this->formatters[$definition->getName()] = $this->formatterFactory->createFormatterFor($definition);
+        if (!isset($this->formatter[$definition->getName()])) {
+            $this->formatter[$definition->getName()] = $this->formatterFactory->createFormatterFor($definition);
         }
 
-        return $this->formatters[$definition->getName()];
+        return $this->formatter[$definition->getName()];
+    }
+
+    /**
+     * Assert that an valid dca is loaded.
+     *
+     * @param string $name Dca name.
+     *
+     * @return void
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
+     */
+    protected function assertValidDca($name)
+    {
+        Assert::keyExists($GLOBALS['TL_DCA'], $name);
+        Assert::isArray($GLOBALS['TL_DCA'][$name]);
     }
 }

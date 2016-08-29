@@ -11,8 +11,10 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
+use Webmozart\Assert\Assert;
+
 /**
- * Set of multiple formatters.
+ * Set of multiple formatter.
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
@@ -23,16 +25,18 @@ final class FormatterChain implements ValueFormatter
      *
      * @var ValueFormatter[]
      */
-    private $formatters = array();
+    private $formatter = array();
 
     /**
      * FormatterChain constructor.
      *
-     * @param ValueFormatter[]|array $formatters Value formatters.
+     * @param ValueFormatter[]|array $formatter Value formatter.
      */
-    public function __construct(array $formatters)
+    public function __construct(array $formatter)
     {
-        $this->formatters = $formatters;
+        Assert::allIsInstanceOf($formatter, 'Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
+
+        $this->formatter = $formatter;
     }
 
     /**
@@ -40,7 +44,7 @@ final class FormatterChain implements ValueFormatter
      */
     public function accepts($fieldName, array $fieldDefinition)
     {
-        foreach ($this->formatters as $formatter) {
+        foreach ($this->formatter as $formatter) {
             if ($formatter->accepts($fieldName, $fieldDefinition)) {
                 return true;
             }
@@ -54,7 +58,7 @@ final class FormatterChain implements ValueFormatter
      */
     public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
-        foreach ($this->formatters as $formatter) {
+        foreach ($this->formatter as $formatter) {
             if ($formatter->accepts($fieldName, $fieldDefinition)) {
                 return $formatter->format($value, $fieldName, $fieldDefinition, $context);
             }

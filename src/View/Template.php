@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\View;
 
-use Netzmacht\Contao\Toolkit\View\Template\HelperNotFound;
+use Netzmacht\Contao\Toolkit\View\Template\Exception\HelperNotFound;
 
 /**
  * Interface describes the templates being used in the toolkit.

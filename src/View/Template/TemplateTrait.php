@@ -11,6 +11,8 @@
 
 namespace Netzmacht\Contao\Toolkit\View\Template;
 
+use Netzmacht\Contao\Toolkit\View\Template\Exception\HelperNotFound;
+
 /**
  * Trait extends the default Contao template classes.
  *

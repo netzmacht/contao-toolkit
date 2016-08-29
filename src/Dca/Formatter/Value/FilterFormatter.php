@@ -11,6 +11,8 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
+use Webmozart\Assert\Assert;
+
 /**
  * FilterFormatter applies formatters used as filters to an value.
  *
@@ -35,6 +37,8 @@ final class FilterFormatter implements ValueFormatter
      */
     public function __construct(array $filters)
     {
+        Assert::allIsInstanceOf($filters, 'Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
+
         $this->filters = $filters;
     }
 

@@ -11,6 +11,9 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Callback;
 
+use InvalidArgumentException;
+use Webmozart\Assert\Assert;
+
 /**
  * Class Callback.
  *
@@ -25,12 +28,15 @@ final class Invoker
      * @param array          $arguments List of arguments being passed to the callback.
      *
      * @return mixed
+     * @throws InvalidArgumentException On callback is not callable.
      */
     public function invoke($callback, array $arguments = [])
     {
         if (is_array($callback)) {
             $callback[0] = \System::importStatic($callback[0]);
         }
+
+        Assert::isCallable($callback);
 
         return call_user_func_array($callback, $arguments);
     }
@@ -44,6 +50,7 @@ final class Invoker
      *                                           index.
      *
      * @return mixed
+     * @throws InvalidArgumentException On one callback is not callable.
      */
     public function invokeAll(array $callbacks, array $arguments = [], $returnValueIndex = false)
     {
