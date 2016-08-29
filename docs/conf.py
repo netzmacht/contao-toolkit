@@ -15,6 +15,8 @@
 import sys
 import os
 import sphinx_rtd_theme
+from sphinx.highlighting import lexers
+from pygments.lexers.web import PhpLexer
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -75,6 +77,8 @@ language = "de"
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 exclude_patterns = []
+
+highlight_language = 'php'
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -334,8 +338,7 @@ epub_exclude_files = ['search.html']
 #epub_use_index = True
 
 # PHP Syntax highlighting
-from sphinx.highlighting import lexers
-from pygments.lexers.web import PhpLexer
+
 lexers["php"] = PhpLexer(startinline=True, linenos=1)
 lexers["php-annotations"] = PhpLexer(startinline=True, linenos=1)
 primary_domain = "php"
