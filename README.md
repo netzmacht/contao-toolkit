@@ -25,4 +25,4 @@ Documentation
 
 For more details please have a look into the [documentation][1].
 
-[1]: http://contao-toolkit.readthedocs.io
+[1]: http://contao-developer-toolkit.readthedocs.io
