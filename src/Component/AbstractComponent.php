@@ -23,7 +23,7 @@ use Webmozart\Assert\Assert;
  *
  * @package Netzmacht\Contao\Toolkit\Component\ContentElement
  */
-abstract class AbstractComponent
+abstract class AbstractComponent implements Component
 {
     /**
      * Assigned model.
