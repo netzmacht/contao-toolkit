@@ -17,7 +17,7 @@ use Netzmacht\Contao\Toolkit\Component\AbstractComponent;
  *
  * @package Netzmacht\Contao\Toolkit\Component\ContentElement
  */
-class AbstractContentElement extends AbstractComponent implements ContentElement
+abstract class AbstractContentElement extends AbstractComponent implements ContentElement
 {
     /**
      * {@inheritDoc}

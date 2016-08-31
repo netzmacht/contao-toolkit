@@ -19,7 +19,7 @@ use Netzmacht\Contao\Toolkit\Component\Module\AbstractModule;
  *
  * @package Netzmacht\Contao\Toolkit\Component\Hybrid
  */
-class AbstractHybrid extends AbstractModule implements Hybrid
+abstract class AbstractHybrid extends AbstractModule implements Hybrid
 {
     /**
      * {@inheritDoc}

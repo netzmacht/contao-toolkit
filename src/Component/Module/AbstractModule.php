@@ -22,7 +22,7 @@ use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
  *
  * @package Netzmacht\Contao\Toolkit\Component\Module
  */
-class AbstractModule extends AbstractComponent implements Module
+abstract class AbstractModule extends AbstractComponent implements Module
 {
     /**
      * Should the module be rendered in backend mode.
