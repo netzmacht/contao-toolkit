@@ -10,7 +10,7 @@
 
 namespace Netzmacht\Contao\Toolkit\DependencyInjection;
 
-use Interop\Container\ContainerInterface;
+use Interop\Container\ContainerInterface as Container;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Exception\ContainerException;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Exception\ServiceNotFound;
 
@@ -19,7 +19,7 @@ use Netzmacht\Contao\Toolkit\DependencyInjection\Exception\ServiceNotFound;
  *
  * @package Netzmacht\Contao\Toolkit\DependencyInjection
  */
-final class PimpleAdapter implements ContainerInterface
+final class PimpleAdapter implements Container
 {
     /**
      * Pimple adapter.

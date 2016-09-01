@@ -12,18 +12,6 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Subscriber;
 
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Event\CreateFormatterEvent;
 use Interop\Container\ContainerInterface as Container;
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\DateFormatter;
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\DeserializeFormatter;
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\EncryptedFormatter;
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FileUuidFormatter;
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FlattenFormatter;
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ForeignKeyFormatter;
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\HiddenValueFormatter;
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\HtmlFormatter;
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\OptionsFormatter;
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ReferenceFormatter;
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\YesNoFormatter;
-use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
 
 /**
  * Class CreateFormatterSubscriber handles the create formatter event.

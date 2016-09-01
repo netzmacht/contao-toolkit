@@ -10,7 +10,7 @@
 
 namespace Netzmacht\Contao\Toolkit\DependencyInjection;
 
-use Interop\Container\ContainerInterface;
+use Interop\Container\ContainerInterface as Container;
 
 /**
  * Provide access to the container.
@@ -24,7 +24,7 @@ trait ContainerAware
     /**
      * Get the container.
      *
-     * @return ContainerInterface
+     * @return Container
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */

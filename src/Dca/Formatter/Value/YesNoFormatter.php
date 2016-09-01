@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use ContaoCommunityAlliance\Translator\TranslatorInterface;
+use ContaoCommunityAlliance\Translator\TranslatorInterface as Translator;
 
 /**
  * Class YesNoFormatter formats non multiple checkboxes with yes and no.
@@ -23,16 +23,16 @@ final class YesNoFormatter implements ValueFormatter
     /**
      * Translator.
      *
-     * @var TranslatorInterface
+     * @var Translator
      */
     private $translator;
 
     /**
      * YesNoFormatter constructor.
      *
-     * @param TranslatorInterface $translator Translator.
+     * @param Translator $translator Translator.
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(Translator $translator)
     {
         $this->translator = $translator;
     }
