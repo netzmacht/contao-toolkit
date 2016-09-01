@@ -11,12 +11,13 @@
 namespace Netzmacht\Contao\Toolkit\DependencyInjection\Exception;
 
 use Interop\Container\Exception\ContainerException as InteropContainerException;
+use Netzmacht\Contao\Toolkit\Exception;
 
 /**
  * Class ContainerException.
  *
  * @package Netzmacht\Contao\Toolkit\DependencyInjection\Exception
  */
-class ContainerException extends \Exception implements InteropContainerException
+class ContainerException extends Exception implements InteropContainerException
 {
 }
