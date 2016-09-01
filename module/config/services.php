@@ -13,6 +13,7 @@ use Contao\InsertTags as ContaoInsertTags;
 use Interop\Container\ContainerInterface;
 use Netzmacht\Contao\Toolkit\Component\ComponentFactory;
 use Netzmacht\Contao\Toolkit\Component\FactoryToClassMapConverter;
+use Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\ExistingAliasFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SlugifyFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SuffixFilter;
@@ -193,7 +194,7 @@ $container[Services::ASSETS_MANAGER] = $container->share(
  */
 $container[Services::MODULE_FACTORY] = $container->share(
     function ($container) {
-        return new ComponentFactory(
+        return new ToolkitComponentFactory(
             $container[Services::MODULES_MAP],
             $container[Services::CONTAINER]
         );
@@ -229,13 +230,11 @@ $container['toolkit.component.module-map-converter'] = $container->share(
 /**
  * Content element factory.
  *
- * @param $container
- *
- * @return bool
+ * @return ComponentFactory
  */
 $container[Services::CONTENT_ELEMENT_FACTORY] = $container->share(
     function ($container) {
-        return new ComponentFactory(
+        return new ToolkitComponentFactory(
             $container[Services::CONTENT_ELEMENTS_MAP],
             $container[Services::CONTAINER]
         );
