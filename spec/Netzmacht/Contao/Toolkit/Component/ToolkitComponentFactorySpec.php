@@ -4,16 +4,16 @@ namespace spec\Netzmacht\Contao\Toolkit\Component;
 
 use Interop\Container\ContainerInterface;
 use Netzmacht\Contao\Toolkit\Component\Component;
-use Netzmacht\Contao\Toolkit\Component\ComponentFactory;
+use Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory;
 use PhpSpec\ObjectBehavior;
 
 /**
  * Class ComponentFactorySpec
  *
  * @package spec\Netzmacht\Contao\Toolkit\Component
- * @mixin ComponentFactory
+ * @mixin ToolkitComponentFactory
  */
-class ComponentFactorySpec extends ObjectBehavior
+class ToolkitComponentFactorySpec extends ObjectBehavior
 {
     private $factories;
 

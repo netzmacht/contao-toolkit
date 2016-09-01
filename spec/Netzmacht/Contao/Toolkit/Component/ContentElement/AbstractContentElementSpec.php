@@ -1,24 +1,24 @@
 <?php
 
-namespace spec\Netzmacht\Contao\Toolkit\Component;
+namespace spec\Netzmacht\Contao\Toolkit\Component\ContentElement;
 
-use Netzmacht\Contao\Toolkit\Component\AbstractComponent;
+use Netzmacht\Contao\Toolkit\Component\ContentElement\AbstractContentElement;
 use Netzmacht\Contao\Toolkit\View\Template;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-if (!defined('TL_MODE')) {
-    define('TL_MODE', 'FE');
+if (!defined('BE_USER_LOGGED_IN')) {
+    define('BE_USER_LOGGED_IN', false);
 }
 
 /**
- * Class AbstractComponentSpec
+ * Class AbstractContentElementSpec
  *
- * @package spec\Netzmacht\Contao\Toolkit\Component
- * @mixin AbstractComponent
+ * @package spec\Netzmacht\Contao\Toolkit\Component\ContentElement
+ * @mixin AbstractContentElement
  */
-class AbstractComponentSpec extends ObjectBehavior
+class AbstractContentElementSpec extends ObjectBehavior
 {
     private $model;
 
@@ -37,13 +37,13 @@ class AbstractComponentSpec extends ObjectBehavior
 
         $templateFactory->createFrontendTemplate(Argument::cetera())->willReturn($template);
 
-        $this->beAnInstanceOf('spec\Netzmacht\Contao\Toolkit\Component\ConcreteComponent');
+        $this->beAnInstanceOf('spec\Netzmacht\Contao\Toolkit\Component\ContentElement\ConcreteContentElement');
         $this->beConstructedWith($this->model, $templateFactory);
     }
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Netzmacht\Contao\Toolkit\Component\AbstractComponent');
+        $this->shouldHaveType('Netzmacht\Contao\Toolkit\Component\ContentElement\AbstractContentElement');
     }
 
     function it_is_a_component()
@@ -51,33 +51,9 @@ class AbstractComponentSpec extends ObjectBehavior
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Component\Component');
     }
 
-    function it_provides_data_read_access()
+    function it_is_a_content_element()
     {
-        $this->get('id')->shouldReturn(1);
-    }
-
-    function it_provides_data_write_access()
-    {
-        $this->set('foo', 'bar')->shouldReturn($this);
-        $this->get('foo')->shouldReturn('bar');
-    }
-
-    function it_knows_with_data_exist()
-    {
-        $this->has('id')->shouldReturn(true);
-        $this->has('invalid')->shouldreturn(false);
-    }
-
-    function it_deserializes_headline()
-    {
-        $this->get('headline')->shouldReturn('test');
-        $this->get('hl')->shouldReturn('h1');
-    }
-
-    function it_uses_custom_tpl()
-    {
-        // Only works in FE MODE!
-        $this->getTemplateName()->shouldReturn('custom_tpl');
+        $this->shouldImplement('Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElement');
     }
 
     function it_generates_output(Template $template)
@@ -90,12 +66,9 @@ class AbstractComponentSpec extends ObjectBehavior
     }
 }
 
-class ConcreteComponent extends AbstractComponent
+
+class ConcreteContentElement extends AbstractContentElement
 {
-    public function getTemplateName()
-    {
-        return parent::getTemplateName();
-    }
 
 }
 
