@@ -4,7 +4,7 @@ View
 .. _contents:
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
 
    templates
    assets

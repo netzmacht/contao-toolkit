@@ -4,7 +4,7 @@ Data container array
 .. _contents:
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
 
    definition
    callbacks

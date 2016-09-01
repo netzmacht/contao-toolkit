@@ -4,7 +4,7 @@ Developer Toolkit for Contao CMS
 Contents
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
 
    introduction
    dependency-injection/index

@@ -8,7 +8,7 @@ Toolkit also provides a way using dependency injection for components.
 .. _contents:
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
 
    content-element
    module
