@@ -19,7 +19,7 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SlugifyFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SuffixFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\FilterBasedAliasGenerator;
 use Netzmacht\Contao\Toolkit\Data\Alias\Validator\UniqueDatabaseValueValidator;
-use Netzmacht\Contao\Toolkit\Data\Updater\DatabaseEntryUpdater;
+use Netzmacht\Contao\Toolkit\Data\Updater\DatabaseRowUpdater;
 use Netzmacht\Contao\Toolkit\Data\Updater\Updater;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\DcaLoader;
@@ -316,7 +316,7 @@ $container['toolkit.dca-loader'] = function () {
  */
 $container[Services::DATABASE_ROW_UPDATER] = $container->share(
     function ($container) {
-        return new DatabaseEntryUpdater(
+        return new DatabaseRowUpdater(
             $container[Services::USER],
             $container[Services::DATABASE_CONNECTION],
             $container[Services::DCA_MANAGER],

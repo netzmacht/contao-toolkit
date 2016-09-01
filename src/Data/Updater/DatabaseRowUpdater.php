@@ -21,11 +21,11 @@ use User;
 use Versions;
 
 /**
- * Class StateToggler.
+ * Class DatabaseRowUpdater.
  *
- * @package Netzmacht\Contao\Toolkit\Data\State
+ * @package Netzmacht\Contao\Toolkit\Data\Updater
  */
-final class DatabaseEntryUpdater implements Updater
+final class DatabaseRowUpdater implements Updater
 {
     /**
      * Contao user.
