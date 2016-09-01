@@ -198,7 +198,7 @@ final class Services
     /**
      * Request token service.
      *
-     * Instnace of \RequestToken.
+     * Instance of \RequestToken.
      *
      * @var string
      */

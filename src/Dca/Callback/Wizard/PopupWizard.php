@@ -11,7 +11,6 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
 
-use DataContainer;
 use RequestToken;
 use ContaoCommunityAlliance\Translator\TranslatorInterface as Translator;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;

@@ -47,7 +47,7 @@ final class Definition
     /**
      * Get the path as array.
      *
-     * @param mixed $path The path as "/" separted string or array.
+     * @param mixed $path The path as "/" seared string or array.
      *
      * @return array
      */

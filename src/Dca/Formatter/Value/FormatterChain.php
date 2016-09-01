@@ -21,7 +21,7 @@ use Webmozart\Assert\Assert;
 final class FormatterChain implements ValueFormatter
 {
     /**
-     * List of value formatters.
+     * List of value formatter.
      *
      * @var ValueFormatter[]
      */

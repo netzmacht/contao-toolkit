@@ -14,7 +14,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 use Webmozart\Assert\Assert;
 
 /**
- * FilterFormatter applies formatters used as filters to an value.
+ * FilterFormatter applies formatter used as filters to an value.
  *
  * The difference between the FormatterChain and the FilterFormatter is that the filter formatter will apply all
  * rules and modifies the given value.

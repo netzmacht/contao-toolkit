@@ -103,7 +103,7 @@ final class CreateFormatterEvent extends Event
     }
 
     /**
-     * Get formatters.
+     * Get formatter.
      *
      * @return ValueFormatter[]
      */

@@ -12,7 +12,7 @@
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
 /**
- * SlugifyFilter creates a slug value of the columns being representated.
+ * SlugifyFilter creates a slug value of the columns being represented.
  *
  * @package Netzmacht\Contao\Toolkit\Data\Alias\Filter
  */

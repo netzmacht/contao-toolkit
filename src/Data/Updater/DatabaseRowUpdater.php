@@ -56,7 +56,7 @@ final class DatabaseRowUpdater implements Updater
     private $dcaManager;
 
     /**
-     * StateToggler constructor.
+     * DatabaseRowUpdater constructor.
      *
      * @param User     $user       User object.
      * @param Database $database   Database connection.

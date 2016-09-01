@@ -12,8 +12,6 @@
 namespace Netzmacht\Contao\Toolkit\View\Template;
 
 use Netzmacht\Contao\Toolkit\View\Template;
-use Netzmacht\Contao\Toolkit\View\Template\Event\GetTemplateHelpersEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 
 /**
  * TemplateFactory creates a template with some predefined helpers.
