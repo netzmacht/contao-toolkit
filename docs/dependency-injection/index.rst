@@ -4,11 +4,12 @@ Dependency Injection
 The container
 -------------
 
-Even though Toolkit currently is for Contao 3.5 only it's designed to work with Contao 4.x as well. Since Contao 4.x uses
-Symfony there is already an container implementation. Contao 3.5 lacks of a dependency container support that's why
-`contao-community-alliance/dependency-container`_ is used which based on `Pimple`_.
+Even though Toolkit currently is only available for Contao 3.5 it's prepared to work with Contao 4.x later on.
+Since Contao 4.x uses Symfony there is already an container implementation. Contao 3.5 lacks of a dependency container
+support that's why `contao-community-alliance/dependency-container`_ is used which based on `Pimple`_.
 
-To overcome the API differences between both implementations Toolkit container bases on `container-interop`_.
+To overcome the API differences between both container implementations and allow to plugin other libraries requiring
+other container implementations too, Toolkit container bases on `container-interop`_.
 
 
 ContainerAware
@@ -40,8 +41,6 @@ an easy access to a service there is a `Services`_ class providing constants for
             $this->database = $this->getContainer()->get(Services::DATABASE_CONNECTION);
         }
     }
-
-Toolkit provides
 
 .. _contao-community-alliance/dependency-container: https://github.com/contao-community-alliance/dependency-container
 .. _container-interop: https://github.com/container-interop/container-interop
