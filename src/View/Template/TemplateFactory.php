@@ -18,25 +18,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatche
 /**
  * TemplateFactory creates a template with some predefined helpers.
  */
-final class TemplateFactory
+interface TemplateFactory
 {
-    /**
-     * Event dispatcher.
-     *
-     * @var EventDispatcher
-     */
-    private $eventDispatcher;
-
-    /**
-     * TemplateFactory constructor.
-     *
-     * @param EventDispatcher $eventDispatcher Event dispatcher.
-     */
-    public function __construct(EventDispatcher $eventDispatcher)
-    {
-        $this->eventDispatcher = $eventDispatcher;
-    }
-
     /**
      * Create a frontend template.
      *
@@ -46,17 +29,7 @@ final class TemplateFactory
      *
      * @return Template
      */
-    public function createFrontendTemplate($name, array $data = null, $contentType = 'text/html')
-    {
-        $helpers  = $this->getTemplateHelpers($name, $contentType);
-        $template = new FrontendTemplate($name, $helpers, $contentType);
-
-        if ($data) {
-            $template->setData($data);
-        }
-
-        return $template;
-    }
+    public function createFrontendTemplate($name, array $data = null, $contentType = 'text/html');
 
     /**
      * Create a backend template.
@@ -67,31 +40,5 @@ final class TemplateFactory
      *
      * @return Template
      */
-    public function createBackendTemplate($name, array $data = null, $contentType = 'text/html')
-    {
-        $helpers  = $this->getTemplateHelpers($name, $contentType);
-        $template = new BackendTemplate($name, $helpers, $contentType);
-
-        if ($data) {
-            $template->setData($data);
-        }
-
-        return $template;
-    }
-
-    /**
-     * Get template helpers for an template.
-     *
-     * @param string $name        Template name.
-     * @param string $contentType Template content type.
-     *
-     * @return array
-     */
-    private function getTemplateHelpers($name, $contentType)
-    {
-        $event = new GetTemplateHelpersEvent($name, $contentType);
-        $this->eventDispatcher->dispatch($event::NAME, $event);
-
-        return $event->getHelpers();
-    }
+    public function createBackendTemplate($name, array $data = null, $contentType = 'text/html');
 }

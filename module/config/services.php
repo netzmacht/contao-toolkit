@@ -46,6 +46,7 @@ use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
 use Netzmacht\Contao\Toolkit\View\Assets\GlobalsAssetsManager;
 use Netzmacht\Contao\Toolkit\View\Template\Subscriber\GetTemplateHelpersListener;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
+use Netzmacht\Contao\Toolkit\View\Template\ToolkitTemplateFactory;
 
 global $container;
 
@@ -147,7 +148,7 @@ if (!isset($container[Services::PRODUCTION_MODE])) {
  */
 $container[Services::TEMPLATE_FACTORY] = $container->share(
     function ($container) {
-        return new TemplateFactory($container[Services::EVENT_DISPATCHER]);
+        return new ToolkitTemplateFactory($container[Services::EVENT_DISPATCHER]);
     }
 );
 
