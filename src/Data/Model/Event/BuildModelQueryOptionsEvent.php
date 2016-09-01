@@ -101,7 +101,7 @@ final class BuildModelQueryOptionsEvent extends Event
      *
      * @param bool $arrayCopy If true an array copy is returned.
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|array
      */
     public function getColumn($arrayCopy = false)
     {
@@ -113,7 +113,7 @@ final class BuildModelQueryOptionsEvent extends Event
      *
      * @param bool $arrayCopy If true an array copy is returned.
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|array
      */
     public function getValue($arrayCopy = false)
     {
@@ -125,7 +125,7 @@ final class BuildModelQueryOptionsEvent extends Event
      *
      * @param bool $arrayCopy If true an array copy is returned.
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|array
      */
     public function getOptions($arrayCopy = false)
     {
