@@ -33,7 +33,7 @@ trait ComponentDecoratorTrait
      */
     public function __construct($contentModel, $column = 'main')
     {
-        $factory         = $this->getFactory($contentModel);
+        $factory         = $this->getFactory();
         $this->component = $factory->create($contentModel, $column);
     }
 
