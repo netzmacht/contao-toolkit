@@ -11,8 +11,8 @@ The hybrid is a special kind of component. It's interface inherits from the inte
 same time.
 
 
-Using AbstractHybrid
---------------------
+Extending AbstractHybrid
+------------------------
 
 Contao also knows the concept of hybrids but in Contao hybrids are a bit limited. The assume that a foreign table is used
 for the actual content. It's used for frontend forms in Contao, for instance.

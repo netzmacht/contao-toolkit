@@ -1,8 +1,9 @@
 Components
 ==========
 
-Toolkit allows to develop lightweight components which are fully decoupled from the Contao object stack and which can
-benefit from dependency injection.
+Contao uses content elements and frontend modules to generate content. Toolkit uses the term components to describe
+them. Toolkit allows to develop lightweight components. They does not require to extend from the Contao class stack.
+Toolkit also provides a way using dependency injection for components.
 
 .. _contents:
 

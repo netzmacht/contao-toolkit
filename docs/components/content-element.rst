@@ -3,11 +3,11 @@ Content element
 
 Focusing on the main goal for Toolkit there is an easy way to create lightweight decoupled content elements.
 
-The Interface
--------------
+Interface ContentElement
+------------------------
 
 The only requirement for an content element supported by Toolkit is that the interface
-`ContentElement`_ which extends the `Component`_ interface.
+`ContentElement`_ is implemented. It extends the `Component`_ interface.
 
 The Main difference between Contao content element and the interface is that the data attributes has to be accessible by
 the explicit `get` and `set` methods. Magic `__get` and `__set` are not recommended.
@@ -16,8 +16,8 @@ the explicit `get` and `set` methods. Magic `__get` and `__set` are not recommen
 Register a content element
 --------------------------
 
-Since Toolkit supports dependency injection for content elements you have to register your content element by configuring
-a callable as factory. The callable has to support three arguments:
+Since Toolkit supports dependency injection for content elements you have to register your content element by
+configuring a callable as factory. The callable has to support at least two arguments. The third one is optional.
 
 .. glossary::
 
@@ -48,12 +48,13 @@ a callable as factory. The callable has to support three arguments:
         );
     };
 
-.. hint:: Internal all occurrences of callables are collected and replaced by an decorator class. The decorator class
-   is a wrapper to the own content element class and calls the defined factory class.
+.. hint:: All occurrences of callables are collected and replaced by an decorator class. This wrapper is responsible
+   to delegate all access from the outside to the actual content element. It also uses the factory to create the content
+   element.
 
 
-Using AbstractContentElement
-----------------------------
+Extending AbstractContentElement
+--------------------------------
 
 To simplify creating a new content element implementing the provided interface you can use the `AbstractContentElement`_
 which itself is a subclass of `AbstractComponent`_.
@@ -85,6 +86,7 @@ placeholders which doesn't have to be called when being overriden.
 
    postGenerate($buffer)
     Is triggered after the content element is parsed.
+
 
 .. _Template: https://github.com/netzmacht/contao-toolkit/tree/develop/src/View/Template.php
 .. _Component: https://github.com/netzmacht/contao-toolkit/tree/develop/src/Component/Component.php

@@ -3,8 +3,8 @@ Frontend module
 
 Focusing on the main goal for Toolkit there is an easy way to create lightweight decoupled frontend modules.
 
-The Interface
--------------
+Interface Module
+----------------
 
 The only requirement for an frontend module supported by Toolkit is that the interface
 `Module`_ which extends the `Component`_ interface.
@@ -16,8 +16,8 @@ the explicit `get` and `set` methods. Magic `__get` and `__set` are not recommen
 Register a frontend module
 --------------------------
 
-Since Toolkit supports dependency injection for frontend modules you have to register your frontend module by configuring
-a callable as factory. The callable has to support three arguments:
+Since Toolkit supports dependency injection for frontend modules you have to register your module by configuring a
+callable as factory. The callable has to support at least two arguments. The third one is optional.
 
 .. glossary::
 
@@ -48,12 +48,12 @@ a callable as factory. The callable has to support three arguments:
         );
     };
 
-.. hint:: Internal all occurrences of callables are collected and replaced by an decorator class. The decorator class
-   is a wrapper to the own frontend module class and calls the defined factory class.
+.. hint:: All occurrences of callables are collected and replaced by an decorator class. This wrapper is responsible
+   to delegate all access from the outside to the actual frontend module. It also uses the factory to create the module.
 
 
-Using AbstractModule
---------------------
+Extending AbstractModule
+------------------------
 
 To simplify creating a new frontend module implementing the provided interface you can use the `AbstractModule`_
 which itself is a subclass of `AbstractComponent`_.
@@ -91,6 +91,7 @@ placeholders which doesn't have to be called when being overriden.
 
    generateBackendLink()
     Is triggered to create the backend edit link.
+
 
 .. _Template: https://github.com/netzmacht/contao-toolkit/tree/develop/src/View/Template.php
 .. _Component: https://github.com/netzmacht/contao-toolkit/tree/develop/src/Component/Component.php
