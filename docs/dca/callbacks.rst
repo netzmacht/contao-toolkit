@@ -1,2 +1,5 @@
 Callbacks
 =========
+
+.. _callbacks-alias:
+
