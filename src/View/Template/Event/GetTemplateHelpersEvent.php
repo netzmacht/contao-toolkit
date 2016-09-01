@@ -17,7 +17,7 @@ use Symfony\Component\EventDispatcher\Event;
  *
  * @package Netzmacht\Contao\Toolkit\View\Template\Event
  */
-final class GetTemplateHelpersEvent extends Event
+class GetTemplateHelpersEvent extends Event
 {
     /**
      * The event name.
