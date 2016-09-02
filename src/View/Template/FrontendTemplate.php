@@ -19,4 +19,18 @@ use Netzmacht\Contao\Toolkit\View\Template;
 final class FrontendTemplate extends \Contao\FrontendTemplate implements Template
 {
     use TemplateTrait;
+
+    /**
+     * TemplateTrait constructor.
+     *
+     * @param string     $name        The template name.
+     * @param callable[] $helpers     View helpers.
+     * @param string     $contentType The content type.
+     */
+    public function __construct($name, $helpers = [], $contentType = 'text/html')
+    {
+        parent::__construct($name, $contentType);
+
+        $this->helpers = $helpers;
+    }
 }
