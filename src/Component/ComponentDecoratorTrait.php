@@ -26,16 +26,7 @@ trait ComponentDecoratorTrait
      *
      * @var Component
      */
-    private $component;
-
-    /**
-     * {@inheritDoc}
-     */
-    public function __construct($contentModel, $column = 'main')
-    {
-        $factory         = $this->getFactory();
-        $this->component = $factory->create($contentModel, $column);
-    }
+    protected $component;
 
     /**
      * {@inheritDoc}

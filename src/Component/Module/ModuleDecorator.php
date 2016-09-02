@@ -25,6 +25,15 @@ final class ModuleDecorator extends \ContentElement
     /**
      * {@inheritDoc}
      */
+    public function __construct($contentModel, $column = 'main')
+    {
+        $factory         = $this->getFactory();
+        $this->component = $factory->create($contentModel, $column);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     protected function getFactory()
     {
         return $this->getContainer()->get(Services::MODULE_FACTORY);
