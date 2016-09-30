@@ -171,6 +171,14 @@ $container['toolkit.view.get-template-helpers-listener'] = function ($container)
  */
 $container[Services::ASSETS_MANAGER] = $container->share(
     function ($container) {
+        if (!isset($GLOBALS['TL_CSS']) || !is_array($GLOBALS['TL_CSS'])) {
+            $GLOBALS['TL_CSS'] = [];
+        }
+
+        if (!isset($GLOBALS['TL_JAVASCRIPT']) || !is_array($GLOBALS['TL_JAVASCRIPT'])) {
+            $GLOBALS['TL_JAVASCRIPT'] = [];
+        }
+
         return new GlobalsAssetsManager(
             $GLOBALS['TL_CSS'],
             $GLOBALS['TL_JAVASCRIPT'],

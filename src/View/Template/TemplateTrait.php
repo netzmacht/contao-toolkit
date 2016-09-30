@@ -25,21 +25,7 @@ trait TemplateTrait
      *
      * @var callable[]
      */
-    private $helpers = [];
-
-    /**
-     * TemplateTrait constructor.
-     *
-     * @param string     $name        The template name.
-     * @param callable[] $helpers     View helpers.
-     * @param string     $contentType The content type.
-     */
-    public function __construct($name, $helpers = [], $contentType = 'text/html')
-    {
-        parent::__construct($name, $contentType);
-
-        $this->helpers = $helpers;
-    }
+    protected $helpers = [];
 
     /**
      * Get a template value.
