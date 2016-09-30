@@ -545,9 +545,10 @@ $container[Services::INSERT_TAG_REPLACER] = $container->share(
  */
 $container['toolkit.insert-tag.insert-tags'] = $container->share(
     function () {
-        if (version_compare(VERSION . '.' . BUILD, '3.5.3', '>=')) {
-            return new ContaoInsertTags();
-        }
+        // DON'T USE Contao insert tags as it breaks object stack order (session error!).
+//        if (version_compare(VERSION . '.' . BUILD, '3.5.3', '>=')) {
+//            return new ContaoInsertTags();
+//        }
 
         return new InsertTags();
     }
