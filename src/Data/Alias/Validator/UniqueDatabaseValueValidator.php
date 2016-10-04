@@ -50,17 +50,26 @@ final class UniqueDatabaseValueValidator implements Validator
     private $query;
 
     /**
+     * Allow an empty alias.
+     *
+     * @var bool
+     */
+    private $allowEmptyAlias;
+
+    /**
      * UniqueDatabaseValueValidator constructor.
      *
-     * @param Database $database   Database connection.
-     * @param string   $tableName  Table name.
-     * @param string   $columnName Column name.
+     * @param Database $database        Database connection.
+     * @param string   $tableName       Table name.
+     * @param string   $columnName      Column name.
+     * @param bool     $allowEmptyAlias Allow empty alias.
      */
-    public function __construct(Database $database, $tableName, $columnName)
+    public function __construct(Database $database, $tableName, $columnName, $allowEmptyAlias = false)
     {
-        $this->database   = $database;
-        $this->tableName  = $tableName;
-        $this->columnName = $columnName;
+        $this->database        = $database;
+        $this->tableName       = $tableName;
+        $this->columnName      = $columnName;
+        $this->allowEmptyAlias = $allowEmptyAlias;
 
         $this->query = sprintf(
             'SELECT count(*) AS result FROM %s WHERE %s=?',
@@ -74,6 +83,10 @@ final class UniqueDatabaseValueValidator implements Validator
      */
     public function validate($value, array $exclude = null)
     {
+        if (!$this->allowEmptyAlias && $value === '') {
+            return false;
+        }
+
         $query = $this->query;
 
         if ($exclude) {
