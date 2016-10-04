@@ -34,6 +34,8 @@ Instead of magic properties the template interface provides `set` and `get` meth
    access all methods and magic properties as you are used to.
 
 
+.. _template-helpers:
+
 Helpers
 -------
 
