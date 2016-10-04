@@ -21,7 +21,7 @@ use Webmozart\Assert\Assert;
  *
  * @package Netzmacht\Contao\Toolkit\Data\Alias
  */
-final class FilterBasedAliasGenerator
+final class FilterBasedAliasGenerator implements AliasGenerator
 {
     /**
      * Alias validator.
