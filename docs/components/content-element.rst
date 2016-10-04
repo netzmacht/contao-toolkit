@@ -53,6 +53,20 @@ configuring a callable as factory. The callable has to support at least two argu
    element.
 
 
+Instead of registering component factories in the config.php you can directly register them in the services.php. I
+recommend to use that way because Contao combines your config.php. Using `use statements` can be dangerous though.
+
+.. code-block:: php
+
+    // config.php
+    $GLOBALS['TL_CTE']['text']['example'] = 'Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElementDecorator';
+
+    // services.php
+    $container[Services::CONTENT_ELEMENTS_MAP]['example'] = function ($model, $column, ContainerInterface $container) {
+        return new ExampleElement($model, $column);
+    };
+
+
 Extending AbstractContentElement
 --------------------------------
 

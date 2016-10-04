@@ -52,6 +52,20 @@ callable as factory. The callable has to support at least two arguments. The thi
    to delegate all access from the outside to the actual frontend module. It also uses the factory to create the module.
 
 
+Instead of registering component factories in the config.php you can directly register them in the services.php. I
+recommend to use that way because Contao combines your config.php. Using `use statements` can be dangerous though.
+
+.. code-block:: php
+
+    // config.php
+    $GLOBALS['FE_MOD']['application']['example'] = 'Netzmacht\Contao\Toolkit\Component\Module\ModuleDecorator';
+
+    // services.php
+    $container[Services::MODULES_MAP]['example'] = function ($model, $column, ContainerInterface $container) {
+        return new ExampleElement($model, $column);
+    };
+
+
 Extending AbstractModule
 ------------------------
 
