@@ -33,6 +33,13 @@ final class SuffixFilter extends AbstractFilter
     private $start;
 
     /**
+     * Temporary value.
+     *
+     * @var string
+     */
+    private $value;
+
+    /**
      * AbstractFilter constructor.
      *
      * @param bool $break If true break after the filter if value is unique.
@@ -51,6 +58,7 @@ final class SuffixFilter extends AbstractFilter
     public function initialize()
     {
         $this->index = $this->start;
+        $this->value = null;
     }
 
     /**
@@ -66,6 +74,10 @@ final class SuffixFilter extends AbstractFilter
      */
     public function apply($model, $value, $separator)
     {
-        return $this->combine($value, $this->index++, $separator);
+        if ($this->value === null) {
+            $this->value = $value;
+        }
+
+        return $this->combine($this->value, $this->index++, $separator);
     }
 }
