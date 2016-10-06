@@ -11,6 +11,9 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
+use Database\Result;
+use Model;
+
 /**
  * Interface Validator describes an alias validator.
  *
@@ -21,10 +24,11 @@ interface Validator
     /**
      * Validate a value.
      *
-     * @param mixed      $value   Given value to validate.
-     * @param array|null $exclude Set of ids which should be ignored.
+     * @param Result|Model $result  The database result.
+     * @param mixed        $value   Given value to validate.
+     * @param array|null   $exclude Set of ids which should be ignored.
      *
      * @return bool
      */
-    public function validate($value, array $exclude = null);
+    public function validate($result, $value, array $exclude = null);
 }

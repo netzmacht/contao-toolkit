@@ -81,7 +81,7 @@ final class UniqueDatabaseValueValidator implements Validator
     /**
      * {@inheritDoc}
      */
-    public function validate($value, array $exclude = null)
+    public function validate($result, $value, array $exclude = null)
     {
         if (!$this->allowEmptyAlias && $value === '') {
             return false;

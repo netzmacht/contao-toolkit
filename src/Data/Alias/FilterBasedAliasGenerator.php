@@ -121,14 +121,15 @@ final class FilterBasedAliasGenerator implements AliasGenerator
     /**
      * Consider if value is an valid alias.
      *
+     * @param Database|Model $result Data record.
      * @param mixed $value The alias value.
      * @param int   $rowId The row id.
      *
      * @return bool
      */
-    private function isValid($value, $rowId)
+    private function isValid($result, $value, $rowId)
     {
-        return $this->validator->validate($value, [$rowId]);
+        return $this->validator->validate($result, $value, [$rowId]);
     }
 
     /**
@@ -146,7 +147,7 @@ final class FilterBasedAliasGenerator implements AliasGenerator
 
             do {
                 $value  = $filter->apply($result, $value, $this->separator);
-                $unique = $this->isValid($value, $result->id);
+                $unique = $this->isValid($result, $value, $result->id);
 
                 if ($filter->breakIfValid() && $unique) {
                     break 2;
