@@ -131,12 +131,12 @@ final class OptionsBuilder
         foreach ($this->options as $key => $value) {
             $pid = $this->options[$key][$parent];
 
-            $values[$pid][$key] = array_merge($this->options->row(), ['__label__' => $value]);
+            $values[$pid][$key] = array_merge($this->options[$key], ['__label__' => $value]);
         }
 
         $this->buildTree($values, $options, 0, $indentBy);
 
-        $this->options = new ArrayListOptions($options, $this->options->getValueKey(), '__label__');
+        $this->options = new ArrayOptions($options);
 
         return $this;
     }
@@ -187,7 +187,7 @@ final class OptionsBuilder
         }
 
         foreach ($values[$index] as $key => $value) {
-            $options[$key] = str_repeat($indentBy, $depth) . ' ' . $value;
+            $options[$key] = str_repeat($indentBy, $depth) . ' ' . $value['__label__'];
             $this->buildTree($values, $options, $key, $indentBy, ($depth + 1));
         }
 
