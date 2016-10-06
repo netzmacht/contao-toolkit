@@ -33,7 +33,7 @@ class ComponentDecoratorTraitSpec extends ObjectBehavior
         $componentFactory->create($this->model, 'main')->willReturn($component);
 
         $this->beAnInstanceOf('spec\Netzmacht\Contao\Toolkit\Component\ComponentDecorator');
-        $this->beConstructedWith($componentFactory, $this->model, 'main');
+        $this->beConstructedWith($component, $componentFactory, $this->model, 'main');
     }
 
     function it_delegates_get(Component $component)
@@ -70,16 +70,13 @@ class ComponentDecoratorTraitSpec extends ObjectBehavior
 
 class ComponentDecorator extends \Module
 {
-    use ComponentDecoratorTrait {
-        ComponentDecoratorTrait::__construct as construct;
-    }
+    use ComponentDecoratorTrait;
 
     private $factory;
 
-    public function __construct($factory, $contentModel, $column)
+    public function __construct(Component $component, $factory)
     {
-        $this->factory = $factory;
-        $this->construct($contentModel, $column);
+        $this->component = $component;
     }
 
     protected function getFactory()
