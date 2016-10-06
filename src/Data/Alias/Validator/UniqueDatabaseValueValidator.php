@@ -55,7 +55,10 @@ final class UniqueDatabaseValueValidator implements Validator
      * @var bool
      */
     private $allowEmptyAlias;
+
     /**
+     * Data fields.
+     *
      * @var array
      */
     private $dataFields;
@@ -102,7 +105,7 @@ final class UniqueDatabaseValueValidator implements Validator
      */
     public function validate($result, $value, array $exclude = null)
     {
-        if (!$this->allowEmptyAlias && $value === '') {
+        if (!$this->allowEmptyAlias && $value == '') {
             return false;
         }
 
