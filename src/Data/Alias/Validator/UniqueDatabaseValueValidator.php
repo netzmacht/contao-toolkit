@@ -55,27 +55,46 @@ final class UniqueDatabaseValueValidator implements Validator
      * @var bool
      */
     private $allowEmptyAlias;
+    /**
+     * @var array
+     */
+    private $dataFields;
+    /**
+     * @var
+     */
+    private $uniqueKeyFields;
 
     /**
      * UniqueDatabaseValueValidator constructor.
      *
      * @param Database $database        Database connection.
      * @param string   $tableName       Table name.
-     * @param string   $columnName      Column name.
+     * @param string   $columnName      Alias value column name.
+     * @param array    $uniqueKeyFields Other fields which spans the unique key along the alias column.
      * @param bool     $allowEmptyAlias Allow empty alias.
      */
-    public function __construct(Database $database, $tableName, $columnName, $allowEmptyAlias = false)
-    {
+    public function __construct(
+        Database $database,
+        $tableName,
+        $columnName,
+        array $uniqueKeyFields = [],
+        $allowEmptyAlias = false
+    ) {
         $this->database        = $database;
         $this->tableName       = $tableName;
         $this->columnName      = $columnName;
         $this->allowEmptyAlias = $allowEmptyAlias;
+        $this->uniqueKeyFields = $uniqueKeyFields;
 
         $this->query = sprintf(
             'SELECT count(*) AS result FROM %s WHERE %s=?',
             $this->tableName,
             $this->columnName
         );
+
+        foreach ($uniqueKeyFields as $field) {
+            $this->query .= sprintf(' AND %s=?', $field);
+        }
     }
 
     /**
@@ -88,10 +107,15 @@ final class UniqueDatabaseValueValidator implements Validator
         }
 
         $query = $this->query;
+        $value = [$value];
+
+        foreach ($this->uniqueKeyFields as $field) {
+            $value[] = $result->$field;
+        }
 
         if ($exclude) {
             $query .= ' AND id NOT IN(?' . str_repeat(',?', (count($exclude) - 1)) . ')';
-            $value  = array_merge([$value], $exclude);
+            $value  = array_merge($value, $exclude);
         }
 
         $result = $this->database

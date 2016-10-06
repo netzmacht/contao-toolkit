@@ -169,7 +169,7 @@ final class FilterBasedAliasGenerator implements AliasGenerator
      */
     private function guardValidAlias($result, $value)
     {
-        if (!$value || !$this->isValid($value, $result->id)) {
+        if (!$value || !$this->isValid($result, $value, $result->id)) {
             throw InvalidAliasException::forDatabaseEntry($this->tableName, $result->id, $value);
         }
     }
