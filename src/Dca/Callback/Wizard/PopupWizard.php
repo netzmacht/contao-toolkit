@@ -130,7 +130,7 @@ final class PopupWizard extends AbstractWizard
     public function generate($value)
     {
         if ($this->always || $value) {
-            $href    = sprintf($this->requestToken, $this->href, $value, $this->requestToken->get());
+            $href    = sprintf($this->linkPattern, $this->href, $value, $this->requestToken->get());
             $jsTitle = specialchars(str_replace('\'', '\\\'', $this->title));
 
             $template = $this->createTemplate();
