@@ -122,8 +122,8 @@ final class FilterBasedAliasGenerator implements AliasGenerator
      * Consider if value is an valid alias.
      *
      * @param Database|Model $result Data record.
-     * @param mixed $value The alias value.
-     * @param int   $rowId The row id.
+     * @param mixed          $value  The alias value.
+     * @param int            $rowId  The row id.
      *
      * @return bool
      */
