@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @package    dev
+ * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015 netzmacht creative David Molineus
+ * @copyright  2015-2016 netzmacht David Molineus
  * @license    LGPL 3.0
  * @filesource
  *
@@ -11,28 +11,28 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use ContaoCommunityAlliance\Translator\TranslatorInterface;
+use ContaoCommunityAlliance\Translator\TranslatorInterface as Translator;
 
 /**
  * Class YesNoFormatter formats non multiple checkboxes with yes and no.
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
-class YesNoFormatter implements ValueFormatter
+final class YesNoFormatter implements ValueFormatter
 {
     /**
      * Translator.
      *
-     * @var TranslatorInterface
+     * @var Translator
      */
     private $translator;
 
     /**
      * YesNoFormatter constructor.
      *
-     * @param TranslatorInterface $translator Translator.
+     * @param Translator $translator Translator.
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(Translator $translator)
     {
         $this->translator = $translator;
     }

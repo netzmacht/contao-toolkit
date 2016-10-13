@@ -2,10 +2,8 @@
 
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Contao\Config;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\DateFormatter;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 /**
  * Class DateFormatterSpec
@@ -23,7 +21,7 @@ class DateFormatterSpec extends ObjectBehavior
 
     function let()
     {
-        $reflector = new \ReflectionClass('Contao\Config');
+        $reflector = new \ReflectionClass('Config');
         $config    = $reflector->newInstanceWithoutConstructor();
 
         $GLOBALS['TL_CONFIG']['dateFormat']  = static::DATE_FORMAT;

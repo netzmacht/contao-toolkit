@@ -2,7 +2,7 @@
 
 namespace spec\Netzmacht\Contao\Toolkit\Data\Alias\Validator;
 
-use Contao\Database;
+use Database;
 use Netzmacht\Contao\Toolkit\Data\Alias\Validator\UniqueDatabaseValueValidator;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -38,17 +38,17 @@ class UniqueDatabaseValueValidatorSpec extends ObjectBehavior
     {
         $result = (object) ['result' => 0];
         $database->prepare(Argument::any())->willReturn($statement);
-        $statement->execute('foo')->willReturn($result);
+        $statement->execute(['foo'])->willReturn($result);
 
-        $this->validate('foo')->shouldReturn(true);
+        $this->validate($result, 'foo')->shouldReturn(true);
     }
 
     function it_invalidates_when_value_exists(Database $database, Database\Statement $statement)
     {
         $result = (object) ['result' => 1];
         $database->prepare(Argument::any())->willReturn($statement);
-        $statement->execute('foo')->willReturn($result);
+        $statement->execute(['foo'])->willReturn($result);
 
-        $this->validate('foo')->shouldReturn(false);
+        $this->validate($result, 'foo')->shouldReturn(false);
     }
 }

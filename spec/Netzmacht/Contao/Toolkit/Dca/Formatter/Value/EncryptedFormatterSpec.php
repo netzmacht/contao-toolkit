@@ -19,6 +19,8 @@ class EncryptedFormatterSpec extends ObjectBehavior
         $GLOBALS['TL_CONFIG']['encryptionKey']    = 'gg889';
         $GLOBALS['TL_CONFIG']['encryptionMode']   = 'cfb';
         $GLOBALS['TL_CONFIG']['encryptionCipher'] = 'rijndael-256';
+
+        $this->beConstructedWith(\Encryption::getInstance());
     }
 
     function it_is_initializable()

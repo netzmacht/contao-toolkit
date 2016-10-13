@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @package    dev
+ * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015 netzmacht creative David Molineus
+ * @copyright  2015-2016 netzmacht David Molineus
  * @license    LGPL 3.0
  * @filesource
  *
@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
  *
  * @package Netzmacht\Contao\Toolkit\Data\Alias\Filter
  */
-class RawValueFilter extends AbstractValueFilter
+final class RawValueFilter extends AbstractValueFilter
 {
     /**
      * {@inheritdoc}

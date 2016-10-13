@@ -3,7 +3,7 @@
 /**
  * @package    toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015 netzmacht creative David Molineus
+ * @copyright  2015-2016 netzmacht David Molineus
  * @license    LGPL 3.0
  * @filesource
  *
@@ -11,14 +11,14 @@
 
 namespace Netzmacht\Contao\Toolkit\View;
 
-use ContaoCommunityAlliance\Translator\TranslatorInterface;
+use Netzmacht\Contao\Toolkit\View\Template\Exception\HelperNotFound;
 
 /**
  * Interface describes the templates being used in the toolkit.
  *
  * @package Netzmacht\Contao\Toolkit\View
  */
-interface Template extends TranslatorInterface
+interface Template
 {
     /**
      * Parse the template.
@@ -47,9 +47,28 @@ interface Template extends TranslatorInterface
     public function set($name, $value);
 
     /**
-     * Get the assets manager.
+     * Get an helper.
      *
-     * @return AssetsManager
+     * @param string $name Name of the helper.
+     *
+     * @return mixed
+     * @throws HelperNotFound If helper not exists.
      */
-    public function getAssetsManager();
+    public function helper($name);
+
+    /**
+     * Get all the template data.
+     *
+     * @return array
+     */
+    public function getData();
+
+    /**
+     * Set all the template data.
+     *
+     * @param array $data Template data.
+     *
+     * @return void
+     */
+    public function setData($data);
 }

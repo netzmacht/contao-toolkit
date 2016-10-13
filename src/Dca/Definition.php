@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @package    dev
+ * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015 netzmacht creative David Molineus
+ * @copyright  2015-2016 netzmacht David Molineus
  * @license    LGPL 3.0
  * @filesource
  *
@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca;
  *
  * @package Netzmacht\Contao\Toolkit\Dca
  */
-class Definition
+final class Definition
 {
     /**
      * The dca definition.
@@ -47,7 +47,7 @@ class Definition
     /**
      * Get the path as array.
      *
-     * @param mixed $path The path as "/" separted string or array.
+     * @param mixed $path The path as "/" seared string or array.
      *
      * @return array
      */
@@ -63,16 +63,21 @@ class Definition
     /**
      * Get from the dca.
      *
-     * @param array|string $path    The path.
-     * @param mixed        $default The default value.
+     * @param array|string $path              The path.
+     * @param mixed        $default           The default value.
+     * @param bool         $createIfNotExists Create definition if not exists.
      *
-     * @return mixed.
+     * @return mixed .
      */
-    public function &get($path, $default = null)
+    public function &get($path, $default = null, $createIfNotExists = false)
     {
         $dca =& $this->dca;
 
         foreach ($this->path($path) as $key) {
+            if ($createIfNotExists && is_array($dca) && !array_key_exists($key, $dca) && $default !== null) {
+                $this->set($path, $default);
+            }
+
             if (!is_array($dca) || !array_key_exists($key, $dca)) {
                 return $default;
             }

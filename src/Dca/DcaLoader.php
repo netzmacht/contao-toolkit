@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @package    dev
+ * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
  * @copyright  2014 netzmacht creative David Molineus
  * @license    LGPL 3.0
@@ -18,7 +18,7 @@ namespace Netzmacht\Contao\Toolkit\Dca;
  *
  * @package Netzmacht\Contao\DevTools\Dca
  */
-class DcaLoader extends \Controller
+final class DcaLoader extends \Controller
 {
     /**
      * Construct.

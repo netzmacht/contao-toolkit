@@ -2,6 +2,7 @@
 
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
+use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\OptionsFormatter;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -14,6 +15,11 @@ use Prophecy\Argument;
  */
 class OptionsFormatterSpec extends ObjectBehavior
 {
+    function let()
+    {
+        $this->beConstructedWith(new Invoker());
+    }
+
     function it_is_initializable()
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\OptionsFormatter');
@@ -73,16 +79,29 @@ class OptionsFormatterSpec extends ObjectBehavior
         $this->format(1, 'test', $definition)->shouldReturn('foo');
     }
 
-    function it_formats_option_calling_options_callback()
+    function it_formats_option_calling_options_callback(MockableOptionsCallback $callback)
     {
+        $callback
+            ->__invoke()
+            ->shouldBeCalled()
+            ->willReturn(['foo' => 'bar']);
+
         $definition = [
-            'options_callback' => function () {
-                return [
-                    'foo' => 'bar'
-                ];
-            }
+           'options_callback' => $callback
         ];
 
-        $this->format('foo', 'test', $definition)->shouldReturn('bar');
+        $this->format('foo', 'test', $definition);
+    }
+}
+
+class MockableOptionsCallback
+{
+    public function __invoke()
+    {
+        return $this->invoke();
+    }
+
+    public function invoke()
+    {
     }
 }

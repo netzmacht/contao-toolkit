@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @package    dev
+ * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015 netzmacht creative David Molineus
+ * @copyright  2015-2016 netzmacht David Molineus
  * @license    LGPL 3.0
  * @filesource
  *
@@ -11,65 +11,23 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter;
 
-use Netzmacht\Contao\Toolkit\Dca\Definition;
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
-
 /**
  * Formatter handles the formatting of data container labels.
  *
  * @package Netzmacht\Contao\Toolkit\Dca
  */
-class Formatter
+interface Formatter
 {
-    /**
-     * Data container definition.
-     *
-     * @var Definition
-     */
-    private $definition;
-
-    /**
-     * Value formatter.
-     *
-     * @var ValueFormatter
-     */
-    private $valueFormatter;
-
-    /**
-     * Formatter constructor.
-     *
-     * @param Definition     $definition     Data container definition.
-     * @param ValueFormatter $valueFormatter Value formatter.
-     */
-    public function __construct(Definition $definition, ValueFormatter $valueFormatter)
-    {
-        $this->definition     = $definition;
-        $this->valueFormatter = $valueFormatter;
-    }
-
     /**
      * Format a field value.
      *
-     * @param string $field Field name.
-     * @param mixed  $value Field value.
+     * @param string $field   Field name.
+     * @param mixed  $value   Field value.
+     * @param mixed  $context Context object, usually the data container driver.
      *
      * @return array|null|string
      */
-    public function formatValue($field, $value)
-    {
-        $fieldDefinition = $this->definition->get(['fields', $field]);
-
-        // Not found.
-        if (!is_array($fieldDefinition)) {
-            return '';
-        }
-
-        if ($this->valueFormatter->accepts($field, $fieldDefinition)) {
-            $value = $this->valueFormatter->format($value, $field, $fieldDefinition);
-        }
-
-        return $value;
-    }
+    public function formatValue($field, $value, $context = null);
 
     /**
      * Format the field label.
@@ -78,10 +36,7 @@ class Formatter
      *
      * @return string
      */
-    public function formatFieldLabel($field)
-    {
-        return $this->definition->get(['fields', $field, 'label', 0], $field);
-    }
+    public function formatFieldLabel($field);
 
     /**
      * Format the field description.
@@ -90,34 +45,16 @@ class Formatter
      *
      * @return mixed
      */
-    public function formatFieldDescription($field)
-    {
-        return $this->definition->get(['fields', $field, 'label', 1], $field);
-    }
+    public function formatFieldDescription($field);
 
     /**
      * Format field options.
      *
-     * @param string $field  Field name.
-     * @param array  $values Field values.
+     * @param string $field   Field name.
+     * @param array  $values  Field values.
+     * @param mixed  $context Data container object.
      *
      * @return array
      */
-    public function formatOptions($field, array $values)
-    {
-        $labels = $this->definition->get(['fields', $field, 'reference']);
-        if (!$labels) {
-            return $values;
-        }
-
-        $options = array();
-
-        foreach (array_keys($values) as $key) {
-            if (array_key_exists($key, $labels)) {
-                $options[$key] = !empty($labels[$key]);
-            }
-        }
-
-        return $options;
-    }
+    public function formatOptions($field, array $values, $context = null);
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @package    dev
+ * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
  * @copyright  2014 netzmacht creative David Molineus
  * @license    LGPL 3.0
@@ -17,8 +17,10 @@ use Model\Collection;
  * Class CollectionOptions maps a model collection to the option format.
  *
  * @package Netzmacht\Contao\DevTools\Dca\Options
+ *
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class CollectionOptions implements Options
+final class CollectionOptions implements Options
 {
     /**
      * The database result.
@@ -42,13 +44,6 @@ class CollectionOptions implements Options
     private $valueColumn = 'id';
 
     /**
-     * Instead of a label column you can define a callable.
-     *
-     * @var \callable
-     */
-    private $labelCallback;
-
-    /**
      * Current position.
      *
      * @var int
@@ -58,15 +53,15 @@ class CollectionOptions implements Options
     /**
      * Construct.
      *
-     * @param Collection $collection  Model collection.
-     * @param string     $labelColumn Name of label column.
-     * @param string     $valueColumn Name of value column.
+     * @param Collection      $collection  Model collection.
+     * @param string|callable $labelColumn Name of label column.
+     * @param string          $valueColumn Name of value column.
      */
-    public function __construct($collection, $labelColumn = null, $valueColumn = 'id')
+    public function __construct(Collection $collection, $labelColumn = null, $valueColumn = 'id')
     {
         $this->collection  = $collection;
-        $this->labelColumn = $labelColumn;
         $this->valueColumn = $valueColumn;
+        $this->labelColumn = $labelColumn ?: $valueColumn;
     }
 
     /**
@@ -74,23 +69,9 @@ class CollectionOptions implements Options
      *
      * @return string
      */
-    public function getLabelColumn()
+    public function getLabelKey()
     {
         return $this->labelColumn;
-    }
-
-    /**
-     * Set label column.
-     *
-     * @param string $labelColumn Label column.
-     *
-     * @return $this
-     */
-    public function setLabelColumn($labelColumn)
-    {
-        $this->labelColumn = $labelColumn;
-
-        return $this;
     }
 
     /**
@@ -98,40 +79,9 @@ class CollectionOptions implements Options
      *
      * @return string
      */
-    public function getValueColumn()
+    public function getValueKey()
     {
         return $this->valueColumn;
-    }
-
-    /**
-     * Set the value column.
-     *
-     * @param string $valueColumn Value column.
-     *
-     * @return $this
-     */
-    public function setValueColumn($valueColumn)
-    {
-        $this->valueColumn = $valueColumn;
-
-        return $this;
-    }
-
-    /**
-     * Set the label callback.
-     *
-     * If a label callback is defined it is used no matter if any label column is selection. The callback gets the
-     * current Model as argument.
-     *
-     * @param callable $labelCallback Label callback.
-     *
-     * @return $this
-     */
-    public function setLabelCallback($labelCallback)
-    {
-        $this->labelCallback = $labelCallback;
-
-        return $this;
     }
 
     /**
@@ -139,11 +89,19 @@ class CollectionOptions implements Options
      */
     public function current()
     {
-        if ($this->labelCallback) {
-            return call_user_func($this->labelCallback, $this->collection->row());
+        if (is_callable($this->labelColumn)) {
+            return call_user_func($this->labelColumn, $this->row());
         }
 
         return $this->collection->{$this->labelColumn};
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function row()
+    {
+        return $this->collection->row();
     }
 
     /**

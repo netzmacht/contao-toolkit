@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @package    dev
+ * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015 netzmacht creative David Molineus
+ * @copyright  2015-2016 netzmacht David Molineus
  * @license    LGPL 3.0
  * @filesource
  *
@@ -11,35 +11,37 @@
 
 namespace Netzmacht\Contao\Toolkit;
 
-use Netzmacht\Contao\Toolkit\Event\InitializeSystemEvent;
+use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerAware;
+use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
+use Netzmacht\Contao\Toolkit\Boot\Event\InitializeSystemEvent;
 
 /**
  * Boot the environment.
  *
  * @package Netzmacht\Contao\Toolkit
  */
-class Boot
+final class Boot
 {
+    use ContainerAware;
+
     /**
      * Initialize.
      *
      * This method is called by the initializeDependencyContainer hook.
      *
-     * @param \Pimple $container The dependency container.
-     *
      * @return void
      */
-    public function initialize(\Pimple $container)
+    public function initialize()
     {
         // No initialization when being in install mode.
         if (TL_SCRIPT === 'contao/install.php') {
             return;
         }
 
-        /** @var ServiceContainer $serviceContainer */
-        $serviceContainer = $container['toolkit.service-container'];
+        $container  = static::getContainer();
+        $event      = new InitializeSystemEvent($container);
+        $dispatcher = $container->get(Services::EVENT_DISPATCHER);
 
-        $event = new InitializeSystemEvent($serviceContainer);
-        $serviceContainer->getEventDispatcher()->dispatch($event::NAME, $event);
+        $dispatcher->dispatch($event::NAME, $event);
     }
 }

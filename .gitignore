@@ -1,5 +1,6 @@
 /vendor/
 /bin/
+/docs/_build
 
 coverage.xml
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @package    dev
+ * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
  * @copyright  2014 netzmacht creative David Molineus
  * @license    LGPL 3.0
@@ -15,8 +15,10 @@ namespace Netzmacht\Contao\Toolkit\Dca\Options;
  * Class ArrayListOptions extracts options from a list of associative arrays.
  *
  * @package Netzmacht\Contao\DevTools\Dca\Options
+ *
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class ArrayListOptions implements Options
+final class ArrayListOptions implements Options
 {
     /**
      * The array list.
@@ -40,13 +42,6 @@ class ArrayListOptions implements Options
     private $valueKey = 'id';
 
     /**
-     * Instead of a label key you can define a callable.
-     *
-     * @var \callable
-     */
-    private $labelCallback;
-
-    /**
      * Current position.
      *
      * @var int
@@ -54,17 +49,24 @@ class ArrayListOptions implements Options
     private $position = 0;
 
     /**
+     * List of keys.
+     *
+     * @var array
+     */
+    private $keys;
+
+    /**
      * Construct.
      *
-     * @param array  $list     Array list.
-     * @param string $valueKey Name of value key.
-     * @param string $labelKey Name of label key.
+     * @param array           $list     Array list.
+     * @param string|callable $labelKey Name of label key.
+     * @param string          $valueKey Name of value key.
      */
-    public function __construct(array $list, $valueKey = 'id', $labelKey = null)
+    public function __construct(array $list, $labelKey = null, $valueKey = 'id')
     {
         $this->list     = $list;
         $this->keys     = array_keys($list);
-        $this->labelKey = $labelKey;
+        $this->labelKey = $labelKey ?: $valueKey;
         $this->valueKey = $valueKey;
     }
 
@@ -79,20 +81,6 @@ class ArrayListOptions implements Options
     }
 
     /**
-     * Set label column.
-     *
-     * @param string $labelKey Label column.
-     *
-     * @return $this
-     */
-    public function setLabelKey($labelKey)
-    {
-        $this->labelKey = $labelKey;
-
-        return $this;
-    }
-
-    /**
      * Get the value column.
      *
      * @return string
@@ -103,48 +91,25 @@ class ArrayListOptions implements Options
     }
 
     /**
-     * Set the value column.
-     *
-     * @param string $valueKey Value column.
-     *
-     * @return $this
-     */
-    public function setValueKey($valueKey)
-    {
-        $this->valueKey = $valueKey;
-
-        return $this;
-    }
-
-    /**
-     * Set the label callback.
-     *
-     * If a label callback is defined it is used no matter if any label column is selection. The callback gets the
-     * current Model as argument.
-     *
-     * @param callable $labelCallback Label callback.
-     *
-     * @return $this
-     */
-    public function setLabelCallback($labelCallback)
-    {
-        $this->labelCallback = $labelCallback;
-
-        return $this;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function current()
     {
         $current = $this->list[$this->keys[$this->position]];
 
-        if ($this->labelCallback) {
-            return call_user_func($this->labelCallback, $current);
+        if (is_callable($this->labelKey)) {
+            return call_user_func($this->labelKey, $current);
         }
 
         return $current[$this->labelKey];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function row()
+    {
+        return $this->list[$this->keys[$this->position]];
     }
 
     /**

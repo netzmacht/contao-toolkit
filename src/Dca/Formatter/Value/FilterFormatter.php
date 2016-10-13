@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @package    dev
+ * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015 netzmacht creative David Molineus
+ * @copyright  2015-2016 netzmacht David Molineus
  * @license    LGPL 3.0
  * @filesource
  *
@@ -11,15 +11,17 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
+use Webmozart\Assert\Assert;
+
 /**
- * FilterFormatter applies formatters used as filters to an value.
+ * FilterFormatter applies formatter used as filters to an value.
  *
  * The difference between the FormatterChain and the FilterFormatter is that the filter formatter will apply all
  * rules and modifies the given value.
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
-class FilterFormatter implements ValueFormatter
+final class FilterFormatter implements ValueFormatter
 {
     /**
      * List of filters.
@@ -35,6 +37,8 @@ class FilterFormatter implements ValueFormatter
      */
     public function __construct(array $filters)
     {
+        Assert::allIsInstanceOf($filters, 'Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
+
         $this->filters = $filters;
     }
 

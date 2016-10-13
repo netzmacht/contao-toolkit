@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @package    dev
+ * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
  * @copyright  2014 netzmacht creative David Molineus
  * @license    LGPL 3.0
@@ -16,6 +16,32 @@ namespace Netzmacht\Contao\Toolkit\Dca\Options;
  *
  * @package Netzmacht\Contao\DevTools\Dca\Options
  */
-class ArrayOptions extends \ArrayIterator implements Options
+final class ArrayOptions extends \ArrayIterator implements Options
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function getLabelKey()
+    {
+        return '__label__';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getValueKey()
+    {
+        return '__key__';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function row()
+    {
+        return [
+            '__key__' => $this->key(),
+            '__label__' => $this->current()
+        ];
+    }
 }

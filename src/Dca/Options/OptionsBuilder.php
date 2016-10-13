@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @package    dev
+ * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
  * @copyright  2014 netzmacht creative David Molineus
  * @license    LGPL 3.0
@@ -13,19 +13,18 @@ namespace Netzmacht\Contao\Toolkit\Dca\Options;
 
 use Database\Result;
 use Model\Collection;
-use Netzmacht\Contao\Toolkit\Dca;
 
 /**
  * Class OptionsBuilder is designed to transfer data to the requested format for options.
  *
  * @package Netzmacht\Contao\DevTools\Dca
  */
-class OptionsBuilder
+final class OptionsBuilder
 {
     /**
      * The options.
      *
-     * @var \Netzmacht\Contao\Toolkit\Dca\Options\Options
+     * @var Options
      */
     private $options;
 
@@ -33,27 +32,18 @@ class OptionsBuilder
      * Get Options builder for collection.
      *
      * @param Collection       $collection  Model collection.
-     * @param string           $valueColumn Value column.
      * @param string|\callable $labelColumn Label column or callback.
+     * @param string           $valueColumn Value column.
      *
      * @return OptionsBuilder
      */
-    public static function fromCollection(Collection $collection = null, $valueColumn = 'id', $labelColumn = null)
+    public static function fromCollection(Collection $collection = null, $labelColumn = null, $valueColumn = 'id')
     {
         if ($collection === null) {
-            return new static(new ArrayOptions());
+            return new static(new ArrayListOptions([], $valueColumn, $labelColumn));
         }
 
-        $options = new CollectionOptions($collection);
-        $options->setValueColumn($valueColumn);
-
-        if (is_callable($labelColumn)) {
-            $options->setLabelCallback($labelColumn);
-        } elseif ($labelColumn) {
-            $options->setLabelColumn($labelColumn);
-        } else {
-            $options->setLabelColumn($valueColumn);
-        }
+        $options = new CollectionOptions($collection, $labelColumn, $valueColumn);
 
         return new static($options);
     }
@@ -62,44 +52,29 @@ class OptionsBuilder
      * Get Options builder for collection.
      *
      * @param Result           $result      Database result.
-     * @param string           $valueColumn Value column.
      * @param string|\callable $labelColumn Label column or callback.
+     * @param string           $valueColumn Value column.
      *
      * @return OptionsBuilder
      */
-    public static function fromResult(Result $result = null, $valueColumn = 'id', $labelColumn = null)
+    public static function fromResult(Result $result = null, $labelColumn = null, $valueColumn = 'id')
     {
-        if ($result->numRows < 1) {
-            return  new static(new ArrayOptions());
-        }
-
-        $options = new ArrayListOptions($result->fetchAllAssoc());
-        $options->setValueKey($valueColumn);
-
-        if (is_callable($labelColumn)) {
-            $options->setLabelCallback($labelColumn);
-        } elseif ($labelColumn) {
-            $options->setLabelKey($labelColumn);
-        } else {
-            $options->setLabelKey($valueColumn);
-        }
-
-        return new static($options);
+        return static::fromArrayList($result->fetchAllAssoc(), $valueColumn, $labelColumn);
     }
 
     /**
      * Create options from array list.
      *
-     * It expects an array which is a list of associatives arrays where the value column is part of the associative
+     * It expects an array which is a list of associative arrays where the value column is part of the associative
      * array and has to be extracted.
      *
      * @param array            $data     Raw data list.
-     * @param string           $valueKey Value key.
      * @param string|\callable $labelKey Label key or callback.
+     * @param string           $valueKey Value key.
      *
      * @return OptionsBuilder
      */
-    public static function fromArrayList(array $data, $valueKey = 'id', $labelKey = null)
+    public static function fromArrayList(array $data, $labelKey = null, $valueKey = 'id')
     {
         $options = new ArrayListOptions($data, $valueKey, $labelKey);
 
@@ -129,7 +104,8 @@ class OptionsBuilder
         $options = array();
 
         foreach ($this->options as $key => $value) {
-            $group = $this->groupValue($this->options[$key][$column], $callback);
+            $row   = $this->options->row();
+            $group = $this->groupValue($row[$column], $callback, $row);
 
             $options[$group][$key] = $value;
         }
@@ -155,7 +131,7 @@ class OptionsBuilder
         foreach ($this->options as $key => $value) {
             $pid = $this->options[$key][$parent];
 
-            $values[$pid][$key] = $value;
+            $values[$pid][$key] = array_merge($this->options[$key], ['__label__' => $value]);
         }
 
         $this->buildTree($values, $options, 0, $indentBy);
@@ -180,13 +156,14 @@ class OptionsBuilder
      *
      * @param mixed          $value    Raw group value.
      * @param \callable|null $callback Optional callback.
+     * @param array          $row      Current data row.
      *
      * @return mixed
      */
-    private function groupValue($value, $callback)
+    private function groupValue($value, $callback, array $row)
     {
         if (is_callable($callback)) {
-            return $callback($value);
+            return $callback($value, $row);
         }
 
         return $value;
@@ -210,7 +187,7 @@ class OptionsBuilder
         }
 
         foreach ($values[$index] as $key => $value) {
-            $options[$key] = str_repeat($indentBy, $depth) . ' ' . $value;
+            $options[$key] = str_repeat($indentBy, $depth) . ' ' . $value['__label__'];
             $this->buildTree($values, $options, $key, $indentBy, ($depth + 1));
         }
 

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @package    dev
+ * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015 netzmacht creative David Molineus
+ * @copyright  2015-2016 netzmacht David Molineus
  * @license    LGPL 3.0
  * @filesource
  *
@@ -11,13 +11,18 @@
 
 namespace Netzmacht\Contao\Toolkit\InsertTag;
 
+use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerAware;
+use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
+
 /**
  * IntegratedReplacer is the insert tag replacer implementation which integrates into the Contao replacement way.
  *
  * @package Netzmacht\Contao\I18n\InsertTag
  */
-class IntegratedReplacer implements Replacer
+final class IntegratedReplacer implements Replacer
 {
+    use ContainerAware;
+
     /**
      * Insert tag map.
      *
@@ -61,12 +66,10 @@ class IntegratedReplacer implements Replacer
      *
      * @return static
      * @internal
-     *
-     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public static function getInstance()
     {
-        return $GLOBALS['container']['toolkit.insert-tag-replacer'];
+        return static::getContainer()->get(Services::INSERT_TAG_REPLACER);
     }
 
     /**
@@ -81,7 +84,12 @@ class IntegratedReplacer implements Replacer
      */
     public function replaceTag($raw, $cache = true)
     {
-        list($tag, $params) = explode('::', $raw, 2);
+        if (strpos($raw, '::')) {
+            list($tag, $params) = explode('::', $raw, 2);
+        } else {
+            $tag    = $raw;
+            $params = null;
+        }
 
         foreach ($this->parsers as $parser) {
             if ($parser->supports($tag)) {

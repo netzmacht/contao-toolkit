@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @package    dev
+ * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015 netzmacht creative David Molineus
+ * @copyright  2015-2016 netzmacht David Molineus
  * @license    LGPL 3.0
  * @filesource
  *
@@ -11,7 +11,8 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Model;
 
-use Contao\Model;
+use Model;
+use Webmozart\Assert\Assert;
 
 /**
  * Class ContaoRepository.
@@ -34,6 +35,9 @@ class ContaoRepository implements Repository
      */
     public function __construct($modelClass)
     {
+        Assert::classExists($modelClass);
+        Assert::subclassOf($modelClass, 'Model');
+
         $this->modelClass = $modelClass;
     }
 

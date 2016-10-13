@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @package    dev
+ * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015 netzmacht creative David Molineus
+ * @copyright  2015-2016 netzmacht David Molineus
  * @license    LGPL 3.0
  * @filesource
  *
@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Validator;
 
-use Contao\Database;
+use Database;
 use Netzmacht\Contao\Toolkit\Data\Alias\Validator;
 
 /**
@@ -19,7 +19,7 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Validator;
  *
  * @package Netzmacht\Contao\Toolkit\Data\Alias\Validator
  */
-class UniqueDatabaseValueValidator implements Validator
+final class UniqueDatabaseValueValidator implements Validator
 {
     /**
      * Database connection.
@@ -50,35 +50,71 @@ class UniqueDatabaseValueValidator implements Validator
     private $query;
 
     /**
+     * Allow an empty alias.
+     *
+     * @var bool
+     */
+    private $allowEmptyAlias;
+
+    /**
+     * Data fields being used as unique fields.
+     *
+     * @var array
+     */
+    private $uniqueKeyFields;
+
+    /**
      * UniqueDatabaseValueValidator constructor.
      *
-     * @param Database $database   Database connection.
-     * @param string   $tableName  Table name.
-     * @param string   $columnName Column name.
+     * @param Database $database        Database connection.
+     * @param string   $tableName       Table name.
+     * @param string   $columnName      Alias value column name.
+     * @param array    $uniqueKeyFields Other fields which spans the unique key along the alias column.
+     * @param bool     $allowEmptyAlias Allow empty alias.
      */
-    public function __construct(Database $database, $tableName, $columnName)
-    {
-        $this->database   = $database;
-        $this->tableName  = $tableName;
-        $this->columnName = $columnName;
+    public function __construct(
+        Database $database,
+        $tableName,
+        $columnName,
+        array $uniqueKeyFields = [],
+        $allowEmptyAlias = false
+    ) {
+        $this->database        = $database;
+        $this->tableName       = $tableName;
+        $this->columnName      = $columnName;
+        $this->allowEmptyAlias = $allowEmptyAlias;
+        $this->uniqueKeyFields = $uniqueKeyFields;
 
         $this->query = sprintf(
             'SELECT count(*) AS result FROM %s WHERE %s=?',
             $this->tableName,
             $this->columnName
         );
+
+        foreach ($uniqueKeyFields as $field) {
+            $this->query .= sprintf(' AND %s=?', $field);
+        }
     }
 
     /**
      * {@inheritDoc}
      */
-    public function validate($value, array $exclude = null)
+    public function validate($result, $value, array $exclude = null)
     {
+        if (!$this->allowEmptyAlias && $value == '') {
+            return false;
+        }
+
         $query = $this->query;
+        $value = [$value];
+
+        foreach ($this->uniqueKeyFields as $field) {
+            $value[] = $result->$field;
+        }
 
         if ($exclude) {
             $query .= ' AND id NOT IN(?' . str_repeat(',?', (count($exclude) - 1)) . ')';
-            $value  = array_merge([$value], $exclude);
+            $value  = array_merge($value, $exclude);
         }
 
         $result = $this->database

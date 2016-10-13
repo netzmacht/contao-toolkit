@@ -2,7 +2,7 @@
 
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Contao\Database;
+use Database;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ForeignKeyFormatter;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;

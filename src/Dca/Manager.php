@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @package    dev
+ * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
  * @copyright  2014 netzmacht creative David Molineus
  * @license    LGPL 3.0
@@ -13,13 +13,14 @@ namespace Netzmacht\Contao\Toolkit\Dca;
 
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory;
+use Webmozart\Assert\Assert;
 
 /**
  * Data container definition manager.
  *
  * @package Netzmacht\Contao\Toolkit\Dca
  */
-class Manager
+final class Manager
 {
     /**
      * Data definition cache.
@@ -33,7 +34,7 @@ class Manager
      *
      * @var Formatter[]
      */
-    private $formatters = array();
+    private $formatter = array();
 
     /**
      * The data definition array loader.
@@ -69,27 +70,14 @@ class Manager
      *
      * @return Definition
      *
-     * @deprecated Use getDefinition().
-     */
-    public function get($name, $noCache = false)
-    {
-        return $this->getDefinition($name, $noCache);
-    }
-
-    /**
-     * Get a data container definition.
-     *
-     * @param string $name    The data definition name.
-     * @param bool   $noCache If true not the cached version is loaded.
-     *
-     * @return Definition
-     *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function getDefinition($name, $noCache = false)
     {
         if ($noCache) {
             $this->loader->loadDataContainer($name, $noCache);
+
+            $this->assertValidDca($name);
 
             return new Definition($name, $GLOBALS['TL_DCA'][$name]);
         }
@@ -113,17 +101,32 @@ class Manager
     public function getFormatter($definition)
     {
         if (!$definition instanceof Definition) {
-            if (isset($this->formatters[$definition])) {
-                return $this->formatters[$definition];
+            if (isset($this->formatter[$definition])) {
+                return $this->formatter[$definition];
             }
 
             $definition = $this->getDefinition($definition);
         }
 
-        if (!isset($this->formatters[$definition->getName()])) {
-            $this->formatters[$definition->getName()] = $this->formatterFactory->createFormatterFor($definition);
+        if (!isset($this->formatter[$definition->getName()])) {
+            $this->formatter[$definition->getName()] = $this->formatterFactory->createFormatterFor($definition);
         }
 
-        return $this->formatters[$definition->getName()];
+        return $this->formatter[$definition->getName()];
+    }
+
+    /**
+     * Assert that an valid dca is loaded.
+     *
+     * @param string $name Dca name.
+     *
+     * @return void
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
+     */
+    protected function assertValidDca($name)
+    {
+        Assert::keyExists($GLOBALS['TL_DCA'], $name);
+        Assert::isArray($GLOBALS['TL_DCA'][$name]);
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @package    dev
+ * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015 netzmacht creative David Molineus
+ * @copyright  2015-2016 netzmacht David Molineus
  * @license    LGPL 3.0
  * @filesource
  *
@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
  *
  * @package Netzmacht\Contao\Toolkit\Data\Alias\Filter
  */
-class SuffixFilter extends AbstractFilter
+final class SuffixFilter extends AbstractFilter
 {
     /**
      * The internal index counter.
@@ -31,6 +31,13 @@ class SuffixFilter extends AbstractFilter
      * @var int
      */
     private $start;
+
+    /**
+     * Temporary value.
+     *
+     * @var string
+     */
+    private $value;
 
     /**
      * AbstractFilter constructor.
@@ -51,6 +58,7 @@ class SuffixFilter extends AbstractFilter
     public function initialize()
     {
         $this->index = $this->start;
+        $this->value = null;
     }
 
     /**
@@ -66,6 +74,10 @@ class SuffixFilter extends AbstractFilter
      */
     public function apply($model, $value, $separator)
     {
-        return $this->combine($value, $this->index++, $separator);
+        if ($this->value === null) {
+            $this->value = $value;
+        }
+
+        return $this->combine($this->value, $this->index++, $separator);
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @package    dev
+ * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015 netzmacht creative David Molineus
+ * @copyright  2015-2016 netzmacht David Molineus
  * @license    LGPL 3.0
  * @filesource
  *
@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
-class FileUuidFormatter implements ValueFormatter
+final class FileUuidFormatter implements ValueFormatter
 {
     /**
      * {@inheritDoc}
@@ -36,14 +36,14 @@ class FileUuidFormatter implements ValueFormatter
                 array_filter(
                     array_map(
                         function ($value) {
-                            return $value ? \String::binToUuid($value) : '';
+                            return $value ? \StringUtil::binToUuid($value) : '';
                         },
                         $value
                     )
                 )
             );
         } else {
-            $value = $value ? \String::binToUuid($value) : '';
+            $value = $value ? \StringUtil::binToUuid($value) : '';
         }
 
         return $value;
