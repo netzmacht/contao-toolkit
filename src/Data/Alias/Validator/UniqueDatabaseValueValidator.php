@@ -57,13 +57,9 @@ final class UniqueDatabaseValueValidator implements Validator
     private $allowEmptyAlias;
 
     /**
-     * Data fields.
+     * Data fields being used as unique fields.
      *
      * @var array
-     */
-    private $dataFields;
-    /**
-     * @var
      */
     private $uniqueKeyFields;
 
