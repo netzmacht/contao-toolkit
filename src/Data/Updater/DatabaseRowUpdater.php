@@ -191,12 +191,15 @@ final class DatabaseRowUpdater implements Updater
     {
         // Filter empty values which should not be saved.
         foreach ($data as $column => $value) {
-            if ($value == '') {
-                if ($definition->get(['fields', $column, 'eval', 'alwaysSave'], false)
-                    && $definition->get(['fields', $column, 'eval', 'doNotSaveEmpty'], false)
-                ) {
-                    unset ($data[$column]);
-                }
+            if ($value != '') {
+                continue;
+            }
+
+            $alwaysSave     = $definition->get(['fields', $column, 'eval', 'alwaysSave'], false);
+            $doNotSaveEmpty = $definition->get(['fields', $column, 'eval', 'doNotSaveEmpty'], false);
+
+            if (!$alwaysSave && $doNotSaveEmpty) {
+                unset ($data[$column]);
             }
         }
 
