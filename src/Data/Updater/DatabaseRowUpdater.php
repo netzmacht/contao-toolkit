@@ -204,7 +204,7 @@ final class DatabaseRowUpdater implements Updater
         }
 
         // Add tstamp if field exists.
-        if (empty($data['tstamp'] && $this->database->fieldExists('tstamp', $definition->getName()))) {
+        if (empty($data['tstamp']) && $this->database->fieldExists('tstamp', $definition->getName())) {
             $data['tstamp'] = time();
         }
 
