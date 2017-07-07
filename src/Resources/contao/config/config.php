@@ -9,4 +9,4 @@
  *
  */
 
-$GLOBALS['TL_HOOKS']['initializeDependencyContainer'][] = ['Netzmacht\Contao\Toolkit\Boot', 'initialize'];
+$GLOBALS['TL_HOOKS']['initializeSystem'][] = ['netzmacht.toolkit.listeners.hook_listener', 'onInitializeSystem'];

@@ -1,0 +1,5 @@
+services:
+  netzmacht.toolkit.listeners.hook_listener:
+    class: Netzmacht\Contao\Toolkit\Listener\HookListener
+    arguments:
+      - "@event_dispatcher"
