@@ -6,7 +6,7 @@
         "dev",
         "tools"
     ],
-    "type": "contao-module",
+    "type": "contao-bundle",
     "license": "LGPL-3.0+",
     "authors": [
         {
@@ -22,17 +22,14 @@
         "source": "https://github.com/netzmacht/contao-toolkit"
     },
     "require": {
-        "php": ">=5.4",
-        "contao/core": "~3.5.1",
-        "contao-community-alliance/dependency-container": "~1.6",
-        "contao-community-alliance/event-dispatcher": "~1",
-        "contao-community-alliance/composer-plugin": "~2",
-        "contao-community-alliance/translator": "~2.0",
-        "contao-community-alliance/events-contao-bindings": "~3",
+        "php": ">=5.6",
+        "contao/core-bundle": "~4.4",
+        "contao-community-alliance/composer-plugin": "~3.0"
         "container-interop/container-interop": "^1.1",
         "webmozart/assert": "^1.1"
     },
     "require-dev": {
+        "contao/manager-plugin": "^2.0",
         "phpspec/phpspec": "~2.1",
         "henrikbjorn/phpspec-code-coverage": "~0.2",
         "netzmacht/contao-build-tools": "~1.1"
@@ -53,14 +50,10 @@
     "prefer-stable": true,
     "minimum-stability": "dev",
     "extra": {
-        "contao": {
-            "sources":{
-                "module": "system/modules/toolkit"
-            }
-        },
+        "contao-manager-plugin": "Netzmacht\\Contao\\Toolkit\\ContaoManager\\Plugin",
         "branch-alias": {
             "dev-master": "2.0.x-dev",
-            "dev-develop": "2.1.x-dev",
+            "dev-develop": "3.0.x-dev",
             "dev-support/1.0.x": "1.0.x-dev"
         }
     }
