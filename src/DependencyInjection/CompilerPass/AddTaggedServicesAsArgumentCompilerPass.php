@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @package Netzmacht\Contao\Toolkit\DependencyInjection\CompilerPass
  */
-class ComponentFactoryCompilePass implements CompilerPassInterface
+class AddTaggedServicesAsArgumentCompilerPass implements CompilerPassInterface
 {
     /**
      * Service name which should be adjusted.
@@ -65,9 +65,9 @@ class ComponentFactoryCompilePass implements CompilerPassInterface
             return;
         }
 
-        $definition = $container->findDefinition($this->serviceName);
+        $definition       = $container->findDefinition($this->serviceName);
         $taggedServiceIds = $container->findTaggedServiceIds($this->tagName);
-        $services         = (array) $definition->getArgument($this->argumentIndex);
+        $services         = (array)$definition->getArgument($this->argumentIndex);
 
         foreach (array_keys($taggedServiceIds) as $serviceIds) {
             $services[] = new Reference($serviceIds);
