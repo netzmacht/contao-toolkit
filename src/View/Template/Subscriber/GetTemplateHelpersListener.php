@@ -10,8 +10,8 @@
 
 namespace Netzmacht\Contao\Toolkit\View\Template\Subscriber;
 
-use Interop\Container\ContainerInterface as Container;
-use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
+use ContaoCommunityAlliance\Translator\TranslatorInterface as Translator;
+use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
 use Netzmacht\Contao\Toolkit\View\Template\Event\GetTemplateHelpersEvent;
 
 /**
@@ -22,20 +22,29 @@ use Netzmacht\Contao\Toolkit\View\Template\Event\GetTemplateHelpersEvent;
 class GetTemplateHelpersListener
 {
     /**
-     * Service container.
+     * Assets manager.
      *
-     * @var Container
+     * @var AssetsManager
      */
-    private $container;
+    private $assetsManager;
+
+    /**
+     * Translator.
+     *
+     * @var Translator
+     */
+    private $translator;
 
     /**
      * GetTemplateHelpersListener constructor.
      *
-     * @param Container $container Service container.
+     * @param AssetsManager $assetsManager Assets manager.
+     * @param Translator    $translator    Translator.
      */
-    public function __construct(Container $container)
+    public function __construct(AssetsManager $assetsManager, Translator $translator)
     {
-        $this->container = $container;
+        $this->assetsManager = $assetsManager;
+        $this->translator    = $translator;
     }
 
     /**
@@ -48,7 +57,7 @@ class GetTemplateHelpersListener
     public function handle(GetTemplateHelpersEvent $event)
     {
         $event
-            ->addHelper('assets', $this->container->get(Services::ASSETS_MANAGER))
-            ->addHelper('translator', $this->container->get(Services::TRANSLATOR));
+            ->addHelper('assets', $this->assetsManager)
+            ->addHelper('translator', $this->translator);
     }
 }
