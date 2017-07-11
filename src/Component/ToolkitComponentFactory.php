@@ -10,10 +10,8 @@
 
 namespace Netzmacht\Contao\Toolkit\Component;
 
-use ArrayObject;
-use Database\Result;
-use Interop\Container\ContainerInterface as Container;
-use Model;
+use Contao\Database\Result;
+use Contao\Model;
 use Netzmacht\Contao\Toolkit\Component\Exception\ComponentNotFound;
 
 /**
@@ -26,27 +24,32 @@ final class ToolkitComponentFactory implements ComponentFactory
     /**
      * List of Component factories.
      *
-     * @var ArrayObject|callable[]
+     * @var ComponentFactory[]
      */
     private $factories;
 
     /**
-     * Service container.
-     *
-     * @var Container
-     */
-    private $container;
-
-    /**
      * ComponentFactory constructor.
      *
-     * @param ArrayObject|callable[] $factories Component factories.
-     * @param Container              $container Service container.
+     * @param ComponentFactory[] $factories Component factories.
      */
-    public function __construct(ArrayObject $factories, Container $container)
+    public function __construct($factories)
     {
         $this->factories = $factories;
-        $this->container = $container;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function supports($model)
+    {
+        foreach ($this->factories as $factory) {
+            if ($factory->supports($model)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -60,15 +63,12 @@ final class ToolkitComponentFactory implements ComponentFactory
      */
     public function create($model, $column)
     {
-        if (!isset($this->factories[$model->type])) {
-            throw ComponentNotFound::forModel($model);
+        foreach ($this->factories as $factory) {
+            if ($factory->supports($model)) {
+                return $factory->create($model, $column);
+            }
         }
 
-        $component = call_user_func($this->factories[$model->type], $model, $column, $this->container);
-        if (!$component instanceof Component) {
-            throw ComponentNotFound::forModel($model);
-        }
-
-        return $component;
+        throw ComponentNotFound::forModel($model);
     }
 }

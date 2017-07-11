@@ -10,7 +10,10 @@
 
 namespace Netzmacht\Contao\Toolkit\Component\Exception;
 
-use Database\Result;
+use Contao\ContentModel;
+use Contao\Database\Result;
+use Contao\Model;
+use Contao\ModuleModel;
 use Netzmacht\Contao\Toolkit\Exception;
 
 /**
@@ -23,7 +26,7 @@ class ComponentNotFound extends Exception
     /**
      * Create exception for the given model.
      *
-     * @param \Model|Result $model Component model.
+     * @param Model|Result $model Component model.
      *
      * @return static
      */
@@ -42,17 +45,17 @@ class ComponentNotFound extends Exception
     /**
      * Describe the model.
      *
-     * @param \Model $model Component model.
+     * @param Model $model Component model.
      *
      * @return string
      */
     private static function describeModel($model)
     {
-        if ($model instanceof \ContentModel) {
+        if ($model instanceof ContentModel) {
             return 'Content element';
         }
 
-        if ($model instanceof \ModuleModel) {
+        if ($model instanceof ModuleModel) {
             return 'Frontend module';
         }
 

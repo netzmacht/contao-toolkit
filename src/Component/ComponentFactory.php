@@ -10,8 +10,8 @@
 
 namespace Netzmacht\Contao\Toolkit\Component;
 
-use Database\Result;
-use Model;
+use Contao\Database\Result;
+use Contao\Model;
 use Netzmacht\Contao\Toolkit\Component\Exception\ComponentNotFound;
 
 /**
@@ -21,6 +21,15 @@ use Netzmacht\Contao\Toolkit\Component\Exception\ComponentNotFound;
  */
 interface ComponentFactory
 {
+    /**
+     * Check if factory supports the component-
+     *
+     * @param Model|Result $model  Component model.
+     *
+     * @return bool
+     */
+    public function supports($model);
+
     /**
      * Create a new component.
      *
