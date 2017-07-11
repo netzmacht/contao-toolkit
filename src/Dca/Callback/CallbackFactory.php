@@ -10,7 +10,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Callback;
 
-use Controller;
+use Contao\Controller;
 use Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Button\StateButtonCallback;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Save\GenerateAliasCallback;
@@ -18,7 +18,6 @@ use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\ColorPicker;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\FilePicker;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\PagePicker;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\PopupWizard;
-use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerAware;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
 
 /**
@@ -28,8 +27,6 @@ use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
  */
 final class CallbackFactory
 {
-    use ContainerAware;
-
     /**
      * Create templates callback.
      *
@@ -63,7 +60,7 @@ final class CallbackFactory
      */
     public static function stateButton($dataContainerName, $column, $disabledIcon = null, $inverse = false)
     {
-        $container = static::getContainer();
+        $container = Controller::getContainer();
 
         return new StateButtonCallback(
             $container->get(Services::INPUT),
@@ -86,7 +83,7 @@ final class CallbackFactory
     public static function service($serviceName, $methodName)
     {
         return function () use ($serviceName, $methodName) {
-            $service = self::getContainer()->get($serviceName);
+            $service = Controller::getContainer()->get($serviceName);
 
             return call_user_func_array([$service, $methodName], func_get_args());
         };
@@ -102,7 +99,7 @@ final class CallbackFactory
      */
     public static function colorPicker($replaceHex = false, $template = null)
     {
-        $container = static::getContainer();
+        $container = Controller::getContainer();
 
         return new ColorPicker(
             $container->get(Services::TEMPLATE_FACTORY),
@@ -123,7 +120,7 @@ final class CallbackFactory
      */
     public static function filePicker($template = null)
     {
-        $container = static::getContainer();
+        $container = Controller::getContainer();
 
         return new FilePicker(
             $container->get(Services::TEMPLATE_FACTORY),
@@ -142,7 +139,7 @@ final class CallbackFactory
      */
     public static function pagePicker($template = null)
     {
-        $container = static::getContainer();
+        $container = Controller::getContainer();
 
         return new PagePicker(
             $container->get(Services::TEMPLATE_FACTORY),
@@ -174,7 +171,7 @@ final class CallbackFactory
         $linkPattern = null,
         $template = null
     ) {
-        $container = static::getContainer();
+        $container = Controller::getContainer();
 
         return new PopupWizard(
             $container->get(Services::TEMPLATE_FACTORY),
@@ -202,7 +199,7 @@ final class CallbackFactory
      */
     public static function aliasGenerator($dataContainerName, $aliasField, array $fields = null, $factoryService = null)
     {
-        $container      = static::getContainer();
+        $container      = Controller::getContainer();
         $factoryService = $factoryService ?: Services::DEFAULT_ALIAS_GENERATOR_FACTORY;
         $factory        = $container->get($factoryService);
         $fields         = $fields ?: ['id'];
