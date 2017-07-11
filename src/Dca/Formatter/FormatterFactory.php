@@ -33,22 +33,13 @@ final class FormatterFactory
     private $eventDispatcher;
 
     /**
-     * Service container.
-     *
-     * @var Container
-     */
-    private $serviceContainer;
-
-    /**
      * FormatterFactory constructor.
      *
-     * @param Container       $serviceContainer Event dispatcher.
-     * @param EventDispatcher $eventDispatcher  Service container.
+     * @param EventDispatcher $eventDispatcher Event dispatcher.
      */
-    public function __construct(Container $serviceContainer, EventDispatcher $eventDispatcher)
+    public function __construct(EventDispatcher$eventDispatcher)
     {
-        $this->serviceContainer = $serviceContainer;
-        $this->eventDispatcher  = $eventDispatcher;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
