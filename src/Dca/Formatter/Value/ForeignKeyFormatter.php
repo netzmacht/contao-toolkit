@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Database;
+use Doctrine\DBAL\Connection;
 
 /**
  * ForeignKeyFormatter formats fields which defines a foreign key.
@@ -23,18 +23,18 @@ final class ForeignKeyFormatter implements ValueFormatter
     /**
      * Database connection.
      *
-     * @var Database
+     * @var Connection
      */
-    private $database;
+    private $connection;
 
     /**
      * ForeignKeyFormatter constructor.
      *
-     * @param Database $database Database connection.
+     * @param Connection $database Database connection.
      */
-    public function __construct(Database $database)
+    public function __construct(Connection $database)
     {
-        $this->database = $database;
+        $this->connection = $database;
     }
 
     /**
@@ -53,11 +53,12 @@ final class ForeignKeyFormatter implements ValueFormatter
         $foreignKey = explode('.', $fieldDefinition['foreignKey'], 2);
 
         if (count($foreignKey) == 2) {
-            $query  = sprintf('SELECT %s AS value FROM %s WHERE id=?', $foreignKey[1], $foreignKey[0]);
-            $result = $this->database->prepare($query)->execute($value);
+            $query     = sprintf('SELECT %s AS value FROM %s WHERE id=?', $foreignKey[1], $foreignKey[0]);
+            $statement = $this->connection->prepare($query);
+            $statement->bindValue(1, $value);
 
-            if ($result->numRows) {
-                $value = $result->value;
+            if ($statement->execute() && $statement->rowCount()) {
+                $value = $statement->fetchColumn('value');
             }
         }
 
