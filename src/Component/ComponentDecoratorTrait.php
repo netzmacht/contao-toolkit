@@ -10,8 +10,6 @@
 
 namespace Netzmacht\Contao\Toolkit\Component;
 
-use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerAware;
-
 /**
  * The ComponentDecorator trait is designed to provide a decorator for content elements and frontend modules.
  *
@@ -19,8 +17,6 @@ use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerAware;
  */
 trait ComponentDecoratorTrait
 {
-    use ContainerAware;
-
     /**
      * Inner component.
      *

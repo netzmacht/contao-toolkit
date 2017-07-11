@@ -10,15 +10,15 @@
 
 namespace Netzmacht\Contao\Toolkit\Component\ContentElement;
 
+use Contao\ContentElement;
 use Netzmacht\Contao\Toolkit\Component\ComponentDecoratorTrait;
-use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
 
 /**
  * Class ContentElementDecorator.
  *
  * @package Netzmacht\Contao\Toolkit\Component\ContentElement
  */
-final class ContentElementDecorator extends \ContentElement
+final class ContentElementDecorator extends ContentElement
 {
     use ComponentDecoratorTrait;
 
@@ -36,6 +36,6 @@ final class ContentElementDecorator extends \ContentElement
      */
     protected function getFactory()
     {
-        return $this->getContainer()->get(Services::CONTENT_ELEMENT_FACTORY);
+        return $this->getContainer()->get('netzmacht.toolkit.component.content_element_factory');
     }
 }

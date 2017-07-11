@@ -13,7 +13,12 @@ services:
   netzmacht.toolkit.component.content_element_factory:
     class: Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory
     arguments:
-      -
+      - []
+
+  netzmacht.toolkit.component.frontend_module_factory:
+      class: Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory
+      arguments:
+        - []
 
   netzmacht.toolkit.filesystem:
     class: Contao\Files
