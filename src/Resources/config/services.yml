@@ -24,7 +24,7 @@ services:
     class: Contao\Files
     factory: ['Contao\Files', 'getInstance']
 
-  netzmacht.tookit.encryption:
+  netzmacht.toolkit.contao_encryption:
     class: Contao\Encryption
     factory: ['Contao\Encryption', 'getInstance']
 

@@ -11,3 +11,11 @@ services:
       - '@cca.translator'
     tags:
       - { name: 'kernel.event_listener', event: 'netzmacht.toolkit.view.get-template-helpers'}
+
+  netzmacht.toolkit.listeners.create-formatter-subscriber:
+    class: Netzmacht\Contao\Toolkit\Dca\Formatter\Subscriber\CreateFormatterSubscriber
+    arguments:
+      - []
+      - []
+      - []
+      - '@netzmacht.toolkit.dca.formatter.options-formatter'
