@@ -69,7 +69,7 @@ final class FilterBasedAliasGenerator implements AliasGenerator
      */
     public function __construct($filters, Validator $validator, $tableName, $aliasField = 'alias', $separator = '-')
     {
-        Assert::allIsInstanceOf($filters, 'Netzmacht\Contao\Toolkit\Data\Alias\Filter');
+        Assert::allIsInstanceOf($filters, Filter::class);
 
         $this->validator  = $validator;
         $this->aliasField = $aliasField;
