@@ -11,8 +11,8 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
-use Database\Result;
-use Model;
+use Contao\Database\Result;
+use Contao\Model;
 
 /**
  * Interface Validator describes an alias validator.

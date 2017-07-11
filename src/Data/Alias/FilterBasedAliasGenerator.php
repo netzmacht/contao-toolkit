@@ -11,8 +11,8 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
-use Database;
-use Model;
+use Contao\Database;
+use Contao\Model;
 use Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException;
 use Webmozart\Assert\Assert;
 
