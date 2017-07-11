@@ -1,0 +1,22 @@
+services:
+  netzmacht.toolkit.filesystem:
+    class: Contao\Files
+    factory: ['Contao\Files', 'getInstance']
+
+  netzmacht.tookit.encryption:
+    class: Contao\Encryption
+    factory: ['Contao\Encryption', 'getInstance']
+
+  netzmacht.toolkit.template_factory:
+    class: Netzmacht\Contao\Toolkit\View\Template\ToolkitTemplateFactory
+    arguments:
+      - "@event_dispatcher"
+
+  netzmacht.toolkit.globals_assets_manager_factory:
+    class: Netzmacht\Contao\Toolkit\View\Assets\GlobalsAssetsManagerFactory
+    arguments:
+      - ['@kernel']
+
+  netzmacht.toolkit.assets_manager:
+    class: Netzmacht\Contao\Toolkit\View\Assets\GlobalsAssetsManager
+    factory: ['@netzmacht.toolkit.globals_assets_manager_factory', 'create']
