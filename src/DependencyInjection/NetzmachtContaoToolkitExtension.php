@@ -32,6 +32,7 @@ class NetzmachtContaoToolkitExtension extends Extension
             new FileLocator(__DIR__.'/../Resources/config')
         );
 
+        $loader->load('formatter.yml');
         $loader->load('listeners.yml');
         $loader->load('services.yml');
     }

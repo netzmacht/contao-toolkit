@@ -11,7 +11,7 @@
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Subscriber;
 
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Event\CreateFormatterEvent;
-use Interop\Container\ContainerInterface as Container;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
 
 /**
  * Class CreateFormatterSubscriber handles the create formatter event.
@@ -21,20 +21,47 @@ use Interop\Container\ContainerInterface as Container;
 final class CreateFormatterSubscriber
 {
     /**
-     * Service Container.
+     * Formatter.
      *
-     * @var Container
+     * @var array|ValueFormatter[]
      */
-    private $container;
+    private $formatter;
+
+    /**
+     * Pre filters.
+     *
+     * @var array|ValueFormatter[]
+     */
+    private $preFilters;
+
+    /**
+     * Post filters.
+     *
+     * @var array|ValueFormatter[]
+     */
+    private $postFilters;
+
+    /**
+     * Value formatter.
+     *
+     * @var ValueFormatter
+     */
+    private $optionsFormatter;
 
     /**
      * CreateFormatterSubscriber constructor.
      *
-     * @param Container $container Service container.
+     * @param array|ValueFormatter[] $formatter        Value formatter.
+     * @param array|ValueFormatter[] $preFilters       Pre filters.
+     * @param array|ValueFormatter[] $postFilters      Post filters.
+     * @param ValueFormatter         $optionsFormatter Options formatter.
      */
-    public function __construct(Container $container)
+    public function __construct($formatter, $preFilters, $postFilters, $optionsFormatter)
     {
-        $this->container = $container;
+        $this->formatter        = $formatter;
+        $this->preFilters       = $preFilters;
+        $this->postFilters      = $postFilters;
+        $this->optionsFormatter = $optionsFormatter;
     }
 
     /**
@@ -46,60 +73,12 @@ final class CreateFormatterSubscriber
      */
     public function handle(CreateFormatterEvent $event)
     {
-        $formatter   = $this->createFormatter();
-        $preFilters  = $this->createPreFilters();
-        $postFilters = $this->createPostFilters();
-
-        $event->addFormatter($formatter);
-        $event->addPreFilters($preFilters);
-        $event->addPostFilters($postFilters);
+        $event->addFormatter($this->formatter);
+        $event->addPreFilters($this->preFilters);
+        $event->addPostFilters($this->postFilters);
 
         if (!$event->getOptionsFormatter()) {
-            $event->setOptionsFormatter($this->container->get('toolkit.dca.formatter.options'));
+            $event->setOptionsFormatter($this->optionsFormatter);
         }
-    }
-
-    /**
-     * Create all default formatter.
-     *
-     * @return array
-     */
-    private function createFormatter()
-    {
-        return [
-            $this->container->get('toolkit.dca.formatter.foreign-key'),
-            $this->container->get('toolkit.dca.formatter.file-uuid'),
-            $this->container->get('toolkit.dca.formatter.date'),
-            $this->container->get('toolkit.dca.formatter.yes-no'),
-            $this->container->get('toolkit.dca.formatter.html'),
-            $this->container->get('toolkit.dca.formatter.reference'),
-            $this->container->get('toolkit.dca.formatter.options'),
-        ];
-    }
-
-    /**
-     * Create all default pre filters.
-     *
-     * @return array
-     */
-    private function createPreFilters()
-    {
-        return [
-            $this->container->get('toolkit.dca.formatter.hidden'),
-            $this->container->get('toolkit.dca.formatter.deserialize'),
-            $this->container->get('toolkit.dca.formatter.encrypted'),
-        ];
-    }
-
-    /**
-     * Create all default post filters.
-     *
-     * @return array
-     */
-    private function createPostFilters()
-    {
-        return [
-            $this->container->get('toolkit.dca.formatter.flatten'),
-        ];
     }
 }

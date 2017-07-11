@@ -41,5 +41,28 @@ class NetzmachtContaoToolkitBundle extends Bundle
                 'netzmacht.toolkit.component.frontend_module_factory'
             )
         );
+
+        $container->addCompilerPass(
+            new AddTaggedServicesAsArgumentCompilerPass(
+                'netzmacht.toolkit.listeners.create-formatter-subscriber',
+                'netzmacht.toolkit.dca.formatter'
+            )
+        );
+
+        $container->addCompilerPass(
+            new AddTaggedServicesAsArgumentCompilerPass(
+                'netzmacht.toolkit.listeners.create-formatter-subscriber',
+                'netzmacht.toolkit.dca.pre-filter',
+                1
+            )
+        );
+
+        $container->addCompilerPass(
+            new AddTaggedServicesAsArgumentCompilerPass(
+                'netzmacht.toolkit.listeners.create-formatter-subscriber',
+                'netzmacht.toolkit.dca.formatter.post-filter',
+                2
+            )
+        );
     }
 }
