@@ -11,12 +11,13 @@
 
 namespace Netzmacht\Contao\Toolkit\View\Template;
 
+use Contao\FrontendTemplate as ContaoFrontendTemplate;
 use Netzmacht\Contao\Toolkit\View\Template;
 
 /**
  * FrontendTemplate with extended features.
  */
-final class FrontendTemplate extends \Contao\FrontendTemplate implements Template
+final class FrontendTemplate extends ContaoFrontendTemplate implements Template
 {
     use TemplateTrait;
 

@@ -11,7 +11,8 @@
 
 namespace Netzmacht\Contao\Toolkit\InsertTag;
 
-use Controller;
+use Contao\Controller;
+use Contao\Database;
 
 /**
  * Class InsertTags allows to replace insert tags.
@@ -30,7 +31,7 @@ final class InsertTags extends Controller
     public function __construct()
     {
         parent::__construct();
-        \Database::getInstance();
+        Database::getInstance();
     }
 
     /**
