@@ -11,6 +11,8 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
+use Contao\Encryption;
+
 /**
  * EncryptedFormatter decrypts encrypted values.
  *
@@ -21,16 +23,16 @@ final class EncryptedFormatter implements ValueFormatter
     /**
      * Encryption instance.
      *
-     * @var \Encryption
+     * @var Encryption
      */
     private $encryption;
 
     /**
      * EncryptedFormatter constructor.
      *
-     * @param \Encryption $encryption Encryption service.
+     * @param Encryption $encryption Encryption service.
      */
-    public function __construct(\Encryption $encryption)
+    public function __construct(Encryption $encryption)
     {
         $this->encryption = $encryption;
     }

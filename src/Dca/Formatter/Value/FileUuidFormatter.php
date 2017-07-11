@@ -11,6 +11,8 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
+use Contao\StringUtil;
+
 /**
  * FileUuidFormatter converts binary file uuids to string uuids.
  *
@@ -36,14 +38,14 @@ final class FileUuidFormatter implements ValueFormatter
                 array_filter(
                     array_map(
                         function ($value) {
-                            return $value ? \StringUtil::binToUuid($value) : '';
+                            return $value ? StringUtil::binToUuid($value) : '';
                         },
                         $value
                     )
                 )
             );
         } else {
-            $value = $value ? \StringUtil::binToUuid($value) : '';
+            $value = $value ? StringUtil::binToUuid($value) : '';
         }
 
         return $value;

@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Config;
+use Contao\Config;
 
 /**
  * DateFormatter format date values.

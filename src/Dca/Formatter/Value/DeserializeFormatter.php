@@ -11,6 +11,8 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
+use Contao\StringUtil;
+
 /**
  * DeserializeFormatter deserialize any value.
  *
@@ -31,6 +33,6 @@ final class DeserializeFormatter implements ValueFormatter
      */
     public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
-        return deserialize($value);
+        return StringUtil::deserialize($value);
     }
 }
