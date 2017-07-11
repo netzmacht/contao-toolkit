@@ -11,14 +11,14 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Button;
 
-use Backend;
-use DataContainer;
-use Controller;
-use Image;
-use Input;
+use Contao\Backend;
+use Contao\DataContainer;
+use Contao\Controller;
+use Contao\Image;
+use Contao\Input;
+use Contao\System;
 use Netzmacht\Contao\Toolkit\Data\Updater\Updater;
 use Netzmacht\Contao\Toolkit\Data\Exception\AccessDenied;
-use System;
 
 /**
  * StateButtonCallback creates the state toggle button known in Contao.

@@ -11,6 +11,8 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca;
 
+use Contao\Controller;
+
 /**
  * Class Loader loads the data container.
  *
@@ -18,7 +20,7 @@ namespace Netzmacht\Contao\Toolkit\Dca;
  *
  * @package Netzmacht\Contao\DevTools\Dca
  */
-final class DcaLoader extends \Controller
+final class DcaLoader extends Controller
 {
     /**
      * Construct.
