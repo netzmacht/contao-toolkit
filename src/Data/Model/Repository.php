@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Model;
 
-use Model;
+use Contao\Model;
 
 /**
  * Interface Repository describes a very base repository.

@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Model;
 
-use Model;
+use Contao\Model;
 use Webmozart\Assert\Assert;
 
 /**

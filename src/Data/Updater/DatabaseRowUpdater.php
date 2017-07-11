@@ -11,14 +11,14 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Updater;
 
-use BackendUser;
-use Database;
+use Contao\BackendUser;
+use Contao\Database;
+use Contao\User;
+use Contao\Versions;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Data\Exception\AccessDenied;
-use User;
-use Versions;
 
 /**
  * Class DatabaseRowUpdater.
