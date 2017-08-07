@@ -11,9 +11,9 @@
 namespace Netzmacht\Contao\Toolkit\Component\Module;
 
 use ContaoCommunityAlliance\Translator\TranslatorInterface as Translator;
-use Database\Result;
-use Model;
-use Model\Collection;
+use Contao\Database\Result;
+use Contao\Model;
+use Contao\Model\Collection;
 use Netzmacht\Contao\Toolkit\Component\AbstractComponent;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 

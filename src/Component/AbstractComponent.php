@@ -10,10 +10,10 @@
 
 namespace Netzmacht\Contao\Toolkit\Component;
 
+use Contao\Database\Result;
+use Contao\Model;
+use Contao\Model\Collection;
 use InvalidArgumentException;
-use Database\Result;
-use Model;
-use Model\Collection;
 use Netzmacht\Contao\Toolkit\View\Template;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 use Webmozart\Assert\Assert;
