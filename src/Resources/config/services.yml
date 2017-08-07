@@ -38,7 +38,6 @@ services:
     arguments:
       - '@cca.legacy_dic.contao_database_connection'
 
-
   netzmacht.toolkit.dca.formatter.factory:
     class: Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory
     arguments:
@@ -52,6 +51,11 @@ services:
 
   netzmacht.toolkit.dca.loader:
     class: Netzmacht\Contao\Toolkit\Dca\DcaLoader
+
+  netzmacht.toolkit.insert_tag.replacer:
+    class: Netzmacht\Contao\Toolkit\InsertTag\IntegratedReplacer
+    arguments:
+      - ['@contao.controller.insert_tags']
 
   netzmacht.toolkit.template_factory:
     class: Netzmacht\Contao\Toolkit\View\Template\ToolkitTemplateFactory

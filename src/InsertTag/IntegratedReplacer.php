@@ -11,6 +11,8 @@
 
 namespace Netzmacht\Contao\Toolkit\InsertTag;
 
+use Contao\InsertTags;
+
 /**
  * IntegratedReplacer is the insert tag replacer implementation which integrates into the Contao replacement way.
  *
@@ -28,17 +30,17 @@ final class IntegratedReplacer implements Replacer
     /**
      * Insert tags replacer.
      *
-     * @var \Contao\InsertTags|InsertTags
+     * @var InsertTags
      */
     private $insertTags;
 
     /**
      * Replacer constructor.
      *
-     * @param \Contao\InsertTags|InsertTags $insertTags The insert tag replacer.
-     * @param array|Parser[]                $parsers    Insert tag parsers.
+     * @param InsertTags     $insertTags The insert tag replacer.
+     * @param array|Parser[] $parsers Insert tag parsers.
      */
-    public function __construct($insertTags, array $parsers = array())
+    public function __construct(InsertTags $insertTags, array $parsers = array())
     {
         $this->parsers    = $parsers;
         $this->insertTags = $insertTags;
