@@ -11,10 +11,10 @@
 namespace Netzmacht\Contao\Toolkit\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
-use Contao\CoreBundle\HttpKernel\Bundle\ContaoModuleBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
+use ContaoCommunityAlliance\Translator\CcaTranslatorBundle;
 use Netzmacht\Contao\Toolkit\NetzmachtContaoToolkitBundle;
 
 /**
@@ -32,7 +32,7 @@ class Plugin implements BundlePluginInterface
         return [
             BundleConfig::create(NetzmachtContaoToolkitBundle::class)
                 ->setReplace(['toolkit'])
-                ->setLoadAfter([ContaoCoreBundle::class, ContaoModuleBundle::class])
+                ->setLoadAfter([ContaoCoreBundle::class, CcaTranslatorBundle::class])
         ];
     }
 }
