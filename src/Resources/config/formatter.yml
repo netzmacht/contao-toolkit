@@ -3,6 +3,8 @@ services:
     class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\OptionsFormatter
     arguments:
       - '@netzmacht.toolkit.callback_invoker'
+    tags:
+      - { name: 'netzmacht.toolkit.dca.formatter'}
 
   netzmacht.toolkit.dca.formatter.foreign_key:
     class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ForeignKeyFormatter

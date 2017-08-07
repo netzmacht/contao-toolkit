@@ -16,18 +16,42 @@ services:
       - []
 
   netzmacht.toolkit.component.frontend_module_factory:
-      class: Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory
-      arguments:
-        - []
+    class: Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory
+    arguments:
+      - []
 
   netzmacht.toolkit.contao_encryption:
     class: Contao\Encryption
     factory: ['@netzmacht.toolkit.contao_services_factory', 'createEncryptionService']
 
   netzmacht.toolkit.contao_services_factory:
-      class: Netzmacht\Contao\Toolkit\DependencyInjection\ContaoServicesFactory
-      arguments:
-        - '@contao.framework'
+    class: Netzmacht\Contao\Toolkit\DependencyInjection\ContaoServicesFactory
+    arguments:
+      - '@contao.framework'
+
+  netzmacht.toolkit.data.alias_generator.factory.default:
+    class: Netzmacht\Contao\Toolkit\Data\Alias\FilterBasedAliasGenerator
+    factory: []
+
+  netzmacht.toolkit.data.alias_generator.factory.default_factory:
+    class: Netzmacht\Contao\Toolkit\Data\Alias\DefaultAliasGeneratorFactory
+    arguments:
+      - '@cca.legacy_dic.contao_database_connection'
+
+
+  netzmacht.toolkit.dca.formatter.factory:
+    class: Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory
+    arguments:
+      - '@event_dispatcher'
+
+  netzmacht.toolkit.dca.manager:
+    class: Netzmacht\Contao\Toolkit\Dca\Manager
+    arguments:
+      - '@netzmacht.toolkit.dca.loader'
+      - '@netzmacht.toolkit.dca.formatter.factory'
+
+  netzmacht.toolkit.dca.loader:
+    class: Netzmacht\Contao\Toolkit\Dca\DcaLoader
 
   netzmacht.toolkit.template_factory:
     class: Netzmacht\Contao\Toolkit\View\Template\ToolkitTemplateFactory
