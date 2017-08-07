@@ -1,21 +1,18 @@
 services:
-  netzmacht.toolkit.listeners.hook_listener:
-    class: Netzmacht\Contao\Toolkit\Listener\HookListener
-    arguments:
-      - '@event_dispatcher'
-
   netzmacht.toolkit.listeners.get_template_helpers:
     class: Netzmacht\Contao\Toolkit\View\Template\Subscriber\GetTemplateHelpersListener
     arguments:
       - '@netzmacht.toolkit.assets_manager'
       - '@cca.translator'
     tags:
-      - { name: 'kernel.event_listener', event: 'netzmacht.toolkit.view.get-template-helpers'}
+      - { name: 'kernel.event_listener', event: 'netzmacht.toolkit.view.get_template_helpers'}
 
-  netzmacht.toolkit.listeners.create-formatter-subscriber:
+  netzmacht.toolkit.listeners.create_formatter_subscriber:
     class: Netzmacht\Contao\Toolkit\Dca\Formatter\Subscriber\CreateFormatterSubscriber
     arguments:
       - []
       - []
       - []
-      - '@netzmacht.toolkit.dca.formatter.options-formatter'
+      - '@netzmacht.toolkit.dca.formatter.options_formatter'
+    tags:
+      - { name: 'kernel.event_listener', event: 'netzmacht.toolkit.dca.create_formatter'}
