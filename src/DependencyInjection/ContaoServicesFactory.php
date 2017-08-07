@@ -15,7 +15,7 @@ use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
 use Contao\Encryption;
 
 /**
- * Class ContaoServicesFactory
+ * Class ContaoServicesFactory.
  *
  * @package Netzmacht\Contao\Toolkit\DependencyInjection
  */

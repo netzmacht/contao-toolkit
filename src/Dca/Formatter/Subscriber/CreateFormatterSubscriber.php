@@ -21,21 +21,21 @@ use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
 final class CreateFormatterSubscriber
 {
     /**
-     * Formatter.
+     * List of supported value formatter.
      *
      * @var array|ValueFormatter[]
      */
     private $formatter;
 
     /**
-     * Pre filters.
+     * Value formatter pre filters.
      *
      * @var array|ValueFormatter[]
      */
     private $preFilters;
 
     /**
-     * Post filters.
+     * Value formatter post filters.
      *
      * @var array|ValueFormatter[]
      */

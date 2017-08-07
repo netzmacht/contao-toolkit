@@ -67,7 +67,7 @@ class AddTaggedServicesAsArgumentCompilerPass implements CompilerPassInterface
 
         $definition       = $container->findDefinition($this->serviceName);
         $taggedServiceIds = $container->findTaggedServiceIds($this->tagName);
-        $services         = (array)$definition->getArgument($this->argumentIndex);
+        $services         = (array) $definition->getArgument($this->argumentIndex);
 
         foreach (array_keys($taggedServiceIds) as $serviceIds) {
             $services[] = new Reference($serviceIds);

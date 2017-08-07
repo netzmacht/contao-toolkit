@@ -43,9 +43,9 @@ class DefaultAliasGeneratorFactory
     /**
      * Invoke will create the alias generator for the given data container and the alias fields.
      *
-     * @param string  $dataContainerName Data container name.
-     * @param string  $aliasField        Alias field name.
-     * @param array   $fields            List of value fields.
+     * @param string $dataContainerName Data container name.
+     * @param string $aliasField        Alias field name.
+     * @param array  $fields            List of value fields.
      *
      * @return FilterBasedAliasGenerator
      */

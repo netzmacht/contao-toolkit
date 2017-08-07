@@ -22,9 +22,9 @@ use Netzmacht\Contao\Toolkit\Component\Exception\ComponentNotFound;
 interface ComponentFactory
 {
     /**
-     * Check if factory supports the component-
+     * Check if factory supports the component.
      *
-     * @param Model|Result $model  Component model.
+     * @param Model|Result $model Component model.
      *
      * @return bool
      */
