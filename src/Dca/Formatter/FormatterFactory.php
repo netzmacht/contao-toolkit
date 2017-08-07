@@ -11,7 +11,6 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter;
 
-use Interop\Container\ContainerInterface as Container;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FilterFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FormatterChain;
@@ -37,7 +36,7 @@ final class FormatterFactory
      *
      * @param EventDispatcher $eventDispatcher Event dispatcher.
      */
-    public function __construct(EventDispatcher$eventDispatcher)
+    public function __construct(EventDispatcher $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
     }
