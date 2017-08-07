@@ -99,7 +99,7 @@ class ConcreteComponent extends AbstractComponent
 
 }
 
-class Model extends \Model
+class Model extends \Contao\Model
 {
     /**
      * Model constructor.

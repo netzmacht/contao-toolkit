@@ -68,7 +68,7 @@ class ComponentDecoratorTraitSpec extends ObjectBehavior
 
 }
 
-class ComponentDecorator extends \Module
+class ComponentDecorator extends \Contao\Module
 {
     use ComponentDecoratorTrait;
 
