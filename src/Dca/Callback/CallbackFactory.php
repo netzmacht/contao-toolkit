@@ -19,7 +19,6 @@ use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\ColorPicker;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\FilePicker;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\PagePicker;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Wizard\PopupWizard;
-use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
 
 /**
  * Class CallbackFactory.
@@ -64,8 +63,8 @@ final class CallbackFactory
         $container = System::getContainer();
 
         return new StateButtonCallback(
-            $container->get(Services::INPUT),
-            $container->get(Services::DATABASE_ROW_UPDATER),
+            $container->get('cca.legacy_dic.contao_input'),
+            $container->get('netzmacht.toolkit.data.database_row_updater'),
             $dataContainerName,
             $column,
             $disabledIcon,
@@ -103,9 +102,9 @@ final class CallbackFactory
         $container = System::getContainer();
 
         return new ColorPicker(
-            $container->get(Services::TEMPLATE_FACTORY),
-            $container->get(Services::TRANSLATOR),
-            $container->get(Services::INPUT),
+            $container->get('netzmacht.toolkit.template_factory'),
+            $container->get('cca.translator.contao_translator'),
+            $container->get('cca.legacy_dic.contao_input'),
             COLORPICKER,
             $replaceHex,
             $template
@@ -124,9 +123,9 @@ final class CallbackFactory
         $container = System::getContainer();
 
         return new FilePicker(
-            $container->get(Services::TEMPLATE_FACTORY),
-            $container->get(Services::TRANSLATOR),
-            $container->get(Services::INPUT),
+            $container->get('netzmacht.toolkit.template_factory'),
+            $container->get('cca.translator.contao_translator'),
+            $container->get('cca.legacy_dic.contao_input'),
             $template
         );
     }
@@ -143,9 +142,9 @@ final class CallbackFactory
         $container = System::getContainer();
 
         return new PagePicker(
-            $container->get(Services::TEMPLATE_FACTORY),
-            $container->get(Services::TRANSLATOR),
-            $container->get(Services::INPUT),
+            $container->get('netzmacht.toolkit.template_factory'),
+            $container->get('cca.translator.contao_translator'),
+            $container->get('cca.legacy_dic.contao_input'),
             $template
         );
     }
@@ -175,9 +174,10 @@ final class CallbackFactory
         $container = System::getContainer();
 
         return new PopupWizard(
-            $container->get(Services::TEMPLATE_FACTORY),
-            $container->get(Services::TRANSLATOR),
-            $container->get(Services::REQUEST_TOKEN),
+            $container->get('netzmacht.toolkit.template_factory'),
+            $container->get('cca.translator.contao_translator'),
+            $container->get('security.csrf.token_manager'),
+            $container->getParameter('contao.csrf_token_name'),
             $href,
             $label,
             $title,
@@ -201,7 +201,7 @@ final class CallbackFactory
     public static function aliasGenerator($dataContainerName, $aliasField, array $fields = null, $factoryService = null)
     {
         $container      = Controller::getContainer();
-        $factoryService = $factoryService ?: Services::DEFAULT_ALIAS_GENERATOR_FACTORY;
+        $factoryService = $factoryService ?: 'netzmacht.toolkit.data.alias_generator.factory.default_factory';
         $factory        = $container->get($factoryService);
         $fields         = $fields ?: ['id'];
 

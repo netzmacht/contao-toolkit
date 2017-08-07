@@ -11,9 +11,9 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
 
-use Contao\RequestToken;
 use ContaoCommunityAlliance\Translator\TranslatorInterface as Translator;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface as CsrfTokenManager;
 
 /**
  * Class PopupWizard.
@@ -44,11 +44,11 @@ final class PopupWizard extends AbstractWizard
     private $linkPattern = 'contao/main.php?%s&amp;id=%s&amp;popup=1&amp;nb=1&amp;rt=%s';
 
     /**
-     * Request token.
+     * Csrf token manager.
      *
-     * @var RequestToken
+     * @var CsrfTokenManager
      */
-    private $requestToken;
+    private $csrfTokenManager;
 
     /**
      * Button icon.
@@ -79,25 +79,34 @@ final class PopupWizard extends AbstractWizard
     private $title;
 
     /**
+     * Crsf token name.
+     *
+     * @var string
+     */
+    private $tokenName;
+
+    /**
      * Construct.
      *
-     * @param TemplateFactory $templateFactory Template Factory.
-     * @param Translator      $translator      Translator.
-     * @param RequestToken    $requestToken    Request token.
-     * @param string          $href            Link href snippet.
-     * @param string          $label           Button label.
-     * @param string          $title           Button title.
-     * @param string          $icon            Button icon.
-     * @param bool            $always          If true the button is generated always no matter if an value is given.
-     * @param string|null     $linkPattern     Link pattern.
-     * @param string          $template        Template name.
+     * @param TemplateFactory  $templateFactory  Template Factory.
+     * @param Translator       $translator       Translator.
+     * @param CsrfTokenManager $csrfTokenManager Csrf Token manager.
+     * @param string           $csrfTokenName    Csrf Token name.
+     * @param string           $href             Link href snippet.
+     * @param string           $label            Button label.
+     * @param string           $title            Button title.
+     * @param string           $icon             Button icon.
+     * @param bool             $always           If true the button is generated always no matter if an value is given.
+     * @param string|null      $linkPattern      Link pattern.
+     * @param string           $template         Template name.
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         TemplateFactory $templateFactory,
         Translator $translator,
-        RequestToken $requestToken,
+        CsrfTokenManager $csrfTokenManager,
+        $csrfTokenName,
         $href,
         $label,
         $title,
@@ -108,12 +117,13 @@ final class PopupWizard extends AbstractWizard
     ) {
         parent::__construct($templateFactory, $translator, $template);
 
-        $this->requestToken = $requestToken;
-        $this->always       = $always;
-        $this->icon         = $icon;
-        $this->href         = $href;
-        $this->label        = $label;
-        $this->title        = $title;
+        $this->csrfTokenManager = $csrfTokenManager;
+        $this->tokenName        = $csrfTokenName;
+        $this->always           = $always;
+        $this->icon             = $icon;
+        $this->href             = $href;
+        $this->label            = $label;
+        $this->title            = $title;
 
         if ($linkPattern) {
             $this->linkPattern = $linkPattern;
@@ -130,7 +140,8 @@ final class PopupWizard extends AbstractWizard
     public function generate($value)
     {
         if ($this->always || $value) {
-            $href    = sprintf($this->linkPattern, $this->href, $value, $this->requestToken->get());
+            $token   = $this->csrfTokenManager->getToken($this->tokenName)->getValue();
+            $href    = sprintf($this->linkPattern, $this->href, $value, $token);
             $jsTitle = specialchars(str_replace('\'', '\\\'', $this->title));
 
             $template = $this->createTemplate();

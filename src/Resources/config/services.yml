@@ -38,6 +38,14 @@ services:
     arguments:
       - '@cca.legacy_dic.contao_database_connection'
 
+  netzmacht.toolkit.data.database_row_updater:
+    class: Netzmacht\Contao\Toolkit\Data\Updater\DatabaseRowUpdater
+    arguments:
+      - '@cca.legacy_dic.contao_user'
+      - '@cca.legacy_dic.contao_database_connection'
+      - '@netzmacht.toolkit.dca.manager'
+      - '@netzmacht.toolkit.callback_invoker'
+
   netzmacht.toolkit.dca.formatter.factory:
     class: Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory
     arguments:
