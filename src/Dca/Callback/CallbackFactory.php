@@ -11,6 +11,7 @@
 namespace Netzmacht\Contao\Toolkit\Dca\Callback;
 
 use Contao\Controller;
+use Contao\System;
 use Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Button\StateButtonCallback;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Save\GenerateAliasCallback;
@@ -60,7 +61,7 @@ final class CallbackFactory
      */
     public static function stateButton($dataContainerName, $column, $disabledIcon = null, $inverse = false)
     {
-        $container = Controller::getContainer();
+        $container = System::getContainer();
 
         return new StateButtonCallback(
             $container->get(Services::INPUT),
@@ -83,7 +84,7 @@ final class CallbackFactory
     public static function service($serviceName, $methodName)
     {
         return function () use ($serviceName, $methodName) {
-            $service = Controller::getContainer()->get($serviceName);
+            $service = System::getContainer()->get($serviceName);
 
             return call_user_func_array([$service, $methodName], func_get_args());
         };
@@ -99,7 +100,7 @@ final class CallbackFactory
      */
     public static function colorPicker($replaceHex = false, $template = null)
     {
-        $container = Controller::getContainer();
+        $container = System::getContainer();
 
         return new ColorPicker(
             $container->get(Services::TEMPLATE_FACTORY),
@@ -120,7 +121,7 @@ final class CallbackFactory
      */
     public static function filePicker($template = null)
     {
-        $container = Controller::getContainer();
+        $container = System::getContainer();
 
         return new FilePicker(
             $container->get(Services::TEMPLATE_FACTORY),
@@ -139,7 +140,7 @@ final class CallbackFactory
      */
     public static function pagePicker($template = null)
     {
-        $container = Controller::getContainer();
+        $container = System::getContainer();
 
         return new PagePicker(
             $container->get(Services::TEMPLATE_FACTORY),
@@ -171,7 +172,7 @@ final class CallbackFactory
         $linkPattern = null,
         $template = null
     ) {
-        $container = Controller::getContainer();
+        $container = System::getContainer();
 
         return new PopupWizard(
             $container->get(Services::TEMPLATE_FACTORY),
