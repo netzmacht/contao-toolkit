@@ -1,7 +1,7 @@
 /vendor/
 /bin/
 /docs/_build
-
+/.idea
 coverage.xml
 
 composer.lock
