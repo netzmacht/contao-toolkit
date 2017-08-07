@@ -12,6 +12,7 @@ namespace Netzmacht\Contao\Toolkit\DependencyInjection;
 
 use Contao\Config;
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
+use Contao\Encryption;
 
 /**
  * Class ContaoServicesFactory
@@ -40,14 +41,28 @@ class ContaoServicesFactory
     /**
      * Create the config service.
      *
+     * Do not create the adapter as we want to rely on the interface.
+     *
      * @return Config
      */
     public function createConfigService()
     {
         $this->framework->initialize();
 
-        // Do not load the adapter as we want to be able to define argument types.
-
         return Config::getInstance();
+    }
+
+    /**
+     * Create the encryption service.
+     *
+     * Do not create the adapter as we want to rely on the interface.
+     *
+     * @return Encryption
+     */
+    public function createEncryptionService()
+    {
+        $this->framework->initialize();
+
+        return Encryption::getInstance();
     }
 }

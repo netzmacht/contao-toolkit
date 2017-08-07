@@ -20,13 +20,9 @@ services:
       arguments:
         - []
 
-  netzmacht.toolkit.filesystem:
-    class: Contao\Files
-    factory: ['Contao\Files', 'getInstance']
-
   netzmacht.toolkit.contao_encryption:
     class: Contao\Encryption
-    factory: ['Contao\Encryption', 'getInstance']
+    factory: ['@netzmacht.toolkit.contao_services_factory', 'createEncryptionService']
 
   netzmacht.toolkit.contao_services_factory:
       class: Netzmacht\Contao\Toolkit\DependencyInjection\ContaoServicesFactory
