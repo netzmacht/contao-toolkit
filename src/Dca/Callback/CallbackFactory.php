@@ -64,7 +64,7 @@ final class CallbackFactory
 
         return new StateButtonCallback(
             $container->get('cca.legacy_dic.contao_input'),
-            $container->get('netzmacht.toolkit.data.database_row_updater'),
+            $container->get('netzmacht.contao_toolkit.data.database_row_updater'),
             $dataContainerName,
             $column,
             $disabledIcon,
@@ -102,7 +102,7 @@ final class CallbackFactory
         $container = System::getContainer();
 
         return new ColorPicker(
-            $container->get('netzmacht.toolkit.template_factory'),
+            $container->get('netzmacht.contao_toolkit.template_factory'),
             $container->get('cca.translator.contao_translator'),
             $container->get('cca.legacy_dic.contao_input'),
             COLORPICKER,
@@ -123,7 +123,7 @@ final class CallbackFactory
         $container = System::getContainer();
 
         return new FilePicker(
-            $container->get('netzmacht.toolkit.template_factory'),
+            $container->get('netzmacht.contao_toolkit.template_factory'),
             $container->get('cca.translator.contao_translator'),
             $container->get('cca.legacy_dic.contao_input'),
             $template
@@ -142,7 +142,7 @@ final class CallbackFactory
         $container = System::getContainer();
 
         return new PagePicker(
-            $container->get('netzmacht.toolkit.template_factory'),
+            $container->get('netzmacht.contao_toolkit.template_factory'),
             $container->get('cca.translator.contao_translator'),
             $container->get('cca.legacy_dic.contao_input'),
             $template
@@ -174,7 +174,7 @@ final class CallbackFactory
         $container = System::getContainer();
 
         return new PopupWizard(
-            $container->get('netzmacht.toolkit.template_factory'),
+            $container->get('netzmacht.contao_toolkit.template_factory'),
             $container->get('cca.translator.contao_translator'),
             $container->get('security.csrf.token_manager'),
             $container->getParameter('contao.csrf_token_name'),
@@ -201,7 +201,7 @@ final class CallbackFactory
     public static function aliasGenerator($dataContainerName, $aliasField, array $fields = null, $factoryService = null)
     {
         $container      = Controller::getContainer();
-        $factoryService = $factoryService ?: 'netzmacht.toolkit.data.alias_generator.factory.default_factory';
+        $factoryService = $factoryService ?: 'netzmacht.contao_toolkit.data.alias_generator.factory.default_factory';
         $factory        = $container->get($factoryService);
         $fields         = $fields ?: ['id'];
 

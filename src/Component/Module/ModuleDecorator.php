@@ -36,6 +36,6 @@ final class ModuleDecorator extends Module
      */
     protected function getFactory()
     {
-        return $this->getContainer()->get('netzmacht.toolkit.component.frontend_module_factory');
+        return $this->getContainer()->get('netzmacht.contao_toolkit.component.frontend_module_factory');
     }
 }

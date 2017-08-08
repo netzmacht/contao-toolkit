@@ -1,65 +1,65 @@
 services:
-  netzmacht.toolkit.dca.formatter.options_formatter:
+  netzmacht.contao_toolkit.dca.formatter.options_formatter:
     class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\OptionsFormatter
     arguments:
-      - '@netzmacht.toolkit.callback_invoker'
+      - '@netzmacht.contao_toolkit.callback_invoker'
     tags:
-      - { name: 'netzmacht.toolkit.dca.formatter'}
+      - { name: 'netzmacht.contao_toolkit.dca.formatter'}
 
-  netzmacht.toolkit.dca.formatter.foreign_key:
+  netzmacht.contao_toolkit.dca.formatter.foreign_key:
     class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ForeignKeyFormatter
     arguments:
       - '@database_connection'
     tags:
-      - { name: 'netzmacht.toolkit.dca.formatter'}
+      - { name: 'netzmacht.contao_toolkit.dca.formatter'}
 
-  netzmacht.toolkit.dca.formatter.file_uuid:
+  netzmacht.contao_toolkit.dca.formatter.file_uuid:
     class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FileUuidFormatter
     tags:
-      - { name: 'netzmacht.toolkit.dca.formatter'}
+      - { name: 'netzmacht.contao_toolkit.dca.formatter'}
 
-  netzmacht.toolkit.dca.formatter.date:
+  netzmacht.contao_toolkit.dca.formatter.date:
     class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\DateFormatter
     arguments:
-      - '@netzmacht.toolkit.contao_config'
+      - '@netzmacht.contao_toolkit.contao_config'
     tags:
-      - { name: 'netzmacht.toolkit.dca.formatter'}
+      - { name: 'netzmacht.contao_toolkit.dca.formatter'}
 
-  netzmacht.toolkit.dca.formatter.yes_no:
+  netzmacht.contao_toolkit.dca.formatter.yes_no:
     class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\HtmlFormatter
     tags:
-      - { name: 'netzmacht.toolkit.dca.formatter'}
+      - { name: 'netzmacht.contao_toolkit.dca.formatter'}
 
-  netzmacht.toolkit.dca.formatter.reference:
+  netzmacht.contao_toolkit.dca.formatter.reference:
     class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ReferenceFormatter
     tags:
-      - { name: 'netzmacht.toolkit.dca.formatter'}
+      - { name: 'netzmacht.contao_toolkit.dca.formatter'}
 
-  netzmacht.toolkit.dca.formatter.options:
+  netzmacht.contao_toolkit.dca.formatter.options:
     class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\OptionsFormatter
     arguments:
-      - '@netzmacht.toolkit.callback_invoker'
+      - '@netzmacht.contao_toolkit.callback_invoker'
     tags:
-      - { name: 'netzmacht.toolkit.dca.formatter'}
+      - { name: 'netzmacht.contao_toolkit.dca.formatter'}
 
-  netzmacht.toolkit.dca.formatter.hidden:
+  netzmacht.contao_toolkit.dca.formatter.hidden:
       class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\HiddenValueFormatter
       tags:
-        - { name: 'netzmacht.toolkit.dca.formatter.pre_filter'}
+        - { name: 'netzmacht.contao_toolkit.dca.formatter.pre_filter'}
 
-  netzmacht.toolkit.dca.formatter.deserialize:
+  netzmacht.contao_toolkit.dca.formatter.deserialize:
       class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\DeserializeFormatter
       tags:
-        - { name: 'netzmacht.toolkit.dca.formatter.pre_filter'}
+        - { name: 'netzmacht.contao_toolkit.dca.formatter.pre_filter'}
 
-  netzmacht.toolkit.dca.formatter.encrypted:
+  netzmacht.contao_toolkit.dca.formatter.encrypted:
       class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\EncryptedFormatter
       arguments:
-        - '@netzmacht.toolkit.contao_encryption'
+        - '@netzmacht.contao_toolkit.contao_encryption'
       tags:
-        - { name: 'netzmacht.toolkit.dca.formatter.pre_filter'}
+        - { name: 'netzmacht.contao_toolkit.dca.formatter.pre_filter'}
 
-  netzmacht.toolkit.dca.formatter.flatten:
+  netzmacht.contao_toolkit.dca.formatter.flatten:
       class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FlattenFormatter
       tags:
-        - { name: 'netzmacht.toolkit.dca.formatter.post_filter'}
+        - { name: 'netzmacht.contao_toolkit.dca.formatter.post_filter'}

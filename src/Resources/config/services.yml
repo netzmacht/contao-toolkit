@@ -1,77 +1,77 @@
 services:
-  netzmacht.toolkit.assets_manager:
+  netzmacht.contao_toolkit.assets_manager:
     class: Netzmacht\Contao\Toolkit\View\Assets\GlobalsAssetsManager
-    factory: ['@netzmacht.toolkit.globals_assets_manager_factory', 'create']
+    factory: ['@netzmacht.contao_toolkit.globals_assets_manager_factory', 'create']
 
-  netzmacht.toolkit.callback_invoker:
+  netzmacht.contao_toolkit.callback_invoker:
     class: Netzmacht\Contao\Toolkit\Dca\Callback\Invoker
 
-  netzmacht.toolkit.contao_config:
+  netzmacht.contao_toolkit.contao_config:
     class: Contao\Config
-    factory: ['@netzmacht.toolkit.contao_services_factory', 'createConfigService']
+    factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createConfigService']
 
-  netzmacht.toolkit.component.content_element_factory:
+  netzmacht.contao_toolkit.component.content_element_factory:
     class: Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory
     arguments:
       - []
 
-  netzmacht.toolkit.component.frontend_module_factory:
+  netzmacht.contao_toolkit.component.frontend_module_factory:
     class: Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory
     arguments:
       - []
 
-  netzmacht.toolkit.contao_encryption:
+  netzmacht.contao_toolkit.contao_encryption:
     class: Contao\Encryption
-    factory: ['@netzmacht.toolkit.contao_services_factory', 'createEncryptionService']
+    factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createEncryptionService']
 
-  netzmacht.toolkit.contao_services_factory:
+  netzmacht.contao_toolkit.contao_services_factory:
     class: Netzmacht\Contao\Toolkit\DependencyInjection\ContaoServicesFactory
     arguments:
       - '@contao.framework'
 
-  netzmacht.toolkit.data.alias_generator.factory.default:
+  netzmacht.contao_toolkit.data.alias_generator.factory.default:
     class: Netzmacht\Contao\Toolkit\Data\Alias\FilterBasedAliasGenerator
     factory: []
 
-  netzmacht.toolkit.data.alias_generator.factory.default_factory:
+  netzmacht.contao_toolkit.data.alias_generator.factory.default_factory:
     class: Netzmacht\Contao\Toolkit\Data\Alias\DefaultAliasGeneratorFactory
     arguments:
       - '@cca.legacy_dic.contao_database_connection'
 
-  netzmacht.toolkit.data.database_row_updater:
+  netzmacht.contao_toolkit.data.database_row_updater:
     class: Netzmacht\Contao\Toolkit\Data\Updater\DatabaseRowUpdater
     arguments:
       - '@cca.legacy_dic.contao_user'
       - '@cca.legacy_dic.contao_database_connection'
-      - '@netzmacht.toolkit.dca.manager'
-      - '@netzmacht.toolkit.callback_invoker'
+      - '@netzmacht.contao_toolkit.dca.manager'
+      - '@netzmacht.contao_toolkit.callback_invoker'
 
-  netzmacht.toolkit.dca.formatter.factory:
+  netzmacht.contao_toolkit.dca.formatter.factory:
     class: Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory
     arguments:
       - '@event_dispatcher'
 
-  netzmacht.toolkit.dca.manager:
+  netzmacht.contao_toolkit.dca.manager:
     class: Netzmacht\Contao\Toolkit\Dca\Manager
     arguments:
-      - '@netzmacht.toolkit.dca.loader'
-      - '@netzmacht.toolkit.dca.formatter.factory'
+      - '@netzmacht.contao_toolkit.dca.loader'
+      - '@netzmacht.contao_toolkit.dca.formatter.factory'
 
-  netzmacht.toolkit.dca.loader:
+  netzmacht.contao_toolkit.dca.loader:
     class: Netzmacht\Contao\Toolkit\Dca\DcaLoader
 
-  netzmacht.toolkit.insert_tag.replacer:
+  netzmacht.contao_toolkit.insert_tag.replacer:
     class: Netzmacht\Contao\Toolkit\InsertTag\IntegratedReplacer
     arguments:
       - ['@contao.controller.insert_tags']
       - []
 
-  netzmacht.toolkit.view.template_factory:
+  netzmacht.contao_toolkit.view.template_factory:
     class: Netzmacht\Contao\Toolkit\View\Template\ToolkitTemplateFactory
     arguments:
       - "@event_dispatcher"
 
-  netzmacht.toolkit.globals_assets_manager_factory:
+  netzmacht.contao_toolkit.globals_assets_manager_factory:
     class: Netzmacht\Contao\Toolkit\View\Assets\GlobalsAssetsManagerFactory
     arguments:
       - ['@kernel']

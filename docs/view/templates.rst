@@ -20,7 +20,7 @@ Instead of magic properties the template interface provides `set` and `get` meth
    use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
 
    /** @var Netzmacht\Contao\Toolkit\View\Template\TemplateFactory $templateFactory */
-   $templateFactory = $container->get('netzmacht.toolkit.view.template_factory');
+   $templateFactory = $container->get('netzmacht.contao_toolkit.view.template_factory');
 
    /** @var Netzmacht\Contao\Toolkit\View\Template\Template $frontendTemplate */
    $frontendTemplate = $templateFactory->createFrontendTemplate('mod_test');

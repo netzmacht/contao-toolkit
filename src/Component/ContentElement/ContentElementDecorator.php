@@ -36,6 +36,6 @@ final class ContentElementDecorator extends ContentElement
      */
     protected function getFactory()
     {
-        return $this->getContainer()->get('netzmacht.toolkit.component.content_element_factory');
+        return $this->getContainer()->get('netzmacht.contao_toolkit.component.content_element_factory');
     }
 }
