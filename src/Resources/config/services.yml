@@ -64,8 +64,9 @@ services:
     class: Netzmacht\Contao\Toolkit\InsertTag\IntegratedReplacer
     arguments:
       - ['@contao.controller.insert_tags']
+      - []
 
-  netzmacht.toolkit.template_factory:
+  netzmacht.toolkit.view.template_factory:
     class: Netzmacht\Contao\Toolkit\View\Template\ToolkitTemplateFactory
     arguments:
       - "@event_dispatcher"
