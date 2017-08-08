@@ -1,49 +1,22 @@
 Dependency Injection
 ====================
 
-The container
--------------
+Toolkit 3.0 doesn't provide any further going dependency injection tools. The `container-interop`_ implementation is
+dropped as `container-interop`_ itself is *deprecated* now in favour of PSR 11.
 
-Even though Toolkit currently is only available for Contao 3.5 it's prepared to work with Contao 4.x later on.
-Since Contao 4.x uses Symfony there is already an container implementation. Contao 3.5 lacks of a dependency container
-support that's why `contao-community-alliance/dependency-container`_ is used which based on `Pimple`_.
-
-To overcome the API differences between both container implementations and allow to plugin other libraries requiring
-other container implementations too, Toolkit container bases on `container-interop`_.
-
-
-ContainerAware
---------------
-
-An easy way to access the container is to use the provided `ContainerAware`_ trait. In general you should avoid to use
-this trait plugin and use dependency injection there possible instead of using the container in a service locator style!
-
+Have a look at `Symfony container documentation`_ and the `contao-community-alliance/dependency-container`_ to get more
+information.
 
 Provided services
 -----------------
 
-Toolkit provides access to a set of list Contao services/singletons and to the services being shipped with Toolkit. For
-an easy access to a service there is a `Services`_ class providing constants for the service names.
+To get an overview over all provided services use the built in Contao console (managed edition) or it's equivalent in
+the standard edition.
 
-.. code-block:: php
+.. code-block:: bash
 
-    use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
-    use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerAware;
+    php vendor/bin/contao-console debug:container
 
-    class MyHookListener
-    {
-        use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerAware;
-
-        private $database;
-
-        public function __construct()
-        {
-            $this->database = $this->getContainer()->get(Services::DATABASE_CONNECTION);
-        }
-    }
-
+.. _Symfony container documentation: https://symfony.com/doc/current/service_container.html
 .. _contao-community-alliance/dependency-container: https://github.com/contao-community-alliance/dependency-container
 .. _container-interop: https://github.com/container-interop/container-interop
-.. _Pimple: https://github.com/silexphp/Pimple/tree/1.1
-.. _ContainerAware: https://github.com/netzmacht/contao-toolkit/blob/develop/src/DependencyInjection/ContainerAware.php
-.. _Services: https://github.com/netzmacht/contao-toolkit/blob/develop/src/DependencyInjection/Services.php

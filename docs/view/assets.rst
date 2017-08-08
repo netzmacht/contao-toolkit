@@ -14,7 +14,7 @@ For instance, then creating an ajax response the assets could get easily collect
    use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
 
    /** @var Netzmacht\Contao\Toolkit\View\AssetsManager\AssetsManager $assetsManager */
-   $assetsManager = $container->get(Services::ASSETS_MANAGER);
+   $assetsManager = $container->get('netzmacht.contao_toolkit.assets_manager');
 
    // Set media type
    $assetsManager->addStylesheet('files/css/print.css', 'print');

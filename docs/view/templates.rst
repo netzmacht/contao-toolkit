@@ -20,7 +20,7 @@ Instead of magic properties the template interface provides `set` and `get` meth
    use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
 
    /** @var Netzmacht\Contao\Toolkit\View\Template\TemplateFactory $templateFactory */
-   $templateFactory = $container->get(Services::TEMPLATE_FACTORY);
+   $templateFactory = $container->get('netzmacht.toolkit.view.template_factory');
 
    /** @var Netzmacht\Contao\Toolkit\View\Template\Template $frontendTemplate */
    $frontendTemplate = $templateFactory->createFrontendTemplate('mod_test');
@@ -63,21 +63,31 @@ instance of `ContaoCommunityAlliance\\Translator\\TranslatorInterface`.
 Register helpers
 ~~~~~~~~~~~~~~~~
 
-Toolkit uses an event driven approach to register template helpers. You can register different helpers for different
-templates.
+Toolkit uses an event driven approach to register template helpers. This approach allows you to register different
+helpers for different templates.
 
 .. code-block:: php
 
     <?php
 
-    // config/event_listeners.php
-    return [
-        Netzmacht\Contao\Toolkit\View\Template\Event\GetTemplateHelpersEvent::NAME => [
-            function (Netzmacht\Contao\Toolkit\View\Template\Event\GetTemplateHelpersEvent $event) {
-                if ($event->getTemplateName() === 'foo' && $event->getContentType() === 'bar') {
-                    $event->addHelper('foo', new FooBarHelper())
-                }
+    // MyCustomTemplateHelperListener.php
+
+    class MyCustomTemplateHelperListener
+    {
+        public function onGetTemplateHelpers(Netzmacht\Contao\Toolkit\View\Template\Event\GetTemplateHelpersEvent $event)
+        {
+            if ($event->getTemplateName() === 'foo' && $event->getContentType() === 'bar') {
+                $event->addHelper('foo', new FooBarHelper())
             }
-        ]
-    ];
+        }
+    }
+
+.. code-block:: yaml
+
+    // src/Resources/config/listeners.yml in your bundle
+
+    my.custom.template-helpers-listener:
+      class: MyCustomTemplateHelperListener
+      tags:
+        - { name: 'kernel.event_listener', event: 'netzmacht.contao_toolkit.view.get_template_helpers'}
 
