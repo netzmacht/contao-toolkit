@@ -64,5 +64,13 @@ class NetzmachtContaoToolkitBundle extends Bundle
                 2
             )
         );
+
+        $container->addCompilerPass(
+            new AddTaggedServicesAsArgumentCompilerPass(
+                'netzmacht.toolkit.insert_tag.replacer',
+                'netzmacht.toolkit.insert_tag.parser',
+                1
+            )
+        );
     }
 }
