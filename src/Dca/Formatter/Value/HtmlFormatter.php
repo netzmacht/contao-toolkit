@@ -11,6 +11,8 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
+use Contao\StringUtil;
+
 /**
  * Class HtmlValue.
  *
@@ -39,6 +41,6 @@ final class HtmlFormatter implements ValueFormatter
      */
     public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
-        return specialchars($value);
+        return StringUtil::specialchars($value);
     }
 }

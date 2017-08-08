@@ -2,10 +2,11 @@
 
 namespace spec\Netzmacht\Contao\Toolkit\Component;
 
-use Interop\Container\ContainerInterface;
 use Netzmacht\Contao\Toolkit\Component\Component;
+use Netzmacht\Contao\Toolkit\Component\ComponentFactory;
 use Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 
 /**
  * Class ComponentFactorySpec
@@ -15,25 +16,13 @@ use PhpSpec\ObjectBehavior;
  */
 class ToolkitComponentFactorySpec extends ObjectBehavior
 {
-    private $factories;
-
     private $example;
 
-    function let(ContainerInterface $container)
+    function let(ComponentFactory $factory)
     {
-        $this->example   = new ComponentExample();
-        $this->factories = new \ArrayObject(
-            [
-                'invalid' => function () {
-                    return ['foo'];
-                },
-                'known' => function () {
-                    return $this->example;
-                }
-            ]
-        );
+        $this->example = new ComponentExample();
 
-        $this->beConstructedWith($this->factories, $container);
+        $this->beConstructedWith([$factory]);
     }
 
     function it_is_initializable()
@@ -57,9 +46,11 @@ class ToolkitComponentFactorySpec extends ObjectBehavior
             ->duringCreate($model, 'main');
     }
 
-    function it_creates_component_calling_responsible_factory()
+    function it_creates_component_calling_responsible_factory(ComponentFactory $factory, \Contao\Model $model)
     {
-        $model = (object) ['type' => 'known', 'id' => '4'];
+        $factory->supports($model)->willReturn(true);
+        $factory->create($model, 'main')->willReturn($this->example)->shouldBeCalled();
+
         $this->create($model, 'main')->shouldReturn($this->example);
     }
 }

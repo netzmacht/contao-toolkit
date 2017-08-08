@@ -40,7 +40,7 @@
     },
     "autoload-dev": {
         "files": [
-            "vendor/netzmacht/contao-build-tools/autoload.php"
+            "vendor/phpcq/autoload-validation/hacks/contao-hack.php"
         ]
     },
     "config": {

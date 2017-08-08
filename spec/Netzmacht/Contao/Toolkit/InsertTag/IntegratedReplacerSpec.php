@@ -14,12 +14,9 @@ use PhpSpec\ObjectBehavior;
  */
 class IntegratedReplacerSpec extends ObjectBehavior
 {
-    function let()
+    function let(InsertTagsMock $insertTags)
     {
-        $insertTags = new InsertTagsMock();
         $this->beConstructedWith($insertTags);
-
-        $insertTags->register($this->getWrappedObject());
     }
 
     function it_is_initializable()
@@ -45,23 +42,13 @@ class IntegratedReplacerSpec extends ObjectBehavior
             ->parse('test', 'test', null, true)
             ->shouldBeCalled();
 
-        $this->replace('test');
+        $this->replaceTag('test');
     }
 
-    public function it_provides_method_for_replace_insert_tags_hook(Parser $parser)
+    public function it_provides_method_for_replace_insert_tags_hook(InsertTagsMock $insertTags)
     {
-        $this->registerParser($parser)->shouldReturn($this);
-
-        $parser
-            ->supports('test')
-            ->shouldBeCalled()
-            ->willReturn(true);
-
-        $parser
-            ->parse('test', 'test', null, true)
-            ->shouldBeCalled();
-
-        $this->replaceTag('test');
+        $insertTags->replace('test', true)->shouldBeCalled();
+        $this->replace('test');
     }
 }
 

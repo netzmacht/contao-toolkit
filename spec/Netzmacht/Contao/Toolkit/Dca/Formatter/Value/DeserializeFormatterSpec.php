@@ -6,9 +6,6 @@ use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\DeserializeFormatter;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-require_once dirname(dirname(dirname(dirname(dirname(dirname(dirname(__DIR__)))))))
-    . '/vendor/contao/core/system/helper/functions.php';
-
 /**
  * Class DeserializeFormatterSpec
  *

@@ -13,6 +13,7 @@ namespace Netzmacht\Contao\Toolkit\Component;
 use Contao\Database\Result;
 use Contao\Model;
 use Contao\Model\Collection;
+use Contao\StringUtil;
 use InvalidArgumentException;
 use Netzmacht\Contao\Toolkit\View\Template;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
@@ -270,14 +271,14 @@ abstract class AbstractComponent implements Component
     protected function deserializeData(array $row)
     {
         if (!empty($row['space'])) {
-            $row['space'] = deserialize($row['space']);
+            $row['space'] = StringUtil::deserialize($row['space']);
         }
 
         if (!empty($row['cssID'])) {
-            $row['cssID'] = deserialize($row['cssID'], true);
+            $row['cssID'] = StringUtil::deserialize($row['cssID'], true);
         }
 
-        $headline = deserialize($row['headline']);
+        $headline = StringUtil::deserialize($row['headline']);
         if (is_array($headline)) {
             $row['headline'] = $headline['value'];
             $row['hl']       = $headline['unit'];

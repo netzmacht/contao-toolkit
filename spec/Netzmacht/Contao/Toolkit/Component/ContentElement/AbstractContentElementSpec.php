@@ -72,7 +72,7 @@ class ConcreteContentElement extends AbstractContentElement
 
 }
 
-class Model extends \Model
+class Model extends \Contao\Model
 {
     /**
      * Model constructor.

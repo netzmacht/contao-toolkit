@@ -2,7 +2,8 @@
 
 namespace spec\Netzmacht\Contao\Toolkit\View\Template\Subscriber;
 
-use Interop\Container\ContainerInterface;
+use ContaoCommunityAlliance\Translator\TranslatorInterface;
+use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
 use Netzmacht\Contao\Toolkit\View\Template\Event\GetTemplateHelpersEvent;
 use Netzmacht\Contao\Toolkit\View\Template\Subscriber\GetTemplateHelpersListener;
 use PhpSpec\ObjectBehavior;
@@ -16,9 +17,9 @@ use Prophecy\Argument;
  */
 class GetTemplateHelpersListenerSpec extends ObjectBehavior
 {
-    function let(ContainerInterface $container)
+    function let(AssetsManager $assetsManager, TranslatorInterface $translator)
     {
-        $this->beConstructedWith($container);
+        $this->beConstructedWith($assetsManager, $translator);
     }
 
     function it_is_initializable()

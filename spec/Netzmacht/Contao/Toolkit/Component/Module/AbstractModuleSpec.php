@@ -73,7 +73,7 @@ class ConcreteModule extends AbstractModule
 
 }
 
-class Model extends \Model
+class Model extends \Contao\Model
 {
     /**
      * Model constructor.

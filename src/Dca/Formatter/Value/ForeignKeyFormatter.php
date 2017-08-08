@@ -53,9 +53,9 @@ final class ForeignKeyFormatter implements ValueFormatter
         $foreignKey = explode('.', $fieldDefinition['foreignKey'], 2);
 
         if (count($foreignKey) == 2) {
-            $query     = sprintf('SELECT %s AS value FROM %s WHERE id=?', $foreignKey[1], $foreignKey[0]);
+            $query     = sprintf('SELECT %s AS value FROM %s WHERE id=:id', $foreignKey[1], $foreignKey[0]);
             $statement = $this->connection->prepare($query);
-            $statement->bindValue(1, $value);
+            $statement->bindValue(':id', $value);
 
             if ($statement->execute() && $statement->rowCount()) {
                 $value = $statement->fetchColumn('value');

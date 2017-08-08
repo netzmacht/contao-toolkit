@@ -56,7 +56,7 @@ final class OptionsFormatter implements ValueFormatter
     public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
         if (!empty($fieldDefinition['eval']['isAssociative'])
-            || (!empty($fieldDefinition['options']) && array_is_assoc($fieldDefinition['options']))
+            || (!empty($fieldDefinition['options']) && $this->isAssociativeArray($fieldDefinition['options']))
         ) {
             if (!empty($fieldDefinition['options'][$value])) {
                 $value = $fieldDefinition['options'][$value];
@@ -74,5 +74,17 @@ final class OptionsFormatter implements ValueFormatter
         }
 
         return $value;
+    }
+
+    /**
+     * Check if given value is an associative array.
+     *
+     * @param mixed $value Given value.
+     *
+     * @return bool
+     */
+    private function isAssociativeArray($value)
+    {
+        return (is_array($value) && array_keys($value) !== range(0, (sizeof($value) - 1)));
     }
 }

@@ -2,7 +2,8 @@
 
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Database;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Statement;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ForeignKeyFormatter;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -15,7 +16,7 @@ use Prophecy\Argument;
  */
 class ForeignKeyFormatterSpec extends ObjectBehavior
 {
-    function let(Database $database)
+    function let(Connection $database)
     {
         $this->beConstructedWith($database);
     }
@@ -42,7 +43,7 @@ class ForeignKeyFormatterSpec extends ObjectBehavior
         $this->accepts('test', [])->shouldReturn(false);
     }
 
-    function it_format_by_parsing_foreign_key(Database $database, Database\Statement $statement)
+    function it_format_by_parsing_foreign_key(Connection $database, Statement $statement)
     {
         $definition['foreignKey'] = 'tl_test.title';
 
@@ -51,8 +52,12 @@ class ForeignKeyFormatterSpec extends ObjectBehavior
             'numRows' => 1
         ];
 
+        $statement->bindValue(':id', 5)->shouldBeCalled();
+        $statement->rowCount()->willReturn(1)->shouldBeCalledTimes(1);
+
         $database->prepare(Argument::any())->willReturn($statement);
-        $statement->execute(5)->willReturn($result);
+        $statement->execute()->willReturn(true);
+        $statement->fetchColumn('value')->willReturn('Title');
 
         $this->format(5, 'test', $definition)->shouldReturn('Title');
     }

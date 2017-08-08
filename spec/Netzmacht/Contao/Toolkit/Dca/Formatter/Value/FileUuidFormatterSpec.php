@@ -2,10 +2,9 @@
 
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Contao\String;
+use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FileUuidFormatter;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 /**
  * Class FileUuidFormatterSpec
@@ -46,7 +45,7 @@ class FileUuidFormatterSpec extends ObjectBehavior
     function it_formats_binary_uuid()
     {
         $uuid   = '31092867-468d-11e5-945d-e766493b4cce';
-        $binary = String::uuidToBin($uuid);
+        $binary = StringUtil::uuidToBin($uuid);
 
         $this->format($binary, 'test', [])->shouldReturn($uuid);
     }
@@ -58,7 +57,7 @@ class FileUuidFormatterSpec extends ObjectBehavior
             '8a4d64cc-73f7-11e5-a93d-236cb64a50b1'
         ];
 
-        $binary = array_map('Contao\String::uuidToBin', $uuids);
+        $binary = array_map('Contao\StringUtil::uuidToBin', $uuids);
 
         $this->format($binary, 'test', [])->shouldReturn($uuids);
     }
@@ -71,11 +70,11 @@ class FileUuidFormatterSpec extends ObjectBehavior
         ];
 
         $value = [
-            String::uuidToBin('31092867-468d-11e5-945d-e766493b4cce'),
+            StringUtil::uuidToBin('31092867-468d-11e5-945d-e766493b4cce'),
             '',
             null,
             false,
-            String::uuidToBin('8a4d64cc-73f7-11e5-a93d-236cb64a50b1')
+            StringUtil::uuidToBin('8a4d64cc-73f7-11e5-a93d-236cb64a50b1')
         ];
 
         $this->format($value, 'test', [])->shouldReturn($uuids);

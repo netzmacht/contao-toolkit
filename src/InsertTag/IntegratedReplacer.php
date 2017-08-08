@@ -40,7 +40,7 @@ final class IntegratedReplacer implements Replacer
      * @param InsertTags     $insertTags The insert tag replacer.
      * @param array|Parser[] $parsers    Insert tag parsers.
      */
-    public function __construct(InsertTags $insertTags, array $parsers = array())
+    public function __construct($insertTags, array $parsers = array())
     {
         $this->parsers    = $parsers;
         $this->insertTags = $insertTags;

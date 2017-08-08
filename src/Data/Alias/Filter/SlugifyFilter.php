@@ -11,6 +11,9 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
+use Contao\StringUtil;
+use Patchwork\Utf8;
+
 /**
  * SlugifyFilter creates a slug value of the columns being represented.
  *
@@ -82,8 +85,8 @@ final class SlugifyFilter extends AbstractValueFilter
         $arrReplace = array('', $separator);
 
         $value = html_entity_decode($value, ENT_QUOTES, $this->charset);
-        $value = strip_insert_tags($value);
-        $value = utf8_romanize($value);
+        $value = StringUtil::stripInsertTags($value);
+        $value = Utf8::toAscii($value);
         $value = preg_replace($arrSearch, $arrReplace, $value);
 
         if (!$this->preserveUppercase) {
