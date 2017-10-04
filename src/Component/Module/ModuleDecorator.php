@@ -8,7 +8,7 @@
  *
  */
 
-namespace Netzmacht\Contao\Toolkit\Component\ContentElement;
+namespace Netzmacht\Contao\Toolkit\Component\Module;
 
 use Contao\Module;
 use Netzmacht\Contao\Toolkit\Component\ComponentDecoratorTrait;
