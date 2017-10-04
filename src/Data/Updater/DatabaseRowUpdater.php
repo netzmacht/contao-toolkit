@@ -196,7 +196,7 @@ final class DatabaseRowUpdater implements Updater
                 if ($definition->get(['fields', $column, 'eval', 'alwaysSave'], false)
                     && $definition->get(['fields', $column, 'eval', 'doNotSaveEmpty'], false)
                 ) {
-                    unset ($data[$column]);
+                    unset($data[$column]);
                 }
             }
         }

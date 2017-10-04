@@ -19,7 +19,6 @@ use Symfony\Component\EventDispatcher\Event;
  *
  * It can be used inside of closed components like content elements, modules etc. to allow 3rd party developers to
  * provide extra queries conditions.
- *
  */
 final class BuildModelQueryOptionsEvent extends Event
 {

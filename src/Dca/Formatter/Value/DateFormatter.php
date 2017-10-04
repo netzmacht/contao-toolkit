@@ -59,7 +59,7 @@ final class DateFormatter implements ValueFormatter
      */
     public function format($value, $fieldName, array $fieldDefinition, $context = null)
     {
-        if (empty ($fieldDefinition['eval']['rgxp'])) {
+        if (empty($fieldDefinition['eval']['rgxp'])) {
             $format = 'datim';
         } else {
             $format = $fieldDefinition['eval']['rgxp'];
