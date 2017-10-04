@@ -44,8 +44,6 @@
     "config": {
         "bin-dir": "bin"
     },
-    "prefer-stable": true,
-    "minimum-stability": "dev",
     "extra": {
         "contao-manager-plugin": "Netzmacht\\Contao\\Toolkit\\ContaoManager\\Plugin",
         "branch-alias": {
