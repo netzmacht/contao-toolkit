@@ -48,7 +48,7 @@ abstract class AbstractPicker extends AbstractWizard
     public function __construct(
         TemplateFactory $templateFactory,
         Translator $translator,
-        Input $input,
+        $input,
         $template = null
     ) {
         parent::__construct($templateFactory, $translator, $template);

@@ -57,7 +57,7 @@ final class ColorPicker extends AbstractPicker
     public function __construct(
         TemplateFactory $templateFactory,
         Translator $translator,
-        Input $input,
+        $input,
         $version,
         $replaceHex = false,
         $template = null

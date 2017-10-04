@@ -107,7 +107,7 @@ final class CallbackFactory
         return new ColorPicker(
             $container->get('netzmacht.contao_toolkit.view.template_factory'),
             $container->get('translator'),
-            $container->get('cca.legacy_dic.contao_input'),
+            $container->get('contao.framework')->getAdapter(Input::class),
             COLORPICKER,
             $replaceHex,
             $template
@@ -128,7 +128,7 @@ final class CallbackFactory
         return new FilePicker(
             $container->get('netzmacht.contao_toolkit.view.template_factory'),
             $container->get('translator'),
-            $container->get('cca.legacy_dic.contao_input'),
+            $container->get('contao.framework')->getAdapter(Input::class),
             $template
         );
     }
@@ -147,7 +147,7 @@ final class CallbackFactory
         return new PagePicker(
             $container->get('netzmacht.contao_toolkit.view.template_factory'),
             $container->get('translator'),
-            $container->get('cca.legacy_dic.contao_input'),
+            $container->get('contao.framework')->getAdapter(Input::class),
             $template
         );
     }
