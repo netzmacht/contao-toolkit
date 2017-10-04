@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Component\Hybrid;
 
 use Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElement;

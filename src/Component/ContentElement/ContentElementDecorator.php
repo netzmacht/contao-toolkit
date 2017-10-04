@@ -10,10 +10,13 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Component\ContentElement;
 
 use Contao\ContentElement;
 use Netzmacht\Contao\Toolkit\Component\ComponentDecoratorTrait;
+use Netzmacht\Contao\Toolkit\Component\ComponentFactory;
 
 /**
  * Class ContentElementDecorator.
@@ -27,7 +30,7 @@ final class ContentElementDecorator extends ContentElement
     /**
      * {@inheritDoc}
      */
-    public function __construct($contentModel, $column = 'main')
+    public function __construct($contentModel, string $column = 'main')
     {
         $factory         = $this->getFactory();
         $this->component = $factory->create($contentModel, $column);
@@ -36,7 +39,7 @@ final class ContentElementDecorator extends ContentElement
     /**
      * {@inheritDoc}
      */
-    protected function getFactory()
+    protected function getFactory(): ComponentFactory
     {
         return $this->getContainer()->get('netzmacht.contao_toolkit.component.content_element_factory');
     }

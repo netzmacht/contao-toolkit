@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Component\ContentElement;
 
 use Netzmacht\Contao\Toolkit\Component\AbstractComponent;
@@ -24,7 +26,7 @@ abstract class AbstractContentElement extends AbstractComponent implements Conte
     /**
      * {@inheritDoc}
      */
-    public function generate()
+    public function generate(): string
     {
         if (!$this->isVisible()) {
             return '';
@@ -38,7 +40,7 @@ abstract class AbstractContentElement extends AbstractComponent implements Conte
      *
      * @return bool
      */
-    protected function isVisible()
+    protected function isVisible(): bool
     {
         if (TL_MODE !== 'FE' || !BE_USER_LOGGED_IN) {
             return true;

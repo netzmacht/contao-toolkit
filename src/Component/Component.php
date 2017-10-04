@@ -10,7 +10,11 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Component;
+
+use Contao\Model;
 
 /**
  * The component is the interface describing content elements and modules.
@@ -27,7 +31,7 @@ interface Component
      *
      * @return $this
      */
-    public function set($name, $value);
+    public function set(string $name, $value): self;
 
     /**
      * Get the value of the parameter.
@@ -36,7 +40,7 @@ interface Component
      *
      * @return mixed
      */
-    public function get($name);
+    public function get(string $name);
 
     /**
      * Check if parameter exists.
@@ -45,19 +49,19 @@ interface Component
      *
      * @return bool
      */
-    public function has($name);
+    public function has(string $name): bool;
 
     /**
      * Get the assigned model.
      *
-     * @return \Model|null
+     * @return Model|null
      */
-    public function getModel();
+    public function getModel(): ?Model;
 
     /**
      * Generate the component.
      *
      * @return string
      */
-    public function generate();
+    public function generate(): string;
 }

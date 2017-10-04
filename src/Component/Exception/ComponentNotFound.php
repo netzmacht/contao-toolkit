@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Component\Exception;
 
 use Contao\ContentModel;
@@ -32,7 +34,7 @@ class ComponentNotFound extends Exception
      *
      * @return static
      */
-    public static function forModel($model)
+    public static function forModel($model): self
     {
         $message = sprintf(
             '%s of type "%s" not found for model ID %s',
@@ -51,7 +53,7 @@ class ComponentNotFound extends Exception
      *
      * @return string
      */
-    private static function describeModel($model)
+    private static function describeModel($model): string
     {
         if ($model instanceof ContentModel) {
             return 'Content element';

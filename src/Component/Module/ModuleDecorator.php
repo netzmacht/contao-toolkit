@@ -10,10 +10,13 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Component\Module;
 
 use Contao\Module;
 use Netzmacht\Contao\Toolkit\Component\ComponentDecoratorTrait;
+use Netzmacht\Contao\Toolkit\Component\ComponentFactory;
 
 /**
  * Class ModuleDecorator.
@@ -36,7 +39,7 @@ final class ModuleDecorator extends Module
     /**
      * {@inheritDoc}
      */
-    protected function getFactory()
+    protected function getFactory(): ComponentFactory
     {
         return $this->getContainer()->get('netzmacht.contao_toolkit.component.frontend_module_factory');
     }

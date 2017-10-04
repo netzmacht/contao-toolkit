@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Component;
 
 use Contao\Database\Result;
@@ -30,7 +32,7 @@ interface ComponentFactory
      *
      * @return bool
      */
-    public function supports($model);
+    public function supports($model): bool;
 
     /**
      * Create a new component.
@@ -38,8 +40,8 @@ interface ComponentFactory
      * @param Model|Result $model  Component model.
      * @param string       $column Column in which the model is generated.
      *
-     * @return mixed
+     * @return Component
      * @throws ComponentNotFound When no component factory is registered.
      */
-    public function create($model, $column);
+    public function create($model, string $column): Component;
 }

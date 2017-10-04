@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Component;
 
 use Contao\Database\Result;
@@ -33,9 +35,9 @@ final class ToolkitComponentFactory implements ComponentFactory
     /**
      * ComponentFactory constructor.
      *
-     * @param ComponentFactory[] $factories Component factories.
+     * @param array|ComponentFactory[] $factories Component factories.
      */
-    public function __construct($factories)
+    public function __construct(array $factories)
     {
         $this->factories = $factories;
     }
@@ -43,7 +45,7 @@ final class ToolkitComponentFactory implements ComponentFactory
     /**
      * {@inheritdoc}
      */
-    public function supports($model)
+    public function supports($model): bool
     {
         foreach ($this->factories as $factory) {
             if ($factory->supports($model)) {
@@ -60,10 +62,10 @@ final class ToolkitComponentFactory implements ComponentFactory
      * @param Model|Result $model  Component model.
      * @param string       $column Column in which the model is generated.
      *
-     * @return mixed
+     * @return Component
      * @throws ComponentNotFound When no component factory is registered.
      */
-    public function create($model, $column)
+    public function create($model, string $column): Component
     {
         foreach ($this->factories as $factory) {
             if ($factory->supports($model)) {

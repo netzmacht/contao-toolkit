@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Component\Module;
 
 use Contao\Database\Result;
@@ -58,7 +60,7 @@ abstract class AbstractModule extends AbstractComponent implements Module
     /**
      * {@inheritDoc}
      */
-    public function generate()
+    public function generate(): string
     {
         if (TL_MODE === 'BE' && !$this->renderInBackendMode) {
             return $this->generateBackendView();
@@ -72,7 +74,7 @@ abstract class AbstractModule extends AbstractComponent implements Module
      *
      * @return string
      */
-    protected function generateBackendView()
+    protected function generateBackendView(): string
     {
         $template = $this->getTemplateFactory()->createBackendTemplate('be_wildcard');
         $href     = $this->generateBackendLink();
@@ -95,7 +97,7 @@ abstract class AbstractModule extends AbstractComponent implements Module
      *
      * @return string
      */
-    protected function generateBackendLink()
+    protected function generateBackendLink(): string
     {
         return 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->get('id');
     }
@@ -105,7 +107,7 @@ abstract class AbstractModule extends AbstractComponent implements Module
      *
      * @return Translator
      */
-    protected function getTranslator()
+    protected function getTranslator(): Translator
     {
         return $this->translator;
     }

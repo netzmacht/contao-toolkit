@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Component;
 
 use Contao\Database\Result;
@@ -103,7 +105,7 @@ abstract class AbstractComponent implements Component
     /**
      * {@inheritDoc}
      */
-    public function set($name, $value)
+    public function set(string $name, $value): Component
     {
         $this->data[$name] = $value;
 
@@ -113,7 +115,7 @@ abstract class AbstractComponent implements Component
     /**
      * {@inheritDoc}
      */
-    public function get($name)
+    public function get(string $name)
     {
         if ($this->has($name)) {
             return $this->data[$name];
@@ -129,7 +131,7 @@ abstract class AbstractComponent implements Component
      *
      * @return bool
      */
-    public function has($name)
+    public function has(string $name): bool
     {
         return array_key_exists($name, $this->data);
     }
@@ -139,7 +141,7 @@ abstract class AbstractComponent implements Component
      *
      * @return string
      */
-    protected function getTemplateName()
+    protected function getTemplateName(): ?string
     {
         return $this->templateName;
     }
@@ -151,7 +153,7 @@ abstract class AbstractComponent implements Component
      *
      * @return $this
      */
-    protected function setTemplateName($templateName)
+    protected function setTemplateName(string $templateName): self
     {
         $this->templateName = $templateName;
 
@@ -161,7 +163,7 @@ abstract class AbstractComponent implements Component
     /**
      * {@inheritDoc}
      */
-    public function getModel()
+    public function getModel(): ?Model
     {
         return $this->model;
     }
@@ -169,7 +171,7 @@ abstract class AbstractComponent implements Component
     /**
      * {@inheritDoc}
      */
-    public function generate()
+    public function generate(): string
     {
         $this->preGenerate();
 
@@ -188,7 +190,7 @@ abstract class AbstractComponent implements Component
      *
      * @return void
      */
-    protected function preGenerate()
+    protected function preGenerate(): void
     {
     }
 
@@ -199,7 +201,7 @@ abstract class AbstractComponent implements Component
      *
      * @return string
      */
-    private function postGenerate($buffer)
+    private function postGenerate(string $buffer): string
     {
         return $buffer;
     }
@@ -211,7 +213,7 @@ abstract class AbstractComponent implements Component
      *
      * @return void
      */
-    private function prepareTemplate(Template $template)
+    private function prepareTemplate(Template $template): void
     {
         $style = [];
         $space = $this->get('space');
@@ -239,7 +241,7 @@ abstract class AbstractComponent implements Component
      *
      * @return void
      */
-    protected function compile()
+    protected function compile(): void
     {
     }
 
@@ -248,7 +250,7 @@ abstract class AbstractComponent implements Component
      *
      * @return array
      */
-    protected function getData()
+    protected function getData(): array
     {
         return $this->data;
     }
@@ -258,7 +260,7 @@ abstract class AbstractComponent implements Component
      *
      * @return TemplateFactory
      */
-    protected function getTemplateFactory()
+    protected function getTemplateFactory(): TemplateFactory
     {
         return $this->templateFactory;
     }
@@ -270,7 +272,7 @@ abstract class AbstractComponent implements Component
      *
      * @return array
      */
-    protected function deserializeData(array $row)
+    protected function deserializeData(array $row): array
     {
         if (!empty($row['space'])) {
             $row['space'] = StringUtil::deserialize($row['space']);
@@ -297,7 +299,7 @@ abstract class AbstractComponent implements Component
      *
      * @return string
      */
-    protected function compileCssClass()
+    protected function compileCssClass(): string
     {
         $cssID    = $this->get('cssID');
         $cssClass = 'ce_' . $this->get('type');
@@ -318,7 +320,7 @@ abstract class AbstractComponent implements Component
      *
      * @return string
      */
-    protected function getColumn()
+    protected function getColumn(): string
     {
         return $this->column;
     }

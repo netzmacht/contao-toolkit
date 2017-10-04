@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Component\Hybrid;
 
 use Netzmacht\Contao\Toolkit\Component\Module\AbstractModule;
@@ -26,7 +28,7 @@ abstract class AbstractHybrid extends AbstractModule implements Hybrid
     /**
      * {@inheritDoc}
      */
-    public function generate()
+    public function generate(): string
     {
         if ($this->isContentElement()) {
             if (!$this->isVisible()) {
@@ -44,7 +46,7 @@ abstract class AbstractHybrid extends AbstractModule implements Hybrid
      *
      * @return bool
      */
-    protected function isVisible()
+    protected function isVisible(): bool
     {
         if (TL_MODE !== 'FE' || !BE_USER_LOGGED_IN) {
             return true;
@@ -70,7 +72,7 @@ abstract class AbstractHybrid extends AbstractModule implements Hybrid
      *
      * @return bool
      */
-    private function isContentElement()
+    private function isContentElement(): bool
     {
         return $this->getModel() instanceof \ContentModel;
     }

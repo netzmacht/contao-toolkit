@@ -10,7 +10,11 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Component;
+
+use Contao\Model;
 
 /**
  * The ComponentDecorator trait is designed to provide a decorator for content elements and frontend modules.
@@ -29,7 +33,7 @@ trait ComponentDecoratorTrait
     /**
      * {@inheritDoc}
      */
-    public function __set($strKey, $varValue)
+    public function __set(string $strKey, $varValue): void
     {
         $this->component->set($strKey, $varValue);
     }
@@ -37,7 +41,7 @@ trait ComponentDecoratorTrait
     /**
      * {@inheritDoc}
      */
-    public function __get($strKey)
+    public function __get(string $strKey)
     {
         return $this->component->get($strKey);
     }
@@ -45,7 +49,7 @@ trait ComponentDecoratorTrait
     /**
      * {@inheritDoc}
      */
-    public function __isset($strKey)
+    public function __isset(string $strKey): bool
     {
         return $this->component->has($strKey);
     }
@@ -53,7 +57,7 @@ trait ComponentDecoratorTrait
     /**
      * {@inheritDoc}
      */
-    public function getModel()
+    public function getModel(): ?Model
     {
         return $this->component->getModel();
     }
@@ -61,7 +65,7 @@ trait ComponentDecoratorTrait
     /**
      * {@inheritDoc}
      */
-    public function generate()
+    public function generate(): string
     {
         return $this->component->generate();
     }
@@ -69,7 +73,7 @@ trait ComponentDecoratorTrait
     /**
      * {@inheritDoc}
      */
-    protected function compile()
+    protected function compile(): void
     {
         // Do nothing.
     }
@@ -79,5 +83,5 @@ trait ComponentDecoratorTrait
      *
      * @return ComponentFactory
      */
-    abstract protected function getFactory();
+    abstract protected function getFactory(): ComponentFactory;
 }
