@@ -24,7 +24,6 @@
     "require": {
         "php": ">=7.1",
         "contao/core-bundle": "~4.4",
-        "contao-community-alliance/dependency-container": "~2.0@dev",
         "webmozart/assert": "^1.1",
         "phpcq/all-tasks": "~1.2"
     },
