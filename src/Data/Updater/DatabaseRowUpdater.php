@@ -13,6 +13,7 @@
 namespace Netzmacht\Contao\Toolkit\Data\Updater;
 
 use Contao\BackendUser;
+use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
 use Contao\User;
 use Contao\Versions;
 use Doctrine\DBAL\Connection;
@@ -29,11 +30,11 @@ use Netzmacht\Contao\Toolkit\Data\Exception\AccessDenied;
 final class DatabaseRowUpdater implements Updater
 {
     /**
-     * Contao user.
+     * Contao framework.
      *
-     * @var User
+     * @var ContaoFramework
      */
-    private $user;
+    private $framework;
 
     /**
      * The database connection.
@@ -59,14 +60,18 @@ final class DatabaseRowUpdater implements Updater
     /**
      * DatabaseRowUpdater constructor.
      *
-     * @param User       $user       User object.
-     * @param Connection $connection Database connection.
-     * @param Manager    $dcaManager Data container manager.
-     * @param Invoker    $invoker    Callback invoker.
+     * @param ContaoFramework $framework  Contao framework.
+     * @param Connection      $connection Database connection.
+     * @param Manager         $dcaManager Data container manager.
+     * @param Invoker         $invoker    Callback invoker.
      */
-    public function __construct(User $user, Connection $connection, Manager $dcaManager, Invoker $invoker)
-    {
-        $this->user       = $user;
+    public function __construct(
+        ContaoFramework $framework,
+        Connection $connection,
+        Manager $dcaManager,
+        Invoker $invoker
+    ) {
+        $this->framework  = $framework;
         $this->connection = $connection;
         $this->invoker    = $invoker;
         $this->dcaManager = $dcaManager;
@@ -109,8 +114,11 @@ final class DatabaseRowUpdater implements Updater
      */
     public function hasUserAccess($tableName, $columnName)
     {
-        if ($this->user instanceof BackendUser) {
-            return $this->user->hasAccess($tableName . '::' . $columnName, 'alexf');
+        /** @var BackendUser $user */
+        $user = $this->framework->getAdapter(User::class);
+
+        if ($user instanceof BackendUser) {
+            return $user->hasAccess($tableName . '::' . $columnName, 'alexf');
         }
 
         return false;

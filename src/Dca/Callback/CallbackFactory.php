@@ -13,6 +13,7 @@
 namespace Netzmacht\Contao\Toolkit\Dca\Callback;
 
 use Contao\Controller;
+use Contao\Input;
 use Contao\System;
 use Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Button\StateButtonCallback;
@@ -65,7 +66,7 @@ final class CallbackFactory
         $container = System::getContainer();
 
         return new StateButtonCallback(
-            $container->get('cca.legacy_dic.contao_input'),
+            $container->get('contao.framework')->getAdapter(Input::class),
             $container->get('netzmacht.contao_toolkit.data.database_row_updater'),
             $dataContainerName,
             $column,
@@ -104,7 +105,7 @@ final class CallbackFactory
         $container = System::getContainer();
 
         return new ColorPicker(
-            $container->get('netzmacht.contao_toolkit.template_factory'),
+            $container->get('netzmacht.contao_toolkit.view.template_factory'),
             $container->get('translator'),
             $container->get('cca.legacy_dic.contao_input'),
             COLORPICKER,
@@ -125,7 +126,7 @@ final class CallbackFactory
         $container = System::getContainer();
 
         return new FilePicker(
-            $container->get('netzmacht.contao_toolkit.template_factory'),
+            $container->get('netzmacht.contao_toolkit.view.template_factory'),
             $container->get('translator'),
             $container->get('cca.legacy_dic.contao_input'),
             $template
@@ -144,7 +145,7 @@ final class CallbackFactory
         $container = System::getContainer();
 
         return new PagePicker(
-            $container->get('netzmacht.contao_toolkit.template_factory'),
+            $container->get('netzmacht.contao_toolkit.view.template_factory'),
             $container->get('translator'),
             $container->get('cca.legacy_dic.contao_input'),
             $template
@@ -176,7 +177,7 @@ final class CallbackFactory
         $container = System::getContainer();
 
         return new PopupWizard(
-            $container->get('netzmacht.contao_toolkit.template_factory'),
+            $container->get('netzmacht.contao_toolkit.view.template_factory'),
             $container->get('translator'),
             $container->get('security.csrf.token_manager'),
             $container->getParameter('contao.csrf_token_name'),

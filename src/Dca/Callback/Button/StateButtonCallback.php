@@ -81,7 +81,7 @@ final class StateButtonCallback
      * @param bool        $inverse      If true state value is handled inverse.
      */
     public function __construct(
-        Input $input,
+        $input,
         Updater $updater,
         $tableName,
         $stateColumn,
