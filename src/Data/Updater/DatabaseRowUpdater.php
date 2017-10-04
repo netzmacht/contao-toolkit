@@ -13,9 +13,9 @@
 namespace Netzmacht\Contao\Toolkit\Data\Updater;
 
 use Contao\BackendUser;
-use Contao\Database;
 use Contao\User;
 use Contao\Versions;
+use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
@@ -38,9 +38,9 @@ final class DatabaseRowUpdater implements Updater
     /**
      * The database connection.
      *
-     * @var Database
+     * @var Connection
      */
-    private $database;
+    private $connection;
 
     /**
      * Callback invoker.
@@ -59,15 +59,15 @@ final class DatabaseRowUpdater implements Updater
     /**
      * DatabaseRowUpdater constructor.
      *
-     * @param User     $user       User object.
-     * @param Database $database   Database connection.
-     * @param Manager  $dcaManager Data container manager.
-     * @param Invoker  $invoker    Callback invoker.
+     * @param User       $user       User object.
+     * @param Connection $connection Database connection.
+     * @param Manager    $dcaManager Data container manager.
+     * @param Invoker    $invoker    Callback invoker.
      */
-    public function __construct(User $user, Database $database, Manager $dcaManager, Invoker $invoker)
+    public function __construct(User $user, Connection $connection, Manager $dcaManager, Invoker $invoker)
     {
         $this->user       = $user;
-        $this->database   = $database;
+        $this->connection = $connection;
         $this->invoker    = $invoker;
         $this->dcaManager = $dcaManager;
     }
@@ -190,26 +190,31 @@ final class DatabaseRowUpdater implements Updater
      */
     private function save(Definition $definition, $recordId, array $data)
     {
-        // Filter empty values which should not be saved.
+        $builder = $this->connection->createQueryBuilder()
+            ->update($definition->getName())
+            ->where('id = :id')
+            ->setParameter('id', $recordId);
+
         foreach ($data as $column => $value) {
+            // Filter empty values which should not be saved.
             if ($value == '') {
                 if ($definition->get(['fields', $column, 'eval', 'alwaysSave'], false)
                     && $definition->get(['fields', $column, 'eval', 'doNotSaveEmpty'], false)
                 ) {
-                    unset($data[$column]);
+                    continue;
                 }
             }
+
+            $builder->set($column, $value);
         }
 
         // Add tstamp if field exists.
-        if (empty($data['tstamp'] && $this->database->fieldExists('tstamp', $definition->getName()))) {
-            $data['tstamp'] = time();
+        $columns = $this->connection->getSchemaManager()->listTableColumns($definition->getName());
+        if (empty($data['tstamp']) && isset($columns['tstamp'])) {
+            $builder->set('tstamp', time());
         }
 
         // Store the data.
-        $this->database
-            ->prepare(sprintf('UPDATE %s %s WHERE id=?', $definition->getName(), '%s'))
-            ->set($data)
-            ->execute($recordId);
+        $builder->execute();
     }
 }

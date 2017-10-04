@@ -12,7 +12,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Validator;
 
-use Contao\Database;
+use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Data\Alias\Validator;
 
 /**
@@ -25,9 +25,9 @@ final class UniqueDatabaseValueValidator implements Validator
     /**
      * Database connection.
      *
-     * @var Database
+     * @var Connection
      */
-    private $database;
+    private $connection;
 
     /**
      * Table name.
@@ -42,13 +42,6 @@ final class UniqueDatabaseValueValidator implements Validator
      * @var string
      */
     private $columnName;
-
-    /**
-     * Unique query.
-     *
-     * @var string
-     */
-    private $query;
 
     /**
      * Allow an empty alias.
@@ -67,34 +60,24 @@ final class UniqueDatabaseValueValidator implements Validator
     /**
      * UniqueDatabaseValueValidator constructor.
      *
-     * @param Database $database        Database connection.
-     * @param string   $tableName       Table name.
-     * @param string   $columnName      Alias value column name.
-     * @param array    $uniqueKeyFields Other fields which spans the unique key along the alias column.
-     * @param bool     $allowEmptyAlias Allow empty alias.
+     * @param Connection $connection      Database connection.
+     * @param string     $tableName       Table name.
+     * @param string     $columnName      Alias value column name.
+     * @param array      $uniqueKeyFields Other fields which spans the unique key along the alias column.
+     * @param bool       $allowEmptyAlias Allow empty alias.
      */
     public function __construct(
-        Database $database,
+        Connection $connection,
         $tableName,
         $columnName,
         array $uniqueKeyFields = [],
         $allowEmptyAlias = false
     ) {
-        $this->database        = $database;
+        $this->connection      = $connection;
         $this->tableName       = $tableName;
         $this->columnName      = $columnName;
         $this->allowEmptyAlias = $allowEmptyAlias;
         $this->uniqueKeyFields = $uniqueKeyFields;
-
-        $this->query = sprintf(
-            'SELECT count(*) AS result FROM %s WHERE %s=?',
-            $this->tableName,
-            $this->columnName
-        );
-
-        foreach ($uniqueKeyFields as $field) {
-            $this->query .= sprintf(' AND %s=?', $field);
-        }
     }
 
     /**
@@ -106,22 +89,25 @@ final class UniqueDatabaseValueValidator implements Validator
             return false;
         }
 
-        $query = $this->query;
-        $value = [$value];
+        $builder = $this->connection->createQueryBuilder();
+        $builder
+            ->select('count(*) AS result')
+            ->from($this->tableName)
+            ->where($this->columnName . '= :value')
+            ->setParameter('value', $value);
 
         foreach ($this->uniqueKeyFields as $field) {
-            $value[] = $result->$field;
+            $builder->andWhere($field . '= :' . $field);
+            $builder->setParameter($field, $result->$field);
         }
 
         if ($exclude) {
-            $query .= ' AND id NOT IN(?' . str_repeat(',?', (count($exclude) - 1)) . ')';
-            $value  = array_merge($value, $exclude);
+            $builder->andWhere('id NOT IN(:excluded)');
+            $builder->setParameter('excluded', $exclude, Connection::PARAM_INT_ARRAY);
         }
 
-        $result = $this->database
-            ->prepare($query)
-            ->execute($value);
+        $statement = $builder->execute();
 
-        return $result->result == 0;
+        return $statement->fetch('result') == 0;
     }
 }
