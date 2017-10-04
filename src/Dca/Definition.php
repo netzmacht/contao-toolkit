@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca;
 
 /**
@@ -39,7 +41,7 @@ final class Definition
      * @param string $name Name of the data definition.
      * @param array  $dca  The data definition array.
      */
-    public function __construct($name, array &$dca)
+    public function __construct(string $name, array &$dca)
     {
         $this->name = $name;
         $this->dca  =& $dca;
@@ -52,7 +54,7 @@ final class Definition
      *
      * @return array
      */
-    private function path($path)
+    private function path($path): array
     {
         if (!is_array($path)) {
             $path = explode('/', $path);
@@ -68,7 +70,7 @@ final class Definition
      * @param mixed        $default           The default value.
      * @param bool         $createIfNotExists Create definition if not exists.
      *
-     * @return mixed .
+     * @return mixed
      */
     public function &get($path, $default = null, $createIfNotExists = false)
     {
@@ -96,7 +98,7 @@ final class Definition
      *
      * @return bool
      */
-    public function has($path)
+    public function has($path): bool
     {
         $dca =& $this->dca;
 
@@ -119,7 +121,7 @@ final class Definition
      *
      * @return bool
      */
-    public function set($path, $value)
+    public function set($path, $value): bool
     {
         $path    = is_array($path) ? $path : explode('/', $path);
         $current =& $this->dca;
@@ -150,7 +152,7 @@ final class Definition
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }

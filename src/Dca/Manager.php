@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca;
 
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
@@ -73,7 +75,7 @@ final class Manager
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function getDefinition($name, $noCache = false)
+    public function getDefinition(string $name, bool $noCache = false): Definition
     {
         if ($noCache) {
             $this->loader->loadDataContainer($name, $noCache);
@@ -95,25 +97,18 @@ final class Manager
     /**
      * Get a formatter for a definition.
      *
-     * @param Definition|string $definition Definition or name.
+     * @param Definition|string $name Definition or name.
      *
      * @return Formatter
      */
-    public function getFormatter($definition)
+    public function getFormatter(string $name): Formatter
     {
-        if (!$definition instanceof Definition) {
-            if (isset($this->formatter[$definition])) {
-                return $this->formatter[$definition];
-            }
-
-            $definition = $this->getDefinition($definition);
+        if (!isset($this->formatter[$name])) {
+            $definition = $this->getDefinition($name);
+            $this->formatter[$name] = $this->formatterFactory->createFormatterFor($definition);
         }
 
-        if (!isset($this->formatter[$definition->getName()])) {
-            $this->formatter[$definition->getName()] = $this->formatterFactory->createFormatterFor($definition);
-        }
-
-        return $this->formatter[$definition->getName()];
+        return $this->formatter[$name];
     }
 
     /**
@@ -125,7 +120,7 @@ final class Manager
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    protected function assertValidDca($name)
+    protected function assertValidDca(string $name): void
     {
         Assert::keyExists($GLOBALS['TL_DCA'], $name);
         Assert::isArray($GLOBALS['TL_DCA'][$name]);
