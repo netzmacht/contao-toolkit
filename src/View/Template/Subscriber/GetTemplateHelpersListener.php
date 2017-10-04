@@ -10,9 +10,9 @@
 
 namespace Netzmacht\Contao\Toolkit\View\Template\Subscriber;
 
-use ContaoCommunityAlliance\Translator\TranslatorInterface as Translator;
 use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
 use Netzmacht\Contao\Toolkit\View\Template\Event\GetTemplateHelpersEvent;
+use Symfony\Component\Translation\TranslatorInterface as Translator;
 
 /**
  * Class GetTemplateHelpersListener registers the default supported template helpers for all templates.

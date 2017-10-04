@@ -12,8 +12,8 @@
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
 
 use Contao\Input;
-use ContaoCommunityAlliance\Translator\TranslatorInterface as Translator;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
+use Symfony\Component\Translation\TranslatorInterface as Translator;
 
 /**
  * AbstractPicker is the base class for a picker wizard.

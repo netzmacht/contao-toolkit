@@ -2,10 +2,10 @@
 
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use ContaoCommunityAlliance\Translator\TranslatorInterface;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\YesNoFormatter;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class YesNoFormatterSpec
@@ -17,8 +17,8 @@ class YesNoFormatterSpec extends ObjectBehavior
 {
     function let(TranslatorInterface $translator)
     {
-        $translator->translate('yes', 'MSC', Argument::any())->willReturn('ja');
-        $translator->translate('no', 'MSC', Argument::any())->willReturn('nein');
+        $translator->trans('MSC.yes', [], 'contao_default', Argument::any())->willReturn('ja');
+        $translator->trans('MSC.no', [], 'contao_default', Argument::any())->willReturn('nein');
 
         $this->beConstructedWith($translator);
     }
@@ -69,10 +69,10 @@ class YesNoFormatterSpec extends ObjectBehavior
 
     function it_translate_checkbox_state(TranslatorInterface $translator)
     {
-        $translator->translate('yes', 'MSC')->shouldBeCalled();
+        $translator->trans('MSC.yes', [], 'contao_default')->shouldBeCalled();
         $this->format('1', 'test', [])->shouldReturn('ja');
 
-        $translator->translate('no', 'MSC')->shouldBeCalled();
+        $translator->trans('MSC.no',  [], 'contao_default')->shouldBeCalled();
         $this->format('', 'test', [])->shouldReturn('nein');
     }
 }

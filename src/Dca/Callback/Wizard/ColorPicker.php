@@ -12,8 +12,8 @@
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
 
 use Contao\Input;
-use ContaoCommunityAlliance\Translator\TranslatorInterface as Translator;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
+use Symfony\Component\Translation\TranslatorInterface as Translator;
 
 /**
  * Class ColorPicker.
@@ -74,7 +74,7 @@ final class ColorPicker extends AbstractPicker
     {
         $template = $this->createTemplate();
         $template
-            ->set('title', $this->translator->translate('MSC.colorpicker'))
+            ->set('title', $this->translator->trans('MSC.colorpicker', [], 'contao_default'))
             ->set('field', $fieldName)
             ->set('version', $this->version)
             ->set('icon', 'pickcolor.gif')

@@ -37,13 +37,13 @@ final class PagePicker extends AbstractFieldPicker
 
         $cssId   = $fieldName . (($this->input->get('act') === 'editAll') ? '_' . $rowId : '');
         $jsTitle = specialchars(
-            str_replace('\'', '\\\'', $this->translator->translate('MOD.page.0', 'modules'))
+            str_replace('\'', '\\\'', $this->translator->trans('MOD.page.0', [], 'contao_modules'))
         );
 
         $template = $this->createTemplate();
         $template
             ->set('url', $url)
-            ->set('title', $this->translator->translate('MSC.pagepicker'))
+            ->set('title', $this->translator->trans('MSC.pagepicker', [], 'contao_default'))
             ->set('jsTitle', $jsTitle)
             ->set('field', $fieldName)
             ->set('icon', 'pickpage.gif')

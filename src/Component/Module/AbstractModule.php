@@ -10,12 +10,12 @@
 
 namespace Netzmacht\Contao\Toolkit\Component\Module;
 
-use ContaoCommunityAlliance\Translator\TranslatorInterface as Translator;
 use Contao\Database\Result;
 use Contao\Model;
 use Contao\Model\Collection;
 use Netzmacht\Contao\Toolkit\Component\AbstractComponent;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
+use Symfony\Component\Translation\TranslatorInterface as Translator;
 
 /**
  * Class AbstractModule.
@@ -76,7 +76,7 @@ abstract class AbstractModule extends AbstractComponent implements Module
         $href     = $this->generateBackendLink();
         $wildcard = sprintf(
             '### %s ###',
-            $this->getTranslator()->translate(sprintf('FMD.%s.0', $this->get('type')))
+            $this->getTranslator()->trans(sprintf('FMD.%s.0', $this->get('type')), [], 'contao_modules')
         );
 
         $template->set('wildcard', $wildcard);

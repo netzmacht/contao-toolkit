@@ -3,7 +3,7 @@ services:
     class: Netzmacht\Contao\Toolkit\View\Template\Subscriber\GetTemplateHelpersListener
     arguments:
       - '@netzmacht.contao_toolkit.assets_manager'
-      - '@cca.translator'
+      - '@translator'
     tags:
       - { name: 'kernel.event_listener', event: 'netzmacht.contao_toolkit.view.get_template_helpers'}
 

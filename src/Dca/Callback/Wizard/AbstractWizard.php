@@ -11,10 +11,10 @@
 
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
 
-use ContaoCommunityAlliance\Translator\TranslatorInterface as Translator;
 use DataContainer;
 use Netzmacht\Contao\Toolkit\View\Template;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
+use Symfony\Component\Translation\TranslatorInterface as Translator;
 
 /**
  * AbstractWizard is the base class for a wizard.

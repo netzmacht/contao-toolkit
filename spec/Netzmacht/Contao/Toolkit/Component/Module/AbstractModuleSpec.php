@@ -2,12 +2,12 @@
 
 namespace spec\Netzmacht\Contao\Toolkit\Component\Module;
 
-use ContaoCommunityAlliance\Translator\TranslatorInterface;
 use Netzmacht\Contao\Toolkit\Component\Module\AbstractModule;
 use Netzmacht\Contao\Toolkit\View\Template;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Symfony\Component\Translation\TranslatorInterface;
 
 if (!defined('BE_USER_LOGGED_IN')) {
     define('BE_USER_LOGGED_IN', false);

@@ -103,7 +103,7 @@ final class CallbackFactory
 
         return new ColorPicker(
             $container->get('netzmacht.contao_toolkit.template_factory'),
-            $container->get('cca.translator.contao_translator'),
+            $container->get('translator'),
             $container->get('cca.legacy_dic.contao_input'),
             COLORPICKER,
             $replaceHex,
@@ -124,7 +124,7 @@ final class CallbackFactory
 
         return new FilePicker(
             $container->get('netzmacht.contao_toolkit.template_factory'),
-            $container->get('cca.translator.contao_translator'),
+            $container->get('translator'),
             $container->get('cca.legacy_dic.contao_input'),
             $template
         );
@@ -143,7 +143,7 @@ final class CallbackFactory
 
         return new PagePicker(
             $container->get('netzmacht.contao_toolkit.template_factory'),
-            $container->get('cca.translator.contao_translator'),
+            $container->get('translator'),
             $container->get('cca.legacy_dic.contao_input'),
             $template
         );
@@ -175,7 +175,7 @@ final class CallbackFactory
 
         return new PopupWizard(
             $container->get('netzmacht.contao_toolkit.template_factory'),
-            $container->get('cca.translator.contao_translator'),
+            $container->get('translator'),
             $container->get('security.csrf.token_manager'),
             $container->getParameter('contao.csrf_token_name'),
             $href,

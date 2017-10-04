@@ -2,12 +2,12 @@
 
 namespace spec\Netzmacht\Contao\Toolkit\View\Template\Subscriber;
 
-use ContaoCommunityAlliance\Translator\TranslatorInterface;
 use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
 use Netzmacht\Contao\Toolkit\View\Template\Event\GetTemplateHelpersEvent;
 use Netzmacht\Contao\Toolkit\View\Template\Subscriber\GetTemplateHelpersListener;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class GetTemplateHelpersListenerSpec

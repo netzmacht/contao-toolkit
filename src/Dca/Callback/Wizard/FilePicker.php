@@ -37,13 +37,13 @@ final class FilePicker extends AbstractFieldPicker
 
         $cssId   = $fieldName . (($this->input->get('act') === 'editAll') ? '_' . $rowId : '');
         $jsTitle = specialchars(
-            str_replace('\'', '\\\'', $this->translator->translate('MOD.files.0', 'modules'))
+            str_replace('\'', '\\\'', $this->translator->trans('MOD.files.0', [], 'contao_modules'))
         );
 
         $template = $this->createTemplate();
         $template
             ->set('url', $url)
-            ->set('title', $this->translator->translate('MSC.filepicker'))
+            ->set('title', $this->translator->trans('MSC.filepicker', [], 'contao_default'))
             ->set('jsTitle', $jsTitle)
             ->set('field', $fieldName)
             ->set('icon', 'pickfile.gif')
