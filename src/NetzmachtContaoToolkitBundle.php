@@ -11,6 +11,7 @@
 namespace Netzmacht\Contao\Toolkit;
 
 use Netzmacht\Contao\Toolkit\DependencyInjection\CompilerPass\AddTaggedServicesAsArgumentCompilerPass;
+use Netzmacht\Contao\Toolkit\DependencyInjection\CompilerPass\TranslatorCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -27,6 +28,8 @@ class NetzmachtContaoToolkitBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
+
+        $container->addCompilerPass(new TranslatorCompilerPass());
 
         $container->addCompilerPass(
             new AddTaggedServicesAsArgumentCompilerPass(
