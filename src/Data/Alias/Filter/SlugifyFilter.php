@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
 use Contao\StringUtil;
@@ -61,12 +63,12 @@ final class SlugifyFilter extends AbstractValueFilter
     /**
      * {@inheritdoc}
      */
-    public function apply($model, $value, $separator)
+    public function apply($model, $value, string $separator): string
     {
         $values = array();
 
         foreach ($this->columns as $column) {
-            $values[] = $this->slugify($model->$column, $separator);
+            $values[] = $this->slugify((string) $model->$column, $separator);
         }
 
         return $this->combine($value, $values, $separator);
@@ -80,7 +82,7 @@ final class SlugifyFilter extends AbstractValueFilter
      *
      * @return string
      */
-    private function slugify($value, $separator)
+    private function slugify(string $value, string $separator): string
     {
         $arrSearch  = array('/[^a-zA-Z0-9 \.\&\/_-]+/', '/[ \.\&\/-]+/');
         $arrReplace = array('', $separator);

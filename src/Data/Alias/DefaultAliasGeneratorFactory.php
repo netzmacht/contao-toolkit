@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
 use Doctrine\DBAL\Connection;
@@ -51,7 +53,7 @@ class DefaultAliasGeneratorFactory
      *
      * @return FilterBasedAliasGenerator
      */
-    public function __invoke($dataContainerName, $aliasField, array $fields)
+    public function __invoke(string $dataContainerName, string $aliasField, array $fields)
     {
         $filters = [
             new ExistingAliasFilter(),

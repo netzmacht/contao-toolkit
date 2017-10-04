@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
 /**
@@ -46,7 +48,7 @@ final class SuffixFilter extends AbstractFilter
      * @param bool $break If true break after the filter if value is unique.
      * @param int  $start Start value.
      */
-    public function __construct($break = true, $start = 2)
+    public function __construct(bool $break = true, int $start = 2)
     {
         parent::__construct($break, static::COMBINE_APPEND);
 
@@ -56,7 +58,7 @@ final class SuffixFilter extends AbstractFilter
     /**
      * {@inheritDoc}
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->index = $this->start;
         $this->value = null;
@@ -65,7 +67,7 @@ final class SuffixFilter extends AbstractFilter
     /**
      * {@inheritDoc}
      */
-    public function repeatUntilValid()
+    public function repeatUntilValid(): bool
     {
         return true;
     }
@@ -73,7 +75,7 @@ final class SuffixFilter extends AbstractFilter
     /**
      * {@inheritDoc}
      */
-    public function apply($model, $value, $separator)
+    public function apply($model, $value, string $separator): string
     {
         if ($this->value === null) {
             $this->value = $value;

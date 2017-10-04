@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
 use Contao\Database\Result;
@@ -28,7 +30,7 @@ interface AliasGenerator
      * @param Result|Model $result The database result.
      * @param mixed        $value  The current value.
      *
-     * @return mixed|null|string
+     * @return string
      */
-    public function generate($result, $value = null);
+    public function generate($result, $value = null): ?string;
 }

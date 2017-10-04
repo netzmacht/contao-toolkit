@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Validator;
 
 use Doctrine\DBAL\Connection;
@@ -68,10 +70,10 @@ final class UniqueDatabaseValueValidator implements Validator
      */
     public function __construct(
         Connection $connection,
-        $tableName,
-        $columnName,
+        string $tableName,
+        string $columnName,
         array $uniqueKeyFields = [],
-        $allowEmptyAlias = false
+        bool $allowEmptyAlias = false
     ) {
         $this->connection      = $connection;
         $this->tableName       = $tableName;
@@ -83,7 +85,7 @@ final class UniqueDatabaseValueValidator implements Validator
     /**
      * {@inheritDoc}
      */
-    public function validate($result, $value, array $exclude = null)
+    public function validate($result, $value, array $exclude = null): bool
     {
         if (!$this->allowEmptyAlias && $value == '') {
             return false;

@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
 use Contao\Database\Result;
@@ -31,5 +33,5 @@ interface Validator
      *
      * @return bool
      */
-    public function validate($result, $value, array $exclude = null);
+    public function validate($result, $value, array $exclude = null): bool;
 }

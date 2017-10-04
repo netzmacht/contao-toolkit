@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
 use Contao\Database;
@@ -48,7 +50,7 @@ final class FilterBasedAliasGenerator implements AliasGenerator
     /**
      * Filters being applied when standardize the value.
      *
-     * @var Filter[]
+     * @var array|Filter[]
      */
     private $filters = array();
 
@@ -68,8 +70,13 @@ final class FilterBasedAliasGenerator implements AliasGenerator
      * @param string    $aliasField The alias field.
      * @param string    $separator  Value separator.
      */
-    public function __construct($filters, Validator $validator, $tableName, $aliasField = 'alias', $separator = '-')
-    {
+    public function __construct(
+        $filters,
+        Validator $validator,
+        string $tableName,
+        string $aliasField = 'alias',
+        string $separator = '-'
+    ) {
         Assert::allIsInstanceOf($filters, Filter::class);
 
         $this->validator  = $validator;
@@ -84,7 +91,7 @@ final class FilterBasedAliasGenerator implements AliasGenerator
      *
      * @return string
      */
-    public function getAliasField()
+    public function getAliasField(): string
     {
         return $this->aliasField;
     }
@@ -94,7 +101,7 @@ final class FilterBasedAliasGenerator implements AliasGenerator
      *
      * @return string
      */
-    public function getTableName()
+    public function getTableName(): string
     {
         return $this->tableName;
     }
@@ -104,7 +111,7 @@ final class FilterBasedAliasGenerator implements AliasGenerator
      *
      * @return string
      */
-    public function getSeparator()
+    public function getSeparator(): string
     {
         return $this->separator;
     }
@@ -112,9 +119,9 @@ final class FilterBasedAliasGenerator implements AliasGenerator
     /**
      * Get all filters.
      *
-     * @return Filter[]
+     * @return array|Filter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return $this->filters;
     }
@@ -128,7 +135,7 @@ final class FilterBasedAliasGenerator implements AliasGenerator
      *
      * @return bool
      */
-    private function isValid($result, $value, $rowId)
+    private function isValid($result, $value, int $rowId): bool
     {
         return $this->validator->validate($result, $value, [$rowId]);
     }
@@ -148,7 +155,7 @@ final class FilterBasedAliasGenerator implements AliasGenerator
 
             do {
                 $value  = $filter->apply($result, $value, $this->separator);
-                $unique = $this->isValid($result, $value, $result->id);
+                $unique = $this->isValid($result, $value, (int) $result->id);
 
                 if ($filter->breakIfValid() && $unique) {
                     break 2;
@@ -168,17 +175,17 @@ final class FilterBasedAliasGenerator implements AliasGenerator
      * @return void
      * @throws InvalidAliasException When No unique alias is generated.
      */
-    private function guardValidAlias($result, $value)
+    private function guardValidAlias($result, $value): void
     {
-        if (!$value || !$this->isValid($result, $value, $result->id)) {
-            throw InvalidAliasException::forDatabaseEntry($this->tableName, $result->id, $value);
+        if (!$value || !$this->isValid($result, $value, (int) $result->id)) {
+            throw InvalidAliasException::forDatabaseEntry($this->tableName, (int) $result->id, $value);
         }
     }
 
     /**
      * {@inheritDoc}
      */
-    public function generate($result, $value = null)
+    public function generate($result, $value = null): ?string
     {
         $value = $this->applyFilters($result, $value);
         $this->guardValidAlias($result, $value);

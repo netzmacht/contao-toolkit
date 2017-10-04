@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
 use Contao\Database\Result;
@@ -27,21 +29,21 @@ interface Filter
      *
      * @return bool
      */
-    public function repeatUntilValid();
+    public function repeatUntilValid(): bool;
 
     /**
      * If true no ongoing filters get applied.
      *
      * @return bool
      */
-    public function breakIfValid();
+    public function breakIfValid(): bool;
 
     /**
      * Initialize the filter.
      *
      * @return void
      */
-    public function initialize();
+    public function initialize(): void;
 
     /**
      * Apply the filter.
@@ -52,5 +54,5 @@ interface Filter
      *
      * @return string
      */
-    public function apply($model, $value, $separator);
+    public function apply($model, $value, string $separator): string;
 }

@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Exception;
 
 use Netzmacht\Contao\Toolkit\Exception;
@@ -30,7 +32,7 @@ class InvalidAliasException extends Exception
      *
      * @return static
      */
-    public static function forDatabaseEntry($tableName, $rowId, $aliasValue)
+    public static function forDatabaseEntry(string $tableName, int $rowId, $aliasValue): self
     {
         $message = sprintf(
             'Could not create unique alias for "%s::%s". Alias value "%s"',

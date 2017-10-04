@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter;
@@ -24,14 +26,14 @@ final class ExistingAliasFilter implements Filter
     /**
      * {@inheritDoc}
      */
-    public function initialize()
+    public function initialize(): void
     {
     }
 
     /**
      * {@inheritDoc}
      */
-    public function repeatUntilValid()
+    public function repeatUntilValid(): bool
     {
         return false;
     }
@@ -39,7 +41,7 @@ final class ExistingAliasFilter implements Filter
     /**
      * {@inheritDoc}
      */
-    public function breakIfValid()
+    public function breakIfValid(): bool
     {
         return true;
     }
@@ -47,7 +49,7 @@ final class ExistingAliasFilter implements Filter
     /**
      * {@inheritDoc}
      */
-    public function apply($model, $value, $separator)
+    public function apply($model, $value, string $separator): string
     {
         return $value;
     }
