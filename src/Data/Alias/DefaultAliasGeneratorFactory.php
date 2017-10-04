@@ -12,7 +12,7 @@
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
-use Contao\Database;
+use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\ExistingAliasFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SlugifyFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SuffixFilter;
@@ -28,16 +28,16 @@ class DefaultAliasGeneratorFactory
     /**
      * Database connection.
      *
-     * @var Database
+     * @var Connection
      */
     private $connection;
 
     /**
      * DefaultAliasGeneratorFactory constructor.
      *
-     * @param Database $connection Database connection.
+     * @param Connection $connection Database connection.
      */
-    public function __construct(Database $connection)
+    public function __construct(Connection $connection)
     {
         $this->connection = $connection;
     }

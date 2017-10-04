@@ -36,7 +36,7 @@ services:
   netzmacht.contao_toolkit.data.alias_generator.factory.default_factory:
     class: Netzmacht\Contao\Toolkit\Data\Alias\DefaultAliasGeneratorFactory
     arguments:
-      - '@cca.legacy_dic.contao_database_connection'
+      - '@database_connection'
 
   netzmacht.contao_toolkit.data.database_row_updater:
     class: Netzmacht\Contao\Toolkit\Data\Updater\DatabaseRowUpdater

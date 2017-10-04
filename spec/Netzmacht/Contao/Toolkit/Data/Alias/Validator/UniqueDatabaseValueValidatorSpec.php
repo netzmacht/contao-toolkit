@@ -2,7 +2,9 @@
 
 namespace spec\Netzmacht\Contao\Toolkit\Data\Alias\Validator;
 
-use Database;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Driver\Statement;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Netzmacht\Contao\Toolkit\Data\Alias\Validator\UniqueDatabaseValueValidator;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -19,9 +21,9 @@ class UniqueDatabaseValueValidatorSpec extends ObjectBehavior
 
     const FIELD_NAME = 'alias';
 
-    function let(Database $database)
+    function let(Connection $connection)
     {
-        $this->beConstructedWith($database, static::TABLE_NAME, static::FIELD_NAME);
+        $this->beConstructedWith($connection, static::TABLE_NAME, static::FIELD_NAME);
     }
 
     function it_is_initializable()
@@ -34,20 +36,39 @@ class UniqueDatabaseValueValidatorSpec extends ObjectBehavior
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Data\Alias\Validator');
     }
 
-    function it_validates_when_value_not_exists(Database $database, Database\Statement $statement)
-    {
+    function it_validates_when_value_not_exists(
+        Connection $connection,
+        QueryBuilder $queryBuilder,
+        Statement $statement
+    ) {
         $result = (object) ['result' => 0];
-        $database->prepare(Argument::any())->willReturn($statement);
-        $statement->execute(['foo'])->willReturn($result);
+
+        $connection->createQueryBuilder()->willReturn($queryBuilder);
+
+        $queryBuilder->select(Argument::type('string'))->willReturn($queryBuilder)->shouldBeCalled();
+        $queryBuilder->from(Argument::type('string'))->willReturn($queryBuilder)->shouldBeCalled();
+        $queryBuilder->where(Argument::type('string'))->willReturn($queryBuilder)->shouldBeCalled();
+        $queryBuilder->setParameter(Argument::type('string'), Argument::any())->willReturn($queryBuilder)->shouldBeCalled();
+        $queryBuilder->execute()->willReturn($statement);
+
+        $statement->fetch('result')->willReturn(0);
 
         $this->validate($result, 'foo')->shouldReturn(true);
     }
 
-    function it_invalidates_when_value_exists(Database $database, Database\Statement $statement)
+    function it_invalidates_when_value_exists(Connection $connection, QueryBuilder $queryBuilder, Statement $statement)
     {
         $result = (object) ['result' => 1];
-        $database->prepare(Argument::any())->willReturn($statement);
-        $statement->execute(['foo'])->willReturn($result);
+
+        $connection->createQueryBuilder()->willReturn($queryBuilder);
+
+        $queryBuilder->select(Argument::type('string'))->willReturn($queryBuilder)->shouldBeCalled();
+        $queryBuilder->from(Argument::type('string'))->willReturn($queryBuilder)->shouldBeCalled();
+        $queryBuilder->where(Argument::type('string'))->willReturn($queryBuilder)->shouldBeCalled();
+        $queryBuilder->setParameter(Argument::type('string'), Argument::any())->willReturn($queryBuilder)->shouldBeCalled();
+        $queryBuilder->execute()->willReturn($statement);
+
+        $statement->fetch('result')->willReturn(1);
 
         $this->validate($result, 'foo')->shouldReturn(false);
     }
