@@ -12,7 +12,7 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit\Dca\Callback\Button;
+namespace Netzmacht\Contao\Toolkit\Dca\Listener\Button;
 
 use Contao\Backend;
 use Contao\DataContainer;
@@ -22,13 +22,14 @@ use Contao\Input;
 use Contao\System;
 use Netzmacht\Contao\Toolkit\Data\Updater\Updater;
 use Netzmacht\Contao\Toolkit\Data\Exception\AccessDenied;
+use Netzmacht\Contao\Toolkit\Dca\Manager;
 
 /**
  * StateButtonCallback creates the state toggle button known in Contao.
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Button\Callback
  */
-final class StateButtonCallback
+final class StateButtonCallbackListener
 {
     /**
      * The input.
@@ -38,34 +39,6 @@ final class StateButtonCallback
     private $input;
 
     /**
-     * Data container name.
-     *
-     * @var string
-     */
-    private $tableName;
-
-    /**
-     * State column.
-     *
-     * @var string
-     */
-    private $stateColumn;
-
-    /**
-     * Disabled icon.
-     *
-     * @var string
-     */
-    private $disabledIcon;
-
-    /**
-     * If true state value is handled inverse.
-     *
-     * @var bool
-     */
-    private $inverse;
-
-    /**
      * Data row updater.
      *
      * @var Updater
@@ -73,29 +46,27 @@ final class StateButtonCallback
     private $updater;
 
     /**
+     * Data container manager.
+     *
+     * @var Manager
+     */
+    private $dcaManager;
+
+    /**
      * StateButtonCallback constructor.
      *
-     * @param Input       $input        Request Input.
-     * @param Updater     $updater      Data record updater.
-     * @param string      $tableName    Data container name.
-     * @param string      $stateColumn  Column name of the state value.
-     * @param string|null $disabledIcon Disabled icon.
-     * @param bool        $inverse      If true state value is handled inverse.
+     * @param Input   $input      Request Input.
+     * @param Updater $updater    Data record updater.
+     * @param Manager $dcaManager Data container manager.
      */
     public function __construct(
         Input $input,
         Updater $updater,
-        string $tableName,
-        string $stateColumn,
-        ?string $disabledIcon = null,
-        bool $inverse = false
+        Manager $dcaManager
     ) {
-        $this->input        = $input;
-        $this->updater      = $updater;
-        $this->tableName    = $tableName;
-        $this->stateColumn  = $stateColumn;
-        $this->disabledIcon = $disabledIcon;
-        $this->inverse      = $inverse;
+        $this->input      = $input;
+        $this->updater    = $updater;
+        $this->dcaManager = $dcaManager;
     }
 
     /**
@@ -135,12 +106,14 @@ final class StateButtonCallback
         string $next,
         $dataContainer
     ) {
+        $config = $this->getConfig($dataContainer);
+
         if ($this->input->get('tid')) {
             try {
                 $this->updater->update(
-                    $this->tableName,
+                    $dataContainer->table,
                     $this->input->get('tid'),
-                    [$this->stateColumn => ($this->input->get('state') == 1)],
+                    [$config['stateColumn'] => ($this->input->get('state') == 1)],
                     $dataContainer
                 );
 
@@ -151,14 +124,14 @@ final class StateButtonCallback
             }
         }
 
-        if (!$this->updater->hasUserAccess($this->tableName, $this->stateColumn)) {
+        if (!$this->updater->hasUserAccess($dataContainer->table, $config['stateColumn'])) {
             return '';
         }
 
         $href .= '&amp;id='.$this->input->get('id').'&amp;tid='.$row['id'].'&amp;state='.$row[''];
 
-        if (!$row[$this->stateColumn] || ($this->inverse && $row[$this->stateColumn])) {
-            $icon = $this->disableIcon($icon);
+        if (!$row[$config['stateColumn']] || ($config['inverse'] && $row[$config['stateColumn']])) {
+            $icon = $this->disableIcon($icon, $config['disabledIcon']);
         }
 
         return sprintf(
@@ -173,20 +146,42 @@ final class StateButtonCallback
     /**
      * Disable the icon.
      *
-     * @param string $icon The enabled icon.
+     * @param string      $icon    The enabled icon.
+     * @param null|string $default The default icon.
      *
      * @return string
      */
-    private function disableIcon(string $icon): string
+    private function disableIcon(string $icon, ?string $default = null): string
     {
-        if ($this->disabledIcon) {
-            return $this->disabledIcon;
+        if ($default) {
+            return $default;
         }
 
-        if ($icon === 'visible.gif') {
-            return 'invisible.gif';
+        if (preg_match('^/.*\.(gif|png|svg|jpg)]$/', $icon, $matches)) {
+            return 'invisible.' . $matches[1] ;
         }
 
         return preg_replace('\.([^\.]*)$', '._$1', $icon);
+    }
+
+    /**
+     * Get config
+     * @param DataContainer $dataContainer
+     *
+     * @return array
+     */
+    private function getConfig($dataContainer): array
+    {
+        $definition = $this->dcaManager->getDefinition($dataContainer->table);
+        $config     = [
+            'disabledIcon' => null,
+            'stateColumn'  => null,
+            'inverse'      => false
+        ];
+
+        return array_merge(
+            $config,
+            $definition->get(['fields', $dataContainer->field, 'toolkit', 'state_button'])
+        );
     }
 }
