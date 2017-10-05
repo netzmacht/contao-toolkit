@@ -51,23 +51,23 @@ final class NetzmachtContaoToolkitBundle extends Bundle
 
         $container->addCompilerPass(
             new AddTaggedServicesAsArgumentCompilerPass(
-                'netzmacht.contao_toolkit.listeners.create-formatter-subscriber',
+                'netzmacht.contao_toolkit.listeners.create_formatter_subscriber',
                 'netzmacht.contao_toolkit.dca.formatter'
             )
         );
 
         $container->addCompilerPass(
             new AddTaggedServicesAsArgumentCompilerPass(
-                'netzmacht.contao_toolkit.listeners.create-formatter-subscriber',
-                'netzmacht.contao_toolkit.dca.pre-filter',
+                'netzmacht.contao_toolkit.listeners.create_formatter_subscriber',
+                'netzmacht.contao_toolkit.dca.formatter.pre_filter',
                 1
             )
         );
 
         $container->addCompilerPass(
             new AddTaggedServicesAsArgumentCompilerPass(
-                'netzmacht.contao_toolkit.listeners.create-formatter-subscriber',
-                'netzmacht.contao_toolkit.dca.formatter.post-filter',
+                'netzmacht.contao_toolkit.listeners.create_formatter_subscriber',
+                'netzmacht.contao_toolkit.dca.formatter.post_filter',
                 2
             )
         );
