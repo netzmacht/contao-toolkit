@@ -6,7 +6,10 @@ use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
 use Netzmacht\Contao\Toolkit\View\Template\Event\GetTemplateHelpersEvent;
 use Netzmacht\Contao\Toolkit\View\Template\Subscriber\GetTemplateHelpersListener;
 use PhpSpec\ObjectBehavior;
+use PhpSpec\Wrapper\Subject;
+use PhpSpec\Wrapper\Wrapper;
 use Prophecy\Argument;
+use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -27,11 +30,13 @@ class GetTemplateHelpersListenerSpec extends ObjectBehavior
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\View\Template\Subscriber\GetTemplateHelpersListener');
     }
 
-    function it_registers_default_helpers(GetTemplateHelpersEvent $event)
+    function it_registers_default_helpers()
     {
-        $event->addHelper('assets', Argument::any())->shouldBeCalled()->willReturn($event);
-        $event->addHelper('translator', Argument::any())->shouldBeCalled()->willReturn($event);
+        $event = new GetTemplateHelpersEvent('example');
 
         $this->handle($event);
+
+        expect($event->getHelpers()['assets'])->shouldHaveType(AssetsManager::class);
+        expect($event->getHelpers()['translator'])->shouldHaveType(TranslatorInterface::class);
     }
 }

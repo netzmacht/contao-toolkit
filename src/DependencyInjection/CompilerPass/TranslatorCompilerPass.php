@@ -25,7 +25,7 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @package Netzmacht\Contao\Toolkit\DependencyInjection\CompilerPass
  */
-class TranslatorCompilerPass implements CompilerPassInterface
+final class TranslatorCompilerPass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}

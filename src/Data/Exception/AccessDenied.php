@@ -19,6 +19,6 @@ use Netzmacht\Contao\Toolkit\Exception;
  *
  * @package Netzmacht\Contao\Toolkit\Exception
  */
-class AccessDenied extends Exception
+final class AccessDenied extends Exception
 {
 }

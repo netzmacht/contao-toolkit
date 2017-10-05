@@ -21,7 +21,7 @@ use Netzmacht\Contao\Toolkit\Exception;
  *
  * @package Netzmacht\Contao\Toolkit\Data\Alias\Exception
  */
-class InvalidAliasException extends Exception
+final class InvalidAliasException extends Exception
 {
     /**
      * Create exception for a database entry.

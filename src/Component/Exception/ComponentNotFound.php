@@ -25,7 +25,7 @@ use Netzmacht\Contao\Toolkit\Exception;
  *
  * @package Netzmacht\Contao\Toolkit\Component\ContentElement
  */
-class ComponentNotFound extends Exception
+final class ComponentNotFound extends Exception
 {
     /**
      * Create exception for the given model.

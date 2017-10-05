@@ -24,7 +24,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  *
  * @package Netzmacht\Contao\Toolkit\DependencyInjection
  */
-class NetzmachtContaoToolkitExtension extends Extension
+final class NetzmachtContaoToolkitExtension extends Extension
 {
     /**
      * {@inheritdoc}

@@ -23,7 +23,7 @@ use Webmozart\Assert\Assert;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Callback
  */
-class GenerateAliasCallback
+final class GenerateAliasCallback
 {
     /**
      * The alias generator.

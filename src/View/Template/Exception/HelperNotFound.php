@@ -21,7 +21,7 @@ use Netzmacht\Contao\Toolkit\Exception;
  *
  * @package Netzmacht\Contao\Toolkit\View
  */
-class HelperNotFound extends Exception
+final class HelperNotFound extends Exception
 {
     /**
      * HelperNotFound constructor.

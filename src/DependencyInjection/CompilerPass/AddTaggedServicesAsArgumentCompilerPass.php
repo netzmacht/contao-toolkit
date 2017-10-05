@@ -23,7 +23,7 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @package Netzmacht\Contao\Toolkit\DependencyInjection\CompilerPass
  */
-class AddTaggedServicesAsArgumentCompilerPass implements CompilerPassInterface
+final class AddTaggedServicesAsArgumentCompilerPass implements CompilerPassInterface
 {
     /**
      * Service name which should be adjusted.

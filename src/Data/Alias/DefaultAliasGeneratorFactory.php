@@ -25,7 +25,7 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Validator\UniqueDatabaseValueValidator;
  *
  * @package Netzmacht\Contao\Toolkit\Data\Alias
  */
-class DefaultAliasGeneratorFactory
+final class DefaultAliasGeneratorFactory
 {
     /**
      * Database connection.

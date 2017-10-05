@@ -23,7 +23,7 @@ use Contao\Encryption;
  *
  * @package Netzmacht\Contao\Toolkit\DependencyInjection
  */
-class ContaoServicesFactory
+final class ContaoServicesFactory
 {
     /**
      * Contao framework.

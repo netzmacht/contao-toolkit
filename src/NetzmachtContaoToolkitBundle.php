@@ -24,7 +24,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  *
  * @package Netzmacht\Contao\Toolkit
  */
-class NetzmachtContaoToolkitBundle extends Bundle
+final class NetzmachtContaoToolkitBundle extends Bundle
 {
     /**
      * {@inheritdoc}

@@ -22,7 +22,7 @@ use Symfony\Component\Translation\TranslatorInterface as Translator;
  * It's a backport of https://github.com/contao/core-bundle/blob/develop/src/Translation/Translator.php introduced in
  * Contao 4.5.
  */
-class LangArrayTranslator implements Translator
+final class LangArrayTranslator implements Translator
 {
     /**
      * Translator.

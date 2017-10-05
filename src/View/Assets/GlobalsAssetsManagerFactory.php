@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\KernelInterface as HttpKernel;
  *
  * @package Netzmacht\Contao\Toolkit\View\Assets
  */
-class GlobalsAssetsManagerFactory
+final class GlobalsAssetsManagerFactory
 {
     /**
      * Http kernel.

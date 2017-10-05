@@ -25,7 +25,7 @@ use Netzmacht\Contao\Toolkit\NetzmachtContaoToolkitBundle;
  *
  * @package Netzmacht\Contao\Toolkit\ContaoManager
  */
-class Plugin implements BundlePluginInterface
+final class Plugin implements BundlePluginInterface
 {
     /**
      * {@inheritdoc}

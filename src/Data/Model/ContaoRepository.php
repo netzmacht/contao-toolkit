@@ -20,7 +20,7 @@ use Webmozart\Assert\Assert;
  *
  * @package Netzmacht\Contao\Toolkit\Data\Model
  */
-class ContaoRepository implements Repository
+final class ContaoRepository implements Repository
 {
     /**
      * The model class.
