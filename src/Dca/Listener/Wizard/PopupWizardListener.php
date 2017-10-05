@@ -12,8 +12,9 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
+namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 
+use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface as CsrfTokenManager;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
@@ -23,7 +24,7 @@ use Symfony\Component\Translation\TranslatorInterface as Translator;
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Wizard
  */
-final class PopupWizard extends AbstractWizard
+final class PopupWizardListener extends AbstractWizardListener
 {
     /**
      * Template name.
@@ -31,13 +32,6 @@ final class PopupWizard extends AbstractWizard
      * @var string
      */
     protected $template = 'be_wizard_popup';
-
-    /**
-     * If true the button is generated always no matter if an value is given.
-     *
-     * @var bool
-     */
-    private $always;
 
     /**
      * Link pattern for the url.
@@ -54,34 +48,6 @@ final class PopupWizard extends AbstractWizard
     private $csrfTokenManager;
 
     /**
-     * Button icon.
-     *
-     * @var string
-     */
-    private $icon;
-
-    /**
-     * Button href.
-     *
-     * @var string
-     */
-    private $href;
-
-    /**
-     * Button label.
-     *
-     * @var string
-     */
-    private $label;
-
-    /**
-     * Button title.
-     *
-     * @var string
-     */
-    private $title;
-
-    /**
      * Crsf token name.
      *
      * @var string
@@ -93,14 +59,9 @@ final class PopupWizard extends AbstractWizard
      *
      * @param TemplateFactory  $templateFactory  Template Factory.
      * @param Translator       $translator       Translator.
+     * @param Manager          $dcaManager       Data container manager.
      * @param CsrfTokenManager $csrfTokenManager Csrf Token manager.
      * @param string           $csrfTokenName    Csrf Token name.
-     * @param string           $href             Link href snippet.
-     * @param string           $label            Button label.
-     * @param string           $title            Button title.
-     * @param string           $icon             Button icon.
-     * @param bool             $always           If true the button is generated always no matter if an value is given.
-     * @param string|null      $linkPattern      Link pattern.
      * @param string|null      $template         Template name.
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
@@ -108,52 +69,50 @@ final class PopupWizard extends AbstractWizard
     public function __construct(
         TemplateFactory $templateFactory,
         Translator $translator,
+        Manager $dcaManager,
         CsrfTokenManager $csrfTokenManager,
         string $csrfTokenName,
-        string $href,
-        string $label,
-        string $title,
-        string $icon,
-        bool $always = false,
-        ?string $linkPattern = null,
         ?string $template = null
     ) {
-        parent::__construct($templateFactory, $translator, $template);
+        parent::__construct($templateFactory, $translator, $dcaManager, $template);
 
         $this->csrfTokenManager = $csrfTokenManager;
         $this->tokenName        = $csrfTokenName;
-        $this->always           = $always;
-        $this->icon             = $icon;
-        $this->href             = $href;
-        $this->label            = $label;
-        $this->title            = $title;
-
-        if ($linkPattern) {
-            $this->linkPattern = $linkPattern;
-        }
     }
 
     /**
      * Generate the popup wizard.
      *
-     * @param mixed $value Id value.
+     * @param mixed $value  Id value.
+     * @param array $config Wizard config.
      *
      * @return string
      */
-    public function generate($value): string
+    public function generate($value, array $config = []): string
     {
-        if ($this->always || $value) {
+        $config = array_merge(
+            [
+                'href'        => null,
+                'title'       => null,
+                'linkPattern' => $this->linkPattern,
+                'icon'        => null,
+                'always'      => false,
+            ],
+            $config
+        );
+
+        if ($config['always'] || $value) {
             $token   = $this->csrfTokenManager->getToken($this->tokenName)->getValue();
-            $href    = sprintf($this->linkPattern, $this->href, $value, $token);
-            $jsTitle = specialchars(str_replace('\'', '\\\'', $this->title));
+            $href    = sprintf($config['linkPattern'], $config['href'], $value, $token);
+            $jsTitle = specialchars(str_replace('\'', '\\\'', $config['title']));
 
             $template = $this->createTemplate();
             $template
                 ->set('href', $href)
-                ->set('label', specialchars($this->label))
-                ->set('title', specialchars($this->title))
+                ->set('label', specialchars($config['label']))
+                ->set('title', specialchars($config['title']))
                 ->set('jsTitle', $jsTitle)
-                ->set('icon', $this->icon);
+                ->set('icon', $config['icon']);
 
             return $template->parse();
         }
@@ -164,8 +123,11 @@ final class PopupWizard extends AbstractWizard
     /**
      * {@inheritDoc}
      */
-    public function __invoke($dataContainer): string
+    public function handleWizardCallback($dataContainer): string
     {
-        return $this->generate($dataContainer->value);
+        $definition = $this->getDefinition($dataContainer);
+        $config     = (array) $definition->get(['fields', $dataContainer->field, 'toolkit', 'popup_wizard']);
+
+        return $this->generate($dataContainer->value, $config);
     }
 }

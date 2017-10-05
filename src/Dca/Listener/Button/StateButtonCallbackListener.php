@@ -158,15 +158,16 @@ final class StateButtonCallbackListener
         }
 
         if (preg_match('^/.*\.(gif|png|svg|jpg)]$/', $icon, $matches)) {
-            return 'invisible.' . $matches[1] ;
+            return 'invisible.' . $matches[1];
         }
 
         return preg_replace('\.([^\.]*)$', '._$1', $icon);
     }
 
     /**
-     * Get config
-     * @param DataContainer $dataContainer
+     * Get callback config.
+     *
+     * @param DataContainer $dataContainer Data container driver.
      *
      * @return array
      */

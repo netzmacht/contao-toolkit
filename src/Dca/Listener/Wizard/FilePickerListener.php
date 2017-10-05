@@ -12,14 +12,14 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
+namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 
 /**
  * FilePicker wizard.
  *
  * @package Netzmacht\Contao\Toolkit\View\Wizard
  */
-final class FilePicker extends AbstractFieldPicker
+final class FilePickerListener extends AbstractFieldPickerListener
 {
     /**
      * {@inheritDoc}

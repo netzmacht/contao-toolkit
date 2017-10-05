@@ -12,15 +12,49 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
+namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
+
+use Contao\CoreBundle\Framework\Adapter;
+use Contao\Input;
+use Netzmacht\Contao\Toolkit\Dca\Manager;
+use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
+use Symfony\Component\Translation\TranslatorInterface as Translator;
 
 /**
  * Class PagePickerCallback.
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Callback
  */
-final class PagePicker extends AbstractFieldPicker
+final class PagePickerListener extends AbstractFieldPickerListener
 {
+    /**
+     * Request input.
+     *
+     * @var Adapter|Input
+     */
+    private $input;
+
+    /**
+     * PagePickerCallback constructor.
+     *
+     * @param TemplateFactory $templateFactory Template factory.
+     * @param Translator      $translator      Translator.
+     * @param Manager         $dcaManager      Data container manager.
+     * @param Input|Adapter   $input           Request input.
+     * @param string|null     $template        Template name.
+     */
+    public function __construct(
+        TemplateFactory $templateFactory,
+        Translator $translator,
+        Manager $dcaManager,
+        $input,
+        $template = null
+    ) {
+        parent::__construct($templateFactory, $translator, $dcaManager, $template);
+
+        $this->input = $input;
+    }
+
     /**
      * {@inheritDoc}
      */

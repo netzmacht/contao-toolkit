@@ -12,9 +12,11 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
+namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 
-use DataContainer;
+use Contao\DataContainer;
+use Netzmacht\Contao\Toolkit\Dca\Definition;
+use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Netzmacht\Contao\Toolkit\View\Template;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
@@ -24,7 +26,7 @@ use Symfony\Component\Translation\TranslatorInterface as Translator;
  *
  * @package Netzmacht\Contao\Toolkit\View\Wizard
  */
-abstract class AbstractWizard
+abstract class AbstractWizardListener
 {
     /**
      * Template name.
@@ -48,16 +50,29 @@ abstract class AbstractWizard
     private $templateFactory;
 
     /**
+     * Data container manager.
+     *
+     * @var Manager
+     */
+    protected $dcaManager;
+
+    /**
      * PagePickerCallback constructor.
      *
      * @param TemplateFactory $templateFactory Template factory.
      * @param Translator      $translator      Translator.
+     * @param Manager         $dcaManager      Data container manager.
      * @param string|null     $template        Template name.
      */
-    public function __construct(TemplateFactory $templateFactory, Translator $translator, ?string $template = null)
-    {
+    public function __construct(
+        TemplateFactory $templateFactory,
+        Translator $translator,
+        Manager $dcaManager,
+        ?string $template = null
+    ) {
         $this->translator      = $translator;
         $this->templateFactory = $templateFactory;
+        $this->dcaManager      = $dcaManager;
 
         if ($template) {
             $this->template = $template;
@@ -77,11 +92,23 @@ abstract class AbstractWizard
     }
 
     /**
+     * Get the data container definition.
+     *
+     * @param DataContainer $dataContainer Data container driver.
+     *
+     * @return Definition
+     */
+    protected function getDefinition($dataContainer): Definition
+    {
+        return $this->dcaManager->getDefinition($dataContainer->table);
+    }
+
+    /**
      * Invoke by the callback.
      *
      * @param DataContainer $dataContainer Data container driver.
      *
      * @return string
      */
-    abstract public function __invoke($dataContainer): string;
+    abstract public function handleWizardCallback($dataContainer): string;
 }

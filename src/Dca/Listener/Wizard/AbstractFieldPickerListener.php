@@ -12,14 +12,14 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
+namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 
 /**
  * Class AbstractFieldPicker.
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Callback\Wizard
  */
-abstract class AbstractFieldPicker extends AbstractPicker
+abstract class AbstractFieldPickerListener extends AbstractPickerListener
 {
     /**
      * Generate the picker.
@@ -36,7 +36,7 @@ abstract class AbstractFieldPicker extends AbstractPicker
     /**
      * {@inheritDoc}
      */
-    public function __invoke($dataContainer): string
+    public function handleWizardCallback($dataContainer): string
     {
         return $this->generate(
             $dataContainer->table,
