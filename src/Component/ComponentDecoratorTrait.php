@@ -33,7 +33,7 @@ trait ComponentDecoratorTrait
     /**
      * {@inheritDoc}
      */
-    public function __set(string $strKey, $varValue): void
+    public function __set($strKey, $varValue)
     {
         $this->component->set($strKey, $varValue);
     }
@@ -41,7 +41,7 @@ trait ComponentDecoratorTrait
     /**
      * {@inheritDoc}
      */
-    public function __get(string $strKey)
+    public function __get($strKey)
     {
         return $this->component->get($strKey);
     }
@@ -49,7 +49,7 @@ trait ComponentDecoratorTrait
     /**
      * {@inheritDoc}
      */
-    public function __isset(string $strKey): bool
+    public function __isset($strKey)
     {
         return $this->component->has($strKey);
     }
@@ -57,7 +57,7 @@ trait ComponentDecoratorTrait
     /**
      * {@inheritDoc}
      */
-    public function getModel(): ?Model
+    public function getModel()
     {
         return $this->component->getModel();
     }
@@ -65,7 +65,7 @@ trait ComponentDecoratorTrait
     /**
      * {@inheritDoc}
      */
-    public function generate(): string
+    public function generate()
     {
         return $this->component->generate();
     }
@@ -73,7 +73,7 @@ trait ComponentDecoratorTrait
     /**
      * {@inheritDoc}
      */
-    protected function compile(): void
+    protected function compile()
     {
         // Do nothing.
     }

@@ -92,7 +92,7 @@ class AbstractComponentSpec extends ObjectBehavior
 
 class ConcreteComponent extends AbstractComponent
 {
-    public function getTemplateName()
+    public function getTemplateName(): string
     {
         return parent::getTemplateName();
     }

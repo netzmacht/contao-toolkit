@@ -2,8 +2,10 @@
 
 namespace spec\Netzmacht\Contao\Toolkit\Component;
 
+use Contao\Model;
 use Netzmacht\Contao\Toolkit\Component\Component;
 use Netzmacht\Contao\Toolkit\Component\ComponentFactory;
+use Netzmacht\Contao\Toolkit\Component\Exception\ComponentNotFound;
 use Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -27,26 +29,29 @@ class ToolkitComponentFactorySpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Netzmacht\Contao\Toolkit\Component\ComponentFactory');
+        $this->shouldHaveType(ComponentFactory::class);
     }
 
-    function it_should_throw_component_not_found_for_unknown_types()
+    function it_should_throw_component_not_found_for_unknown_types(ComponentFactory $factory)
     {
         $model = (object) ['type' => 'unknown', 'id' => '4'];
+        $factory->supports($model)->willReturn(false);
         $this
-            ->shouldThrow('Netzmacht\Contao\Toolkit\Component\Exception\ComponentNotFound')
+            ->shouldThrow(ComponentNotFound::class)
             ->duringCreate($model, 'main');
     }
 
-    function it_should_throw_component_not_found_for_created_non_components()
+    function it_should_throw_component_not_found_for_created_non_components(ComponentFactory $factory)
     {
         $model = (object) ['type' => 'invalid', 'id' => '4'];
+        $factory->supports($model)->willReturn(false);
+
         $this
-            ->shouldThrow('Netzmacht\Contao\Toolkit\Component\Exception\ComponentNotFound')
+            ->shouldThrow(ComponentNotFound::class)
             ->duringCreate($model, 'main');
     }
 
-    function it_creates_component_calling_responsible_factory(ComponentFactory $factory, \Contao\Model $model)
+    function it_creates_component_calling_responsible_factory(ComponentFactory $factory, Model $model)
     {
         $factory->supports($model)->willReturn(true);
         $factory->create($model, 'main')->willReturn($this->example)->shouldBeCalled();
@@ -57,23 +62,24 @@ class ToolkitComponentFactorySpec extends ObjectBehavior
 
 class ComponentExample implements Component
 {
-    public function set($name, $value)
+    public function set(string $name, $value): Component
+    {
+        return $this;
+    }
+
+    public function get(string $name)
     {
     }
 
-    public function get($name)
+    public function has(string $name): bool
     {
     }
 
-    public function has($name)
+    public function getModel(): ?Model
     {
     }
 
-    public function getModel()
-    {
-    }
-
-    public function generate()
+    public function generate(): string
     {
     }
 }
