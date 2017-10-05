@@ -26,7 +26,7 @@ use Webmozart\Assert\Assert;
  */
 final class CreateFormatterEvent extends Event
 {
-    const NAME = 'netzmacht.contao_toolkit.dca.create-formatter';
+    const NAME = 'netzmacht.contao_toolkit.dca.create_formatter';
 
     /**
      * Data container definition.

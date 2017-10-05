@@ -22,7 +22,7 @@ use Symfony\Component\EventDispatcher\Event;
  */
 final class BuildModelQueryOptionsEvent extends Event
 {
-    const NAME = 'netzmacht.contao_toolkit.model.build-query-options';
+    const NAME = 'netzmacht.contao_toolkit.model.build_query_options';
 
     const QUERY_SELECT = 'SELECT';
 
