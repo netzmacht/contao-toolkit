@@ -12,7 +12,7 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit\Dca\Callback;
+namespace Netzmacht\Contao\Toolkit\Dca\Listener;
 
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
@@ -24,7 +24,7 @@ use Webmozart\Assert\Assert;
  *
  * @package Netzmacht\Contao\Toolkit\Dca
  */
-abstract class Callbacks
+abstract class AbstractListener
 {
     /**
      * Name of the data container.
@@ -32,13 +32,6 @@ abstract class Callbacks
      * @var string
      */
     protected static $name;
-
-    /**
-     * Name of the callback service.
-     *
-     * @var string
-     */
-    protected static $serviceName;
 
     /**
      * Data container manager.
@@ -68,26 +61,6 @@ abstract class Callbacks
     public static function getName(): string
     {
         return static::$name;
-    }
-
-    /**
-     * Generate the callback definition.
-     *
-     * The service name is only required if the default service name contao.dca.TL_TABLE is not used.
-     *
-     * @param string      $serviceName Service name or callback method.
-     * @param string|null $methodName  Callback method name.
-     *
-     * @return callable
-     */
-    public static function callback(string $serviceName, ?string $methodName = null): callable
-    {
-        if (!$methodName) {
-            $methodName  = $serviceName;
-            $serviceName = static::$serviceName ?: 'contao.dca.' . static::getName();
-        }
-
-        return CallbackFactory::service($serviceName, $methodName);
     }
 
     /**
