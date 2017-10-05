@@ -91,7 +91,7 @@ final class StateButtonCallbackListener
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
-    public function __invoke(
+    public function handleButtonCallback(
         array $row,
         string $href,
         string $label,
