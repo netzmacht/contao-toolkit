@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 /**
@@ -27,7 +29,7 @@ interface ValueFormatter
      *
      * @return bool
      */
-    public function accepts($fieldName, array $fieldDefinition);
+    public function accepts(string $fieldName, array $fieldDefinition): bool;
 
     /**
      * Format a field value.
@@ -39,5 +41,5 @@ interface ValueFormatter
      *
      * @return mixed
      */
-    public function format($value, $fieldName, array $fieldDefinition, $context = null);
+    public function format($value, string $fieldName, array $fieldDefinition, $context = null);
 }

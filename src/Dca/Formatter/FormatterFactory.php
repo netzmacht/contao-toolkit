@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter;
 
 use Netzmacht\Contao\Toolkit\Dca\Definition;
@@ -49,7 +51,7 @@ final class FormatterFactory
      *
      * @return Formatter
      */
-    public function createFormatterFor(Definition $definition)
+    public function createFormatterFor(Definition $definition): Formatter
     {
         $event = new CreateFormatterEvent($definition);
         $this->eventDispatcher->dispatch($event::NAME, $event);

@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Options;
 
 /**
@@ -38,12 +40,12 @@ interface Options extends \ArrayAccess, \Iterator
      *
      * @return string
      */
-    public function getValueKey();
+    public function getValueKey(): string;
 
     /**
      * Get the current row.
      *
      * @return array
      */
-    public function row();
+    public function row(): array;
 }

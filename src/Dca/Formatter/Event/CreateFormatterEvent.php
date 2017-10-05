@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Event;
 
 use Netzmacht\Contao\Toolkit\Dca\Definition;
@@ -76,7 +78,7 @@ final class CreateFormatterEvent extends Event
      *
      * @return Definition
      */
-    public function getDefinition()
+    public function getDefinition(): Definition
     {
         return $this->definition;
     }
@@ -88,7 +90,7 @@ final class CreateFormatterEvent extends Event
      *
      * @return $this
      */
-    public function addFormatter($formatter)
+    public function addFormatter($formatter): self
     {
         if (is_array($formatter)) {
             foreach ($formatter as $item) {
@@ -106,9 +108,9 @@ final class CreateFormatterEvent extends Event
     /**
      * Get formatter.
      *
-     * @return ValueFormatter[]
+     * @return array|ValueFormatter[]
      */
-    public function getFormatter()
+    public function getFormatter(): array
     {
         return $this->formatter;
     }
@@ -120,7 +122,7 @@ final class CreateFormatterEvent extends Event
      *
      * @return $this
      */
-    public function addPreFilter(ValueFormatter $formatter)
+    public function addPreFilter(ValueFormatter $formatter): self
     {
         $this->preFilters[] = $formatter;
 
@@ -134,7 +136,7 @@ final class CreateFormatterEvent extends Event
      *
      * @return $this
      */
-    public function addPreFilters(array $preFilters)
+    public function addPreFilters(array $preFilters): self
     {
         foreach ($preFilters as $filter) {
             $this->addPreFilter($filter);
@@ -150,7 +152,7 @@ final class CreateFormatterEvent extends Event
      *
      * @return $this
      */
-    public function addPostFilter(ValueFormatter $formatter)
+    public function addPostFilter(ValueFormatter $formatter): self
     {
         $this->preFilters[] = $formatter;
 
@@ -164,7 +166,7 @@ final class CreateFormatterEvent extends Event
      *
      * @return $this
      */
-    public function addPostFilters(array $postFilters)
+    public function addPostFilters(array $postFilters): self
     {
         foreach ($postFilters as $filter) {
             $this->addPostFilter($filter);
@@ -176,9 +178,9 @@ final class CreateFormatterEvent extends Event
     /**
      * Get pre filters.
      *
-     * @return ValueFormatter[]
+     * @return array|ValueFormatter[]
      */
-    public function getPreFilters()
+    public function getPreFilters(): array
     {
         return $this->preFilters;
     }
@@ -186,9 +188,9 @@ final class CreateFormatterEvent extends Event
     /**
      * Get post filters.
      *
-     * @return ValueFormatter[]
+     * @return array|ValueFormatter[]
      */
-    public function getPostFilters()
+    public function getPostFilters(): array
     {
         return $this->postFilters;
     }
@@ -198,7 +200,7 @@ final class CreateFormatterEvent extends Event
      *
      * @return ValueFormatter
      */
-    public function getOptionsFormatter()
+    public function getOptionsFormatter(): ValueFormatter
     {
         return $this->optionsFormatter;
     }
@@ -210,7 +212,7 @@ final class CreateFormatterEvent extends Event
      *
      * @return $this
      */
-    public function setOptionsFormatter(ValueFormatter $optionsFormatter)
+    public function setOptionsFormatter(ValueFormatter $optionsFormatter): self
     {
         $this->optionsFormatter = $optionsFormatter;
 

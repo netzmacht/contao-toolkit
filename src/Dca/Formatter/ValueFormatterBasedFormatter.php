@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter;
 
 use Netzmacht\Contao\Toolkit\Dca\Definition;
@@ -69,7 +71,7 @@ final class ValueFormatterBasedFormatter implements Formatter
      *
      * @return array|null|string
      */
-    public function formatValue($field, $value, $context = null)
+    public function formatValue(string $field, $value, $context = null)
     {
         $fieldDefinition = $this->definition->get(['fields', $field]);
 
@@ -92,9 +94,9 @@ final class ValueFormatterBasedFormatter implements Formatter
      *
      * @return string
      */
-    public function formatFieldLabel($field)
+    public function formatFieldLabel(string $field): string
     {
-        return $this->definition->get(['fields', $field, 'label', 0], $field);
+        return (string) $this->definition->get(['fields', $field, 'label', 0], $field);
     }
 
     /**
@@ -104,9 +106,9 @@ final class ValueFormatterBasedFormatter implements Formatter
      *
      * @return mixed
      */
-    public function formatFieldDescription($field)
+    public function formatFieldDescription(string $field): string
     {
-        return $this->definition->get(['fields', $field, 'label', 1], $field);
+        return (string) $this->definition->get(['fields', $field, 'label', 1], $field);
     }
 
     /**
@@ -118,7 +120,7 @@ final class ValueFormatterBasedFormatter implements Formatter
      *
      * @return array
      */
-    public function formatOptions($field, array $values, $context = null)
+    public function formatOptions(string $field, array $values, $context = null): array
     {
         $definition = $this->definition->get(['fields', $field]);
 

@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Symfony\Component\Translation\TranslatorInterface as Translator;
@@ -41,7 +43,7 @@ final class YesNoFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accepts($fieldName, array $fieldDefinition)
+    public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         if (empty($fieldDefinition['inputType']) || $fieldDefinition['inputType'] !== 'checkbox') {
             return false;
@@ -57,7 +59,7 @@ final class YesNoFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, $context = null)
+    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
     {
         return $this->translator->trans(($value == '' ? 'MSC.no' : 'MSC.yes'), [], 'contao_default');
     }

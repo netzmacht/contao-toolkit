@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Options;
 
 use Database\Result;
@@ -38,8 +40,11 @@ final class OptionsBuilder
      *
      * @return OptionsBuilder
      */
-    public static function fromCollection(Collection $collection = null, $labelColumn = null, $valueColumn = 'id')
-    {
+    public static function fromCollection(
+        Collection $collection = null,
+        $labelColumn = null,
+        string $valueColumn = 'id'
+    ): self {
         if ($collection === null) {
             return new static(new ArrayListOptions([], $valueColumn, $labelColumn));
         }
@@ -58,7 +63,7 @@ final class OptionsBuilder
      *
      * @return OptionsBuilder
      */
-    public static function fromResult(Result $result = null, $labelColumn = null, $valueColumn = 'id')
+    public static function fromResult(Result $result = null, $labelColumn = null, string $valueColumn = 'id'): self
     {
         return static::fromArrayList($result->fetchAllAssoc(), $valueColumn, $labelColumn);
     }
@@ -100,7 +105,7 @@ final class OptionsBuilder
      *
      * @return $this
      */
-    public function groupBy($column, $callback = null)
+    public function groupBy(string $column, $callback = null): self
     {
         $options = array();
 
@@ -124,7 +129,7 @@ final class OptionsBuilder
      *
      * @return $this
      */
-    public function asTree($parent = 'pid', $indentBy = '-- ')
+    public function asTree(string $parent = 'pid', string $indentBy = '-- '): self
     {
         $options = array();
         $values  = array();
@@ -147,7 +152,7 @@ final class OptionsBuilder
      *
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options->getArrayCopy();
     }
@@ -161,7 +166,7 @@ final class OptionsBuilder
      *
      * @return mixed
      */
-    private function groupValue($value, $callback, array $row)
+    private function groupValue($value, ?callable $callback, array $row)
     {
         if (is_callable($callback)) {
             return $callback($value, $row);
@@ -181,7 +186,7 @@ final class OptionsBuilder
      *
      * @return mixed
      */
-    private function buildTree(&$values, &$options, $index, $indentBy, $depth = 0)
+    private function buildTree(array &$values, array &$options, int $index, string $indentBy, int $depth = 0): array
     {
         if (empty($values[$index])) {
             return $options;

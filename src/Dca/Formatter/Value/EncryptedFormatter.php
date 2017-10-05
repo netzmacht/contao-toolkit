@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Contao\Encryption;
@@ -41,7 +43,7 @@ final class EncryptedFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accepts($fieldName, array $fieldDefinition)
+    public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         return !empty($fieldDefinition['eval']['encrypt']);
     }
@@ -49,7 +51,7 @@ final class EncryptedFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, $context = null)
+    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
     {
         return $this->encryption->decrypt($value);
     }

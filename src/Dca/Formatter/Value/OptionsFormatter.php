@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Contao\DataContainer;
@@ -42,7 +44,7 @@ final class OptionsFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accepts($fieldName, array $fieldDefinition)
+    public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         if (!empty($fieldDefinition['eval']['isAssociative']) || !empty($fieldDefinition['options'])) {
             return true;
@@ -54,7 +56,7 @@ final class OptionsFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, $context = null)
+    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
     {
         if (!empty($fieldDefinition['eval']['isAssociative'])
             || (!empty($fieldDefinition['options']) && $this->isAssociativeArray($fieldDefinition['options']))
@@ -84,7 +86,7 @@ final class OptionsFormatter implements ValueFormatter
      *
      * @return bool
      */
-    private function isAssociativeArray($value)
+    private function isAssociativeArray($value): bool
     {
         return (is_array($value) && array_keys($value) !== range(0, (count($value) - 1)));
     }

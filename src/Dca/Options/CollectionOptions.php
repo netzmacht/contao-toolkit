@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Options;
 
 use Model\Collection;
@@ -58,7 +60,7 @@ final class CollectionOptions implements Options
      * @param string|callable $labelColumn Name of label column.
      * @param string          $valueColumn Name of value column.
      */
-    public function __construct(Collection $collection, $labelColumn = null, $valueColumn = 'id')
+    public function __construct(Collection $collection, $labelColumn = null, string $valueColumn = 'id')
     {
         $this->collection  = $collection;
         $this->valueColumn = $valueColumn;
@@ -80,7 +82,7 @@ final class CollectionOptions implements Options
      *
      * @return string
      */
-    public function getValueKey()
+    public function getValueKey(): string
     {
         return $this->valueColumn;
     }
@@ -100,7 +102,7 @@ final class CollectionOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function row()
+    public function row(): array
     {
         return $this->collection->row();
     }
@@ -108,7 +110,7 @@ final class CollectionOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function next()
+    public function next(): void
     {
         $this->position++;
         $this->collection->next();
@@ -125,7 +127,7 @@ final class CollectionOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function valid()
+    public function valid(): bool
     {
         return $this->position < $this->collection->count();
     }
@@ -133,7 +135,7 @@ final class CollectionOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->position = 0;
         $this->collection->reset();
@@ -186,7 +188,7 @@ final class CollectionOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function getArrayCopy()
+    public function getArrayCopy(): array
     {
         $values = array();
 

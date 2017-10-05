@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter;
 
 /**
@@ -28,7 +30,7 @@ interface Formatter
      *
      * @return array|null|string
      */
-    public function formatValue($field, $value, $context = null);
+    public function formatValue(string $field, $value, $context = null);
 
     /**
      * Format the field label.
@@ -37,16 +39,16 @@ interface Formatter
      *
      * @return string
      */
-    public function formatFieldLabel($field);
+    public function formatFieldLabel(string $field): string;
 
     /**
      * Format the field description.
      *
      * @param string $field Field name.
      *
-     * @return mixed
+     * @return string
      */
-    public function formatFieldDescription($field);
+    public function formatFieldDescription(string $field): string;
 
     /**
      * Format field options.
@@ -57,5 +59,5 @@ interface Formatter
      *
      * @return array
      */
-    public function formatOptions($field, array $values, $context = null);
+    public function formatOptions(string $field, array $values, $context = null): array;
 }

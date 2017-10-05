@@ -10,9 +10,12 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Contao\Config;
+use Contao\Date;
 
 /**
  * DateFormatter format date values.
@@ -41,7 +44,7 @@ final class DateFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accepts($fieldName, array $fieldDefinition)
+    public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         if ($fieldName === 'tstamp') {
             return true;
@@ -57,7 +60,7 @@ final class DateFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, $context = null)
+    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
     {
         if (empty($fieldDefinition['eval']['rgxp'])) {
             $format = 'datim';
@@ -67,6 +70,6 @@ final class DateFormatter implements ValueFormatter
 
         $dateFormat = $this->config->get($format . 'Format');
 
-        return \Date::parse($dateFormat, $value);
+        return Date::parse($dateFormat, $value);
     }
 }

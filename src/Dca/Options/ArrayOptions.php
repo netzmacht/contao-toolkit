@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Options;
 
 /**
@@ -30,7 +32,7 @@ final class ArrayOptions extends \ArrayIterator implements Options
     /**
      * {@inheritdoc}
      */
-    public function getValueKey()
+    public function getValueKey(): string
     {
         return '__key__';
     }
@@ -38,7 +40,7 @@ final class ArrayOptions extends \ArrayIterator implements Options
     /**
      * {@inheritdoc}
      */
-    public function row()
+    public function row(): array
     {
         return [
             '__key__' => $this->key(),

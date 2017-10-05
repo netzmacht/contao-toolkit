@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Webmozart\Assert\Assert;
@@ -46,7 +48,7 @@ final class FilterFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accepts($fieldName, array $fieldDefinition)
+    public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         return true;
     }
@@ -54,7 +56,7 @@ final class FilterFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, $context = null)
+    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
     {
         foreach ($this->filters as $filter) {
             if ($filter->accepts($fieldName, $fieldDefinition)) {

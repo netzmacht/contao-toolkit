@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Subscriber;
 
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Event\CreateFormatterEvent;
@@ -58,8 +60,12 @@ final class CreateFormatterSubscriber
      * @param array|ValueFormatter[] $postFilters      Post filters.
      * @param ValueFormatter         $optionsFormatter Options formatter.
      */
-    public function __construct($formatter, $preFilters, $postFilters, $optionsFormatter)
-    {
+    public function __construct(
+        array $formatter,
+        array $preFilters,
+        array $postFilters,
+        ValueFormatter $optionsFormatter
+    ) {
         $this->formatter        = $formatter;
         $this->preFilters       = $preFilters;
         $this->postFilters      = $postFilters;
@@ -73,7 +79,7 @@ final class CreateFormatterSubscriber
      *
      * @return void
      */
-    public function handle(CreateFormatterEvent $event)
+    public function handle(CreateFormatterEvent $event): void
     {
         $event->addFormatter($this->formatter);
         $event->addPreFilters($this->preFilters);

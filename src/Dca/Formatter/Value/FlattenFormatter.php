@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 /**
@@ -22,7 +24,7 @@ final class FlattenFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accepts($fieldName, array $fieldDefinition)
+    public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         return !empty($fieldDefinition['eval']['multiple']);
     }
@@ -30,7 +32,7 @@ final class FlattenFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, $context = null)
+    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
     {
         return $this->flatten($value);
     }
@@ -42,12 +44,12 @@ final class FlattenFormatter implements ValueFormatter
      * arrays will be displayed with brackets.
      * $a = ['a', ['b', 'c']] will be a, [b, c].
      *
-     * @param mixed      $value    Current value.
-     * @param bool|false $brackets If true the value get brackets.
+     * @param mixed $value    Current value.
+     * @param bool  $brackets If true the value get brackets.
      *
      * @return array|string
      */
-    private function flatten($value, $brackets = false)
+    private function flatten($value, bool $brackets = false)
     {
         if (is_array($value)) {
             $value = array_map(

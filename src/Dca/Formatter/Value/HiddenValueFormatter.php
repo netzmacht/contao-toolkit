@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 /**
@@ -39,7 +41,7 @@ final class HiddenValueFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accepts($fieldName, array $fieldDefinition)
+    public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         if (!empty($fieldDefinition['inputType']) && $fieldDefinition['inputType'] === 'password') {
             return true;
@@ -59,7 +61,7 @@ final class HiddenValueFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, $context = null)
+    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
     {
         if ($this->passwordMask) {
             if (!empty($fieldDefinition['inputType']) && $fieldDefinition['inputType'] === 'password') {
