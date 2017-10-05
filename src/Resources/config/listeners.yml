@@ -1,3 +1,6 @@
+parameters:
+  netzmacht.contao_toolkit.alias_generator.default: 'netzmacht.contao_toolkit.data.alias_generator.default'
+
 services:
   netzmacht.contao_toolkit.listeners.get_template_helpers:
     class: Netzmacht\Contao\Toolkit\View\Template\Subscriber\GetTemplateHelpersListener
@@ -16,3 +19,48 @@ services:
       - '@netzmacht.contao_toolkit.dca.formatter.options_formatter'
     tags:
       - { name: 'kernel.event_listener', event: 'netzmacht.contao_toolkit.dca.create_formatter'}
+
+  netzmacht.contao_toolkit.dca.listeners.state_button_callback:
+    class: Netzmacht\Contao\Toolkit\Dca\Listener\Button\StateButtonCallbackListener
+    arguments:
+      - '@netzmacht.contao_toolkit.contao.input'
+      - '@netzmacht.contao_toolkit.data.database_row_updater'
+      - '@netzmacht.contao_toolkit.dca.manager'
+
+  netzmacht.contao_toolkit.dca.listeners.alias_generator:
+    class: Netzmacht\Contao\Toolkit\Dca\Listener\Save\GenerateAliasListener
+    arguments:
+      - '@service_container'
+      - '@netzmacht.contao_toolkit.dca.manager'
+      - '%netzmacht.contao_toolkit.alias_generator.default%'
+      
+  netzmacht.contao_toolkit.dca.listeners.color_picker:
+    class: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\ColorPickerListener
+    arguments:
+      - '@netzmacht.contao_toolkit.view.template_factory'
+      - '@translator'
+      - '@netzmacht.contao_toolkit.dca.manager'
+
+  netzmacht.contao_toolkit.dca.listeners.file_picker:
+    class: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\FilePickerListener
+    arguments:
+      - '@netzmacht.contao_toolkit.view.template_factory'
+      - '@translator'
+      - '@netzmacht.contao_toolkit.dca.manager'
+
+  netzmacht.contao_toolkit.dca.listeners.page_picker:
+    class: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PagePickerListener
+    arguments:
+      - '@netzmacht.contao_toolkit.view.template_factory'
+      - '@translator'
+      - '@netzmacht.contao_toolkit.dca.manager'
+      - '@netzmacht.contao_toolkit.contao.input'
+
+  netzmacht.contao_toolkit.dca.listeners.popup_wizard:
+    class: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PopupWizardListener
+    arguments:
+      - '@netzmacht.contao_toolkit.view.template_factory'
+      - '@translator'
+      - '@netzmacht.contao_toolkit.dca.manager'
+      - '@security.csrf.token_manager'
+      - '%contao.csrf_token_name%'

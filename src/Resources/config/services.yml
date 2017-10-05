@@ -29,6 +29,9 @@ services:
     arguments:
       - '@contao.framework'
 
+  netzmacht.contao_toolkit.contao.input:
+    factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createInputAdapter']
+
   netzmacht.contao_toolkit.data.alias_generator.factory.default:
     class: Netzmacht\Contao\Toolkit\Data\Alias\FilterBasedAliasGenerator
     factory: []

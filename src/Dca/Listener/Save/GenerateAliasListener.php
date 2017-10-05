@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Save;
 
+use Contao\Database\Result;
 use Contao\DataContainer;
 use Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
@@ -72,8 +73,8 @@ final class GenerateAliasListener
      */
     public function handleSaveCallback($value, $dataContainer)
     {
-        Assert::isInstanceOf($dataContainer, 'DataContainer');
-        Assert::isInstanceOf($dataContainer->activeRecord, 'Database\Result');
+        Assert::isInstanceOf($dataContainer, DataContainer::class);
+        Assert::isInstanceOf($dataContainer->activeRecord, Result::class);
 
         $serviceId = $this->getServiceId($dataContainer);
         $generator = $this->container->get($serviceId);

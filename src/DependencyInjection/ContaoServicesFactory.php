@@ -15,8 +15,10 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\DependencyInjection;
 
 use Contao\Config;
+use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
 use Contao\Encryption;
+use Contao\Input;
 
 /**
  * Class ContaoServicesFactory.
@@ -40,6 +42,16 @@ final class ContaoServicesFactory
     public function __construct(ContaoFramework $framework)
     {
         $this->framework = $framework;
+    }
+
+    /**
+     * Create input adapter.
+     *
+     * @return Input|Adapter
+     */
+    public function createInputAdapter()
+    {
+        return $this->framework->createInstance(Input::class);
     }
 
     /**
