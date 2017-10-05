@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\View\Template\Subscriber;
 
 use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
@@ -21,7 +23,7 @@ use Symfony\Component\Translation\TranslatorInterface as Translator;
  *
  * @package Netzmacht\Contao\Toolkit\View\Template\Subscriber
  */
-class GetTemplateHelpersListener
+final class GetTemplateHelpersListener
 {
     /**
      * Assets manager.
@@ -56,7 +58,7 @@ class GetTemplateHelpersListener
      *
      * @return void
      */
-    public function handle(GetTemplateHelpersEvent $event)
+    public function handle(GetTemplateHelpersEvent $event): void
     {
         $event
             ->addHelper('assets', $this->assetsManager)

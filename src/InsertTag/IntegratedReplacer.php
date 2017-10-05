@@ -50,7 +50,7 @@ final class IntegratedReplacer implements Replacer
     /**
      * {@inheritDoc}
      */
-    public function registerParser(Parser $parser)
+    public function registerParser(Parser $parser): Replacer
     {
         $this->parsers[] = $parser;
 
@@ -62,12 +62,12 @@ final class IntegratedReplacer implements Replacer
      *
      * This method is triggered by the replaceInsertTag hook.
      *
-     * @param string    $raw   Insert tag string.
-     * @param bool|true $cache Generate for the cache.
+     * @param string $raw   Insert tag string.
+     * @param bool   $cache Generate for the cache.
      *
      * @return bool|string
      */
-    public function replaceTag($raw, $cache = true)
+    public function replaceTag(string $raw, bool $cache = true)
     {
         if (strpos($raw, '::')) {
             list($tag, $params) = explode('::', $raw, 2);
@@ -88,7 +88,7 @@ final class IntegratedReplacer implements Replacer
     /**
      * {@inheritDoc}
      */
-    public function replace($content, $cache = true)
+    public function replace(string $content, bool $cache = true): string
     {
         return $this->insertTags->replace($content, $cache);
     }

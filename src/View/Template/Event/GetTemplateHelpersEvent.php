@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\View\Template\Event;
 
 use Symfony\Component\EventDispatcher\Event;
@@ -53,7 +55,7 @@ class GetTemplateHelpersEvent extends Event
      * @param string $templateName Template name.
      * @param string $contentType  Content type.
      */
-    public function __construct($templateName, $contentType = 'text/html')
+    public function __construct(string $templateName, string $contentType = 'text/html')
     {
         $this->templateName = $templateName;
         $this->contentType  = $contentType;
@@ -64,7 +66,7 @@ class GetTemplateHelpersEvent extends Event
      *
      * @return string
      */
-    public function getTemplateName()
+    public function getTemplateName(): string
     {
         return $this->templateName;
     }
@@ -74,7 +76,7 @@ class GetTemplateHelpersEvent extends Event
      *
      * @return string
      */
-    public function getContentType()
+    public function getContentType(): string
     {
         return $this->contentType;
     }
@@ -87,7 +89,7 @@ class GetTemplateHelpersEvent extends Event
      *
      * @return $this
      */
-    public function addHelper($name, $helper)
+    public function addHelper(string $name, $helper): self
     {
         $this->helpers[$name] = $helper;
 
@@ -101,7 +103,7 @@ class GetTemplateHelpersEvent extends Event
      *
      * @return $this
      */
-    public function addHelpers(array $helpers)
+    public function addHelpers(array $helpers): self
     {
         foreach ($helpers as $name => $helper) {
             $this->addHelper($name, $helper);
@@ -115,7 +117,7 @@ class GetTemplateHelpersEvent extends Event
      *
      * @return array
      */
-    public function getHelpers()
+    public function getHelpers(): array
     {
         return $this->helpers;
     }

@@ -101,7 +101,7 @@ final class PopupWizard extends AbstractWizard
      * @param string           $icon             Button icon.
      * @param bool             $always           If true the button is generated always no matter if an value is given.
      * @param string|null      $linkPattern      Link pattern.
-     * @param string           $template         Template name.
+     * @param string|null      $template         Template name.
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */

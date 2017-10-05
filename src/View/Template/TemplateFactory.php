@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\View\Template;
 
 use Netzmacht\Contao\Toolkit\View\Template;
@@ -28,7 +30,11 @@ interface TemplateFactory
      *
      * @return Template
      */
-    public function createFrontendTemplate($name, array $data = null, $contentType = 'text/html');
+    public function createFrontendTemplate(
+        string $name,
+        array $data = null,
+        string $contentType = 'text/html'
+    ): Template;
 
     /**
      * Create a backend template.
@@ -39,5 +45,9 @@ interface TemplateFactory
      *
      * @return Template
      */
-    public function createBackendTemplate($name, array $data = null, $contentType = 'text/html');
+    public function createBackendTemplate(
+        string $name,
+        array $data = null,
+        string $contentType = 'text/html'
+    ): Template;
 }

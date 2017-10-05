@@ -10,8 +10,11 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\View\Template;
 
+use Netzmacht\Contao\Toolkit\View\Template;
 use Netzmacht\Contao\Toolkit\View\Template\Exception\HelperNotFound;
 
 /**
@@ -35,7 +38,7 @@ trait TemplateTrait
      *
      * @return mixed
      */
-    public function get($name)
+    public function get(string $name)
     {
         return $this->$name;
     }
@@ -48,7 +51,7 @@ trait TemplateTrait
      *
      * @return $this
      */
-    public function set($name, $value)
+    public function set(string $name, $value): Template
     {
         $this->$name = $value;
 
@@ -63,7 +66,7 @@ trait TemplateTrait
      * @return mixed
      * @throws HelperNotFound If helper is not registered.
      */
-    public function helper($name)
+    public function helper(string $name)
     {
         if (!isset($this->helpers[$name])) {
             throw new HelperNotFound($name);

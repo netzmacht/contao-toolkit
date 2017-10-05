@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\DependencyInjection;
 
 use Contao\Config;
@@ -47,7 +49,7 @@ class ContaoServicesFactory
      *
      * @return Config
      */
-    public function createConfigService()
+    public function createConfigService(): Config
     {
         $this->framework->initialize();
 
@@ -61,7 +63,7 @@ class ContaoServicesFactory
      *
      * @return Encryption
      */
-    public function createEncryptionService()
+    public function createEncryptionService(): Encryption
     {
         $this->framework->initialize();
 

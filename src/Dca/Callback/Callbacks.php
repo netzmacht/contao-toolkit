@@ -75,8 +75,8 @@ abstract class Callbacks
      *
      * The service name is only required if the default service name contao.dca.TL_TABLE is not used.
      *
-     * @param string $serviceName Service name or callback method.
-     * @param string $methodName  Callback method name.
+     * @param string      $serviceName Service name or callback method.
+     * @param string|null $methodName  Callback method name.
      *
      * @return callable
      */

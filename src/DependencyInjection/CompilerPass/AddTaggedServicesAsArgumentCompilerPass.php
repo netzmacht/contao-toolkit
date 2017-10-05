@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\DependencyInjection\CompilerPass;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -51,7 +53,7 @@ class AddTaggedServicesAsArgumentCompilerPass implements CompilerPassInterface
      * @param string $tagName       Name of the tag.
      * @param int    $argumentIndex Index of the argument which should get the tagged references.
      */
-    public function __construct($serviceName, $tagName, $argumentIndex = 0)
+    public function __construct(string $serviceName, string $tagName, int $argumentIndex = 0)
     {
         $this->serviceName   = $serviceName;
         $this->tagName       = $tagName;

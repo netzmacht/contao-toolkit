@@ -161,13 +161,13 @@ final class CallbackFactory
     /**
      * Create the popup wizard.
      *
-     * @param string $href        Link href snippet.
-     * @param string $label       Button label.
-     * @param string $title       Button title.
-     * @param string $icon        Button icon.
-     * @param bool   $always      If true the button is generated always no matter if an value is given.
-     * @param string $linkPattern Link pattern.
-     * @param string $template    Template name.
+     * @param string      $href        Link href snippet.
+     * @param string      $label       Button label.
+     * @param string      $title       Button title.
+     * @param string      $icon        Button icon.
+     * @param bool        $always      If true the button is generated always no matter if an value is given.
+     * @param string      $linkPattern Link pattern.
+     * @param string|null $template    Template name.
      *
      * @return PopupWizard
      */
@@ -200,10 +200,10 @@ final class CallbackFactory
     /**
      * Generate the alias generator callback.
      *
-     * @param string $dataContainerName Data Container name.
-     * @param string $aliasField        Alias field.
-     * @param array  $fields            List of fields being combined as alias. If empty ['id'] is used.
-     * @param string $factoryService    Custom alias generator factory service.
+     * @param string      $dataContainerName Data Container name.
+     * @param string      $aliasField        Alias field.
+     * @param array       $fields            List of fields being combined as alias. If empty ['id'] is used.
+     * @param string|null $factoryService    Custom alias generator factory service.
      *
      * @return GenerateAliasCallback
      */

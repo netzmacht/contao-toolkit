@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\InsertTag;
 
 /**
@@ -22,14 +24,14 @@ interface Parser
     /**
      * Parse an insert tag.
      *
-     * @param string    $raw    Raw insert tag.
-     * @param string    $tag    Insert tag name before the first :: separator.
-     * @param string    $params Insert tag params, all after the first :: separator.
-     * @param bool|true $cache  Check if the insert tags get cached.
+     * @param string $raw    Raw insert tag.
+     * @param string $tag    Insert tag name before the first :: separator.
+     * @param string $params Insert tag params, all after the first :: separator.
+     * @param bool   $cache  Check if the insert tags get cached.
      *
      * @return string
      */
-    public function parse($raw, $tag, $params = null, $cache = true);
+    public function parse(string $raw, string $tag, string $params = null, bool $cache = true): string;
 
     /**
      * Check if an tag is supported.
@@ -38,5 +40,5 @@ interface Parser
      *
      * @return bool
      */
-    public function supports($tag);
+    public function supports(string $tag): bool;
 }

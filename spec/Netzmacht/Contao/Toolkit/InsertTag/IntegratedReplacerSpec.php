@@ -47,7 +47,7 @@ class IntegratedReplacerSpec extends ObjectBehavior
 
     public function it_provides_method_for_replace_insert_tags_hook(InsertTagsMock $insertTags)
     {
-        $insertTags->replace('test', true)->shouldBeCalled();
+        $insertTags->replace('test', true)->willReturn('foo')->shouldBeCalled();
         $this->replace('test');
     }
 }

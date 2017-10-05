@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\View;
 
 use Netzmacht\Contao\Toolkit\View\Template\Exception\HelperNotFound;
@@ -35,7 +37,7 @@ interface Template
      *
      * @return mixed
      */
-    public function get($name);
+    public function get(string $name);
 
     /**
      * Set a template var.
@@ -45,7 +47,7 @@ interface Template
      *
      * @return $this
      */
-    public function set($name, $value);
+    public function set(string $name, $value): self;
 
     /**
      * Get an helper.
@@ -55,7 +57,7 @@ interface Template
      * @return mixed
      * @throws HelperNotFound If helper not exists.
      */
-    public function helper($name);
+    public function helper(string $name);
 
     /**
      * Get all the template data.

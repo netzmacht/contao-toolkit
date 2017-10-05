@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\InsertTag;
 
 /**
@@ -26,15 +28,15 @@ interface Replacer
      *
      * @return $this
      */
-    public function registerParser(Parser $parser);
+    public function registerParser(Parser $parser): self;
 
     /**
      * Replace possible insert tags.
      *
-     * @param string  $content The text with the tags to be replaced.
-     * @param boolean $cache   If false, non-cacheable tags will be replaced.
+     * @param string $content The text with the tags to be replaced.
+     * @param bool   $cache   If false, non-cacheable tags will be replaced.
      *
      * @return string.
      */
-    public function replace($content, $cache = true);
+    public function replace(string $content, bool $cache = true): string;
 }
