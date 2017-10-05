@@ -104,7 +104,7 @@ final class Manager
     public function getFormatter(string $name): Formatter
     {
         if (!isset($this->formatter[$name])) {
-            $definition = $this->getDefinition($name);
+            $definition             = $this->getDefinition($name);
             $this->formatter[$name] = $this->formatterFactory->createFormatterFor($definition);
         }
 
