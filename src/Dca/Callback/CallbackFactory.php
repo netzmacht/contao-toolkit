@@ -114,7 +114,6 @@ final class CallbackFactory
             $container->get('netzmacht.contao_toolkit.view.template_factory'),
             $container->get('translator'),
             $container->get('contao.framework')->getAdapter(Input::class),
-            COLORPICKER,
             $replaceHex,
             $template
         );

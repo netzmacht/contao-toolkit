@@ -8,7 +8,7 @@
         new MooRainbow('moo_<?= $this->field ?>', {
             id: 'ctrl_<?= $this->field ?>',
             startColor: ((cl = $('ctrl_<?= $this->field ?>').value.hexToRgb(true)) ? cl : [255, 0, 0]),
-            imgPath: 'assets/mootools/colorpicker/<?= $this->version ?>/images/',
+            imgPath: 'assets/colorpicker/images/',
             onComplete: function(color) {
                 <?php if ($this->replaceHex): ?>
                 $('ctrl_<?= $this->field ?>').value = color.hex.replace("#", "");

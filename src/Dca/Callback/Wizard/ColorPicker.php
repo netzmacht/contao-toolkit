@@ -40,19 +40,11 @@ final class ColorPicker extends AbstractPicker
     private $replaceHex;
 
     /**
-     * Color picker version.
-     *
-     * @var string
-     */
-    private $version;
-
-    /**
      * Construct.
      *
      * @param TemplateFactory $templateFactory Template factory.
      * @param Translator      $translator      Translator.
      * @param Input           $input           Input.
-     * @param string          $version         Colorpicker version.
      * @param bool            $replaceHex      If true no '#' prefix char is generated.
      * @param string          $template        Template name.
      */
@@ -60,14 +52,12 @@ final class ColorPicker extends AbstractPicker
         TemplateFactory $templateFactory,
         Translator $translator,
         $input,
-        $version,
         $replaceHex = false,
         $template = null
     ) {
         parent::__construct($templateFactory, $translator, $input, $template);
 
         $this->replaceHex = $replaceHex;
-        $this->version    = $version;
     }
 
     /**
@@ -79,7 +69,6 @@ final class ColorPicker extends AbstractPicker
         $template
             ->set('title', $this->translator->trans('MSC.colorpicker', [], 'contao_default'))
             ->set('field', $fieldName)
-            ->set('version', $this->version)
             ->set('icon', 'pickcolor.gif')
             ->set('replaceHex', $this->replaceHex);
 
