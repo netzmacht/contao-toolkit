@@ -20,14 +20,19 @@ services:
     arguments:
       - []
 
-  netzmacht.contao_toolkit.contao_encryption:
-    class: Contao\Encryption
-    factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createEncryptionService']
-
   netzmacht.contao_toolkit.contao_services_factory:
     class: Netzmacht\Contao\Toolkit\DependencyInjection\ContaoServicesFactory
     arguments:
       - '@contao.framework'
+
+  netzmacht.contao_toolkit.contao.config:
+    factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createConfigAdapter']
+
+  netzmacht.contao_toolkit.contao.encryption:
+    factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createEncryptionAdapter']
+
+  netzmacht.contao_toolkit.contao.environment:
+    factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createEnvironmentAdapter']
 
   netzmacht.contao_toolkit.contao.input:
     factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createInputAdapter']

@@ -18,6 +18,7 @@ use Contao\Config;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
 use Contao\Encryption;
+use Contao\Environment;
 use Contao\Input;
 
 /**
@@ -47,38 +48,54 @@ final class ContaoServicesFactory
     /**
      * Create input adapter.
      *
-     * @return Input|Adapter
+     * @return Adapter|Input
      */
-    public function createInputAdapter()
+    public function createInputAdapter(): Adapter
     {
-        return $this->framework->createInstance(Input::class);
+        return $this->createAdapter(Input::class);
     }
 
     /**
-     * Create the config service.
+     * Create the config adapter.
      *
-     * Do not create the adapter as we want to rely on the interface.
-     *
-     * @return Config
+     * @return Adapter|Config
      */
-    public function createConfigService(): Config
+    public function createConfigAdapter(): Adapter
     {
-        $this->framework->initialize();
-
-        return Config::getInstance();
+        return $this->createAdapter(Config::class);
     }
 
     /**
-     * Create the encryption service.
+     * Create an environment adapter.
      *
-     * Do not create the adapter as we want to rely on the interface.
-     *
-     * @return Encryption
+     * @return Adapter|Environment
      */
-    public function createEncryptionService(): Encryption
+    public function createEnvironmentAdapter(): Adapter
+    {
+        return $this->createAdapter(Environment::class);
+    }
+
+    /**
+     * Create an environment adapter.
+     *
+     * @return Adapter|Encryption
+     */
+    public function createEncryptionAdapter(): Adapter
+    {
+        return $this->createAdapter(Encryption::class);
+    }
+
+    /**
+     * Create an adapter for a specific class.
+     *
+     * @param string $class Class name.
+     *
+     * @return Adapter
+     */
+    private function createAdapter(string $class): Adapter
     {
         $this->framework->initialize();
 
-        return Encryption::getInstance();
+        return $this->framework->createInstance($class);
     }
 }

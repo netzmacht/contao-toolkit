@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
+use Contao\CoreBundle\Framework\Adapter;
 use Contao\Encryption;
 
 /**
@@ -33,9 +34,9 @@ final class EncryptedFormatter implements ValueFormatter
     /**
      * EncryptedFormatter constructor.
      *
-     * @param Encryption $encryption Encryption service.
+     * @param Encryption|Adapter $encryption Encryption service.
      */
-    public function __construct(Encryption $encryption)
+    public function __construct($encryption)
     {
         $this->encryption = $encryption;
     }
