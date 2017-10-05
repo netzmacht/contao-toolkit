@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
 
 /**
@@ -24,18 +26,23 @@ abstract class AbstractFieldPicker extends AbstractPicker
      *
      * @param string $tableName Table name.
      * @param string $fieldName Field name.
-     * @param string $rowId     Row id.
+     * @param int    $rowId     Row id.
      * @param string $value     Field value.
      *
-     * @return mixed
+     * @return string
      */
-    abstract public function generate($tableName, $fieldName, $rowId, $value);
+    abstract public function generate(string $tableName, string $fieldName, int $rowId, string $value): string;
 
     /**
      * {@inheritDoc}
      */
-    public function __invoke($dataContainer)
+    public function __invoke($dataContainer): string
     {
-        return $this->generate($dataContainer->table, $dataContainer->field, $dataContainer->id, $dataContainer->value);
+        return $this->generate(
+            $dataContainer->table,
+            $dataContainer->field,
+            (int) $dataContainer->id,
+            $dataContainer->value
+        );
     }
 }

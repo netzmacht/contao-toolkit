@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
 
 use DataContainer;
@@ -50,9 +52,9 @@ abstract class AbstractWizard
      *
      * @param TemplateFactory $templateFactory Template factory.
      * @param Translator      $translator      Translator.
-     * @param string          $template        Template name.
+     * @param string|null     $template        Template name.
      */
-    public function __construct(TemplateFactory $templateFactory, Translator $translator, $template = null)
+    public function __construct(TemplateFactory $templateFactory, Translator $translator, ?string $template = null)
     {
         $this->translator      = $translator;
         $this->templateFactory = $templateFactory;
@@ -69,7 +71,7 @@ abstract class AbstractWizard
      *
      * @return Template
      */
-    protected function createTemplate($name = null)
+    protected function createTemplate(?string $name = null): Template
     {
         return $this->templateFactory->createBackendTemplate($name ?: $this->template);
     }
@@ -81,5 +83,5 @@ abstract class AbstractWizard
      *
      * @return string
      */
-    abstract public function __invoke($dataContainer);
+    abstract public function __invoke($dataContainer): string;
 }

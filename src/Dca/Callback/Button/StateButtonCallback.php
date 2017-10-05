@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Button;
 
 use Contao\Backend;
@@ -81,12 +83,12 @@ final class StateButtonCallback
      * @param bool        $inverse      If true state value is handled inverse.
      */
     public function __construct(
-        $input,
+        Input $input,
         Updater $updater,
-        $tableName,
-        $stateColumn,
-        $disabledIcon = null,
-        $inverse = false
+        string $tableName,
+        string $stateColumn,
+        ?string $disabledIcon = null,
+        bool $inverse = false
     ) {
         $this->input        = $input;
         $this->updater      = $updater;
@@ -119,18 +121,18 @@ final class StateButtonCallback
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __invoke(
-        $row,
-        $href,
-        $label,
-        $title,
-        $icon,
-        $attributes,
-        $tableName,
-        $rootIds,
-        $childRecordIds,
-        $circularReference,
-        $previous,
-        $next,
+        array $row,
+        string $href,
+        string $label,
+        string $title,
+        string $icon,
+        string $attributes,
+        string $tableName,
+        array $rootIds,
+        array $childRecordIds,
+        bool $circularReference,
+        string $previous,
+        string $next,
         $dataContainer
     ) {
         if ($this->input->get('tid')) {
@@ -175,7 +177,7 @@ final class StateButtonCallback
      *
      * @return string
      */
-    private function disableIcon($icon)
+    private function disableIcon(string $icon): string
     {
         if ($this->disabledIcon) {
             return $this->disabledIcon;

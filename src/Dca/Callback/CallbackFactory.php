@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Callback;
 
 use Contao\Controller;
@@ -38,7 +40,7 @@ final class CallbackFactory
      *
      * @return \Closure
      */
-    public static function getTemplates($prefix = '', array $exclude = null)
+    public static function getTemplates(string $prefix = '', array $exclude = null): \Closure
     {
         return function () use ($prefix, $exclude) {
             $templates = Controller::getTemplateGroup($prefix);
@@ -54,15 +56,19 @@ final class CallbackFactory
     /**
      * Create the state button toggle callback.
      *
-     * @param string $dataContainerName Data Contaienr name.
-     * @param string $column            State column.
-     * @param null   $disabledIcon      Optional disabled icon.
-     * @param bool   $inverse           If true the state value gets inversed.
+     * @param string      $dataContainerName Data Contaienr name.
+     * @param string      $column            State column.
+     * @param string|null $disabledIcon      Optional disabled icon.
+     * @param bool        $inverse           If true the state value gets inversed.
      *
-     * @return callable
+     * @return StateButtonCallback
      */
-    public static function stateButton($dataContainerName, $column, $disabledIcon = null, $inverse = false)
-    {
+    public static function stateButton(
+        string $dataContainerName,
+        string $column,
+        ?string $disabledIcon = null,
+        bool $inverse = false
+    ): StateButtonCallback {
         $container = System::getContainer();
 
         return new StateButtonCallback(
@@ -83,7 +89,7 @@ final class CallbackFactory
      *
      * @return \Closure
      */
-    public static function service($serviceName, $methodName)
+    public static function service(string $serviceName, string $methodName): \Closure
     {
         return function () use ($serviceName, $methodName) {
             $service = System::getContainer()->get($serviceName);
@@ -100,7 +106,7 @@ final class CallbackFactory
      *
      * @return ColorPicker
      */
-    public static function colorPicker($replaceHex = false, $template = null)
+    public static function colorPicker(bool $replaceHex = false, string $template = null): ColorPicker
     {
         $container = System::getContainer();
 
@@ -121,7 +127,7 @@ final class CallbackFactory
      *
      * @return FilePicker
      */
-    public static function filePicker($template = null)
+    public static function filePicker(string $template = null)
     {
         $container = System::getContainer();
 
@@ -140,7 +146,7 @@ final class CallbackFactory
      *
      * @return PagePicker
      */
-    public static function pagePicker($template = null)
+    public static function pagePicker(string $template = null): PagePicker
     {
         $container = System::getContainer();
 
@@ -166,14 +172,14 @@ final class CallbackFactory
      * @return PopupWizard
      */
     public static function popupWizard(
-        $href,
-        $label,
-        $title,
-        $icon,
-        $always = false,
-        $linkPattern = null,
-        $template = null
-    ) {
+        string $href,
+        string $label,
+        string $title,
+        string $icon,
+        bool $always = false,
+        string $linkPattern = null,
+        ?string $template = null
+    ): PopupWizard {
         $container = System::getContainer();
 
         return new PopupWizard(
@@ -199,10 +205,14 @@ final class CallbackFactory
      * @param array  $fields            List of fields being combined as alias. If empty ['id'] is used.
      * @param string $factoryService    Custom alias generator factory service.
      *
-     * @return callable
+     * @return GenerateAliasCallback
      */
-    public static function aliasGenerator($dataContainerName, $aliasField, array $fields = null, $factoryService = null)
-    {
+    public static function aliasGenerator(
+        string $dataContainerName,
+        string $aliasField,
+        array $fields = null,
+        ?string $factoryService = null
+    ): GenerateAliasCallback {
         $container      = Controller::getContainer();
         $factoryService = $factoryService ?: 'netzmacht.contao_toolkit.data.alias_generator.factory.default_factory';
         $factory        = $container->get($factoryService);

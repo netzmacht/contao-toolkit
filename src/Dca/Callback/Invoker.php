@@ -10,8 +10,11 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Callback;
 
+use Contao\System;
 use InvalidArgumentException;
 use Webmozart\Assert\Assert;
 
@@ -34,7 +37,7 @@ final class Invoker
     public function invoke($callback, array $arguments = [])
     {
         if (is_array($callback)) {
-            $callback[0] = \System::importStatic($callback[0]);
+            $callback[0] = System::importStatic($callback[0]);
         }
 
         Assert::isCallable($callback);

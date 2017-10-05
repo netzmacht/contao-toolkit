@@ -10,8 +10,11 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Save;
 
+use Contao\DataContainer;
 use Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator;
 use Webmozart\Assert\Assert;
 
@@ -42,8 +45,8 @@ class GenerateAliasCallback
     /**
      * Generate the alias value.
      *
-     * @param mixed          $value         The current value.
-     * @param \DataContainer $dataContainer The data container driver.
+     * @param mixed         $value         The current value.
+     * @param DataContainer $dataContainer The data container driver.
      *
      * @return mixed|null|string
      */

@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
 
 use Contao\Input;
@@ -71,7 +73,7 @@ final class ColorPicker extends AbstractPicker
     /**
      * {@inheritDoc}
      */
-    public function generate($fieldName)
+    public function generate(string $fieldName): string
     {
         $template = $this->createTemplate();
         $template
@@ -87,7 +89,7 @@ final class ColorPicker extends AbstractPicker
     /**
      * {@inheritDoc}
      */
-    public function __invoke($dataContainer)
+    public function __invoke($dataContainer): string
     {
         return $this->generate($dataContainer->field);
     }

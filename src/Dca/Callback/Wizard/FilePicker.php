@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
 
 /**
@@ -22,7 +24,7 @@ final class FilePicker extends AbstractFieldPicker
     /**
      * {@inheritDoc}
      */
-    public function generate($tableName, $fieldName, $rowId, $value)
+    public function generate(string $tableName, string $fieldName, int $rowId, ?string $value = null): string
     {
         $url = sprintf(
             'contao/file.php?do=%s&amp;table=%s&amp;field=%s&amp;value=%',

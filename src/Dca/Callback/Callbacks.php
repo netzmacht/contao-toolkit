@@ -10,11 +10,14 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Callback;
 
 use Netzmacht\Contao\Toolkit\Dca\Definition;
-use Netzmacht\Contao\Toolkit\Dca\Formatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
+use Webmozart\Assert\Assert;
 
 /**
  * Base class for data container callback classes.
@@ -52,6 +55,9 @@ abstract class Callbacks
     public function __construct(Manager $dcaManager)
     {
         $this->dcaManager = $dcaManager;
+
+        Assert::notEmpty(static::$name, 'Name property must not be empty');
+        Assert::string(static::$name, 'Name property must be a string.');
     }
 
     /**
@@ -59,7 +65,7 @@ abstract class Callbacks
      *
      * @return string
      */
-    public static function getName()
+    public static function getName(): string
     {
         return static::$name;
     }
@@ -74,7 +80,7 @@ abstract class Callbacks
      *
      * @return callable
      */
-    public static function callback($serviceName, $methodName = null)
+    public static function callback(string $serviceName, ?string $methodName = null): callable
     {
         if (!$methodName) {
             $methodName  = $serviceName;
@@ -91,7 +97,7 @@ abstract class Callbacks
      *
      * @return Definition
      */
-    protected function getDefinition($name = null)
+    protected function getDefinition(?string $name = null): Definition
     {
         return $this->dcaManager->getDefinition($name ?: static::getName());
     }
@@ -101,9 +107,9 @@ abstract class Callbacks
      *
      * @param string|null $name Data definition name. If empty the default name is used.
      *
-     * @return Formatter\Formatter
+     * @return Formatter
      */
-    protected function getFormatter($name = null)
+    protected function getFormatter(?string $name = null): Formatter
     {
         return $this->dcaManager->getFormatter($name ?: static::getName());
     }

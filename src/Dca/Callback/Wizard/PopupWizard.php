@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Callback\Wizard;
 
 use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
@@ -107,14 +109,14 @@ final class PopupWizard extends AbstractWizard
         TemplateFactory $templateFactory,
         Translator $translator,
         CsrfTokenManager $csrfTokenManager,
-        $csrfTokenName,
-        $href,
-        $label,
-        $title,
-        $icon,
-        $always = false,
-        $linkPattern = null,
-        $template = null
+        string $csrfTokenName,
+        string $href,
+        string $label,
+        string $title,
+        string $icon,
+        bool $always = false,
+        ?string $linkPattern = null,
+        ?string $template = null
     ) {
         parent::__construct($templateFactory, $translator, $template);
 
@@ -138,7 +140,7 @@ final class PopupWizard extends AbstractWizard
      *
      * @return string
      */
-    public function generate($value)
+    public function generate($value): string
     {
         if ($this->always || $value) {
             $token   = $this->csrfTokenManager->getToken($this->tokenName)->getValue();
@@ -162,7 +164,7 @@ final class PopupWizard extends AbstractWizard
     /**
      * {@inheritDoc}
      */
-    public function __invoke($dataContainer)
+    public function __invoke($dataContainer): string
     {
         return $this->generate($dataContainer->value);
     }
