@@ -64,3 +64,8 @@ services:
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@security.csrf.token_manager'
       - '%contao.csrf_token_name%'
+
+  netzmacht.contao_toolkit.dca.listeners.template_options:
+    class: Netzmacht\Contao\Toolkit\Dca\Listener\Options\TemplateOptionsListener
+    arguments:
+      - '@netzmacht.contao_toolkit.dca.manager'
