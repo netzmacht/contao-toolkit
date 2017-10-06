@@ -12,12 +12,15 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit\Data\Alias;
+namespace Netzmacht\Contao\Toolkit\Data\Alias\Factory;
 
 use Doctrine\DBAL\Connection;
+use Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator;
+use Netzmacht\Contao\Toolkit\Data\Alias\Factory\AliasGeneratorFactory;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\ExistingAliasFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SlugifyFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SuffixFilter;
+use Netzmacht\Contao\Toolkit\Data\Alias\FilterBasedAliasGenerator;
 use Netzmacht\Contao\Toolkit\Data\Alias\Validator\UniqueDatabaseValueValidator;
 
 /**
@@ -25,7 +28,7 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Validator\UniqueDatabaseValueValidator;
  *
  * @package Netzmacht\Contao\Toolkit\Data\Alias
  */
-final class DefaultAliasGeneratorFactory
+final class ToolkitAliasGeneratorFactory implements AliasGeneratorFactory
 {
     /**
      * Database connection.
@@ -45,15 +48,9 @@ final class DefaultAliasGeneratorFactory
     }
 
     /**
-     * Invoke will create the alias generator for the given data container and the alias fields.
-     *
-     * @param string $dataContainerName Data container name.
-     * @param string $aliasField        Alias field name.
-     * @param array  $fields            List of value fields.
-     *
-     * @return FilterBasedAliasGenerator
+     * {@inheritdoc}
      */
-    public function __invoke(string $dataContainerName, string $aliasField, array $fields)
+    public function create(string $dataContainerName, string $aliasField, array $fields): AliasGenerator
     {
         $filters = [
             new ExistingAliasFilter(),

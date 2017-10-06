@@ -17,6 +17,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Listener\Save;
 use Contao\Database\Result;
 use Contao\DataContainer;
 use Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator;
+use Netzmacht\Contao\Toolkit\Data\Alias\Factory\AliasGeneratorFactory;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Webmozart\Assert\Assert;
@@ -50,6 +51,13 @@ final class GenerateAliasListener
     private $defaultServiceId;
 
     /**
+     * Cache of created alias generators.
+     *
+     * @var AliasGenerator[][]
+     */
+    private $generators = [];
+
+    /**
      * Construct.
      *
      * @param Container $container        Dependency container.
@@ -76,10 +84,7 @@ final class GenerateAliasListener
         Assert::isInstanceOf($dataContainer, DataContainer::class);
         Assert::isInstanceOf($dataContainer->activeRecord, Result::class);
 
-        $serviceId = $this->getServiceId($dataContainer);
-        $generator = $this->container->get($serviceId);
-
-        $this->guardIsAliasGenerator($generator, $serviceId);
+        $generator = $this->getGenerator($dataContainer);
 
         return $generator->generate($dataContainer->activeRecord, $value);
     }
@@ -91,11 +96,11 @@ final class GenerateAliasListener
      *
      * @return string
      */
-    private function getServiceId($dataContainer): string
+    private function getFactoryServiceId($dataContainer): string
     {
         $definition = $this->dcaManager->getDefinition($dataContainer->table);
         $serviceId  = $definition->get(
-            ['fields', $dataContainer->field, 'toolkit', 'alias_generator', 'serviceId'],
+            ['fields', $dataContainer->field, 'toolkit', 'alias_generator', 'factory'],
             $this->defaultServiceId
         );
 
@@ -105,17 +110,44 @@ final class GenerateAliasListener
     /**
      * Guard that service is an alias generator.
      *
-     * @param mixed  $generator Retrieved alias generator service.
+     * @param mixed  $factory   Retrieved alias generator factory service.
      * @param string $serviceId Service id.
      *
      * @return void
      */
-    private function guardIsAliasGenerator($generator, string $serviceId): void
+    private function guardIsAliasGeneratorFactory($factory, string $serviceId): void
     {
         Assert::isInstanceOf(
-            $generator,
-            AliasGenerator::class,
-            sprintf('Service %s is not an alias generator.', $serviceId)
+            $factory,
+            AliasGeneratorFactory::class,
+            sprintf('Service %s is not an alias generator factory.', $serviceId)
         );
+    }
+
+    /**
+     * Generate an alias generator.
+     *
+     * @param DataContainer $dataContainer Data container driver.
+     *
+     * @return AliasGenerator
+     */
+    private function getGenerator($dataContainer): AliasGenerator
+    {
+        if (isset($this->generators[$dataContainer->table][$dataContainer->field])) {
+            return $this->generators[$dataContainer->table][$dataContainer->field];
+        }
+
+        /** @var AliasGeneratorFactory $factory */
+        $serviceId  = $this->getFactoryServiceId($dataContainer);
+        $factory    = $this->container->get($serviceId);
+        $definition = $this->dcaManager->getDefinition($dataContainer->table);
+        $fields     = (array) $definition->get(
+            ['fields', $dataContainer->field, 'toolkit', 'alias_generator', 'fields'],
+            ['id']
+        );
+
+        $this->guardIsAliasGeneratorFactory($factory, $serviceId);
+
+        return $factory->create($dataContainer->table, $dataContainer->field, $fields);
     }
 }
