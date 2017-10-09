@@ -1,5 +1,5 @@
 parameters:
-  netzmacht.contao_toolkit.alias_generator.default: 'netzmacht.contao_toolkit.data.alias_generator.default'
+  netzmacht.contao_toolkit.alias_generator.default: 'netzmacht.contao_toolkit.data.alias_generator.factory.default_factory'
 
 services:
   netzmacht.contao_toolkit.listeners.get_template_helpers:

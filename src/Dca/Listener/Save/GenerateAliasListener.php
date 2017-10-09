@@ -44,11 +44,11 @@ final class GenerateAliasListener
     private $dcaManager;
 
     /**
-     * Default alias generator service id.
+     * Default alias generator factory service id.
      *
      * @var string
      */
-    private $defaultServiceId;
+    private $defaultFactoryServiceId;
 
     /**
      * Cache of created alias generators.
@@ -60,15 +60,15 @@ final class GenerateAliasListener
     /**
      * Construct.
      *
-     * @param Container $container        Dependency container.
-     * @param Manager   $dcaManager       Data container manager.
-     * @param string    $defaultServiceId Default alias generator service id.
+     * @param Container $container               Dependency container.
+     * @param Manager   $dcaManager              Data container manager.
+     * @param string    $defaultFactoryServiceId Default alias generator factory service id.
      */
-    public function __construct(Container $container, Manager $dcaManager, $defaultServiceId)
+    public function __construct(Container $container, Manager $dcaManager, $defaultFactoryServiceId)
     {
-        $this->container        = $container;
-        $this->defaultServiceId = $defaultServiceId;
-        $this->dcaManager       = $dcaManager;
+        $this->container               = $container;
+        $this->defaultFactoryServiceId = $defaultFactoryServiceId;
+        $this->dcaManager              = $dcaManager;
     }
 
     /**
@@ -101,7 +101,7 @@ final class GenerateAliasListener
         $definition = $this->dcaManager->getDefinition($dataContainer->table);
         $serviceId  = $definition->get(
             ['fields', $dataContainer->field, 'toolkit', 'alias_generator', 'factory'],
-            $this->defaultServiceId
+            $this->defaultFactoryServiceId
         );
 
         return $serviceId;
