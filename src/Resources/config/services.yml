@@ -6,10 +6,6 @@ services:
   netzmacht.contao_toolkit.callback_invoker:
     class: Netzmacht\Contao\Toolkit\Dca\Callback\Invoker
 
-  netzmacht.contao_toolkit.contao_config:
-    class: Contao\Config
-    factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createConfigService']
-
   netzmacht.contao_toolkit.component.content_element_factory:
     class: Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory
     arguments:
@@ -87,4 +83,4 @@ services:
   netzmacht.contao_toolkit.globals_assets_manager_factory:
     class: Netzmacht\Contao\Toolkit\View\Assets\GlobalsAssetsManagerFactory
     arguments:
-      - ['@kernel']
+      - '%kernel.debug%'
