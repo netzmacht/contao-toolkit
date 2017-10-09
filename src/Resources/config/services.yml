@@ -79,6 +79,15 @@ services:
     arguments:
       - "@event_dispatcher"
 
+  netzmacht.contao_toolkit.view.template_name_parser:
+    class: Netzmacht\Contao\Toolkit\View\Template\ContaoTemplateNameParser
+
+  templating.engine.contao:
+    class: Netzmacht\Contao\Toolkit\View\Template\ContaoTemplateEngine
+    arguments:
+      - '@netzmacht.contao_toolkit.view.template_factory'
+      - '@netzmacht.contao_toolkit.view.template_name_parser'
+
   netzmacht.contao_toolkit.globals_assets_manager_factory:
     class: Netzmacht\Contao\Toolkit\View\Assets\GlobalsAssetsManagerFactory
     arguments:

@@ -18,6 +18,8 @@ use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
+use Contao\ManagerPlugin\Config\ContainerBuilder;
+use Contao\ManagerPlugin\Config\ExtensionPluginInterface;
 use Netzmacht\Contao\Toolkit\NetzmachtContaoToolkitBundle;
 
 /**
@@ -25,7 +27,7 @@ use Netzmacht\Contao\Toolkit\NetzmachtContaoToolkitBundle;
  *
  * @package Netzmacht\Contao\Toolkit\ContaoManager
  */
-final class Plugin implements BundlePluginInterface
+final class Plugin implements BundlePluginInterface, ExtensionPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -37,5 +39,23 @@ final class Plugin implements BundlePluginInterface
                 ->setReplace(['toolkit'])
                 ->setLoadAfter([ContaoCoreBundle::class])
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getExtensionConfig($extensionName, array $extensionConfigs, ContainerBuilder $container)
+    {
+        if ($extensionName !== 'framework') {
+            return $extensionConfigs;
+        }
+
+        $extensionConfigs[] = [
+            'templating' => [
+                'engines' => ['twig', 'contao']
+            ]
+        ];
+
+        return $extensionConfigs;
     }
 }
