@@ -60,7 +60,7 @@ final class StateButtonCallbackListener
      * @param Manager $dcaManager Data container manager.
      */
     public function __construct(
-        Input $input,
+        $input,
         Updater $updater,
         Manager $dcaManager
     ) {
@@ -93,17 +93,17 @@ final class StateButtonCallbackListener
      */
     public function handleButtonCallback(
         array $row,
-        string $href,
-        string $label,
-        string $title,
-        string $icon,
-        string $attributes,
+        ?string $href,
+        ?string $label,
+        ?string $title,
+        ?string $icon,
+        ?string $attributes,
         string $tableName,
-        array $rootIds,
-        array $childRecordIds,
+        ?array $rootIds,
+        ?array $childRecordIds,
         bool $circularReference,
-        string $previous,
-        string $next,
+        ?string $previous,
+        ?string $next,
         $dataContainer
     ) {
         $name   = $this->getOperationName($attributes);
