@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit;
 
-use Contao\CoreBundle\DependencyInjection\Compiler\RegisterHooksPass;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\AddTaggedServicesAsArgumentPass;
+use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\RegisterHooksPass;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\TranslatorPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
