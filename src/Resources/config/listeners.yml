@@ -30,7 +30,7 @@ services:
     arguments:
       - '@netzmacht.contao_toolkit.dca.manager'
     tags:
-      { name: 'contao.hook', hook: 'loadDataContainer', method: 'onLoadDataContainer' }
+      - { name: 'contao.hook', hook: 'loadDataContainer', method: 'onLoadDataContainer' }
 
   netzmacht.contao_toolkit.dca.listeners.state_button_callback:
     class: Netzmacht\Contao\Toolkit\Dca\Listener\Button\StateButtonCallbackListener
