@@ -1,7 +1,7 @@
 <?php
 
 /**
- * contao-toolkit.
+ * Contao toolkit.
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
