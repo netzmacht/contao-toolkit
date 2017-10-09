@@ -42,7 +42,7 @@ services:
     factory: []
 
   netzmacht.contao_toolkit.data.alias_generator.factory.default_factory:
-    class: Netzmacht\Contao\Toolkit\Data\Alias\DefaultAliasGeneratorFactory
+    class: Netzmacht\Contao\Toolkit\Data\Alias\Factory\ToolkitAliasGeneratorFactory
     arguments:
       - '@database_connection'
 
