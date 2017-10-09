@@ -12,8 +12,6 @@
 
 namespace Netzmacht\Contao\Toolkit\View\Assets;
 
-use Symfony\Component\HttpKernel\KernelInterface as HttpKernel;
-
 /**
  * Class GlobalsAssetsManagerFactory creates the global assets manager.
  *
@@ -22,20 +20,20 @@ use Symfony\Component\HttpKernel\KernelInterface as HttpKernel;
 final class GlobalsAssetsManagerFactory
 {
     /**
-     * Http kernel.
+     * Kernel debug mode.
      *
-     * @var HttpKernel
+     * @var bool
      */
-    private $kernel;
+    private $debug;
 
     /**
      * GlobalsAssetsManagerFactory constructor.
      *
-     * @param HttpKernel $kernel Http kernel.
+     * @param bool $debug Debug mode.
      */
-    public function __construct(HttpKernel $kernel)
+    public function __construct(bool $debug)
     {
-        $this->kernel = $kernel;
+        $this->debug = $debug;
     }
 
     /**
@@ -58,7 +56,7 @@ final class GlobalsAssetsManagerFactory
         return new GlobalsAssetsManager(
             $GLOBALS['TL_CSS'],
             $GLOBALS['TL_JAVASCRIPT'],
-            $this->kernel->isDebug()
+            $this->debug
         );
     }
 }
