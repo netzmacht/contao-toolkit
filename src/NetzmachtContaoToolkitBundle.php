@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit;
 
-use Netzmacht\Contao\Toolkit\DependencyInjection\CompilerPass\AddTaggedServicesAsArgumentCompilerPass;
-use Netzmacht\Contao\Toolkit\DependencyInjection\CompilerPass\TranslatorCompilerPass;
+use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\AddTaggedServicesAsArgumentPass;
+use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\TranslatorPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -33,31 +33,31 @@ final class NetzmachtContaoToolkitBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new TranslatorCompilerPass());
+        $container->addCompilerPass(new TranslatorPass());
 
         $container->addCompilerPass(
-            new AddTaggedServicesAsArgumentCompilerPass(
+            new AddTaggedServicesAsArgumentPass(
                 'netzmacht.contao_toolkit.component.content_element_factory',
                 'netzmacht.contao_toolkit.component.content_element_factory'
             )
         );
 
         $container->addCompilerPass(
-            new AddTaggedServicesAsArgumentCompilerPass(
+            new AddTaggedServicesAsArgumentPass(
                 'netzmacht.contao_toolkit.component.frontend_module_factory',
                 'netzmacht.contao_toolkit.component.frontend_module_factory'
             )
         );
 
         $container->addCompilerPass(
-            new AddTaggedServicesAsArgumentCompilerPass(
+            new AddTaggedServicesAsArgumentPass(
                 'netzmacht.contao_toolkit.listeners.create_formatter_subscriber',
                 'netzmacht.contao_toolkit.dca.formatter'
             )
         );
 
         $container->addCompilerPass(
-            new AddTaggedServicesAsArgumentCompilerPass(
+            new AddTaggedServicesAsArgumentPass(
                 'netzmacht.contao_toolkit.listeners.create_formatter_subscriber',
                 'netzmacht.contao_toolkit.dca.formatter.pre_filter',
                 1
@@ -65,7 +65,7 @@ final class NetzmachtContaoToolkitBundle extends Bundle
         );
 
         $container->addCompilerPass(
-            new AddTaggedServicesAsArgumentCompilerPass(
+            new AddTaggedServicesAsArgumentPass(
                 'netzmacht.contao_toolkit.listeners.create_formatter_subscriber',
                 'netzmacht.contao_toolkit.dca.formatter.post_filter',
                 2
@@ -73,7 +73,7 @@ final class NetzmachtContaoToolkitBundle extends Bundle
         );
 
         $container->addCompilerPass(
-            new AddTaggedServicesAsArgumentCompilerPass(
+            new AddTaggedServicesAsArgumentPass(
                 'netzmacht.contao_toolkit.insert_tag.replacer',
                 'netzmacht.contao_toolkit.insert_tag_parser',
                 1

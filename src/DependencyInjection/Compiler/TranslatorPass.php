@@ -12,7 +12,7 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit\DependencyInjection\CompilerPass;
+namespace Netzmacht\Contao\Toolkit\DependencyInjection\Compiler;
 
 use Netzmacht\Contao\Toolkit\Translation\LangArrayTranslator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -25,7 +25,7 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @package Netzmacht\Contao\Toolkit\DependencyInjection\CompilerPass
  */
-final class TranslatorCompilerPass implements CompilerPassInterface
+final class TranslatorPass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}

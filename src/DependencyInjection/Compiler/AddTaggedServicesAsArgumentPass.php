@@ -12,7 +12,7 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit\DependencyInjection\CompilerPass;
+namespace Netzmacht\Contao\Toolkit\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -23,7 +23,7 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @package Netzmacht\Contao\Toolkit\DependencyInjection\CompilerPass
  */
-final class AddTaggedServicesAsArgumentCompilerPass implements CompilerPassInterface
+final class AddTaggedServicesAsArgumentPass implements CompilerPassInterface
 {
     /**
      * Service name which should be adjusted.
