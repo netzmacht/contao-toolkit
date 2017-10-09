@@ -43,15 +43,15 @@ final class FilePickerListener extends AbstractFieldPickerListener
             str_replace('\'', '\\\'', $this->translator->trans('MOD.files.0', [], 'contao_modules'))
         );
 
-        $template = $this->createTemplate();
-        $template
-            ->set('url', $url)
-            ->set('title', $this->translator->trans('MSC.filepicker', [], 'contao_default'))
-            ->set('jsTitle', $jsTitle)
-            ->set('field', $fieldName)
-            ->set('icon', 'pickfile.gif')
-            ->set('id', $cssId);
+        $parameters = [
+            'url' => $url,
+            'title' => $this->translator->trans('MSC.filepicker', [], 'contao_default'),
+            'jsTitle' => $jsTitle,
+            'field' => $fieldName,
+            'icon' => 'pickfile.svg',
+            'id' => $cssId
+        ];
 
-        return $template->parse();
+        return $this->render($this->template, $parameters);
     }
 }

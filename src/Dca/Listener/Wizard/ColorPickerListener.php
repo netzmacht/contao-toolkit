@@ -26,7 +26,7 @@ final class ColorPickerListener extends AbstractPickerListener
      *
      * @var string
      */
-    protected $template = 'be_wizard_color_picker';
+    protected $template = 'contao_backend:be_wizard_color_picker.html5';
 
     /**
      * Generate the color picker.
@@ -38,15 +38,10 @@ final class ColorPickerListener extends AbstractPickerListener
      */
     public function generate(string $dataContainerName, string $fieldName): string
     {
-        $config   = $this->getConfig($dataContainerName, $fieldName);
-        $template = $this->createTemplate($config['template']);
-        $template
-            ->set('title', $config['title'])
-            ->set('field', $fieldName)
-            ->set('icon', $config['icon'])
-            ->set('replaceHex', $config['replaceHex']);
+        $config          = $this->getConfig($dataContainerName, $fieldName);
+        $config['field'] = $fieldName;
 
-        return $template->parse();
+        return $this->render($this->template, $config);
     }
 
     /**
@@ -54,7 +49,7 @@ final class ColorPickerListener extends AbstractPickerListener
      */
     public function handleWizardCallback($dataContainer): string
     {
-        return $this->generate($dataContainer->field);
+        return $this->generate($dataContainer->table, $dataContainer->field);
     }
 
     /**

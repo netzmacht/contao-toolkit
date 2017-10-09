@@ -15,8 +15,8 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 
 use Netzmacht\Contao\Toolkit\Dca\Manager;
-use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface as CsrfTokenManager;
+use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 
 /**
@@ -31,7 +31,7 @@ final class PopupWizardListener extends AbstractWizardListener
      *
      * @var string
      */
-    protected $template = 'be_wizard_popup';
+    protected $template = 'contao_backend:be_wizard_popup.html5';
 
     /**
      * Link pattern for the url.
@@ -57,7 +57,7 @@ final class PopupWizardListener extends AbstractWizardListener
     /**
      * Construct.
      *
-     * @param TemplateFactory  $templateFactory  Template Factory.
+     * @param TemplateEngine   $templateEngine   Template Engine.
      * @param Translator       $translator       Translator.
      * @param Manager          $dcaManager       Data container manager.
      * @param CsrfTokenManager $csrfTokenManager Csrf Token manager.
@@ -67,14 +67,14 @@ final class PopupWizardListener extends AbstractWizardListener
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        TemplateFactory $templateFactory,
+        TemplateEngine $templateEngine,
         Translator $translator,
         Manager $dcaManager,
         CsrfTokenManager $csrfTokenManager,
         string $csrfTokenName,
         ?string $template = null
     ) {
-        parent::__construct($templateFactory, $translator, $dcaManager, $template);
+        parent::__construct($templateEngine, $translator, $dcaManager, $template);
 
         $this->csrfTokenManager = $csrfTokenManager;
         $this->tokenName        = $csrfTokenName;
@@ -102,19 +102,16 @@ final class PopupWizardListener extends AbstractWizardListener
         );
 
         if ($config['always'] || $value) {
-            $token   = $this->csrfTokenManager->getToken($this->tokenName)->getValue();
-            $href    = sprintf($config['linkPattern'], $config['href'], $value, $token);
-            $jsTitle = specialchars(str_replace('\'', '\\\'', $config['title']));
+            $token      = $this->csrfTokenManager->getToken($this->tokenName)->getValue();
+            $parameters = [
+                'href'    => sprintf($config['linkPattern'], $config['href'], $value, $token),
+                'label'   => specialchars($config['label']),
+                'title'   => specialchars($config['title']),
+                'jsTitle' => specialchars(str_replace('\'', '\\\'', $config['title'])),
+                'icon'    => $config['icon'],
+            ];
 
-            $template = $this->createTemplate();
-            $template
-                ->set('href', $href)
-                ->set('label', specialchars($config['label']))
-                ->set('title', specialchars($config['title']))
-                ->set('jsTitle', $jsTitle)
-                ->set('icon', $config['icon']);
-
-            return $template->parse();
+            return $this->render($this->template, $parameters);
         }
 
         return '';

@@ -17,7 +17,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\Input;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
-use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
+use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 
 /**
@@ -37,20 +37,20 @@ final class PagePickerListener extends AbstractFieldPickerListener
     /**
      * PagePickerCallback constructor.
      *
-     * @param TemplateFactory $templateFactory Template factory.
-     * @param Translator      $translator      Translator.
-     * @param Manager         $dcaManager      Data container manager.
-     * @param Input|Adapter   $input           Request input.
-     * @param string|null     $template        Template name.
+     * @param TemplateEngine $templateEngine Template engine.
+     * @param Translator     $translator     Translator.
+     * @param Manager        $dcaManager     Data container manager.
+     * @param Input|Adapter  $input          Request input.
+     * @param string|null    $template       Template name.
      */
     public function __construct(
-        TemplateFactory $templateFactory,
+        TemplateEngine $templateEngine,
         Translator $translator,
         Manager $dcaManager,
         $input,
         $template = null
     ) {
-        parent::__construct($templateFactory, $translator, $dcaManager, $template);
+        parent::__construct($templateEngine, $translator, $dcaManager, $template);
 
         $this->input = $input;
     }
@@ -77,15 +77,15 @@ final class PagePickerListener extends AbstractFieldPickerListener
             str_replace('\'', '\\\'', $this->translator->trans('MOD.page.0', [], 'contao_modules'))
         );
 
-        $template = $this->createTemplate();
-        $template
-            ->set('url', $url)
-            ->set('title', $this->translator->trans('MSC.pagepicker', [], 'contao_default'))
-            ->set('jsTitle', $jsTitle)
-            ->set('field', $fieldName)
-            ->set('icon', 'pickpage.gif')
-            ->set('id', $cssId);
+        $parameters = [
+            'url' => $url,
+            'title' => $this->translator->trans('MSC.pagepicker', [], 'contao_default'),
+            'jsTitle' => $jsTitle,
+            'field' => $fieldName,
+            'icon' => 'pickpage.svg',
+            'id' => $cssId
+        ];
 
-        return $template->parse();
+        return $this->render($this->template, $parameters);
     }
 }

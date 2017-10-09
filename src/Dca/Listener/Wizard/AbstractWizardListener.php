@@ -17,8 +17,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 use Contao\DataContainer;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
-use Netzmacht\Contao\Toolkit\View\Template;
-use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
+use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 
 /**
@@ -45,9 +44,9 @@ abstract class AbstractWizardListener
     /**
      * Template factory.
      *
-     * @var TemplateFactory
+     * @var TemplateEngine
      */
-    private $templateFactory;
+    private $templateEngine;
 
     /**
      * Data container manager.
@@ -59,20 +58,20 @@ abstract class AbstractWizardListener
     /**
      * PagePickerCallback constructor.
      *
-     * @param TemplateFactory $templateFactory Template factory.
-     * @param Translator      $translator      Translator.
-     * @param Manager         $dcaManager      Data container manager.
-     * @param string|null     $template        Template name.
+     * @param TemplateEngine $templateEngine Template engine.
+     * @param Translator     $translator     Translator.
+     * @param Manager        $dcaManager     Data container manager.
+     * @param string|null    $template       Template name.
      */
     public function __construct(
-        TemplateFactory $templateFactory,
+        TemplateEngine $templateEngine,
         Translator $translator,
         Manager $dcaManager,
         ?string $template = null
     ) {
-        $this->translator      = $translator;
-        $this->templateFactory = $templateFactory;
-        $this->dcaManager      = $dcaManager;
+        $this->translator     = $translator;
+        $this->templateEngine = $templateEngine;
+        $this->dcaManager     = $dcaManager;
 
         if ($template) {
             $this->template = $template;
@@ -80,15 +79,16 @@ abstract class AbstractWizardListener
     }
 
     /**
-     * Create a new template instance.
+     * Render a template.
      *
-     * @param string|null $name Custom template name. If null main wizard template is used.
+     * @param string|null $name       Custom template name. If null main wizard template is used.
+     * @param array       $parameters Parameters.
      *
-     * @return Template
+     * @return string
      */
-    protected function createTemplate(?string $name = null): Template
+    protected function render(?string $name = null, array $parameters = []): string
     {
-        return $this->templateFactory->createBackendTemplate($name ?: $this->template);
+        return $this->templateEngine->render($name ?: $this->template, $parameters);
     }
 
     /**

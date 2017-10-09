@@ -49,21 +49,21 @@ services:
   netzmacht.contao_toolkit.dca.listeners.color_picker:
     class: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\ColorPickerListener
     arguments:
-      - '@netzmacht.contao_toolkit.view.template_factory'
+      - '@templating'
       - '@translator'
       - '@netzmacht.contao_toolkit.dca.manager'
 
   netzmacht.contao_toolkit.dca.listeners.file_picker:
     class: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\FilePickerListener
     arguments:
-      - '@netzmacht.contao_toolkit.view.template_factory'
+      - '@templating'
       - '@translator'
       - '@netzmacht.contao_toolkit.dca.manager'
 
   netzmacht.contao_toolkit.dca.listeners.page_picker:
     class: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PagePickerListener
     arguments:
-      - '@netzmacht.contao_toolkit.view.template_factory'
+      - '@templating'
       - '@translator'
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@netzmacht.contao_toolkit.contao.input'
@@ -71,7 +71,7 @@ services:
   netzmacht.contao_toolkit.dca.listeners.popup_wizard:
     class: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PopupWizardListener
     arguments:
-      - '@netzmacht.contao_toolkit.view.template_factory'
+      - '@templating'
       - '@translator'
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@security.csrf.token_manager'

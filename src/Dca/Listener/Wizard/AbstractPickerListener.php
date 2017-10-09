@@ -26,5 +26,5 @@ abstract class AbstractPickerListener extends AbstractWizardListener
      *
      * @var string
      */
-    protected $template = 'be_wizard_picker';
+    protected $template = 'contao_backend:be_wizard_picker.html5';
 }
