@@ -184,7 +184,7 @@ final class StateButtonCallbackListener
 
         return array_merge(
             $config,
-            $definition->get(['list', 'operations', $operationName, 'toolkit', 'state_button'])
+            (array) $definition->get(['list', 'operations', $operationName, 'toolkit', 'state_button'])
         );
     }
 
