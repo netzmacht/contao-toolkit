@@ -110,6 +110,6 @@ final class UniqueDatabaseValueValidator implements Validator
 
         $statement = $builder->execute();
 
-        return $statement->fetch('result') == 0;
+        return $statement->fetch()['result'] == 0;
     }
 }
