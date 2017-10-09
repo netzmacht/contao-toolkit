@@ -39,7 +39,7 @@ final class TranslatorPass implements CompilerPassInterface
         $definition = new Definition(
             LangArrayTranslator::class,
             [
-                new Reference('contao.translation.translator.inner'),
+                new Reference('netzmacht.contao_toolkit.translation.translator.inner'),
                 new Reference('contao.framework')
             ]
         );
