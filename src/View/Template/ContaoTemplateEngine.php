@@ -54,6 +54,8 @@ class ContaoTemplateEngine implements EngineInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \RuntimeException If template scope is not supported.
      */
     public function render($name, array $parameters = [])
     {

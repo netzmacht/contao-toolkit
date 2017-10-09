@@ -23,6 +23,8 @@ class ContaoTemplateNameParser implements TemplateNameParserInterface
 {
     /**
      * {@inheritdoc}
+     *
+     * @throws \RuntimeException If template name could not be parsed.
      */
     public function parse($name)
     {
@@ -42,7 +44,9 @@ class ContaoTemplateNameParser implements TemplateNameParserInterface
      *
      * @param string $scope Given scope.
      *
-     * @throws \RuntimeException when template scope is not supported.
+     * @return void
+     *
+     * @throws \RuntimeException When template scope is not supported.
      */
     private function guardSupportedScope($scope): void
     {
