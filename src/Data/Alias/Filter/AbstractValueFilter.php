@@ -56,7 +56,7 @@ abstract class AbstractValueFilter extends AbstractFilter
     /**
      * {@inheritDoc}
      */
-    protected function combine(string $previous, $current, string $separator): string
+    protected function combine($previous, $current, string $separator): string
     {
         if (is_array($current)) {
             $current = implode($separator, array_filter($current));

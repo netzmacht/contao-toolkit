@@ -77,7 +77,7 @@ abstract class AbstractFilter implements Filter
      *
      * @return string
      */
-    protected function combine(string $previous, $current, string $separator): string
+    protected function combine($previous, $current, string $separator): string
     {
         if (!$previous) {
             return $current;

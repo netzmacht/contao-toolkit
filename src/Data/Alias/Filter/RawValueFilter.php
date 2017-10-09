@@ -22,7 +22,7 @@ final class RawValueFilter extends AbstractValueFilter
     /**
      * {@inheritdoc}
      */
-    public function apply($model, $value, string $separator): string
+    public function apply($model, $value, string $separator): ?string
     {
         $values = array();
 
