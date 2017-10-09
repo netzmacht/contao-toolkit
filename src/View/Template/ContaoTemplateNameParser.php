@@ -31,7 +31,7 @@ class ContaoTemplateNameParser implements TemplateNameParserInterface
         if (preg_match('/^([^\:]{1,})\:(.{1,})\.([^\.]{1,})$/', $name, $matches)) {
             $this->guardSupportedScope($matches[1]);
 
-            return new TemplateReference($matches[2], $matches[1], $matches[0]);
+            return new TemplateReference($matches[2], $matches[3], $matches[1]);
         }
 
         throw new \RuntimeException(
