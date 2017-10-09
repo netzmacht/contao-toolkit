@@ -106,7 +106,8 @@ final class StateButtonCallbackListener
         string $next,
         $dataContainer
     ) {
-        $config = $this->getConfig($dataContainer);
+        $name   = $this->getOperationName($attributes);
+        $config = $this->getConfig($dataContainer, $name);
 
         if ($this->input->get('tid')) {
             try {
@@ -168,10 +169,11 @@ final class StateButtonCallbackListener
      * Get callback config.
      *
      * @param DataContainer $dataContainer Data container driver.
+     * @param string        $operationName Operation name.
      *
      * @return array
      */
-    private function getConfig($dataContainer): array
+    private function getConfig($dataContainer, string $operationName): array
     {
         $definition = $this->dcaManager->getDefinition($dataContainer->table);
         $config     = [
@@ -182,7 +184,25 @@ final class StateButtonCallbackListener
 
         return array_merge(
             $config,
-            $definition->get(['fields', $dataContainer->field, 'toolkit', 'state_button'])
+            $definition->get(['list', 'operations', $operationName, 'toolkit', 'state_button'])
         );
+    }
+
+    /**
+     * Extract the operation name from the attributes.
+     *
+     * @param string $attributes Attributes section.
+     *
+     * @return string
+     *
+     * @throws \RuntimeException When no data-operation is set in the attributes.
+     */
+    private function getOperationName($attributes): string
+    {
+        if (preg_match('/data-operation="([^"]*)"/', $attributes, $matches)) {
+            return $matches[1];
+        }
+
+        throw new \RuntimeException('No data-operation attribute set to detect operation name.');
     }
 }
