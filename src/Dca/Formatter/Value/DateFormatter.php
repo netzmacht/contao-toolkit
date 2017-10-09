@@ -36,7 +36,7 @@ final class DateFormatter implements ValueFormatter
      *
      * @param Config $config Contao config.
      */
-    public function __construct(Config $config)
+    public function __construct($config)
     {
         $this->config = $config;
     }

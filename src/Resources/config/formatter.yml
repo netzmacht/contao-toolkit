@@ -21,7 +21,7 @@ services:
   netzmacht.contao_toolkit.dca.formatter.date:
     class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\DateFormatter
     arguments:
-      - '@netzmacht.contao_toolkit.contao_config'
+      - '@netzmacht.contao_toolkit.contao.config'
     tags:
       - { name: 'netzmacht.contao_toolkit.dca.formatter'}
 
