@@ -24,12 +24,12 @@
     "require": {
         "php": ">=7.1",
         "contao/core-bundle": "~4.4",
-        "webmozart/assert": "^1.1",
-        "phpcq/all-tasks": "~1.2"
+        "webmozart/assert": "^1.1"
     },
     "require-dev": {
         "contao/manager-plugin": "^2.0",
-        "bossa/phpspec2-expect": "^3.0"
+        "bossa/phpspec2-expect": "^3.0",
+        "phpcq/all-tasks": "~1.2"
     },
     "autoload": {
         "psr-4": {
