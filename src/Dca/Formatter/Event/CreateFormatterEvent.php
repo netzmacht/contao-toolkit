@@ -198,9 +198,9 @@ final class CreateFormatterEvent extends Event
     /**
      * Get options formatter.
      *
-     * @return ValueFormatter
+     * @return ValueFormatter|null
      */
-    public function getOptionsFormatter(): ValueFormatter
+    public function getOptionsFormatter(): ?ValueFormatter
     {
         return $this->optionsFormatter;
     }
