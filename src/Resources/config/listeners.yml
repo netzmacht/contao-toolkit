@@ -20,6 +20,11 @@ services:
     tags:
       - { name: 'kernel.event_listener', event: 'netzmacht.contao_toolkit.dca.create_formatter'}
 
+  netzmacht.contao_toolkit.listeners.merge_hook_listeners:
+    class: Netzmacht\Contao\Toolkit\DependencyInjection\Listener\MergeHookListenersListener
+    arguments:
+      - []
+
   netzmacht.contao_toolkit.listeners.set_operation_data_attribute:
     class: Netzmacht\Contao\Toolkit\Dca\Listener\SetOperationDataAttributeListener
     arguments:

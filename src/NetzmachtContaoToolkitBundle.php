@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit;
 
+use Contao\CoreBundle\DependencyInjection\Compiler\RegisterHooksPass;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\AddTaggedServicesAsArgumentPass;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\TranslatorPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -79,5 +80,11 @@ final class NetzmachtContaoToolkitBundle extends Bundle
                 1
             )
         );
+
+        // Contao 4.5 will support tagged hook listeners out of the box if PR got merged
+        // https://github.com/contao/core-bundle/pull/1094/files
+        if (!class_exists('Contao\CoreBundle\DependencyInjection\Compiler\RegisterHooksPass')) {
+            $container->addCompilerPass(new RegisterHooksPass());
+        }
     }
 }

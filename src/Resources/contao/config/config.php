@@ -1,7 +1,7 @@
 <?php
 
 /**
- * contao-toolkit.
+ * Contao toolkit.
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
@@ -10,7 +10,7 @@
  * @filesource
  */
 
-$GLOBALS['TL_HOOKS']['loadDataContainer'][] = [
-    'netzmacht.contao_toolkit.listeners.set_operation_data_attribute',
-    'onLoadDataContainer'
+$GLOBALS['TL_HOOKS']['initializeSystem'][] = [
+    'netzmacht.contao_toolkit.listeners.merge_hook_listeners',
+    'onInitializeSystem'
 ];
