@@ -96,6 +96,6 @@ final class ContaoServicesFactory
     {
         $this->framework->initialize();
 
-        return $this->framework->createInstance($class);
+        return $this->framework->getAdapter($class);
     }
 }
