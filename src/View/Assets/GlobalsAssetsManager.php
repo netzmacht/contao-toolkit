@@ -34,24 +34,24 @@ final class GlobalsAssetsManager implements AssetsManager
     private $stylesheets;
 
     /**
-     * Production mode of the environment.
+     * Debug mode of the environment.
      *
      * @var bool
      */
-    private $productionMode;
+    private $debugMode;
 
     /**
      * AssetsManager constructor.
      *
-     * @param array $stylesheets    The registered stylesheets.
-     * @param array $javascripts    The registered javascripts.
-     * @param bool  $productionMode Production mode of the environment.
+     * @param array $stylesheets The registered stylesheets.
+     * @param array $javascripts The registered javascripts.
+     * @param bool  $debugMode   Debug mode of the environment.
      */
-    public function __construct(array &$stylesheets, array &$javascripts, $productionMode = false)
+    public function __construct(array &$stylesheets, array &$javascripts, $debugMode = false)
     {
-        $this->stylesheets    =& $stylesheets;
-        $this->javascripts    =& $javascripts;
-        $this->productionMode = $productionMode;
+        $this->stylesheets =& $stylesheets;
+        $this->javascripts =& $javascripts;
+        $this->debugMode   = $debugMode;
     }
 
     /**
@@ -138,7 +138,7 @@ final class GlobalsAssetsManager implements AssetsManager
     private function isStatic($flag)
     {
         if ($flag === static::STATIC_PRODUCTION) {
-            return $this->productionMode;
+            return !$this->debugMode;
         }
 
         return $flag;
