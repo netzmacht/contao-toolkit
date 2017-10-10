@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\DependencyInjection\Listener;
 
+use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
+
 /**
  * Class MergerHookListenerListener
  *
@@ -29,17 +31,26 @@ class MergeHookListenersListener
     private $hookListeners;
 
     /**
+     * Callback invoker.
+     *
+     * @var Invoker
+     */
+    private $invoker;
+
+    /**
      * MergerHookListenerListener constructor.
      *
-     * @param array $hookListeners Hook listeners.
+     * @param Invoker $invoker       Callback invoker.
+     * @param array   $hookListeners Hook listeners.
      */
-    public function __construct(array $hookListeners = [])
+    public function __construct(Invoker $invoker, array $hookListeners = [])
     {
         $this->hookListeners = $hookListeners;
+        $this->invoker       = $invoker;
     }
 
     /**
-     * Initialize the system
+     * Initialize the system.
      *
      * @return void
      *
@@ -47,6 +58,15 @@ class MergeHookListenersListener
      */
     public function onInitializeSystem(): void
     {
+        // initializeSystem listeners can't be merged so just invoke them.
+        if (isset($this->hookListeners['initializeSystem'])) {
+            foreach ($this->hookListeners['initializeSystem'] as $listeners) {
+                $this->invoker->invokeAll($listeners);
+            }
+
+            unset ($this->hookListeners['initializeSystem']);
+        }
+
         foreach ($this->hookListeners as $hookName => $priorities) {
             $hooks = [];
 

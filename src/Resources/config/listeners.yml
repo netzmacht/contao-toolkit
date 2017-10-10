@@ -23,6 +23,7 @@ services:
   netzmacht.contao_toolkit.listeners.merge_hook_listeners:
     class: Netzmacht\Contao\Toolkit\DependencyInjection\Listener\MergeHookListenersListener
     arguments:
+      - '@netzmacht.contao_toolkit.callback_invoker'
       - []
 
   netzmacht.contao_toolkit.listeners.set_operation_data_attribute:
