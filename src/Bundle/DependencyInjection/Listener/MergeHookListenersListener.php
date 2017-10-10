@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Listener;
 
-use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
+use Netzmacht\Contao\Toolkit\Callback\Invoker;
 
 /**
  * Class MergerHookListenerListener.

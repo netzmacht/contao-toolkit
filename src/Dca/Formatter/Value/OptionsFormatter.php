@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Contao\DataContainer;
-use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
+use Netzmacht\Contao\Toolkit\Callback\Invoker;
 
 /**
  * OptionsFormatter fetches the value from the options or options callback.

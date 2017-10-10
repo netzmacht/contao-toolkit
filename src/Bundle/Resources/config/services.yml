@@ -4,7 +4,7 @@ services:
     factory: ['@netzmacht.contao_toolkit.globals_assets_manager_factory', 'create']
 
   netzmacht.contao_toolkit.callback_invoker:
-    class: Netzmacht\Contao\Toolkit\Dca\Callback\Invoker
+    class: Netzmacht\Contao\Toolkit\Callback\Invoker
 
   netzmacht.contao_toolkit.component.content_element_factory:
     class: Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory
