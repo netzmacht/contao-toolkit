@@ -51,7 +51,7 @@ class UniqueDatabaseValueValidatorSpec extends ObjectBehavior
         $queryBuilder->setParameter(Argument::type('string'), Argument::any())->willReturn($queryBuilder)->shouldBeCalled();
         $queryBuilder->execute()->willReturn($statement);
 
-        $statement->fetch('result')->willReturn(0);
+        $statement->fetch()->willReturn(['result' => 0]);
 
         $this->validate($result, 'foo')->shouldReturn(true);
     }
@@ -68,7 +68,7 @@ class UniqueDatabaseValueValidatorSpec extends ObjectBehavior
         $queryBuilder->setParameter(Argument::type('string'), Argument::any())->willReturn($queryBuilder)->shouldBeCalled();
         $queryBuilder->execute()->willReturn($statement);
 
-        $statement->fetch('result')->willReturn(1);
+        $statement->fetch()->willReturn(['result' => 1]);
 
         $this->validate($result, 'foo')->shouldReturn(false);
     }
