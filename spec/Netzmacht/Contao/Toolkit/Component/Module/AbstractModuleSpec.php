@@ -3,10 +3,9 @@
 namespace spec\Netzmacht\Contao\Toolkit\Component\Module;
 
 use Netzmacht\Contao\Toolkit\Component\Module\AbstractModule;
-use Netzmacht\Contao\Toolkit\View\Template;
-use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 if (!defined('BE_USER_LOGGED_IN')) {
@@ -25,7 +24,7 @@ class AbstractModuleSpec extends ObjectBehavior
 
     private $modelData;
 
-    function let(TemplateFactory $templateFactory, Template $template, TranslatorInterface $translator)
+    function let(EngineInterface $templateEngine, TranslatorInterface $translator)
     {
         $this->modelData = [
             'type' => 'test',
@@ -36,10 +35,8 @@ class AbstractModuleSpec extends ObjectBehavior
 
         $this->model = new Model($this->modelData);
 
-        $templateFactory->createFrontendTemplate(Argument::cetera())->willReturn($template);
-
         $this->beAnInstanceOf('spec\Netzmacht\Contao\Toolkit\Component\Module\ConcreteModule');
-        $this->beConstructedWith($this->model, $templateFactory, $translator);
+        $this->beConstructedWith($this->model, $templateEngine, $translator);
     }
 
     function it_is_initializable()
@@ -57,10 +54,9 @@ class AbstractModuleSpec extends ObjectBehavior
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Component\Module\Module');
     }
 
-    function it_generates_output(Template $template)
+    function it_generates_output(EngineInterface $templateEngine)
     {
-        $template->set(Argument::type('string'), Argument::any())->shouldBeCalled();
-        $template->parse()->willReturn('output');
+        $templateEngine->render(Argument::cetera())->willReturn('output');
 
         $this->generate()->shouldBeString();
         $this->generate()->shouldReturn('output');

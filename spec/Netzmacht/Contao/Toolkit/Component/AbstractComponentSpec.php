@@ -3,10 +3,9 @@
 namespace spec\Netzmacht\Contao\Toolkit\Component;
 
 use Netzmacht\Contao\Toolkit\Component\AbstractComponent;
-use Netzmacht\Contao\Toolkit\View\Template;
-use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Symfony\Component\Templating\EngineInterface;
 
 if (!defined('TL_MODE')) {
     define('TL_MODE', 'FE');
@@ -24,7 +23,7 @@ class AbstractComponentSpec extends ObjectBehavior
 
     private $modelData;
 
-    function let(TemplateFactory $templateFactory, Template $template)
+    function let(EngineInterface $templateEngine)
     {
         $this->modelData = [
             'type' => 'test',
@@ -35,10 +34,8 @@ class AbstractComponentSpec extends ObjectBehavior
 
         $this->model = new Model($this->modelData);
 
-        $templateFactory->createFrontendTemplate(Argument::cetera())->willReturn($template);
-
         $this->beAnInstanceOf('spec\Netzmacht\Contao\Toolkit\Component\ConcreteComponent');
-        $this->beConstructedWith($this->model, $templateFactory);
+        $this->beConstructedWith($this->model, $templateEngine);
     }
 
     function it_is_initializable()
@@ -80,10 +77,9 @@ class AbstractComponentSpec extends ObjectBehavior
         $this->getTemplateName()->shouldReturn('custom_tpl');
     }
 
-    function it_generates_output(Template $template)
+    function it_generates_output(EngineInterface $templateEngine)
     {
-        $template->set(Argument::type('string'), Argument::any())->shouldBeCalled();
-        $template->parse()->willReturn('output');
+        $templateEngine->render(Argument::cetera())->willReturn('output');
 
         $this->generate()->shouldBeString();
         $this->generate()->shouldReturn('output');
