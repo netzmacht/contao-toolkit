@@ -19,8 +19,9 @@ use Contao\Model;
 use Contao\Model\Collection;
 use Contao\StringUtil;
 use InvalidArgumentException;
-use Netzmacht\Contao\Toolkit\View\Template;
-use Netzmacht\Contao\Toolkit\View\Template\TemplateFactory;
+use Netzmacht\Contao\Toolkit\View\Template\TemplateReference as ToolkitTemplateReference;
+use Symfony\Component\Templating\EngineInterface as TemplateEngine;
+use Symfony\Component\Templating\TemplateReferenceInterface as TemplateReference;
 use Webmozart\Assert\Assert;
 
 /**
@@ -59,29 +60,22 @@ abstract class AbstractComponent implements Component
     protected $templateName;
 
     /**
-     * Template factory.
+     * Template engine.
      *
-     * @var TemplateFactory
+     * @var TemplateEngine
      */
-    private $templateFactory;
-
-    /**
-     * Template instance.
-     *
-     * @var Template
-     */
-    protected $template;
+    private $templateEngine;
 
     /**
      * AbstractContentElement constructor.
      *
-     * @param Model|Collection|Result $model           Object model or result.
-     * @param TemplateFactory         $templateFactory Template factory.
-     * @param string                  $column          Column.
+     * @param Model|Collection|Result $model          Object model or result.
+     * @param TemplateEngine          $templateEngine Template engine.
+     * @param string                  $column         Column.
      *
      * @throws InvalidArgumentException When model does not have a row method.
      */
-    public function __construct($model, TemplateFactory $templateFactory, $column = 'main')
+    public function __construct($model, TemplateEngine $templateEngine, $column = 'main')
     {
         if ($model instanceof Collection) {
             $model = $model->current();
@@ -93,12 +87,12 @@ abstract class AbstractComponent implements Component
 
         Assert::methodExists($model, 'row');
 
-        $this->templateFactory = $templateFactory;
-        $this->column          = $column;
-        $this->data            = $this->deserializeData($model->row());
+        $this->templateEngine = $templateEngine;
+        $this->column         = $column;
+        $this->data           = $this->deserializeData($model->row());
 
         if ($this->get('customTpl') != '' && TL_MODE == 'FE') {
-            $this->setTemplateName($this->get('customTpl'));
+            $this->setTemplateName((string) $this->get('customTpl'));
         }
     }
 
@@ -173,47 +167,36 @@ abstract class AbstractComponent implements Component
      */
     public function generate(): string
     {
-        $this->preGenerate();
-
-        $this->template = $this->templateFactory->createFrontendTemplate($this->getTemplateName(), $this->getData());
-        $this->prepareTemplate($this->template);
         $this->compile();
 
-        $buffer = $this->template->parse();
+        $data   = $this->prepareTemplateData($this->getData());
+        $buffer = $this->render($this->getTemplateReference(), $data);
         $buffer = $this->postGenerate($buffer);
 
         return $buffer;
     }
 
     /**
-     * Pre generate is called before creating the template.
+     * Render a template.
      *
-     * @return void
-     */
-    protected function preGenerate(): void
-    {
-    }
-
-    /**
-     * Post generate the output.
-     *
-     * @param string $buffer Generated component.
+     * @param TemplateReference|string $templateName Template name or reference.
+     * @param array                    $parameters   Additional parameters being passed to the template.
      *
      * @return string
      */
-    private function postGenerate(string $buffer): string
+    protected function render($templateName, array $parameters = []): string
     {
-        return $buffer;
+        return $this->templateEngine->render($templateName, $parameters);
     }
 
     /**
-     * Prepare the template.
+     * Pre template data.
      *
-     * @param Template $template Template name.
+     * @param array $data Given data.
      *
-     * @return void
+     * @return array
      */
-    private function prepareTemplate(Template $template): void
+    protected function prepareTemplateData(array $data): array
     {
         $style = [];
         $space = $this->get('space');
@@ -230,10 +213,24 @@ abstract class AbstractComponent implements Component
         $cssClass = $this->compileCssClass();
 
         // Do not change this order (see #6191)
-        $template->set('style', implode(' ', $style));
-        $template->set('class', $cssClass);
-        $template->set('cssID', ($cssID[0] != '') ? ' id="' . $cssID[0] . '"' : '');
-        $template->set('inColumn', $this->getColumn());
+        $data['style']    = implode(' ', $style);
+        $data['class']    = $cssClass;
+        $data['cssID']    = ($cssID[0] != '') ? ' id="' . $cssID[0] . '"' : '';
+        $data['inColumn'] = $this->getColumn();
+
+        return $data;
+    }
+
+    /**
+     * Post generate the output.
+     *
+     * @param string $buffer Generated component.
+     *
+     * @return string
+     */
+    private function postGenerate(string $buffer): string
+    {
+        return $buffer;
     }
 
     /**
@@ -253,16 +250,6 @@ abstract class AbstractComponent implements Component
     protected function getData(): array
     {
         return $this->data;
-    }
-
-    /**
-     * Get the template factory.
-     *
-     * @return TemplateFactory
-     */
-    protected function getTemplateFactory(): TemplateFactory
-    {
-        return $this->templateFactory;
     }
 
     /**
@@ -323,5 +310,19 @@ abstract class AbstractComponent implements Component
     protected function getColumn(): string
     {
         return $this->column;
+    }
+
+    /**
+     * Get the template reference.
+     *
+     * @return TemplateReference
+     */
+    protected function getTemplateReference(): TemplateReference
+    {
+        return new ToolkitTemplateReference(
+            $this->getTemplateName(),
+            'html5',
+            ToolkitTemplateReference::SCOPE_FRONTEND
+        );
     }
 }

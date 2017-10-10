@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Component\Hybrid;
 
+use Contao\ContentModel;
 use Netzmacht\Contao\Toolkit\Component\Module\AbstractModule;
 
 /**
@@ -74,6 +75,6 @@ abstract class AbstractHybrid extends AbstractModule implements Hybrid
      */
     private function isContentElement(): bool
     {
-        return $this->getModel() instanceof \ContentModel;
+        return $this->getModel() instanceof ContentModel;
     }
 }

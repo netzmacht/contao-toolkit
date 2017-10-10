@@ -32,8 +32,7 @@ final class ModuleDecorator extends Module
      */
     public function __construct($contentModel, $column = 'main')
     {
-        $factory         = $this->getFactory();
-        $this->component = $factory->create($contentModel, $column);
+        $this->component = $this->getFactory()->create($contentModel, $column);
     }
 
     /**

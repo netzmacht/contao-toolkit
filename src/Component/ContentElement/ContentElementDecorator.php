@@ -32,8 +32,7 @@ final class ContentElementDecorator extends ContentElement
      */
     public function __construct($contentModel, string $column = 'main')
     {
-        $factory         = $this->getFactory();
-        $this->component = $factory->create($contentModel, $column);
+        $this->component = $this->getFactory()->create($contentModel, $column);
     }
 
     /**
