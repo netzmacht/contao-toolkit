@@ -117,7 +117,7 @@ class ToolkitTemplateEngine implements EngineInterface
             return false;
         }
 
-        return $reference->get('engine') === 'contao';
+        return $reference->get('engine') === TemplateReference::ENGINE;
     }
 
     /**
