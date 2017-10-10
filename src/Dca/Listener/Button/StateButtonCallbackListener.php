@@ -158,11 +158,11 @@ final class StateButtonCallbackListener
             return $default;
         }
 
-        if (preg_match('^/.*\.(gif|png|svg|jpg)]$/', $icon, $matches)) {
+        if (preg_match('/^visible\.(gif|png|svg|jpg)$/', $icon, $matches)) {
             return 'invisible.' . $matches[1];
         }
 
-        return preg_replace('\.([^\.]*)$', '._$1', $icon);
+        return preg_replace('/\.([^\.]*)$/', '_.$1', $icon);
     }
 
     /**
