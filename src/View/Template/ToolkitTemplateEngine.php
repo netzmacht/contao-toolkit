@@ -22,7 +22,7 @@ use Symfony\Component\Templating\TemplateReferenceInterface;
  *
  * @package Netzmacht\Contao\Toolkit\View\Template
  */
-class ContaoTemplateEngine implements EngineInterface
+class ToolkitTemplateEngine implements EngineInterface
 {
     /**
      * Template factory.

@@ -19,7 +19,7 @@ use Symfony\Component\Templating\TemplateNameParserInterface;
  *
  * @package Netzmacht\Contao\Toolkit\View\Template
  */
-class ContaoTemplateNameParser implements TemplateNameParserInterface
+class ToolkitTemplateNameParser implements TemplateNameParserInterface
 {
     /**
      * {@inheritdoc}
@@ -28,10 +28,13 @@ class ContaoTemplateNameParser implements TemplateNameParserInterface
      */
     public function parse($name)
     {
-        if (preg_match('/^([^\:]{1,})\:(.{1,})\.([^\.]{1,})$/', $name, $matches)) {
-            $this->guardSupportedScope($matches[1]);
+        if (preg_match('/^([^\:]{1,})\:([^\:]{1,})\:(.{1,})\.([^\.\:]{1,})\:?([^\:]*)$/', $name, $matches)) {
+            $this->guardSupportedEngine($matches[1]);
+            $this->guardSupportedScope($matches[2]);
 
-            return new TemplateReference($matches[2], $matches[3], $matches[1]);
+            $contentType = ($matches[5] ?? 'text/html');
+
+            return new TemplateReference($matches[3], $matches[4], $matches[2], $contentType, $matches[1]);
         }
 
         throw new \RuntimeException(
@@ -56,6 +59,27 @@ class ContaoTemplateNameParser implements TemplateNameParserInterface
                 sprintf(
                     'Template scope "%s" is not supported. Has to be contao_frontend or contao_backend.',
                     $scope
+                )
+            );
+        }
+    }
+
+    /**
+     * Guard that template engine is supported.
+     *
+     * @param string $engine Given engine.
+     *
+     * @return void
+     *
+     * @throws \RuntimeException When template engine is not supported.
+     */
+    private function guardSupportedEngine($engine): void
+    {
+        if ($engine !== TemplateReference::ENGINE) {
+            throw new \RuntimeException(
+                sprintf(
+                    'Template engine "%s" is not supported. Has to be toolkit.',
+                    $engine
                 )
             );
         }

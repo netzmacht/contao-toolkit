@@ -21,9 +21,11 @@ use Symfony\Component\Templating\TemplateReference as BaseTemplateReference;
  */
 class TemplateReference extends BaseTemplateReference
 {
-    const SCOPE_BACKEND = 'contao_backend';
+    const SCOPE_BACKEND = 'be';
 
-    const SCOPE_FRONTEND = 'contao_frontend';
+    const SCOPE_FRONTEND = 'fe';
+
+    const ENGINE = 'toolkit';
 
     /**
      * TemplateReference constructor.
@@ -39,7 +41,7 @@ class TemplateReference extends BaseTemplateReference
         $format = null,
         $scope = null,
         $contentType = 'text/html',
-        $engine = 'contao'
+        $engine = self::ENGINE
     ) {
         parent::__construct($name, $engine);
 

@@ -26,7 +26,7 @@ final class ColorPickerListener extends AbstractPickerListener
      *
      * @var string
      */
-    protected $template = 'contao_backend:be_wizard_color_picker.html5';
+    protected $template = 'toolkit:be:be_wizard_color_picker.html5';
 
     /**
      * Generate the color picker.

@@ -31,7 +31,7 @@ final class PopupWizardListener extends AbstractWizardListener
      *
      * @var string
      */
-    protected $template = 'contao_backend:be_wizard_popup.html5';
+    protected $template = 'toolkit:be:be_wizard_popup.html5';
 
     /**
      * Link pattern for the url.
