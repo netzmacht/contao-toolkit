@@ -26,6 +26,14 @@ services:
       - '@netzmacht.contao_toolkit.callback_invoker'
       - []
 
+  netzmacht.contao_toolkit.listeners.register_component_decorators:
+    class: Netzmacht\Contao\Toolkit\DependencyInjection\Listener\RegisterComponentDecoratorsListener
+    arguments:
+      - []
+      - []
+    tags:
+      - { name: 'contao.hook', hook: 'initializeSystem', method: 'onInitializeSystem', priority: 100 }
+
   netzmacht.contao_toolkit.listeners.set_operation_data_attribute:
     class: Netzmacht\Contao\Toolkit\Dca\Listener\SetOperationDataAttributeListener
     arguments:

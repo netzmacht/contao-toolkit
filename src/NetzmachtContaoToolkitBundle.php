@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit;
 
 use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\AddTaggedServicesAsArgumentPass;
+use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\ComponentDecoratorPass;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\RegisterHooksPass;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\TranslatorPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -79,6 +80,14 @@ final class NetzmachtContaoToolkitBundle extends Bundle
                 'netzmacht.contao_toolkit.insert_tag_parser',
                 1
             )
+        );
+
+        $container->addCompilerPass(
+            new ComponentDecoratorPass('netzmacht.contao_toolkit.component.frontend_module', 0)
+        );
+
+        $container->addCompilerPass(
+            new ComponentDecoratorPass('netzmacht.contao_toolkit.component.content_element', 1)
         );
 
         // Contao 4.5 will support tagged hook listeners out of the box if PR got merged
