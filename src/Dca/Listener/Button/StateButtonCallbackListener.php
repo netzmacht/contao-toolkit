@@ -73,17 +73,17 @@ final class StateButtonCallbackListener
      * Invoke the callback.
      *
      * @param array         $row               Current data row.
-     * @param string        $href              Button link.
-     * @param string        $label             Button label.
-     * @param string        $title             Button title.
-     * @param string        $icon              Enabled button icon.
-     * @param string        $attributes        Html attributes as string.
+     * @param string|null   $href              Button link.
+     * @param string|null   $label             Button label.
+     * @param string|null   $title             Button title.
+     * @param string|null   $icon              Enabled button icon.
+     * @param string|null   $attributes        Html attributes as string.
      * @param string        $tableName         Table name.
-     * @param array         $rootIds           Root ids.
-     * @param array         $childRecordIds    Child record ids.
+     * @param array|null    $rootIds           Root ids.
+     * @param array|null    $childRecordIds    Child record ids.
      * @param bool          $circularReference Circular reference flag.
-     * @param string        $previous          Previous button name.
-     * @param string        $next              Next button name.
+     * @param string|null   $previous          Previous button name.
+     * @param string|null   $next              Next button name.
      * @param DataContainer $dataContainer     Data container driver.
      *
      * @return string
