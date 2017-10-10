@@ -114,14 +114,14 @@ final class DatabaseRowUpdater implements Updater
      */
     public function hasUserAccess($tableName, $columnName)
     {
-        /** @var BackendUser $user */
-        $user = $this->framework->getAdapter(User::class);
-
-        if ($user instanceof BackendUser) {
-            return $user->hasAccess($tableName . '::' . $columnName, 'alexf');
+        if (TL_MODE !== 'BE') {
+            return false;
         }
 
-        return false;
+        /** @var BackendUser $user */
+        $user = $this->framework->createInstance(BackendUser::class);
+
+        return $user->hasAccess($tableName . '::' . $columnName, 'alexf');
     }
 
     /**
@@ -213,7 +213,8 @@ final class DatabaseRowUpdater implements Updater
                 }
             }
 
-            $builder->set($column, $value);
+            $builder->set($column, ':' . $column);
+            $builder->setParameter($column, (string) $value);
         }
 
         // Add tstamp if field exists.
