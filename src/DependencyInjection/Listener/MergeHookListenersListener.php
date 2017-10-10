@@ -17,11 +17,11 @@ namespace Netzmacht\Contao\Toolkit\DependencyInjection\Listener;
 use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
 
 /**
- * Class MergerHookListenerListener
+ * Class MergerHookListenerListener.
  *
  * @package Netzmacht\Contao\Toolkit\DependencyInjection\Listener
  */
-class MergeHookListenersListener
+final class MergeHookListenersListener
 {
     /**
      * Hook listeners.
@@ -58,13 +58,13 @@ class MergeHookListenersListener
      */
     public function onInitializeSystem(): void
     {
-        // initializeSystem listeners can't be merged so just invoke them.
+        // Hook initializeSystem listeners can't be merged so just invoke them.
         if (isset($this->hookListeners['initializeSystem'])) {
             foreach ($this->hookListeners['initializeSystem'] as $listeners) {
                 $this->invoker->invokeAll($listeners);
             }
 
-            unset ($this->hookListeners['initializeSystem']);
+            unset($this->hookListeners['initializeSystem']);
         }
 
         foreach ($this->hookListeners as $hookName => $priorities) {

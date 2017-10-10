@@ -1,12 +1,12 @@
 <?php
 
 /**
- * contao-toolkit.
+ * Contao toolkit.
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0 https://github.com/netzmacht/contao-leaflet-maps/blob/master/LICENSE
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
  */
 
@@ -41,13 +41,13 @@ class ComponentDecoratorPass implements CompilerPassInterface
     /**
      * ComponentFactoryCompilePass constructor.
      *
-     * @param string $tagName        Name of the tag.
-     * @param int    $argumentIndex  Index of the argument which should get the tagged references.
+     * @param string $tagName       Name of the tag.
+     * @param int    $argumentIndex Index of the argument which should get the tagged references.
      */
     public function __construct(string $tagName, int $argumentIndex)
     {
-        $this->tagName        = $tagName;
-        $this->argumentIndex  = $argumentIndex;
+        $this->tagName       = $tagName;
+        $this->argumentIndex = $argumentIndex;
     }
 
     /**

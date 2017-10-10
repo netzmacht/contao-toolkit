@@ -1,12 +1,12 @@
 <?php
 
 /**
- * contao-toolkit.
+ * Contao toolkit.
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0 https://github.com/netzmacht/contao-leaflet-maps/blob/master/LICENSE
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
  */
 
@@ -25,14 +25,14 @@ use Netzmacht\Contao\Toolkit\Component\Module\ModuleDecorator;
 final class RegisterComponentDecoratorsListener
 {
     /**
-     * Map of modules.
+     * List of modules in their categories.
      *
      * @var array
      */
     private $modules;
 
     /**
-     * Map of elements.
+     * List of elements in their categories.
      *
      * @var array
      */
@@ -41,8 +41,8 @@ final class RegisterComponentDecoratorsListener
     /**
      * RegisterComponentDecoratorsListener constructor.
      *
-     * @param array $modules
-     * @param array $elements
+     * @param array $modules  List of modules in their categories.
+     * @param array $elements List of elements in their categories.
      */
     public function __construct(array $modules, array $elements)
     {
@@ -54,6 +54,8 @@ final class RegisterComponentDecoratorsListener
      * Handle the on initialize system hook.
      *
      * @return void
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function onInitializeSystem(): void
     {
