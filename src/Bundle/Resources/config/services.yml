@@ -17,7 +17,7 @@ services:
       - []
 
   netzmacht.contao_toolkit.contao_services_factory:
-    class: Netzmacht\Contao\Toolkit\DependencyInjection\ContaoServicesFactory
+    class: Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\ContaoServicesFactory
     arguments:
       - '@contao.framework'
 
