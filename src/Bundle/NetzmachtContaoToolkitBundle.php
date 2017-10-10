@@ -12,12 +12,12 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit;
+namespace Netzmacht\Contao\Toolkit\Bundle;
 
-use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\AddTaggedServicesAsArgumentPass;
-use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\ComponentDecoratorPass;
-use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\RegisterHooksPass;
-use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\TranslatorPass;
+use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\AddTaggedServicesAsArgumentPass;
+use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\ComponentDecoratorPass;
+use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterHooksPass;
+use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\TranslatorPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

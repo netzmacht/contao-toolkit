@@ -12,7 +12,7 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit\DependencyInjection\Compiler;
+namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler;
 
 use Netzmacht\Contao\Toolkit\Translation\LangArrayTranslator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;

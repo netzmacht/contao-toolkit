@@ -12,7 +12,7 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit\DependencyInjection;
+namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection;
 
 use Contao\Config;
 use Contao\CoreBundle\Framework\Adapter;

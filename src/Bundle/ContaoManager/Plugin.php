@@ -12,7 +12,7 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit\ContaoManager;
+namespace Netzmacht\Contao\Toolkit\Bundle\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
@@ -21,7 +21,7 @@ use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Contao\ManagerPlugin\Config\ContainerBuilder;
 use Contao\ManagerPlugin\Config\ExtensionPluginInterface;
 use Contao\ManagerPlugin\Dependency\DependentPluginInterface;
-use Netzmacht\Contao\Toolkit\NetzmachtContaoToolkitBundle;
+use Netzmacht\Contao\Toolkit\Bundle\NetzmachtContaoToolkitBundle;
 
 /**
  * Class Plugin.

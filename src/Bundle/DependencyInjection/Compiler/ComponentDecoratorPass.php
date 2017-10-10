@@ -12,26 +12,18 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit\DependencyInjection\Compiler;
+namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Class ComponentFactoryCompilePass.
+ * Class ComponentFactoriesPass.
  *
- * @package Netzmacht\Contao\Toolkit\DependencyInjection\CompilerPass
+ * @package Netzmacht\Contao\Toolkit\DependencyInjection\Compiler
  */
-final class AddTaggedServicesAsArgumentPass implements CompilerPassInterface
+class ComponentDecoratorPass implements CompilerPassInterface
 {
-    /**
-     * Service name which should be adjusted.
-     *
-     * @var string
-     */
-    private $serviceName;
-
     /**
      * Name of the tag.
      *
@@ -49,13 +41,11 @@ final class AddTaggedServicesAsArgumentPass implements CompilerPassInterface
     /**
      * ComponentFactoryCompilePass constructor.
      *
-     * @param string $serviceName   Service name which should be adjusted.
      * @param string $tagName       Name of the tag.
      * @param int    $argumentIndex Index of the argument which should get the tagged references.
      */
-    public function __construct(string $serviceName, string $tagName, int $argumentIndex = 0)
+    public function __construct(string $tagName, int $argumentIndex)
     {
-        $this->serviceName   = $serviceName;
         $this->tagName       = $tagName;
         $this->argumentIndex = $argumentIndex;
     }
@@ -65,18 +55,22 @@ final class AddTaggedServicesAsArgumentPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->has($this->serviceName)) {
+        $serviceId = 'netzmacht.contao_toolkit.listeners.register_component_decorators';
+
+        if (!$container->has($serviceId)) {
             return;
         }
 
-        $definition       = $container->findDefinition($this->serviceName);
+        $definition       = $container->findDefinition($serviceId);
         $taggedServiceIds = $container->findTaggedServiceIds($this->tagName);
-        $services         = (array) $definition->getArgument($this->argumentIndex);
+        $components       = (array) $definition->getArgument($this->argumentIndex);
 
-        foreach (array_keys($taggedServiceIds) as $serviceIds) {
-            $services[] = new Reference($serviceIds);
+        foreach ($taggedServiceIds as $tags) {
+            foreach ($tags as $tag) {
+                $components[$tag['category']][] = $tag['alias'];
+            }
         }
 
-        $definition->replaceArgument($this->argumentIndex, $services);
+        $definition->replaceArgument($this->argumentIndex, $components);
     }
 }
