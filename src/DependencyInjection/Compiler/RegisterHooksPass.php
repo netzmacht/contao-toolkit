@@ -53,7 +53,7 @@ class RegisterHooksPass implements CompilerPassInterface
             }
 
             $definition = $container->getDefinition('netzmacht.contao_toolkit.listeners.merge_hook_listeners');
-            $definition->setArgument(0, $hooks);
+            $definition->setArgument(1, $hooks);
         }
     }
 
