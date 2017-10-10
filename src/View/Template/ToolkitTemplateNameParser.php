@@ -32,7 +32,7 @@ class ToolkitTemplateNameParser implements TemplateNameParserInterface
             $this->guardSupportedEngine($matches[1]);
             $this->guardSupportedScope($matches[2]);
 
-            $contentType = ($matches[5] ?? 'text/html');
+            $contentType = $matches[5] ?: 'text/html';
 
             return new TemplateReference($matches[3], $matches[4], $matches[2], $contentType, $matches[1]);
         }
