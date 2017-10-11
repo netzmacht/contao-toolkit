@@ -110,7 +110,7 @@ final class CollectionOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function next(): void
+    public function next()
     {
         $this->position++;
         $this->collection->next();
@@ -135,7 +135,7 @@ final class CollectionOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function rewind(): void
+    public function rewind()
     {
         $this->position = 0;
         $this->collection->reset();

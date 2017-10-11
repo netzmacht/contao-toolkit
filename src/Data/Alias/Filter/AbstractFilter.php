@@ -64,7 +64,7 @@ abstract class AbstractFilter implements Filter
     /**
      * {@inheritdoc}
      */
-    public function initialize(): void
+    public function initialize()
     {
     }
 

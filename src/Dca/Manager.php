@@ -120,7 +120,7 @@ final class Manager
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    protected function assertValidDca(string $name): void
+    protected function assertValidDca(string $name)
     {
         Assert::keyExists($GLOBALS['TL_DCA'], $name);
         Assert::isArray($GLOBALS['TL_DCA'][$name]);

@@ -67,7 +67,7 @@ class RegisterHooksPass implements CompilerPassInterface
      *
      * @throws InvalidConfigurationException When an attribute is missing.
      */
-    private function guardRequiredAttributesExist(string $serviceId, array $attributes): void
+    private function guardRequiredAttributesExist(string $serviceId, array $attributes)
     {
         if (!isset($attributes['hook'])) {
             throw new InvalidConfigurationException(

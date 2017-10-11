@@ -48,7 +48,7 @@ class SetOperationDataAttributeListener
      *
      * @return void
      */
-    public function onLoadDataContainer(string $dataContainerName): void
+    public function onLoadDataContainer(string $dataContainerName)
     {
         $definition = $this->dcaManager->getDefinition($dataContainerName);
         $buttons    = (array) $definition->get(['list', 'operations']);

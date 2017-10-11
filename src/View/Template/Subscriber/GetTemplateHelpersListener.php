@@ -58,7 +58,7 @@ final class GetTemplateHelpersListener
      *
      * @return void
      */
-    public function handle(GetTemplateHelpersEvent $event): void
+    public function handle(GetTemplateHelpersEvent $event)
     {
         $event
             ->addHelper('assets', $this->assetsManager)

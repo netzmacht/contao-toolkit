@@ -238,7 +238,7 @@ abstract class AbstractComponent implements Component
      *
      * @return void
      */
-    protected function compile(): void
+    protected function compile()
     {
     }
 

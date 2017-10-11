@@ -56,7 +56,7 @@ final class MergeHookListenersListener
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function onInitializeSystem(): void
+    public function onInitializeSystem()
     {
         // Hook initializeSystem listeners can't be merged so just invoke them.
         if (isset($this->hookListeners['initializeSystem'])) {

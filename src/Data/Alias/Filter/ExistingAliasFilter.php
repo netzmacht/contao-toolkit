@@ -26,7 +26,7 @@ final class ExistingAliasFilter implements Filter
     /**
      * {@inheritDoc}
      */
-    public function initialize(): void
+    public function initialize()
     {
     }
 

@@ -175,7 +175,7 @@ final class FilterBasedAliasGenerator implements AliasGenerator
      * @return void
      * @throws InvalidAliasException When No unique alias is generated.
      */
-    private function guardValidAlias($result, $value): void
+    private function guardValidAlias($result, $value)
     {
         if (!$value || !$this->isValid($result, $value, (int) $result->id)) {
             throw InvalidAliasException::forDatabaseEntry($this->tableName, (int) $result->id, $value);

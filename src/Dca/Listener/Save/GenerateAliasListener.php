@@ -115,7 +115,7 @@ final class GenerateAliasListener
      *
      * @return void
      */
-    private function guardIsAliasGeneratorFactory($factory, string $serviceId): void
+    private function guardIsAliasGeneratorFactory($factory, string $serviceId)
     {
         Assert::isInstanceOf(
             $factory,

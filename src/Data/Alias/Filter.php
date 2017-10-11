@@ -43,7 +43,7 @@ interface Filter
      *
      * @return void
      */
-    public function initialize(): void;
+    public function initialize();
 
     /**
      * Apply the filter.

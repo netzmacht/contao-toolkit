@@ -51,7 +51,7 @@ class ToolkitTemplateNameParser implements TemplateNameParserInterface
      *
      * @throws \RuntimeException When template scope is not supported.
      */
-    private function guardSupportedScope($scope): void
+    private function guardSupportedScope($scope)
     {
         if ($scope !== TemplateReference::SCOPE_FRONTEND
             && $scope !== TemplateReference::SCOPE_BACKEND) {
@@ -73,7 +73,7 @@ class ToolkitTemplateNameParser implements TemplateNameParserInterface
      *
      * @throws \RuntimeException When template engine is not supported.
      */
-    private function guardSupportedEngine($engine): void
+    private function guardSupportedEngine($engine)
     {
         if ($engine !== TemplateReference::ENGINE) {
             throw new \RuntimeException(

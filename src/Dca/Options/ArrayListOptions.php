@@ -116,7 +116,7 @@ final class ArrayListOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function next(): void
+    public function next()
     {
         $this->position++;
     }

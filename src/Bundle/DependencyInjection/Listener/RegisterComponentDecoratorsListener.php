@@ -57,7 +57,7 @@ final class RegisterComponentDecoratorsListener
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function onInitializeSystem(): void
+    public function onInitializeSystem()
     {
         foreach ($this->elements as $category => $elements) {
             foreach ($elements as $element) {
