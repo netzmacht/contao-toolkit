@@ -66,11 +66,11 @@ abstract class AbstractListener
     /**
      * Get a definition.
      *
-     * @param string|null $name Data definition name. If empty the default name is used.
+     * @param string $name Data definition name. If empty the default name is used.
      *
      * @return Definition
      */
-    protected function getDefinition(?string $name = null): Definition
+    protected function getDefinition(string $name = ''): Definition
     {
         return $this->dcaManager->getDefinition($name ?: static::getName());
     }
@@ -78,11 +78,11 @@ abstract class AbstractListener
     /**
      * Get a formatter.
      *
-     * @param string|null $name Data definition name. If empty the default name is used.
+     * @param string $name Data definition name. If empty the default name is used.
      *
      * @return Formatter
      */
-    protected function getFormatter(?string $name = null): Formatter
+    protected function getFormatter(string $name = ''): Formatter
     {
         return $this->dcaManager->getFormatter($name ?: static::getName());
     }

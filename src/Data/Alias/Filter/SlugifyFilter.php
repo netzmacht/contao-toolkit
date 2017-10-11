@@ -63,7 +63,7 @@ final class SlugifyFilter extends AbstractValueFilter
     /**
      * {@inheritdoc}
      */
-    public function apply($model, $value, string $separator): ?string
+    public function apply($model, $value, string $separator)
     {
         $values = array();
 

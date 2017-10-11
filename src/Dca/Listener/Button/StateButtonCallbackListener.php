@@ -93,17 +93,17 @@ final class StateButtonCallbackListener
      */
     public function handleButtonCallback(
         array $row,
-        ?string $href,
-        ?string $label,
-        ?string $title,
-        ?string $icon,
-        ?string $attributes,
+        $href,
+        $label,
+        $title,
+        $icon,
+        $attributes,
         string $tableName,
-        ?array $rootIds,
-        ?array $childRecordIds,
+        $rootIds,
+        $childRecordIds,
         bool $circularReference,
-        ?string $previous,
-        ?string $next,
+        $previous,
+        $next,
         $dataContainer
     ) {
         $name   = $this->getOperationName($attributes);
@@ -152,7 +152,7 @@ final class StateButtonCallbackListener
      *
      * @return string
      */
-    private function disableIcon(string $icon, ?string $default = null): string
+    private function disableIcon(string $icon, string $default = ''): string
     {
         if ($default) {
             return $default;

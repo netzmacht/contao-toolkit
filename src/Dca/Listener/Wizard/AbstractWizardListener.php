@@ -61,13 +61,13 @@ abstract class AbstractWizardListener
      * @param TemplateEngine $templateEngine Template engine.
      * @param Translator     $translator     Translator.
      * @param Manager        $dcaManager     Data container manager.
-     * @param string|null    $template       Template name.
+     * @param string         $template       Template name.
      */
     public function __construct(
         TemplateEngine $templateEngine,
         Translator $translator,
         Manager $dcaManager,
-        ?string $template = null
+        string $template = ''
     ) {
         $this->translator     = $translator;
         $this->templateEngine = $templateEngine;
@@ -86,7 +86,7 @@ abstract class AbstractWizardListener
      *
      * @return string
      */
-    protected function render(?string $name = null, array $parameters = []): string
+    protected function render($name = null, array $parameters = []): string
     {
         return $this->templateEngine->render($name ?: $this->template, $parameters);
     }

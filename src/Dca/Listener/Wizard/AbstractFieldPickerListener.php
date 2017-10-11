@@ -31,7 +31,7 @@ abstract class AbstractFieldPickerListener extends AbstractPickerListener
      *
      * @return string
      */
-    abstract public function generate(string $tableName, string $fieldName, int $rowId, string $value): string;
+    abstract public function generate(string $tableName, string $fieldName, int $rowId, $value): string;
 
     /**
      * {@inheritDoc}

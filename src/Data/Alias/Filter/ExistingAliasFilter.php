@@ -49,7 +49,7 @@ final class ExistingAliasFilter implements Filter
     /**
      * {@inheritDoc}
      */
-    public function apply($model, $value, string $separator): ?string
+    public function apply($model, $value, string $separator)
     {
         return $value;
     }

@@ -185,7 +185,7 @@ final class FilterBasedAliasGenerator implements AliasGenerator
     /**
      * {@inheritDoc}
      */
-    public function generate($result, $value = null): ?string
+    public function generate($result, $value = null)
     {
         $value = $this->applyFilters($result, $value);
         $this->guardValidAlias($result, $value);

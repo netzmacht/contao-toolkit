@@ -56,7 +56,7 @@ interface Component
      *
      * @return Model|null
      */
-    public function getModel(): ?Model;
+    public function getModel();
 
     /**
      * Generate the component.

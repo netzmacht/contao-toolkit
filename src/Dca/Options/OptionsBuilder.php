@@ -166,7 +166,7 @@ final class OptionsBuilder
      *
      * @return mixed
      */
-    private function groupValue($value, ?callable $callback, array $row)
+    private function groupValue($value, $callback, array $row)
     {
         if (is_callable($callback)) {
             return $callback($value, $row);

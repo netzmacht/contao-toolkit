@@ -57,7 +57,7 @@ abstract class AbstractComponent implements Component
      *
      * @var string
      */
-    protected $templateName;
+    protected $templateName = '';
 
     /**
      * Template engine.
@@ -135,7 +135,7 @@ abstract class AbstractComponent implements Component
      *
      * @return string
      */
-    protected function getTemplateName(): ?string
+    protected function getTemplateName(): string
     {
         return $this->templateName;
     }
@@ -157,7 +157,7 @@ abstract class AbstractComponent implements Component
     /**
      * {@inheritDoc}
      */
-    public function getModel(): ?Model
+    public function getModel()
     {
         return $this->model;
     }

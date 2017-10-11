@@ -62,7 +62,7 @@ final class PopupWizardListener extends AbstractWizardListener
      * @param Manager          $dcaManager       Data container manager.
      * @param CsrfTokenManager $csrfTokenManager Csrf Token manager.
      * @param string           $csrfTokenName    Csrf Token name.
-     * @param string|null      $template         Template name.
+     * @param string           $template         Template name.
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
@@ -72,7 +72,7 @@ final class PopupWizardListener extends AbstractWizardListener
         Manager $dcaManager,
         CsrfTokenManager $csrfTokenManager,
         string $csrfTokenName,
-        ?string $template = null
+        string $template = ''
     ) {
         parent::__construct($templateEngine, $translator, $dcaManager, $template);
 

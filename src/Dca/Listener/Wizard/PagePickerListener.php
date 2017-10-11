@@ -58,7 +58,7 @@ final class PagePickerListener extends AbstractFieldPickerListener
     /**
      * {@inheritDoc}
      */
-    public function generate(string $tableName, string $fieldName, int $rowId, ?string $value = null): string
+    public function generate(string $tableName, string $fieldName, int $rowId, $value = null): string
     {
         $url = sprintf(
             'contao/page.php?do=%s&amp;table=%s&amp;field=%s&amp;value=%',
