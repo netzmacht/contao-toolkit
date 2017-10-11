@@ -60,12 +60,6 @@ services:
   netzmacht.contao_toolkit.dca.loader:
     class: Netzmacht\Contao\Toolkit\Dca\DcaLoader
 
-  netzmacht.contao_toolkit.insert_tag.replacer:
-    class: Netzmacht\Contao\Toolkit\InsertTag\IntegratedReplacer
-    arguments:
-      - ['@contao.controller.insert_tags']
-      - []
-
   netzmacht.contao_toolkit.view.template_factory:
     class: Netzmacht\Contao\Toolkit\View\Template\ToolkitTemplateFactory
     arguments:

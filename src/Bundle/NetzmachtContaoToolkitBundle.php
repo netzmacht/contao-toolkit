@@ -75,14 +75,6 @@ final class NetzmachtContaoToolkitBundle extends Bundle
         );
 
         $container->addCompilerPass(
-            new AddTaggedServicesAsArgumentPass(
-                'netzmacht.contao_toolkit.insert_tag.replacer',
-                'netzmacht.contao_toolkit.insert_tag_parser',
-                1
-            )
-        );
-
-        $container->addCompilerPass(
             new ComponentDecoratorPass('netzmacht.contao_toolkit.component.frontend_module', 0)
         );
 
