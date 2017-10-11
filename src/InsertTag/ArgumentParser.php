@@ -119,7 +119,11 @@ final class ArgumentParser
      */
     private function handleSplitBy(string $query, string $separator, array $names = null, int $limit = null)
     {
-        $values = explode($separator, $query, $limit);
+        if ($limit === null) {
+            $values = explode($separator, $query);
+        } else {
+            $values = explode($separator, $query, $limit);
+        }
 
         if ($names === null) {
             return $values;
