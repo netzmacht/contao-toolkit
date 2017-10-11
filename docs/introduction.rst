@@ -26,22 +26,11 @@ and uses the features provided by the other tools.
 
 .. glossary::
 
-   dependency-container
-    The `dependency-container`_ introduces dependency injection into Contao first. Toolkit uses it for its own
-    dependency injection features.
-
-   event-dispatcher
-    The `event-dispatcher`_ integrates the Symfony event dispatcher into Contao. Toolkit is based on it and provides
-    some useful events to interact with Toolkit.
-
-   translator
-    The `translator`_ library provides a neat interface to use translation in your extensions. Toolkit requires it as
-    dependency because the internal used translations is done by it. It also recommend to use it in own extensions.
-
    contao-haste
     The `haste libary`_ is one of the more comprehensive developer tools for Contao developers. There are some
     intersections between Toolkit and haste but the main focus is different.
 
+The `dependency-container`_, `event-dispatcher`_ and `translator`_ got obsolete since Contao 4 based on Symfony.
 
 
 Examples

@@ -13,3 +13,8 @@ Toolkit also provides a way using dependency injection for components.
    content-element
    module
    hybrid
+
+.. hint:: If you're developing for Contao 4.5 you might look at the `fragments support`_. If you have to stay on Contao
+   LTS 4.4 you maybe want to read further.
+
+.. _fragments support: https://github.com/contao/core-bundle/pull/700

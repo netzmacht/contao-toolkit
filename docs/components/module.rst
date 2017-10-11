@@ -3,6 +3,9 @@ Frontend module
 
 Focusing on the main goal for Toolkit there is an easy way to create lightweight decoupled frontend modules.
 
+.. hint:: If you're developing for Contao 4.5 you might look at the `fragments support`_. If you have to stay on Contao
+   LTS 4.4 you maybe want to read further.
+
 Interface Module
 ----------------
 
@@ -16,21 +19,27 @@ the explicit `get` and `set` methods. Magic `__get` and `__set` are not recommen
 Register a frontend module
 --------------------------
 
-Since Toolkit supports dependency injection for frontend modules you have to register your module by configuring a
-callable as factory. The callable has to support at least two arguments. The third one is optional.
+Since Toolkit supports dependency injection for content elements you have to create factories which creates them. A
+factory has to implement the `ComponentFactory`_ interface and must be registered as a tagged service.
+
+Provided tags:
 
 .. glossary::
 
-   $model
-    frontend module model or database result
+   netzmacht.contao_toolkit.component.frontend_module_factory
+    Tag your factory service with this tag so that toolkit will use it to create the elements.
 
-   $column
-    The column in which the element is created. Default is `main`
-
-   $container
-    The dependency container instance of `ContainerInterop\\ContainerInterface`
+   netzmacht.contao_toolkit.component.frontend_module
+    Tag your factory with this tag to provide information about the supported content elements. You have to define
+    the `category` and `type` attribute as well.
 
 .. code-block:: php
+
+    // src/ExampleFactory.php
+    class ExampleFactory implements Netzmacht\Contao\Toolkit\Component\ComponentFactory
+    {
+        // ...
+    }
 
     // src/Example.php
     class Example implements Netzmacht\Contao\Toolkit\Component\Module\Module
@@ -38,33 +47,19 @@ callable as factory. The callable has to support at least two arguments. The thi
         // ...
     }
 
-    // config.php
-    $GLOBALS['FE_MOD']['application']['example'] = function ($model, $column, ContainerInterop\ContainerInterface $container) {
-        return new Example(
-            $model,
-            $column,
-            $container->get('dependency-1'),
-            $container->get('dependency-2')
-        );
-    };
+.. code-block:: yml
 
-.. hint:: All occurrences of callables are collected and replaced by an decorator class. This wrapper is responsible
-   to delegate all access from the outside to the actual frontend module. It also uses the factory to create the module.
+    // services.yml
+    foo.frontend_module.factory:
+        class: ExampleFactory
+        tags:
+            - { name: 'netzmacht.contao_toolkit.component.frontend_module' }
+            - { name: 'netzmacht.contao_toolkit.component.frontend_module', category: 'texts', type: 'example' }
 
 
-Instead of registering component factories in the config.php you can directly register them in the services.php. I
-recommend to use that way because Contao combines your config.php. Using `use statements` can be dangerous though.
+.. hint:: It's possible to create multiple types with a factory. Just add multiple tags.
 
-.. code-block:: php
-
-    // config.php
-    $GLOBALS['FE_MOD']['application']['example'] = 'Netzmacht\Contao\Toolkit\Component\Module\ModuleDecorator';
-
-    // services.php
-    $container[Services::MODULES_MAP]['example'] = function ($model, $column, ContainerInterface $container) {
-        return new ExampleElement($model, $column);
-    };
-
+You don't have to register you frontend module in the `config.php`. Toolkit will do it for you.
 
 Extending AbstractModule
 ------------------------
@@ -90,12 +85,11 @@ placeholders which doesn't have to be called when being overriden.
     Method deserialize the given raw data coming form the database entry or model. You should call the parent method
     when overriding this one. Deserialization of the headline is done here.
 
-   preCompile()
-    Is an empty placeholder triggered before the template is created. It's recommend to use this method for redirects
-    or non rendering related work.
-
    compile()
-    Compile your frontend module here.
+    Is called before the template data are prepared.
+
+   prepareTemplateData(array $data)
+    Prepares the data which are passed to the template.
 
    postGenerate($buffer)
     Is triggered after the frontend module is parsed.
@@ -112,3 +106,4 @@ placeholders which doesn't have to be called when being overriden.
 .. _AbstractComponent: https://github.com/netzmacht/contao-toolkit/tree/develop/src/Component/AbstractComponent.php
 .. _Module: https://github.com/netzmacht/contao-toolkit/tree/develop/src/Component/Module/Module.php
 .. _AbstractModule: https://github.com/netzmacht/contao-toolkit/tree/develop/src/Component/Module/AbstractModule.php
+.. _ComponentFactory: https://github.com/netzmacht/contao-toolkit/tree/develop/src/Component/ComponentFactory.php
