@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection;
 
+use Contao\Backend;
 use Contao\BackendUser;
 use Contao\Config;
 use Contao\Controller;
@@ -47,6 +48,16 @@ final class ContaoServicesFactory
     public function __construct(ContaoFramework $framework)
     {
         $this->framework = $framework;
+    }
+
+    /**
+     * Create the backend adapter.
+     *
+     * @return Adapter|Backend
+     */
+    public function createBackendAdapter(): Adapter
+    {
+        return $this->createAdapter(Backend::class);
     }
 
     /**

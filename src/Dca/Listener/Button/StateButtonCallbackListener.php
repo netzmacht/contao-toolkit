@@ -16,10 +16,8 @@ namespace Netzmacht\Contao\Toolkit\Dca\Listener\Button;
 
 use Contao\Backend;
 use Contao\DataContainer;
-use Contao\Controller;
 use Contao\Image;
 use Contao\Input;
-use Contao\System;
 use Netzmacht\Contao\Toolkit\Data\Updater\Updater;
 use Netzmacht\Contao\Toolkit\Data\Exception\AccessDenied;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
@@ -53,13 +51,22 @@ final class StateButtonCallbackListener
     private $dcaManager;
 
     /**
+     * Contao backend adapter.
+     *
+     * @var Backend
+     */
+    private $backend;
+
+    /**
      * StateButtonCallback constructor.
      *
+     * @param Backend $backend    Contao backend adapter.
      * @param Input   $input      Request Input.
      * @param Updater $updater    Data record updater.
      * @param Manager $dcaManager Data container manager.
      */
     public function __construct(
+        $backend,
         $input,
         Updater $updater,
         Manager $dcaManager
@@ -67,6 +74,7 @@ final class StateButtonCallbackListener
         $this->input      = $input;
         $this->updater    = $updater;
         $this->dcaManager = $dcaManager;
+        $this->backend    = $backend;
     }
 
     /**
@@ -118,10 +126,10 @@ final class StateButtonCallbackListener
                     $dataContainer
                 );
 
-                Controller::redirect(Controller::getReferer());
+                $this->backend->redirect($this->backend->getReferer());
             } catch (AccessDenied $e) {
-                System::log($e->getMessage(), __METHOD__, TL_ERROR);
-                Controller::redirect('contao/main.php?act=error');
+                $this->backend->log($e->getMessage(), __METHOD__, TL_ERROR);
+                $this->backend->redirect('contao?act=error');
             }
         }
 
@@ -137,7 +145,7 @@ final class StateButtonCallbackListener
 
         return sprintf(
             '<a href="%s" title="%s"%s>%s</a> ',
-            Backend::addToUrl($href),
+            $this->backend->addToUrl($href),
             specialchars($title),
             $attributes,
             Image::getHtml($icon, $label)

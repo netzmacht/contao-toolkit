@@ -21,6 +21,10 @@ services:
     arguments:
       - '@contao.framework'
 
+  netzmacht.contao_toolkit.contao.backend_adapter:
+    class: Contao\CoreBundle\Framework\Adapter
+    factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createBackendAdapter']
+
   netzmacht.contao_toolkit.contao.config_adapter:
     class: Contao\CoreBundle\Framework\Adapter
     factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createConfigAdapter']
