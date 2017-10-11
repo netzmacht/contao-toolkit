@@ -14,12 +14,16 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection;
 
+use Contao\BackendUser;
 use Contao\Config;
+use Contao\Controller;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
 use Contao\Encryption;
 use Contao\Environment;
+use Contao\FrontendUser;
 use Contao\Input;
+use Contao\System;
 
 /**
  * Class ContaoServicesFactory.
@@ -66,6 +70,26 @@ final class ContaoServicesFactory
     }
 
     /**
+     * Create the controller adapter.
+     *
+     * @return Adapter|Controller
+     */
+    public function createControllerAdapter(): Adapter
+    {
+        return $this->createAdapter(Controller::class);
+    }
+
+    /**
+     * Create the system adapter.
+     *
+     * @return Adapter
+     */
+    public function createSystemAdapter(): Adapter
+    {
+        return $this->createAdapter(System::class);
+    }
+
+    /**
      * Create an environment adapter.
      *
      * @return Adapter|Environment
@@ -86,6 +110,26 @@ final class ContaoServicesFactory
     }
 
     /**
+     * Create backend user instance.
+     *
+     * @return BackendUser
+     */
+    public function createBackendUserInstance(): BackendUser
+    {
+        return $this->createInstance(BackendUser::class);
+    }
+
+    /**
+     * Frontend user.
+     *
+     * @return FrontendUser
+     */
+    public function createFrontendUserInstance(): FrontendUser
+    {
+        return $this->createInstance(FrontendUser::class);
+    }
+
+    /**
      * Create an adapter for a specific class.
      *
      * @param string $class Class name.
@@ -97,5 +141,19 @@ final class ContaoServicesFactory
         $this->framework->initialize();
 
         return $this->framework->getAdapter($class);
+    }
+
+    /**
+     * Create an adapter for a specific class.
+     *
+     * @param string $class Class name.
+     *
+     * @return object
+     */
+    private function createInstance(string $class)
+    {
+        $this->framework->initialize();
+
+        return $this->framework->createInstance($class);
     }
 }

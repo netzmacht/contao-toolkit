@@ -13,8 +13,6 @@
 namespace Netzmacht\Contao\Toolkit\Data\Updater;
 
 use Contao\BackendUser;
-use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
-use Contao\User;
 use Contao\Versions;
 use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
@@ -30,11 +28,11 @@ use Netzmacht\Contao\Toolkit\Data\Exception\AccessDenied;
 final class DatabaseRowUpdater implements Updater
 {
     /**
-     * Contao framework.
+     * Contao backend user..
      *
-     * @var ContaoFramework
+     * @var BackendUser
      */
-    private $framework;
+    private $backendUser;
 
     /**
      * The database connection.
@@ -60,21 +58,21 @@ final class DatabaseRowUpdater implements Updater
     /**
      * DatabaseRowUpdater constructor.
      *
-     * @param ContaoFramework $framework  Contao framework.
-     * @param Connection      $connection Database connection.
-     * @param Manager         $dcaManager Data container manager.
-     * @param Invoker         $invoker    Callback invoker.
+     * @param BackendUser $backendUser Backend user.
+     * @param Connection  $connection  Database connection.
+     * @param Manager     $dcaManager  Data container manager.
+     * @param Invoker     $invoker     Callback invoker.
      */
     public function __construct(
-        ContaoFramework $framework,
+        BackendUser $backendUser,
         Connection $connection,
         Manager $dcaManager,
         Invoker $invoker
     ) {
-        $this->framework  = $framework;
-        $this->connection = $connection;
-        $this->invoker    = $invoker;
-        $this->dcaManager = $dcaManager;
+        $this->backendUser = $backendUser;
+        $this->connection  = $connection;
+        $this->invoker     = $invoker;
+        $this->dcaManager  = $dcaManager;
     }
 
     /**
@@ -118,10 +116,7 @@ final class DatabaseRowUpdater implements Updater
             return false;
         }
 
-        /** @var BackendUser $user */
-        $user = $this->framework->createInstance(BackendUser::class);
-
-        return $user->hasAccess($tableName . '::' . $columnName, 'alexf');
+        return $this->backendUser->hasAccess($tableName . '::' . $columnName, 'alexf');
     }
 
     /**
