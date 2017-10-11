@@ -132,7 +132,7 @@ final class StateButtonCallbackListener
         $href .= '&amp;id='.$this->input->get('id').'&amp;tid='.$row['id'].'&amp;state='.$row[''];
 
         if (!$row[$config['stateColumn']] || ($config['inverse'] && $row[$config['stateColumn']])) {
-            $icon = $this->disableIcon($icon, $config['disabledIcon']);
+            $icon = $this->disableIcon($icon, (string) $config['disabledIcon']);
         }
 
         return sprintf(
