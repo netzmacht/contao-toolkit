@@ -21,7 +21,7 @@ services:
   netzmacht.contao_toolkit.dca.formatter.date:
     class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\DateFormatter
     arguments:
-      - '@netzmacht.contao_toolkit.contao.config'
+      - '@netzmacht.contao_toolkit.contao.config_adapter'
     tags:
       - { name: 'netzmacht.contao_toolkit.dca.formatter'}
 
@@ -55,7 +55,7 @@ services:
   netzmacht.contao_toolkit.dca.formatter.encrypted:
       class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\EncryptedFormatter
       arguments:
-        - '@netzmacht.contao_toolkit.contao.encryption'
+        - '@netzmacht.contao_toolkit.contao.encryption_adapter'
       tags:
         - { name: 'netzmacht.contao_toolkit.dca.formatter.pre_filter'}
 

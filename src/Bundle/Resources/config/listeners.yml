@@ -44,7 +44,7 @@ services:
   netzmacht.contao_toolkit.dca.listeners.state_button_callback:
     class: Netzmacht\Contao\Toolkit\Dca\Listener\Button\StateButtonCallbackListener
     arguments:
-      - '@netzmacht.contao_toolkit.contao.input'
+      - '@netzmacht.contao_toolkit.contao.input_adapter'
       - '@netzmacht.contao_toolkit.data.database_row_updater'
       - '@netzmacht.contao_toolkit.dca.manager'
 
@@ -75,7 +75,7 @@ services:
       - '@templating'
       - '@translator'
       - '@netzmacht.contao_toolkit.dca.manager'
-      - '@netzmacht.contao_toolkit.contao.input'
+      - '@netzmacht.contao_toolkit.contao.input_adapter'
 
   netzmacht.contao_toolkit.dca.listeners.popup_wizard:
     class: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PopupWizardListener

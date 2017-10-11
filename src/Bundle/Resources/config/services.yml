@@ -21,16 +21,16 @@ services:
     arguments:
       - '@contao.framework'
 
-  netzmacht.contao_toolkit.contao.config:
+  netzmacht.contao_toolkit.contao.config_adapter:
     factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createConfigAdapter']
 
-  netzmacht.contao_toolkit.contao.encryption:
+  netzmacht.contao_toolkit.contao.encryption_adapter:
     factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createEncryptionAdapter']
 
-  netzmacht.contao_toolkit.contao.environment:
+  netzmacht.contao_toolkit.contao.environment_adapter:
     factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createEnvironmentAdapter']
 
-  netzmacht.contao_toolkit.contao.input:
+  netzmacht.contao_toolkit.contao.input_adapter:
     factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createInputAdapter']
 
   netzmacht.contao_toolkit.data.alias_generator.factory.default_factory:
