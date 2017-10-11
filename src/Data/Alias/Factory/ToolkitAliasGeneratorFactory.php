@@ -16,7 +16,6 @@ namespace Netzmacht\Contao\Toolkit\Data\Alias\Factory;
 
 use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator;
-use Netzmacht\Contao\Toolkit\Data\Alias\Factory\AliasGeneratorFactory;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\ExistingAliasFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SlugifyFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SuffixFilter;

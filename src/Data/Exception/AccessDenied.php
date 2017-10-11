@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Data\Exception;
 
 use Netzmacht\Contao\Toolkit\Exception;
