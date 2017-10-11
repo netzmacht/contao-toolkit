@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Data\Model;
 
 use Contao\Model;
@@ -20,8 +22,10 @@ use Webmozart\Assert\Assert;
  *
  * @package Netzmacht\Contao\Toolkit\Data\Model
  */
-final class ContaoRepository implements Repository
+class ContaoRepository implements Repository
 {
+    use QueryProxy;
+
     /**
      * The model class.
      *
@@ -55,7 +59,7 @@ final class ContaoRepository implements Repository
     /**
      * {@inheritDoc}
      */
-    public function find($modelId)
+    public function find(int $modelId)
     {
         return $this->call('findByPK', [$modelId]);
     }
@@ -142,7 +146,7 @@ final class ContaoRepository implements Repository
      *
      * @return mixed
      */
-    protected function call($method, $arguments = [])
+    protected function call(string $method, array $arguments = [])
     {
         return call_user_func_array([$this->modelClass, $method], $arguments);
     }

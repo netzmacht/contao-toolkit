@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Data\Model;
 
 use Contao\Model;
@@ -28,7 +30,7 @@ interface Repository
      *
      * @return Model|null
      */
-    public function find($modelId);
+    public function find(int $modelId);
 
     /**
      * Find records by various criteria.
