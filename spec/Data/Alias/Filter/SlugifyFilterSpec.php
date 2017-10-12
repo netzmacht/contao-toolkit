@@ -16,15 +16,14 @@ class SlugifyFilterSpec extends ObjectBehavior
 {
     const SEPARATOR = '-';
 
-    const RAW_VALUE = 'Äöü -?^°#.test';
+    const RAW_VALUE = 'Aou -?^°#.test';
 
-    const ALIAS_VALUE = 'aeoeue-test';
+    const ALIAS_VALUE = 'aou-test';
 
     const COLUMN = 'title';
 
     function let()
     {
-        setlocale(LC_ALL, 'de_DE');
         $GLOBALS['TL_CONFIG']['characterSet'] = 'utf-8';
     }
 
@@ -74,10 +73,10 @@ class SlugifyFilterSpec extends ObjectBehavior
 
     function it_supports_multiple_columns()
     {
-        $aliasValue = 'aeae0032ae-12';
+        $aliasValue = 'aa0032a-12';
         $model      = (object) [
             static::COLUMN => static::RAW_VALUE,
-            'test' => 'ää0032ä-´12'
+            'test' => 'aa0032a-´12'
         ];
 
         $this->beConstructedWith([static::COLUMN, 'test']);
@@ -88,10 +87,10 @@ class SlugifyFilterSpec extends ObjectBehavior
 
     function it_supports_custom_separator()
     {
-        $aliasValue = 'aeae0032ae_12';
+        $aliasValue = 'aa0032a_12';
         $model       = (object) [
             static::COLUMN => static::RAW_VALUE,
-            'test' => 'ää0032ä-´12'
+            'test' => 'aa0032a-´12'
         ];
 
         $this->beConstructedWith([static::COLUMN, 'test']);
