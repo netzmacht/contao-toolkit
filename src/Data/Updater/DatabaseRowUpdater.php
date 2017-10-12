@@ -18,7 +18,7 @@ use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Netzmacht\Contao\Toolkit\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
-use Netzmacht\Contao\Toolkit\Data\Exception\AccessDenied;
+use Netzmacht\Contao\Toolkit\Exception\AccessDenied;
 
 /**
  * Class DatabaseRowUpdater.

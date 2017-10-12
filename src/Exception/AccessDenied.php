@@ -12,15 +12,13 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit;
-
-use Exception as PhpException;
+namespace Netzmacht\Contao\Toolkit\Exception;
 
 /**
- * Base Exception class.
+ * Class AccessDeniedException.
  *
  * @package Netzmacht\Contao\Toolkit\Exception
  */
-class Exception extends PhpException
+final class AccessDenied extends RuntimeException
 {
 }

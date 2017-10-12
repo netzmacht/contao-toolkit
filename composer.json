@@ -29,7 +29,8 @@
         "symfony/templating": "~3.3",
         "symfony/http-kernel": "~3.3",
         "symfony/dependency-injection": "~3.3",
-        "symfony/config": "~3.3"
+        "symfony/config": "~3.3",
+        "beberlei/assert": "^2.7"
     },
     "require-dev": {
         "contao/manager-plugin": "^2.0",

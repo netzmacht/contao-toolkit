@@ -19,7 +19,7 @@ use Contao\DataContainer;
 use Contao\Image;
 use Contao\Input;
 use Netzmacht\Contao\Toolkit\Data\Updater\Updater;
-use Netzmacht\Contao\Toolkit\Data\Exception\AccessDenied;
+use Netzmacht\Contao\Toolkit\Exception\AccessDenied;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 
 /**

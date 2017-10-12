@@ -12,15 +12,13 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit\Data\Exception;
-
-use Netzmacht\Contao\Toolkit\Exception;
+namespace Netzmacht\Contao\Toolkit\Exception;
 
 /**
- * Class AccessDeniedException.
+ * Exception interface.
  *
  * @package Netzmacht\Contao\Toolkit\Exception
  */
-final class AccessDenied extends Exception
+interface Exception
 {
 }

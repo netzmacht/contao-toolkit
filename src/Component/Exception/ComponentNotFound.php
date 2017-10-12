@@ -18,14 +18,15 @@ use Contao\ContentModel;
 use Contao\Database\Result;
 use Contao\Model;
 use Contao\ModuleModel;
-use Netzmacht\Contao\Toolkit\Exception;
+use Imagine\Exception\RuntimeException;
+use Netzmacht\Contao\Toolkit\Exception\Exception;
 
 /**
  * Exception class ContentElementNotFound is thrown if a content element could not be created.
  *
  * @package Netzmacht\Contao\Toolkit\Component\ContentElement
  */
-final class ComponentNotFound extends Exception
+final class ComponentNotFound extends RuntimeException implements Exception
 {
     /**
      * Create exception for the given model.
