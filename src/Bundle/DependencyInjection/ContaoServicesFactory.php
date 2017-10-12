@@ -31,6 +31,8 @@ use Contao\System;
  * Class ContaoServicesFactory.
  *
  * @package Netzmacht\Contao\Toolkit\DependencyInjection
+ *
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 final class ContaoServicesFactory
 {

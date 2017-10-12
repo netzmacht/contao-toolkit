@@ -12,9 +12,8 @@
 
 namespace Netzmacht\Contao\Toolkit\Exception;
 
-
 /**
- * Class RuntimeException
+ * Class RuntimeException.
  *
  * @package Netzmacht\Contao\Toolkit\Exception
  */

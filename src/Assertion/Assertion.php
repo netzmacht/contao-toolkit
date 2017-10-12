@@ -15,11 +15,16 @@ namespace Netzmacht\Contao\Toolkit\Assertion;
 use Assert\Assertion as BaseAssertion;
 
 /**
- * Class Assertion
+ * Class Assertion.
  *
  * @package Netzmacht\Contao\Toolkit\Assertion
  */
 class Assertion extends BaseAssertion
 {
+    /**
+     * Exception class.
+     *
+     * @var string
+     */
     protected static $exceptionClass = InvalidArgumentException::class;
 }
