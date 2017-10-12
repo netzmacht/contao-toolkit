@@ -137,18 +137,21 @@ final class StateButtonCallbackListener
             return '';
         }
 
-        $href .= '&amp;id='.$this->input->get('id').'&amp;tid='.$row['id'].'&amp;state='.$row[''];
+        $href    .= '&amp;id='.$this->input->get('id').'&amp;tid='.$row['id'].'&amp;state='.$row[''];
+        $disabled = !$row[$config['stateColumn']] || ($config['inverse'] && $row[$config['stateColumn']]);
 
-        if (!$row[$config['stateColumn']] || ($config['inverse'] && $row[$config['stateColumn']])) {
+        if ($disabled) {
             $icon = $this->disableIcon($icon, (string) $config['disabledIcon']);
         }
+
+        $imageAttributes = sprintf('data-state="%s"', $disabled ? '' : '1');
 
         return sprintf(
             '<a href="%s" title="%s"%s>%s</a> ',
             $this->backend->addToUrl($href),
             specialchars($title),
             $attributes,
-            Image::getHtml($icon, $label)
+            Image::getHtml($icon, $label, $imageAttributes)
         );
     }
 
