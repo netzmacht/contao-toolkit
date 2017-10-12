@@ -47,9 +47,6 @@
             "vendor/phpcq/autoload-validation/hacks/contao-hack.php"
         ]
     },
-    "config": {
-        "bin-dir": "bin"
-    },
     "extra": {
         "contao-manager-plugin": "Netzmacht\\Contao\\Toolkit\\Bundle\\ContaoManager\\Plugin",
         "branch-alias": {
