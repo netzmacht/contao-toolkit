@@ -75,7 +75,7 @@ class ComponentExample implements Component
     {
     }
 
-    public function getModel(): ?Model
+    public function getModel()
     {
     }
 
