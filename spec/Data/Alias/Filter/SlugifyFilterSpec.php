@@ -24,6 +24,7 @@ class SlugifyFilterSpec extends ObjectBehavior
 
     function let()
     {
+        setlocale(LC_ALL, 'de_DE');
         $GLOBALS['TL_CONFIG']['characterSet'] = 'utf-8';
     }
 

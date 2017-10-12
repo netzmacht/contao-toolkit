@@ -23,8 +23,6 @@ class UniqueDatabaseValueValidatorSpec extends ObjectBehavior
 
     function let(Connection $connection)
     {
-        setlocale(LC_ALL, 'de_DE');
-
         $this->beConstructedWith($connection, static::TABLE_NAME, static::FIELD_NAME);
     }
 
