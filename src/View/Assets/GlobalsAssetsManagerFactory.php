@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\View\Assets;
 
 /**
@@ -27,13 +29,31 @@ final class GlobalsAssetsManagerFactory
     private $debug;
 
     /**
+     * Web directory.
+     *
+     * @var string
+     */
+    private $webDir;
+
+    /**
+     * Root directory.
+     *
+     * @var string
+     */
+    private $rootDir;
+
+    /**
      * GlobalsAssetsManagerFactory constructor.
      *
-     * @param bool $debug Debug mode.
+     * @param bool   $debug      Debug mode.
+     * @param string $projectDir Kernel project directory.
+     * @param string $webDir     Web directory.
      */
-    public function __construct(bool $debug)
+    public function __construct(bool $debug, string $projectDir, string $webDir)
     {
-        $this->debug = $debug;
+        $this->debug   = $debug;
+        $this->webDir  = $webDir;
+        $this->rootDir = $projectDir;
     }
 
     /**
@@ -56,6 +76,7 @@ final class GlobalsAssetsManagerFactory
         return new GlobalsAssetsManager(
             $GLOBALS['TL_CSS'],
             $GLOBALS['TL_JAVASCRIPT'],
+            substr($this->webDir, (strlen($this->rootDir) + 1)),
             $this->debug
         );
     }
