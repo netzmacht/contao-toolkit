@@ -1,15 +1,21 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
+
+use Contao\StringUtil;
+use Patchwork\Utf8;
 
 /**
  * SlugifyFilter creates a slug value of the columns being represented.
@@ -57,12 +63,12 @@ final class SlugifyFilter extends AbstractValueFilter
     /**
      * {@inheritdoc}
      */
-    public function apply($model, $value, $separator)
+    public function apply($model, $value, string $separator)
     {
         $values = array();
 
         foreach ($this->columns as $column) {
-            $values[] = $this->slugify($model->$column, $separator);
+            $values[] = $this->slugify((string) $model->$column, $separator);
         }
 
         return $this->combine($value, $values, $separator);
@@ -76,14 +82,14 @@ final class SlugifyFilter extends AbstractValueFilter
      *
      * @return string
      */
-    private function slugify($value, $separator)
+    private function slugify(string $value, string $separator): string
     {
         $arrSearch  = array('/[^a-zA-Z0-9 \.\&\/_-]+/', '/[ \.\&\/-]+/');
         $arrReplace = array('', $separator);
 
         $value = html_entity_decode($value, ENT_QUOTES, $this->charset);
-        $value = strip_insert_tags($value);
-        $value = utf8_romanize($value);
+        $value = StringUtil::stripInsertTags($value);
+        $value = Utf8::toAscii($value);
         $value = preg_replace($arrSearch, $arrReplace, $value);
 
         if (!$this->preserveUppercase) {

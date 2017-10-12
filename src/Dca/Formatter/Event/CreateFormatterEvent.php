@@ -1,20 +1,23 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Event;
 
+use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
 use Symfony\Component\EventDispatcher\Event;
-use Webmozart\Assert\Assert;
 
 /**
  * Class CreateFormatterEvent.
@@ -23,7 +26,7 @@ use Webmozart\Assert\Assert;
  */
 final class CreateFormatterEvent extends Event
 {
-    const NAME = 'toolkit.dca.create-formatter';
+    const NAME = 'netzmacht.contao_toolkit.dca.create_formatter';
 
     /**
      * Data container definition.
@@ -75,7 +78,7 @@ final class CreateFormatterEvent extends Event
      *
      * @return Definition
      */
-    public function getDefinition()
+    public function getDefinition(): Definition
     {
         return $this->definition;
     }
@@ -87,14 +90,14 @@ final class CreateFormatterEvent extends Event
      *
      * @return $this
      */
-    public function addFormatter($formatter)
+    public function addFormatter($formatter): self
     {
         if (is_array($formatter)) {
             foreach ($formatter as $item) {
                 $this->addFormatter($item);
             }
         } else {
-            Assert::isInstanceOf($formatter, 'Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
+            Assertion::isInstanceOf($formatter, ValueFormatter::class);
 
             $this->formatter[] = $formatter;
         }
@@ -105,9 +108,9 @@ final class CreateFormatterEvent extends Event
     /**
      * Get formatter.
      *
-     * @return ValueFormatter[]
+     * @return array|ValueFormatter[]
      */
-    public function getFormatter()
+    public function getFormatter(): array
     {
         return $this->formatter;
     }
@@ -119,7 +122,7 @@ final class CreateFormatterEvent extends Event
      *
      * @return $this
      */
-    public function addPreFilter(ValueFormatter $formatter)
+    public function addPreFilter(ValueFormatter $formatter): self
     {
         $this->preFilters[] = $formatter;
 
@@ -133,7 +136,7 @@ final class CreateFormatterEvent extends Event
      *
      * @return $this
      */
-    public function addPreFilters(array $preFilters)
+    public function addPreFilters(array $preFilters): self
     {
         foreach ($preFilters as $filter) {
             $this->addPreFilter($filter);
@@ -149,7 +152,7 @@ final class CreateFormatterEvent extends Event
      *
      * @return $this
      */
-    public function addPostFilter(ValueFormatter $formatter)
+    public function addPostFilter(ValueFormatter $formatter): self
     {
         $this->preFilters[] = $formatter;
 
@@ -163,7 +166,7 @@ final class CreateFormatterEvent extends Event
      *
      * @return $this
      */
-    public function addPostFilters(array $postFilters)
+    public function addPostFilters(array $postFilters): self
     {
         foreach ($postFilters as $filter) {
             $this->addPostFilter($filter);
@@ -175,9 +178,9 @@ final class CreateFormatterEvent extends Event
     /**
      * Get pre filters.
      *
-     * @return ValueFormatter[]
+     * @return array|ValueFormatter[]
      */
-    public function getPreFilters()
+    public function getPreFilters(): array
     {
         return $this->preFilters;
     }
@@ -185,9 +188,9 @@ final class CreateFormatterEvent extends Event
     /**
      * Get post filters.
      *
-     * @return ValueFormatter[]
+     * @return array|ValueFormatter[]
      */
-    public function getPostFilters()
+    public function getPostFilters(): array
     {
         return $this->postFilters;
     }
@@ -195,7 +198,7 @@ final class CreateFormatterEvent extends Event
     /**
      * Get options formatter.
      *
-     * @return ValueFormatter
+     * @return ValueFormatter|null
      */
     public function getOptionsFormatter()
     {
@@ -209,7 +212,7 @@ final class CreateFormatterEvent extends Event
      *
      * @return $this
      */
-    public function setOptionsFormatter(ValueFormatter $optionsFormatter)
+    public function setOptionsFormatter(ValueFormatter $optionsFormatter): self
     {
         $this->optionsFormatter = $optionsFormatter;
 

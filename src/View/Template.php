@@ -1,13 +1,16 @@
 <?php
 
 /**
- * @package    toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
- * @filesource
+ * Contao toolkit.
  *
+ * @package    contao-toolkit
+ * @author     David Molineus <david.molineus@netzmacht.de>
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
+ * @filesource
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View;
 
@@ -34,7 +37,7 @@ interface Template
      *
      * @return mixed
      */
-    public function get($name);
+    public function get(string $name);
 
     /**
      * Set a template var.
@@ -44,7 +47,7 @@ interface Template
      *
      * @return $this
      */
-    public function set($name, $value);
+    public function set(string $name, $value): self;
 
     /**
      * Get an helper.
@@ -54,7 +57,7 @@ interface Template
      * @return mixed
      * @throws HelperNotFound If helper not exists.
      */
-    public function helper($name);
+    public function helper(string $name);
 
     /**
      * Get all the template data.

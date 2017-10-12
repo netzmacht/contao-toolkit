@@ -1,24 +1,28 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Exception;
 
-use Netzmacht\Contao\Toolkit\Exception;
+use Netzmacht\Contao\Toolkit\Exception\Exception;
+use Netzmacht\Contao\Toolkit\Exception\RuntimeException;
 
 /**
  * Class InvalidAliasException.
  *
  * @package Netzmacht\Contao\Toolkit\Data\Alias\Exception
  */
-class InvalidAliasException extends Exception
+final class InvalidAliasException extends RuntimeException implements Exception
 {
     /**
      * Create exception for a database entry.
@@ -29,7 +33,7 @@ class InvalidAliasException extends Exception
      *
      * @return static
      */
-    public static function forDatabaseEntry($tableName, $rowId, $aliasValue)
+    public static function forDatabaseEntry(string $tableName, int $rowId, $aliasValue): self
     {
         $message = sprintf(
             'Could not create unique alias for "%s::%s". Alias value "%s"',

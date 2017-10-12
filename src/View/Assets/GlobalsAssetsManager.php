@@ -1,13 +1,16 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Assets;
 
@@ -33,32 +36,42 @@ final class GlobalsAssetsManager implements AssetsManager
     private $stylesheets;
 
     /**
-     * Production mode of the environment.
+     * Debug mode of the environment.
      *
      * @var bool
      */
-    private $productionMode;
+    private $debugMode;
+
+    /**
+     * Web directory.
+     *
+     * @var string
+     */
+    private $webDir;
 
     /**
      * AssetsManager constructor.
      *
-     * @param array $stylesheets    The registered stylesheets.
-     * @param array $javascripts    The registered javascripts.
-     * @param bool  $productionMode Production mode of the environment.
+     * @param array  $stylesheets The registered stylesheets.
+     * @param array  $javascripts The registered javascripts.
+     * @param string $webDir      Relative web dir.
+     * @param bool   $debugMode   Debug mode of the environment.
      */
-    public function __construct(array &$stylesheets, array &$javascripts, $productionMode = false)
+    public function __construct(array &$stylesheets, array &$javascripts, string $webDir, $debugMode = false)
     {
-        $this->stylesheets    =& $stylesheets;
-        $this->javascripts    =& $javascripts;
-        $this->productionMode = $productionMode;
+        $this->stylesheets =& $stylesheets;
+        $this->javascripts =& $javascripts;
+        $this->debugMode   = $debugMode;
+        $this->webDir      = $webDir;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function addJavascript($path, $static = self::STATIC_PRODUCTION, $name = null)
+    public function addJavascript(string $path, $static = self::STATIC_PRODUCTION, string $name = null): AssetsManager
     {
         if (static::isStatic($static)) {
+            $path  = $this->webDir . '/' . $path;
             $path .= '|static';
         }
 
@@ -74,7 +87,7 @@ final class GlobalsAssetsManager implements AssetsManager
     /**
      * {@inheritDoc}
      */
-    public function addJavascripts(array $paths, $static = self::STATIC_PRODUCTION, $name = null)
+    public function addJavascripts(array $paths, $static = self::STATIC_PRODUCTION, string $name = null): AssetsManager
     {
         foreach ($paths as $identifier => $path) {
             if ($name) {
@@ -92,14 +105,19 @@ final class GlobalsAssetsManager implements AssetsManager
     /**
      * {@inheritDoc}
      */
-    public function addStylesheet($path, $media = '', $static = self::STATIC_PRODUCTION, $name = null)
-    {
+    public function addStylesheet(
+        string $path,
+        string $media = '',
+        $static = self::STATIC_PRODUCTION,
+        string $name = null
+    ): AssetsManager {
         $static = static::isStatic($static);
 
         if ($media || $static) {
             $path .= '|' . $media;
 
             if ($static) {
+                $path  = $this->webDir . '/' . $path;
                 $path .= '|static';
             }
         }
@@ -116,8 +134,12 @@ final class GlobalsAssetsManager implements AssetsManager
     /**
      * {@inheritDoc}
      */
-    public function addStylesheets(array $paths, $media = '', $static = self::STATIC_PRODUCTION, $name = null)
-    {
+    public function addStylesheets(
+        array $paths,
+        string $media = '',
+        $static = self::STATIC_PRODUCTION,
+        string $name = null
+    ): AssetsManager {
         foreach ($paths as $identifier => $path) {
             if ($name) {
                 $name .= '_' . $identifier;
@@ -134,12 +156,12 @@ final class GlobalsAssetsManager implements AssetsManager
     /**
      * {@inheritDoc}
      */
-    private function isStatic($flag)
+    private function isStatic($flag): bool
     {
         if ($flag === static::STATIC_PRODUCTION) {
-            return $this->productionMode;
+            return !$this->debugMode;
         }
 
-        return $flag;
+        return (bool) $flag;
     }
 }

@@ -1,13 +1,16 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
@@ -21,7 +24,7 @@ final class FlattenFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accepts($fieldName, array $fieldDefinition)
+    public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         return !empty($fieldDefinition['eval']['multiple']);
     }
@@ -29,7 +32,7 @@ final class FlattenFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, $context = null)
+    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
     {
         return $this->flatten($value);
     }
@@ -41,12 +44,12 @@ final class FlattenFormatter implements ValueFormatter
      * arrays will be displayed with brackets.
      * $a = ['a', ['b', 'c']] will be a, [b, c].
      *
-     * @param mixed      $value    Current value.
-     * @param bool|false $brackets If true the value get brackets.
+     * @param mixed $value    Current value.
+     * @param bool  $brackets If true the value get brackets.
      *
      * @return array|string
      */
-    private function flatten($value, $brackets = false)
+    private function flatten($value, bool $brackets = false)
     {
         if (is_array($value)) {
             $value = array_map(

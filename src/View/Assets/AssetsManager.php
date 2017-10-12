@@ -1,13 +1,16 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Assets;
 
@@ -23,46 +26,56 @@ interface AssetsManager
     /**
      * Add a javascript file to Contao assets.
      *
-     * @param string $path   The assets path.
-     * @param string $static Register it as static entry.
-     * @param null   $name   Optional assets name.
+     * @param string      $path   The assets path.
+     * @param string|bool $static Register it as static entry.
+     * @param string|null $name   Optional assets name.
      *
      * @return $this
      */
-    public function addJavascript($path, $static = self::STATIC_PRODUCTION, $name = null);
+    public function addJavascript(string $path, $static = self::STATIC_PRODUCTION, string $name = null): self;
 
     /**
      * Add javascript files to Contao assets.
      *
-     * @param array  $paths  The assets paths.
-     * @param string $static Register it as static entry.
-     * @param null   $name   Optional assets name.
+     * @param array       $paths  The assets paths.
+     * @param string|bool $static Register it as static entry.
+     * @param string|null $name   Optional assets name.
      *
      * @return $this
      */
-    public function addJavascripts(array $paths, $static = self::STATIC_PRODUCTION, $name = null);
+    public function addJavascripts(array $paths, $static = self::STATIC_PRODUCTION, string $name = null): self;
 
     /**
      * Add a javascript file to Contao assets.
      *
-     * @param string $path   The assets path.
-     * @param string $media  The media query.
-     * @param string $static Register it as static entry.
-     * @param null   $name   Optional assets name.
+     * @param string      $path   The assets path.
+     * @param string      $media  The media query.
+     * @param string|bool $static Register it as static entry.
+     * @param string|null $name   Optional assets name.
      *
      * @return $this
      */
-    public function addStylesheet($path, $media = '', $static = self::STATIC_PRODUCTION, $name = null);
+    public function addStylesheet(
+        string $path,
+        string $media = '',
+        $static = self::STATIC_PRODUCTION,
+        string $name = null
+    ): self;
 
     /**
      * Add stylesheet files to Contao assets.
      *
-     * @param array  $paths  The assets paths.
-     * @param string $media  The media type.
-     * @param string $static Register it as static entry.
-     * @param null   $name   Optional assets name.
+     * @param array       $paths  The assets paths.
+     * @param string      $media  The media type.
+     * @param string|bool $static Register it as static entry.
+     * @param string|null $name   Optional assets name.
      *
      * @return $this
      */
-    public function addStylesheets(array $paths, $media = '', $static = self::STATIC_PRODUCTION, $name = null);
+    public function addStylesheets(
+        array $paths,
+        string $media = '',
+        $static = self::STATIC_PRODUCTION,
+        string $name = null
+    ): self;
 }

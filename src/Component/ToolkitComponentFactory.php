@@ -1,19 +1,21 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus.
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Component;
 
-use ArrayObject;
-use Database\Result;
-use Interop\Container\ContainerInterface as Container;
-use Model;
+use Contao\Database\Result;
+use Contao\Model;
 use Netzmacht\Contao\Toolkit\Component\Exception\ComponentNotFound;
 
 /**
@@ -26,27 +28,32 @@ final class ToolkitComponentFactory implements ComponentFactory
     /**
      * List of Component factories.
      *
-     * @var ArrayObject|callable[]
+     * @var ComponentFactory[]
      */
     private $factories;
 
     /**
-     * Service container.
-     *
-     * @var Container
-     */
-    private $container;
-
-    /**
      * ComponentFactory constructor.
      *
-     * @param ArrayObject|callable[] $factories Component factories.
-     * @param Container              $container Service container.
+     * @param array|ComponentFactory[] $factories Component factories.
      */
-    public function __construct(ArrayObject $factories, Container $container)
+    public function __construct(array $factories)
     {
         $this->factories = $factories;
-        $this->container = $container;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function supports($model): bool
+    {
+        foreach ($this->factories as $factory) {
+            if ($factory->supports($model)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -55,20 +62,17 @@ final class ToolkitComponentFactory implements ComponentFactory
      * @param Model|Result $model  Component model.
      * @param string       $column Column in which the model is generated.
      *
-     * @return mixed
+     * @return Component
      * @throws ComponentNotFound When no component factory is registered.
      */
-    public function create($model, $column)
+    public function create($model, string $column): Component
     {
-        if (!isset($this->factories[$model->type])) {
-            throw ComponentNotFound::forModel($model);
+        foreach ($this->factories as $factory) {
+            if ($factory->supports($model)) {
+                return $factory->create($model, $column);
+            }
         }
 
-        $component = call_user_func($this->factories[$model->type], $model, $column, $this->container);
-        if (!$component instanceof Component) {
-            throw ComponentNotFound::forModel($model);
-        }
-
-        return $component;
+        throw ComponentNotFound::forModel($model);
     }
 }

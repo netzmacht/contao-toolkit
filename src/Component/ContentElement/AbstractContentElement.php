@@ -1,12 +1,16 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus.
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Component\ContentElement;
 
@@ -22,7 +26,7 @@ abstract class AbstractContentElement extends AbstractComponent implements Conte
     /**
      * {@inheritDoc}
      */
-    public function generate()
+    public function generate(): string
     {
         if (!$this->isVisible()) {
             return '';
@@ -36,7 +40,7 @@ abstract class AbstractContentElement extends AbstractComponent implements Conte
      *
      * @return bool
      */
-    protected function isVisible()
+    protected function isVisible(): bool
     {
         if (TL_MODE !== 'FE' || !BE_USER_LOGGED_IN) {
             return true;

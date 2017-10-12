@@ -1,24 +1,24 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
 
 namespace Netzmacht\Contao\Toolkit\Data\Updater;
 
-use BackendUser;
-use Database;
+use Contao\BackendUser;
+use Contao\Versions;
+use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
-use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
+use Netzmacht\Contao\Toolkit\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
-use Netzmacht\Contao\Toolkit\Data\Exception\AccessDenied;
-use User;
-use Versions;
+use Netzmacht\Contao\Toolkit\Exception\AccessDenied;
 
 /**
  * Class DatabaseRowUpdater.
@@ -28,18 +28,18 @@ use Versions;
 final class DatabaseRowUpdater implements Updater
 {
     /**
-     * Contao user.
+     * Contao backend user..
      *
-     * @var User
+     * @var BackendUser
      */
-    private $user;
+    private $backendUser;
 
     /**
      * The database connection.
      *
-     * @var Database
+     * @var Connection
      */
-    private $database;
+    private $connection;
 
     /**
      * Callback invoker.
@@ -58,17 +58,21 @@ final class DatabaseRowUpdater implements Updater
     /**
      * DatabaseRowUpdater constructor.
      *
-     * @param User     $user       User object.
-     * @param Database $database   Database connection.
-     * @param Manager  $dcaManager Data container manager.
-     * @param Invoker  $invoker    Callback invoker.
+     * @param BackendUser $backendUser Backend user.
+     * @param Connection  $connection  Database connection.
+     * @param Manager     $dcaManager  Data container manager.
+     * @param Invoker     $invoker     Callback invoker.
      */
-    public function __construct(User $user, Database $database, Manager $dcaManager, Invoker $invoker)
-    {
-        $this->user       = $user;
-        $this->database   = $database;
-        $this->invoker    = $invoker;
-        $this->dcaManager = $dcaManager;
+    public function __construct(
+        BackendUser $backendUser,
+        Connection $connection,
+        Manager $dcaManager,
+        Invoker $invoker
+    ) {
+        $this->backendUser = $backendUser;
+        $this->connection  = $connection;
+        $this->invoker     = $invoker;
+        $this->dcaManager  = $dcaManager;
     }
 
     /**
@@ -108,11 +112,11 @@ final class DatabaseRowUpdater implements Updater
      */
     public function hasUserAccess($tableName, $columnName)
     {
-        if ($this->user instanceof BackendUser) {
-            return $this->user->hasAccess($tableName . '::' . $columnName, 'alexf');
+        if (TL_MODE !== 'BE') {
+            return false;
         }
 
-        return false;
+        return $this->backendUser->hasAccess($tableName . '::' . $columnName, 'alexf');
     }
 
     /**
@@ -189,29 +193,32 @@ final class DatabaseRowUpdater implements Updater
      */
     private function save(Definition $definition, $recordId, array $data)
     {
-        // Filter empty values which should not be saved.
+        $builder = $this->connection->createQueryBuilder()
+            ->update($definition->getName())
+            ->where('id = :id')
+            ->setParameter('id', $recordId);
+
         foreach ($data as $column => $value) {
-            if ($value != '') {
-                continue;
+            // Filter empty values which should not be saved.
+            if ($value == '') {
+                if ($definition->get(['fields', $column, 'eval', 'alwaysSave'], false)
+                    && $definition->get(['fields', $column, 'eval', 'doNotSaveEmpty'], false)
+                ) {
+                    continue;
+                }
             }
 
-            $alwaysSave     = $definition->get(['fields', $column, 'eval', 'alwaysSave'], false);
-            $doNotSaveEmpty = $definition->get(['fields', $column, 'eval', 'doNotSaveEmpty'], false);
-
-            if (!$alwaysSave && $doNotSaveEmpty) {
-                unset ($data[$column]);
-            }
+            $builder->set($column, ':' . $column);
+            $builder->setParameter($column, (string) $value);
         }
 
         // Add tstamp if field exists.
-        if (empty($data['tstamp']) && $this->database->fieldExists('tstamp', $definition->getName())) {
-            $data['tstamp'] = time();
+        $columns = $this->connection->getSchemaManager()->listTableColumns($definition->getName());
+        if (empty($data['tstamp']) && isset($columns['tstamp'])) {
+            $builder->set('tstamp', time());
         }
 
         // Store the data.
-        $this->database
-            ->prepare(sprintf('UPDATE %s %s WHERE id=?', $definition->getName(), '%s'))
-            ->set($data)
-            ->execute($recordId);
+        $builder->execute();
     }
 }

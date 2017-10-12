@@ -1,16 +1,20 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Template;
 
+use Netzmacht\Contao\Toolkit\View\Template;
 use Netzmacht\Contao\Toolkit\View\Template\Exception\HelperNotFound;
 
 /**
@@ -34,7 +38,7 @@ trait TemplateTrait
      *
      * @return mixed
      */
-    public function get($name)
+    public function get(string $name)
     {
         return $this->$name;
     }
@@ -47,7 +51,7 @@ trait TemplateTrait
      *
      * @return $this
      */
-    public function set($name, $value)
+    public function set(string $name, $value): Template
     {
         $this->$name = $value;
 
@@ -62,7 +66,7 @@ trait TemplateTrait
      * @return mixed
      * @throws HelperNotFound If helper is not registered.
      */
-    public function helper($name)
+    public function helper(string $name)
     {
         if (!isset($this->helpers[$name])) {
             throw new HelperNotFound($name);

@@ -1,17 +1,20 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Database;
+use Doctrine\DBAL\Connection;
 
 /**
  * ForeignKeyFormatter formats fields which defines a foreign key.
@@ -23,24 +26,24 @@ final class ForeignKeyFormatter implements ValueFormatter
     /**
      * Database connection.
      *
-     * @var Database
+     * @var Connection
      */
-    private $database;
+    private $connection;
 
     /**
      * ForeignKeyFormatter constructor.
      *
-     * @param Database $database Database connection.
+     * @param Connection $database Database connection.
      */
-    public function __construct(Database $database)
+    public function __construct(Connection $database)
     {
-        $this->database = $database;
+        $this->connection = $database;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function accepts($fieldName, array $fieldDefinition)
+    public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         return isset($fieldDefinition['foreignKey']);
     }
@@ -48,16 +51,17 @@ final class ForeignKeyFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, $context = null)
+    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
     {
         $foreignKey = explode('.', $fieldDefinition['foreignKey'], 2);
 
         if (count($foreignKey) == 2) {
-            $query  = sprintf('SELECT %s AS value FROM %s WHERE id=?', $foreignKey[1], $foreignKey[0]);
-            $result = $this->database->prepare($query)->execute($value);
+            $query     = sprintf('SELECT %s AS value FROM %s WHERE id=:id', $foreignKey[1], $foreignKey[0]);
+            $statement = $this->connection->prepare($query);
+            $statement->bindValue(':id', $value);
 
-            if ($result->numRows) {
-                $value = $result->value;
+            if ($statement->execute() && $statement->rowCount()) {
+                $value = $statement->fetchColumn('value');
             }
         }
 

@@ -1,13 +1,16 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
@@ -34,8 +37,8 @@ abstract class AbstractValueFilter extends AbstractFilter
      */
     public function __construct(
         array $columns,
-        $break = true,
-        $combine = self::COMBINE_REPLACE
+        bool $break = true,
+        int $combine = self::COMBINE_REPLACE
     ) {
         parent::__construct($break, $combine);
 
@@ -45,7 +48,7 @@ abstract class AbstractValueFilter extends AbstractFilter
     /**
      * {@inheritDoc}
      */
-    public function repeatUntilValid()
+    public function repeatUntilValid(): bool
     {
         return false;
     }
@@ -53,7 +56,7 @@ abstract class AbstractValueFilter extends AbstractFilter
     /**
      * {@inheritDoc}
      */
-    protected function combine($previous, $current, $separator)
+    protected function combine($previous, $current, string $separator): string
     {
         if (is_array($current)) {
             $current = implode($separator, array_filter($current));

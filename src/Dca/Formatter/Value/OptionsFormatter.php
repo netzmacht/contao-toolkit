@@ -1,18 +1,21 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use DataContainer;
-use Netzmacht\Contao\Toolkit\Dca\Callback\Invoker;
+use Contao\DataContainer;
+use Netzmacht\Contao\Toolkit\Callback\Invoker;
 
 /**
  * OptionsFormatter fetches the value from the options or options callback.
@@ -41,7 +44,7 @@ final class OptionsFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accepts($fieldName, array $fieldDefinition)
+    public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         if (!empty($fieldDefinition['eval']['isAssociative']) || !empty($fieldDefinition['options'])) {
             return true;
@@ -53,10 +56,10 @@ final class OptionsFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, $context = null)
+    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
     {
         if (!empty($fieldDefinition['eval']['isAssociative'])
-            || (!empty($fieldDefinition['options']) && array_is_assoc($fieldDefinition['options']))
+            || (!empty($fieldDefinition['options']) && $this->isAssociativeArray($fieldDefinition['options']))
         ) {
             if (!empty($fieldDefinition['options'][$value])) {
                 $value = $fieldDefinition['options'][$value];
@@ -74,5 +77,17 @@ final class OptionsFormatter implements ValueFormatter
         }
 
         return $value;
+    }
+
+    /**
+     * Check if given value is an associative array.
+     *
+     * @param mixed $value Given value.
+     *
+     * @return bool
+     */
+    private function isAssociativeArray($value): bool
+    {
+        return (is_array($value) && array_keys($value) !== range(0, (count($value) - 1)));
     }
 }

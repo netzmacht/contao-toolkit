@@ -1,33 +1,41 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus.
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Component\Exception;
 
-use Database\Result;
-use Netzmacht\Contao\Toolkit\Exception;
+use Contao\ContentModel;
+use Contao\Database\Result;
+use Contao\Model;
+use Contao\ModuleModel;
+use Imagine\Exception\RuntimeException;
+use Netzmacht\Contao\Toolkit\Exception\Exception;
 
 /**
  * Exception class ContentElementNotFound is thrown if a content element could not be created.
  *
  * @package Netzmacht\Contao\Toolkit\Component\ContentElement
  */
-class ComponentNotFound extends Exception
+final class ComponentNotFound extends RuntimeException implements Exception
 {
     /**
      * Create exception for the given model.
      *
-     * @param \Model|Result $model Component model.
+     * @param Model|Result $model Component model.
      *
      * @return static
      */
-    public static function forModel($model)
+    public static function forModel($model): self
     {
         $message = sprintf(
             '%s of type "%s" not found for model ID %s',
@@ -42,17 +50,17 @@ class ComponentNotFound extends Exception
     /**
      * Describe the model.
      *
-     * @param \Model $model Component model.
+     * @param Model $model Component model.
      *
      * @return string
      */
-    private static function describeModel($model)
+    private static function describeModel($model): string
     {
-        if ($model instanceof \ContentModel) {
+        if ($model instanceof ContentModel) {
             return 'Content element';
         }
 
-        if ($model instanceof \ModuleModel) {
+        if ($model instanceof ModuleModel) {
             return 'Frontend module';
         }
 

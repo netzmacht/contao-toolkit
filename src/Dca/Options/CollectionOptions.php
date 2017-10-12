@@ -1,13 +1,16 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2014 netzmacht creative David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Options;
 
@@ -57,7 +60,7 @@ final class CollectionOptions implements Options
      * @param string|callable $labelColumn Name of label column.
      * @param string          $valueColumn Name of value column.
      */
-    public function __construct(Collection $collection, $labelColumn = null, $valueColumn = 'id')
+    public function __construct(Collection $collection, $labelColumn = null, string $valueColumn = 'id')
     {
         $this->collection  = $collection;
         $this->valueColumn = $valueColumn;
@@ -79,7 +82,7 @@ final class CollectionOptions implements Options
      *
      * @return string
      */
-    public function getValueKey()
+    public function getValueKey(): string
     {
         return $this->valueColumn;
     }
@@ -99,7 +102,7 @@ final class CollectionOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function row()
+    public function row(): array
     {
         return $this->collection->row();
     }
@@ -124,7 +127,7 @@ final class CollectionOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function valid()
+    public function valid(): bool
     {
         return $this->position < $this->collection->count();
     }
@@ -185,7 +188,7 @@ final class CollectionOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function getArrayCopy()
+    public function getArrayCopy(): array
     {
         $values = array();
 

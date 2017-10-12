@@ -1,0 +1,21 @@
+<?= $this->generateImage(
+    $this->icon,
+    $this->title,
+    'style="vertical-align:top;cursor:pointer;padding-left:3px" title="' . $this->title .'" id="moo_' . $this->field . '"'
+); ?>
+<script>
+    window.addEvent('domready', function() {
+        new MooRainbow('moo_<?= $this->field ?>', {
+            id: 'ctrl_<?= $this->field ?>',
+            startColor: ((cl = $('ctrl_<?= $this->field ?>').value.hexToRgb(true)) ? cl : [255, 0, 0]),
+            imgPath: 'assets/colorpicker/images/',
+            onComplete: function(color) {
+                <?php if ($this->replaceHex): ?>
+                $('ctrl_<?= $this->field ?>').value = color.hex.replace("#", "");
+                <?php else: ?>
+                $('ctrl_<?= $this->field ?>').value = color.hex;
+                <?php endif; ?>
+            }
+        });
+    });
+</script>

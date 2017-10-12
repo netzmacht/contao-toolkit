@@ -1,13 +1,16 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca;
 
@@ -38,7 +41,7 @@ final class Definition
      * @param string $name Name of the data definition.
      * @param array  $dca  The data definition array.
      */
-    public function __construct($name, array &$dca)
+    public function __construct(string $name, array &$dca)
     {
         $this->name = $name;
         $this->dca  =& $dca;
@@ -51,7 +54,7 @@ final class Definition
      *
      * @return array
      */
-    private function path($path)
+    private function path($path): array
     {
         if (!is_array($path)) {
             $path = explode('/', $path);
@@ -67,7 +70,7 @@ final class Definition
      * @param mixed        $default           The default value.
      * @param bool         $createIfNotExists Create definition if not exists.
      *
-     * @return mixed .
+     * @return mixed
      */
     public function &get($path, $default = null, $createIfNotExists = false)
     {
@@ -95,7 +98,7 @@ final class Definition
      *
      * @return bool
      */
-    public function has($path)
+    public function has($path): bool
     {
         $dca =& $this->dca;
 
@@ -118,7 +121,7 @@ final class Definition
      *
      * @return bool
      */
-    public function set($path, $value)
+    public function set($path, $value): bool
     {
         $path    = is_array($path) ? $path : explode('/', $path);
         $current =& $this->dca;
@@ -149,7 +152,7 @@ final class Definition
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }

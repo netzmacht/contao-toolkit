@@ -17,8 +17,14 @@ class. That's why Toolkit v1 provided a standard way to replace insert tags.
 
    <?php
 
+    // Both method does the same
+
+    /** @var ContaoInsertTags $replacer */
+    $replacer = $container->get('contao.controller.insert_tags');
+    $buffer   = $replacer->replace($buffer);
+
     /** @var Netzmacht\Contao\Toolkit\InsertTag\Replacer $replacer */
-    $replacer = $container->get(Netzmacht\Contao\Toolkit\DependencyInjection\Services::INSERT_TAG_REPLACER);
+    $replacer = $container->get('netzmacht.contao_toolkit.insert_tag.replacer');
     $buffer   = $replacer->replace($buffer);
 
 .. hint:: You should be careful using the InsertTags class provided by Contao. It hassles with the right order of the
@@ -52,18 +58,12 @@ you. The :code:`Netzmacht\Contao\Toolkit\InsertTag\Parser` interface is used for
         }
     }
 
+.. code-block:: yaml
+
     // 2. Register your parser
 
-    // config/event_listeners.php
-
-    return [
-        Netzmacht\Contao\Toolkit\Boot\Event\InitializeSystemEvent::Name => [
-            function ($event) {
-                $container = $event->getContainer();
-                $replacer  = $container->get(Netzmacht\Contao\Toolkit\DependencyInjection\Services::INSERT_TAG_REPLACER);
-                $parser    = $container->get('my.smiley.parser');
-
-                $replacer->register($parser);
-            }
-        ]
-    ];
+    // src/Resources/config/services.yml in your bundle
+    my.custom.smiley-insert-tag-parser:
+      class: SmileyParser
+      tags:
+        - { name: netzmacht.contao_toolkit.insert_tag.parser}

@@ -1,1 +1,5 @@
 formatter.name: pretty
+suites:
+    toolkit_suite:
+        namespace: Netzmacht\Contao\Toolkit
+        psr4_prefix: Netzmacht\Contao\Toolkit

@@ -1,13 +1,16 @@
 <?php
 
 /**
- * @package    toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
- * @filesource
+ * Contao toolkit.
  *
+ * @package    contao-toolkit
+ * @author     David Molineus <david.molineus@netzmacht.de>
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
+ * @filesource
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Template;
 
@@ -38,16 +41,13 @@ final class ToolkitTemplateFactory implements TemplateFactory
     }
 
     /**
-     * Create a frontend template.
-     *
-     * @param string     $name        Template name.
-     * @param array|null $data        Template data.
-     * @param string     $contentType Content type.
-     *
-     * @return Template
+     * {@inheritdoc}
      */
-    public function createFrontendTemplate($name, array $data = null, $contentType = 'text/html')
-    {
+    public function createFrontendTemplate(
+        string $name,
+        array $data = null,
+        string $contentType = 'text/html'
+    ): Template {
         $helpers  = $this->getTemplateHelpers($name, $contentType);
         $template = new FrontendTemplate($name, $helpers, $contentType);
 
@@ -59,16 +59,13 @@ final class ToolkitTemplateFactory implements TemplateFactory
     }
 
     /**
-     * Create a backend template.
-     *
-     * @param string     $name        Template name.
-     * @param array|null $data        Template data.
-     * @param string     $contentType Content type.
-     *
-     * @return Template
+     * {@inheritdoc}
      */
-    public function createBackendTemplate($name, array $data = null, $contentType = 'text/html')
-    {
+    public function createBackendTemplate(
+        string $name,
+        array $data = null,
+        string $contentType = 'text/html'
+    ): Template {
         $helpers  = $this->getTemplateHelpers($name, $contentType);
         $template = new BackendTemplate($name, $helpers, $contentType);
 
@@ -87,7 +84,7 @@ final class ToolkitTemplateFactory implements TemplateFactory
      *
      * @return array
      */
-    private function getTemplateHelpers($name, $contentType)
+    private function getTemplateHelpers(string $name, string $contentType): array
     {
         $event = new GetTemplateHelpersEvent($name, $contentType);
         $this->eventDispatcher->dispatch($event::NAME, $event);

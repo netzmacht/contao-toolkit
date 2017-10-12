@@ -1,13 +1,16 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
@@ -45,7 +48,7 @@ final class SuffixFilter extends AbstractFilter
      * @param bool $break If true break after the filter if value is unique.
      * @param int  $start Start value.
      */
-    public function __construct($break = true, $start = 2)
+    public function __construct(bool $break = true, int $start = 2)
     {
         parent::__construct($break, static::COMBINE_APPEND);
 
@@ -64,7 +67,7 @@ final class SuffixFilter extends AbstractFilter
     /**
      * {@inheritDoc}
      */
-    public function repeatUntilValid()
+    public function repeatUntilValid(): bool
     {
         return true;
     }
@@ -72,7 +75,7 @@ final class SuffixFilter extends AbstractFilter
     /**
      * {@inheritDoc}
      */
-    public function apply($model, $value, $separator)
+    public function apply($model, $value, string $separator): string
     {
         if ($this->value === null) {
             $this->value = $value;

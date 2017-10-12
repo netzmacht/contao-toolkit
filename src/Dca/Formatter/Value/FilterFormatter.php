@@ -1,17 +1,20 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Webmozart\Assert\Assert;
+use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 
 /**
  * FilterFormatter applies formatter used as filters to an value.
@@ -37,7 +40,7 @@ final class FilterFormatter implements ValueFormatter
      */
     public function __construct(array $filters)
     {
-        Assert::allIsInstanceOf($filters, 'Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
+        Assertion::allImplementsInterface($filters, ValueFormatter::class);
 
         $this->filters = $filters;
     }
@@ -45,7 +48,7 @@ final class FilterFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function accepts($fieldName, array $fieldDefinition)
+    public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         return true;
     }
@@ -53,7 +56,7 @@ final class FilterFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, $fieldName, array $fieldDefinition, $context = null)
+    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
     {
         foreach ($this->filters as $filter) {
             if ($filter->accepts($fieldName, $fieldDefinition)) {

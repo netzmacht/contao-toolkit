@@ -1,18 +1,21 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Model;
 
-use Model;
-use Webmozart\Assert\Assert;
+use Contao\Model;
+use Netzmacht\Contao\Toolkit\Assertion\Assert;
 
 /**
  * Class ContaoRepository.
@@ -21,6 +24,8 @@ use Webmozart\Assert\Assert;
  */
 class ContaoRepository implements Repository
 {
+    use QueryProxy;
+
     /**
      * The model class.
      *
@@ -35,8 +40,9 @@ class ContaoRepository implements Repository
      */
     public function __construct($modelClass)
     {
-        Assert::classExists($modelClass);
-        Assert::subclassOf($modelClass, 'Model');
+        Assert::that($modelClass)
+            ->classExists()
+            ->subclassOf(Model::class);
 
         $this->modelClass = $modelClass;
     }
@@ -54,7 +60,7 @@ class ContaoRepository implements Repository
     /**
      * {@inheritDoc}
      */
-    public function find($modelId)
+    public function find(int $modelId)
     {
         return $this->call('findByPK', [$modelId]);
     }
@@ -141,7 +147,7 @@ class ContaoRepository implements Repository
      *
      * @return mixed
      */
-    protected function call($method, $arguments = [])
+    protected function call(string $method, array $arguments = [])
     {
         return call_user_func_array([$this->modelClass, $method], $arguments);
     }

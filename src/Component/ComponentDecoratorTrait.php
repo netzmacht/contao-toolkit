@@ -1,16 +1,20 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus.
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Component;
 
-use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerAware;
+use Contao\Model;
 
 /**
  * The ComponentDecorator trait is designed to provide a decorator for content elements and frontend modules.
@@ -19,8 +23,6 @@ use Netzmacht\Contao\Toolkit\DependencyInjection\ContainerAware;
  */
 trait ComponentDecoratorTrait
 {
-    use ContainerAware;
-
     /**
      * Inner component.
      *
@@ -81,5 +83,5 @@ trait ComponentDecoratorTrait
      *
      * @return ComponentFactory
      */
-    abstract protected function getFactory();
+    abstract protected function getFactory(): ComponentFactory;
 }

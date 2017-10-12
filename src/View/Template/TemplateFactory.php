@@ -1,13 +1,16 @@
 <?php
 
 /**
- * @package    toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
- * @filesource
+ * Contao toolkit.
  *
+ * @package    contao-toolkit
+ * @author     David Molineus <david.molineus@netzmacht.de>
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
+ * @filesource
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Template;
 
@@ -27,7 +30,11 @@ interface TemplateFactory
      *
      * @return Template
      */
-    public function createFrontendTemplate($name, array $data = null, $contentType = 'text/html');
+    public function createFrontendTemplate(
+        string $name,
+        array $data = null,
+        string $contentType = 'text/html'
+    ): Template;
 
     /**
      * Create a backend template.
@@ -38,5 +45,9 @@ interface TemplateFactory
      *
      * @return Template
      */
-    public function createBackendTemplate($name, array $data = null, $contentType = 'text/html');
+    public function createBackendTemplate(
+        string $name,
+        array $data = null,
+        string $contentType = 'text/html'
+    ): Template;
 }

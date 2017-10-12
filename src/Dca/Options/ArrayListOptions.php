@@ -1,13 +1,16 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2014 netzmacht creative David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Options;
 
@@ -62,7 +65,7 @@ final class ArrayListOptions implements Options
      * @param string|callable $labelKey Name of label key.
      * @param string          $valueKey Name of value key.
      */
-    public function __construct(array $list, $labelKey = null, $valueKey = 'id')
+    public function __construct(array $list, $labelKey = null, string $valueKey = 'id')
     {
         $this->list     = $list;
         $this->keys     = array_keys($list);
@@ -71,9 +74,7 @@ final class ArrayListOptions implements Options
     }
 
     /**
-     * Get the label column.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getLabelKey()
     {
@@ -85,7 +86,7 @@ final class ArrayListOptions implements Options
      *
      * @return string
      */
-    public function getValueKey()
+    public function getValueKey(): string
     {
         return $this->valueKey;
     }
@@ -107,7 +108,7 @@ final class ArrayListOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function row()
+    public function row(): array
     {
         return $this->list[$this->keys[$this->position]];
     }
@@ -131,7 +132,7 @@ final class ArrayListOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function valid()
+    public function valid(): bool
     {
         return $this->position < count($this->keys);
     }
@@ -179,7 +180,7 @@ final class ArrayListOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function getArrayCopy()
+    public function getArrayCopy(): array
     {
         $values = array();
 

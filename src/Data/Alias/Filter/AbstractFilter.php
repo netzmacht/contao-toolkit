@@ -1,13 +1,16 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
@@ -44,16 +47,16 @@ abstract class AbstractFilter implements Filter
      * @param bool $break   If true break after the filter if value is unique.
      * @param int  $combine Combine flag.
      */
-    public function __construct($break, $combine = self::COMBINE_REPLACE)
+    public function __construct(bool $break, int $combine = self::COMBINE_REPLACE)
     {
-        $this->break   = (bool) $break;
-        $this->combine = (int) $combine;
+        $this->break   = $break;
+        $this->combine = $combine;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function breakIfValid()
+    public function breakIfValid(): bool
     {
         return $this->break;
     }
@@ -69,12 +72,12 @@ abstract class AbstractFilter implements Filter
      * Combine the current value with the previous one.
      *
      * @param string $previous  Previous alias value.
-     * @param string $current   Current alias value.
+     * @param mixed  $current   Current alias value.
      * @param string $separator A separator string.
      *
      * @return string
      */
-    protected function combine($previous, $current, $separator)
+    protected function combine($previous, $current, string $separator): string
     {
         if (!$previous) {
             return $current;

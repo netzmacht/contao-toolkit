@@ -1,13 +1,16 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter;
 
@@ -27,7 +30,7 @@ interface Formatter
      *
      * @return array|null|string
      */
-    public function formatValue($field, $value, $context = null);
+    public function formatValue(string $field, $value, $context = null);
 
     /**
      * Format the field label.
@@ -36,16 +39,16 @@ interface Formatter
      *
      * @return string
      */
-    public function formatFieldLabel($field);
+    public function formatFieldLabel(string $field): string;
 
     /**
      * Format the field description.
      *
      * @param string $field Field name.
      *
-     * @return mixed
+     * @return string
      */
-    public function formatFieldDescription($field);
+    public function formatFieldDescription(string $field): string;
 
     /**
      * Format field options.
@@ -56,5 +59,5 @@ interface Formatter
      *
      * @return array
      */
-    public function formatOptions($field, array $values, $context = null);
+    public function formatOptions(string $field, array $values, $context = null): array;
 }

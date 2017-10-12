@@ -1,18 +1,21 @@
 <?php
 
 /**
+ * Contao toolkit.
+ *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2016 netzmacht David Molineus
- * @license    LGPL 3.0
+ * @copyright  2015-2017 netzmacht David Molineus.
+ * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
- *
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
-use Database\Result;
-use Model;
+use Contao\Database\Result;
+use Contao\Model;
 
 /**
  * Filter modifies a value for the alias generator.
@@ -26,14 +29,14 @@ interface Filter
      *
      * @return bool
      */
-    public function repeatUntilValid();
+    public function repeatUntilValid(): bool;
 
     /**
      * If true no ongoing filters get applied.
      *
      * @return bool
      */
-    public function breakIfValid();
+    public function breakIfValid(): bool;
 
     /**
      * Initialize the filter.
@@ -51,5 +54,5 @@ interface Filter
      *
      * @return string
      */
-    public function apply($model, $value, $separator);
+    public function apply($model, $value, string $separator);
 }
