@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Webmozart\Assert\Assert;
+use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 
 /**
  * Set of multiple formatter.
@@ -37,7 +37,7 @@ final class FormatterChain implements ValueFormatter
      */
     public function __construct(array $formatter)
     {
-        Assert::allIsInstanceOf($formatter, 'Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
+        Assertion::allImplementsInterface($formatter, ValueFormatter::class);
 
         $this->formatter = $formatter;
     }

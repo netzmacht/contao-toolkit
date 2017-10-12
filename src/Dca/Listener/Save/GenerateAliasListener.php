@@ -16,11 +16,11 @@ namespace Netzmacht\Contao\Toolkit\Dca\Listener\Save;
 
 use Contao\Database\Result;
 use Contao\DataContainer;
+use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator;
 use Netzmacht\Contao\Toolkit\Data\Alias\Factory\AliasGeneratorFactory;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
-use Webmozart\Assert\Assert;
 
 /**
  * Class GenerateAliasCallback is designed to create an alias of a column.
@@ -81,8 +81,8 @@ final class GenerateAliasListener
      */
     public function handleSaveCallback($value, $dataContainer)
     {
-        Assert::isInstanceOf($dataContainer, DataContainer::class);
-        Assert::isInstanceOf($dataContainer->activeRecord, Result::class);
+        Assertion::isInstanceOf($dataContainer, DataContainer::class);
+        Assertion::isInstanceOf($dataContainer->activeRecord, Result::class);
 
         $generator = $this->getGenerator($dataContainer);
 
@@ -117,7 +117,7 @@ final class GenerateAliasListener
      */
     private function guardIsAliasGeneratorFactory($factory, string $serviceId)
     {
-        Assert::isInstanceOf(
+        Assertion::isInstanceOf(
             $factory,
             AliasGeneratorFactory::class,
             sprintf('Service %s is not an alias generator factory.', $serviceId)

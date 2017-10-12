@@ -19,10 +19,10 @@ use Contao\Model;
 use Contao\Model\Collection;
 use Contao\StringUtil;
 use InvalidArgumentException;
+use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateReference as ToolkitTemplateReference;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Templating\TemplateReferenceInterface as TemplateReference;
-use Webmozart\Assert\Assert;
 
 /**
  * Base element.
@@ -85,7 +85,7 @@ abstract class AbstractComponent implements Component
             $this->model = $model;
         }
 
-        Assert::methodExists($model, 'row');
+        Assertion::methodExists('row', $model);
 
         $this->templateEngine = $templateEngine;
         $this->column         = $column;

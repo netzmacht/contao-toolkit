@@ -14,9 +14,10 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca;
 
+use Netzmacht\Contao\Toolkit\Assertion\Assert;
+use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory;
-use Webmozart\Assert\Assert;
 
 /**
  * Data container definition manager.
@@ -122,7 +123,7 @@ final class Manager
      */
     protected function assertValidDca(string $name)
     {
-        Assert::keyExists($GLOBALS['TL_DCA'], $name);
-        Assert::isArray($GLOBALS['TL_DCA'][$name]);
+        Assertion::keyExists($GLOBALS['TL_DCA'], $name);
+        Assertion::isArray($GLOBALS['TL_DCA'][$name]);
     }
 }

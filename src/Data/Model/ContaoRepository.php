@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Data\Model;
 
 use Contao\Model;
-use Webmozart\Assert\Assert;
+use Netzmacht\Contao\Toolkit\Assertion\Assert;
 
 /**
  * Class ContaoRepository.
@@ -40,8 +40,9 @@ class ContaoRepository implements Repository
      */
     public function __construct($modelClass)
     {
-        Assert::classExists($modelClass);
-        Assert::subclassOf($modelClass, 'Model');
+        Assert::that($modelClass)
+            ->classExists()
+            ->subclassOf(Model::class);
 
         $this->modelClass = $modelClass;
     }

@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Callback;
 
 use Contao\System;
 use InvalidArgumentException;
-use Webmozart\Assert\Assert;
+use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 
 /**
  * Class Callback.
@@ -40,7 +40,7 @@ final class Invoker
             $callback[0] = System::importStatic($callback[0]);
         }
 
-        Assert::isCallable($callback);
+        Assertion::isCallable($callback);
 
         return call_user_func_array($callback, $arguments);
     }

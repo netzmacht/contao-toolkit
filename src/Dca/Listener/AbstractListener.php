@@ -14,10 +14,10 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener;
 
+use Netzmacht\Contao\Toolkit\Assertion\Assert;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
-use Webmozart\Assert\Assert;
 
 /**
  * Base class for data container callback classes.
@@ -49,8 +49,9 @@ abstract class AbstractListener
     {
         $this->dcaManager = $dcaManager;
 
-        Assert::notEmpty(static::$name, 'Name property must not be empty');
-        Assert::string(static::$name, 'Name property must be a string.');
+        Assert::that(static::$name)
+            ->notEmpty('Name property must not be empty')
+            ->string('Name property must be a string.');
     }
 
     /**

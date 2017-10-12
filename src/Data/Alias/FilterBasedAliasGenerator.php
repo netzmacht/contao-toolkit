@@ -16,8 +16,8 @@ namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
 use Contao\Database;
 use Contao\Model;
+use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException;
-use Webmozart\Assert\Assert;
 
 /**
  * Alias generator.
@@ -77,7 +77,7 @@ final class FilterBasedAliasGenerator implements AliasGenerator
         string $aliasField = 'alias',
         string $separator = '-'
     ) {
-        Assert::allIsInstanceOf($filters, Filter::class);
+        Assertion::allIsInstanceOf($filters, Filter::class);
 
         $this->validator  = $validator;
         $this->aliasField = $aliasField;
