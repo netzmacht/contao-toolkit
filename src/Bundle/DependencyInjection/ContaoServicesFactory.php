@@ -22,6 +22,7 @@ use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
 use Contao\Encryption;
 use Contao\Environment;
+use Contao\Frontend;
 use Contao\FrontendUser;
 use Contao\Input;
 use Contao\System;
@@ -118,6 +119,16 @@ final class ContaoServicesFactory
     public function createEncryptionAdapter(): Adapter
     {
         return $this->createAdapter(Encryption::class);
+    }
+
+    /**
+     * Create a frontend adapter.
+     *
+     * @return Adapter|Frontend
+     */
+    public function createFrontendAdapter(): Adapter
+    {
+        return $this->createAdapter(Frontend::class);
     }
 
     /**
