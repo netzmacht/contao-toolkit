@@ -29,31 +29,13 @@ final class GlobalsAssetsManagerFactory
     private $debug;
 
     /**
-     * Web directory.
-     *
-     * @var string
-     */
-    private $webDir;
-
-    /**
-     * Root directory.
-     *
-     * @var string
-     */
-    private $rootDir;
-
-    /**
      * GlobalsAssetsManagerFactory constructor.
      *
-     * @param bool   $debug      Debug mode.
-     * @param string $projectDir Kernel project directory.
-     * @param string $webDir     Web directory.
+     * @param bool $debug Debug mode.
      */
-    public function __construct(bool $debug, string $projectDir, string $webDir)
+    public function __construct(bool $debug)
     {
-        $this->debug   = $debug;
-        $this->webDir  = $webDir;
-        $this->rootDir = $projectDir;
+        $this->debug = $debug;
     }
 
     /**
@@ -76,7 +58,6 @@ final class GlobalsAssetsManagerFactory
         return new GlobalsAssetsManager(
             $GLOBALS['TL_CSS'],
             $GLOBALS['TL_JAVASCRIPT'],
-            substr($this->webDir, (strlen($this->rootDir) + 1)),
             $this->debug
         );
     }

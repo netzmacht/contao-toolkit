@@ -23,7 +23,7 @@
     },
     "require": {
         "php": ">=7.0",
-        "contao/core-bundle": "~4.4",
+        "contao/core-bundle": "^4.4.7",
         "symfony/translation": "~3.3",
         "symfony/templating": "~3.3",
         "symfony/http-kernel": "~3.3",

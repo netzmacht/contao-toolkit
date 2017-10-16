@@ -102,5 +102,3 @@ services:
     class: Netzmacht\Contao\Toolkit\View\Assets\GlobalsAssetsManagerFactory
     arguments:
       - '%kernel.debug%'
-      - '%kernel.project_dir%'
-      - '%contao.web_dir%'
