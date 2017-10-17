@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    public: false
+
   netzmacht.contao_toolkit.assets_manager:
     class: Netzmacht\Contao\Toolkit\View\Assets\GlobalsAssetsManager
     factory: ['@netzmacht.contao_toolkit.globals_assets_manager_factory', 'create']
@@ -8,11 +11,13 @@ services:
 
   netzmacht.contao_toolkit.component.content_element_factory:
     class: Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory
+    public: true
     arguments:
       - []
 
   netzmacht.contao_toolkit.component.frontend_module_factory:
     class: Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory
+    public: true
     arguments:
       - []
 
