@@ -1,11 +1,4 @@
 services:
-  netzmacht.contao_toolkit.dca.formatter.options_formatter:
-    class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\OptionsFormatter
-    arguments:
-      - '@netzmacht.contao_toolkit.callback_invoker'
-    tags:
-      - { name: 'netzmacht.contao_toolkit.dca.formatter'}
-
   netzmacht.contao_toolkit.dca.formatter.foreign_key:
     class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ForeignKeyFormatter
     arguments:

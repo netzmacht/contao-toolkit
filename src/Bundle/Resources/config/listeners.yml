@@ -16,7 +16,7 @@ services:
       - []
       - []
       - []
-      - '@netzmacht.contao_toolkit.dca.formatter.options_formatter'
+      - '@netzmacht.contao_toolkit.dca.formatter.options'
     tags:
       - { name: 'kernel.event_listener', event: 'netzmacht.contao_toolkit.dca.create_formatter', method: 'handle' }
 
