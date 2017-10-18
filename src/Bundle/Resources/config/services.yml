@@ -107,3 +107,8 @@ services:
     class: Netzmacht\Contao\Toolkit\View\Assets\GlobalsAssetsManagerFactory
     arguments:
       - '%kernel.debug%'
+
+  netzmacht.contao_toolkit.repository_manager:
+    class: Netzmacht\Contao\Toolkit\Data\Model\ToolkitRepositoryManager
+    arguments:
+      - []
