@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    public: false
+
   netzmacht.contao_toolkit.dca.formatter.foreign_key:
     class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ForeignKeyFormatter
     arguments:
