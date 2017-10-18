@@ -20,6 +20,6 @@ use Netzmacht\Contao\Toolkit\Exception\Exception;
  *
  * @package Netzmacht\Contao\Toolkit\Assertion
  */
-class InvalidArgumentException extends BaseInvalidArgumentException implements Exception
+class AssertionFailed extends BaseInvalidArgumentException implements Exception
 {
 }

@@ -26,5 +26,5 @@ class Assertion extends BaseAssertion
      *
      * @var string
      */
-    protected static $exceptionClass = InvalidArgumentException::class;
+    protected static $exceptionClass = AssertionFailed::class;
 }
