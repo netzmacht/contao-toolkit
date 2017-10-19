@@ -3,6 +3,7 @@
 namespace spec\Netzmacht\Contao\Toolkit\Data\Model;
 
 use Contao\Model;
+use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Assertion\AssertionFailed;
 use Netzmacht\Contao\Toolkit\Data\Model\ContaoRepository;
 use Netzmacht\Contao\Toolkit\Data\Model\Repository;
@@ -13,9 +14,9 @@ use PhpSpec\ObjectBehavior;
 
 class ToolkitRepositoryManagerSpec extends ObjectBehavior
 {
-    function let()
+    function let(Connection $connection)
     {
-        $this->beConstructedWith([]);
+        $this->beConstructedWith($connection, []);
     }
     function it_is_initializable()
     {
@@ -27,9 +28,9 @@ class ToolkitRepositoryManagerSpec extends ObjectBehavior
         $this->shouldImplement(RepositoryManager::class);
     }
 
-    function it_gets_registered_repository(Repository $repository)
+    function it_gets_registered_repository(Connection $connection, Repository $repository)
     {
-        $this->beConstructedWith(['example' => $repository]);
+        $this->beConstructedWith($connection, ['example' => $repository]);
         $this->getRepository('example')->shouldReturn($repository);
     }
 
@@ -47,6 +48,11 @@ class ToolkitRepositoryManagerSpec extends ObjectBehavior
     {
         $this->beConstructedWith(['foo' => new \stdClass()]);
         $this->shouldThrow(AssertionFailed::class)->duringInstantiation();
+    }
+
+    function it_has_the_database_connection(Connection $connection)
+    {
+        $this->getConnection()->shouldReturn($connection);
     }
 }
 

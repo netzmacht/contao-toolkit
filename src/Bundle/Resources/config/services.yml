@@ -113,4 +113,5 @@ services:
   netzmacht.contao_toolkit.repository_manager:
     class: Netzmacht\Contao\Toolkit\Data\Model\ToolkitRepositoryManager
     arguments:
+      - '@database_connection'
       - []

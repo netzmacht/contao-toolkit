@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Data\Model;
 
 use Contao\Model;
+use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Exception\InvalidArgumentException;
 
@@ -33,11 +34,17 @@ final class ToolkitRepositoryManager implements RepositoryManager
     private $repositories;
 
     /**
+     * @var Connection
+     */
+    private $connection;
+
+    /**
      * ToolkitRepositoryManager constructor.
      *
-     * @param $repositories
+     * @param Connection $connection   Database connection.
+     * @param array      $repositories List of repositories.
      */
-    public function __construct(array $repositories)
+    public function __construct(Connection $connection, array $repositories)
     {
         Assertion::allImplementsInterface($repositories, Repository::class);
 
@@ -48,6 +55,7 @@ final class ToolkitRepositoryManager implements RepositoryManager
         }
 
         $this->repositories = $repositories;
+        $this->connection   = $connection;
     }
 
     /**
@@ -73,5 +81,13 @@ final class ToolkitRepositoryManager implements RepositoryManager
                 $modelClass
             )
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConnection(): Connection
+    {
+        return $this->connection;
     }
 }
