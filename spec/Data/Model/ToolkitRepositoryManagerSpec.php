@@ -44,9 +44,9 @@ class ToolkitRepositoryManagerSpec extends ObjectBehavior
         $this->shouldThrow(InvalidArgumentException::class)->during('getRepository', ['foo']);
     }
 
-    function it_throws_exception_if_no_repository_is_passed()
+    function it_throws_exception_if_no_repository_is_passed(Connection $connection)
     {
-        $this->beConstructedWith(['foo' => new \stdClass()]);
+        $this->beConstructedWith($connection, ['foo' => new \stdClass()]);
         $this->shouldThrow(AssertionFailed::class)->duringInstantiation();
     }
 
