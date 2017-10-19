@@ -34,6 +34,8 @@ final class ToolkitRepositoryManager implements RepositoryManager
     private $repositories;
 
     /**
+     * Database connection.
+     *
      * @var Connection
      */
     private $connection;
