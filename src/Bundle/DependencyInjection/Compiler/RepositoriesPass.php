@@ -39,7 +39,7 @@ class RepositoriesPass implements CompilerPassInterface
 
         $definition   = $container->getDefinition('netzmacht.contao_toolkit.repository_manager');
         $services     = $container->findTaggedServiceIds('netzmacht.contao_toolkit.repository');
-        $repositories = (array) $definition->getArgument(0);
+        $repositories = (array) $definition->getArgument(1);
 
         foreach ($services as $serviceId => $tags) {
             foreach ($tags as $attributes) {
@@ -53,6 +53,6 @@ class RepositoriesPass implements CompilerPassInterface
             }
         }
 
-        $definition->setArgument(0, $repositories);
+        $definition->setArgument(1, $repositories);
     }
 }

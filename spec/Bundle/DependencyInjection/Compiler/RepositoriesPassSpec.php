@@ -32,7 +32,7 @@ class RepositoriesPassSpec extends ObjectBehavior
             ]
         ];
 
-        $definition->getArgument(0)->shouldBeCalled();
+        $definition->getArgument(1)->shouldBeCalled();
 
         $container
             ->hasDefinition('netzmacht.contao_toolkit.repository_manager')
@@ -48,7 +48,7 @@ class RepositoriesPassSpec extends ObjectBehavior
             ->shouldBeCalled()
             ->willReturn($taggedServices);
 
-        $definition->setArgument(0, Argument::size(2))->shouldBeCalled();
+        $definition->setArgument(1, Argument::size(2))->shouldBeCalled();
 
         $this->process($container);
     }
