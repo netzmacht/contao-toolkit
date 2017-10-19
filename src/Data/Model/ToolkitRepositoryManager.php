@@ -41,6 +41,12 @@ final class ToolkitRepositoryManager implements RepositoryManager
     {
         Assertion::allImplementsInterface($repositories, Repository::class);
 
+        foreach ($repositories as $repository) {
+            if ($repository instanceof RepositoryManagerAware) {
+                $repository->setRepositoryManager($this);
+            }
+        }
+
         $this->repositories = $repositories;
     }
 
