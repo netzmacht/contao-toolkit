@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Callback;
 
+use Contao\CoreBundle\Framework\Adapter;
 use Contao\System;
 use InvalidArgumentException;
 use Netzmacht\Contao\Toolkit\Assertion\Assertion;
@@ -26,6 +27,23 @@ use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 final class Invoker
 {
     /**
+     * System adapter.
+     *
+     * @var Adapter|System
+     */
+    private $systemAdapter;
+
+    /**
+     * Invoker constructor.
+     *
+     * @param Adapter|System $systemAdapter System adapter.
+     */
+    public function __construct($systemAdapter)
+    {
+        $this->systemAdapter = $systemAdapter;
+    }
+
+    /**
      * Handle the callback.
      *
      * @param array|callable $callback  Callback as Contao array notation or as PHP callable.
@@ -37,7 +55,7 @@ final class Invoker
     public function invoke($callback, array $arguments = [])
     {
         if (is_array($callback)) {
-            $callback[0] = System::importStatic($callback[0]);
+            $callback[0] = $this->systemAdapter->importStatic($callback[0]);
         }
 
         Assertion::isCallable($callback);

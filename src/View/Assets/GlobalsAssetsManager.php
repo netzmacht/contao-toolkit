@@ -43,26 +43,17 @@ final class GlobalsAssetsManager implements AssetsManager
     private $debugMode;
 
     /**
-     * Web directory.
-     *
-     * @var string
-     */
-    private $webDir;
-
-    /**
      * AssetsManager constructor.
      *
      * @param array  $stylesheets The registered stylesheets.
      * @param array  $javascripts The registered javascripts.
-     * @param string $webDir      Relative web dir.
      * @param bool   $debugMode   Debug mode of the environment.
      */
-    public function __construct(array &$stylesheets, array &$javascripts, string $webDir, $debugMode = false)
+    public function __construct(array &$stylesheets, array &$javascripts, $debugMode = false)
     {
         $this->stylesheets =& $stylesheets;
         $this->javascripts =& $javascripts;
         $this->debugMode   = $debugMode;
-        $this->webDir      = $webDir;
     }
 
     /**
@@ -71,7 +62,6 @@ final class GlobalsAssetsManager implements AssetsManager
     public function addJavascript(string $path, $static = self::STATIC_PRODUCTION, string $name = null): AssetsManager
     {
         if (static::isStatic($static)) {
-            $path  = $this->webDir . '/' . $path;
             $path .= '|static';
         }
 
@@ -117,7 +107,6 @@ final class GlobalsAssetsManager implements AssetsManager
             $path .= '|' . $media;
 
             if ($static) {
-                $path  = $this->webDir . '/' . $path;
                 $path .= '|static';
             }
         }

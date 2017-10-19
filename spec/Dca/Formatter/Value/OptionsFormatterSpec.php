@@ -2,6 +2,7 @@
 
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
+use Contao\CoreBundle\Framework\Adapter;
 use Netzmacht\Contao\Toolkit\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\OptionsFormatter;
 use PhpSpec\ObjectBehavior;
@@ -15,9 +16,9 @@ use Prophecy\Argument;
  */
 class OptionsFormatterSpec extends ObjectBehavior
 {
-    function let()
+    function let(Adapter $adapter)
     {
-        $this->beConstructedWith(new Invoker());
+        $this->beConstructedWith(new Invoker($adapter));
     }
 
     function it_is_initializable()

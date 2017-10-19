@@ -1,18 +1,25 @@
 services:
+  _defaults:
+    public: false
+
   netzmacht.contao_toolkit.assets_manager:
     class: Netzmacht\Contao\Toolkit\View\Assets\GlobalsAssetsManager
     factory: ['@netzmacht.contao_toolkit.globals_assets_manager_factory', 'create']
 
   netzmacht.contao_toolkit.callback_invoker:
     class: Netzmacht\Contao\Toolkit\Callback\Invoker
+    arguments:
+      - '@netzmacht.contao_toolkit.contao.system_adapter'
 
   netzmacht.contao_toolkit.component.content_element_factory:
     class: Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory
+    public: true
     arguments:
       - []
 
   netzmacht.contao_toolkit.component.frontend_module_factory:
     class: Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory
+    public: true
     arguments:
       - []
 
@@ -102,5 +109,9 @@ services:
     class: Netzmacht\Contao\Toolkit\View\Assets\GlobalsAssetsManagerFactory
     arguments:
       - '%kernel.debug%'
-      - '%kernel.project_dir%'
-      - '%contao.web_dir%'
+
+  netzmacht.contao_toolkit.repository_manager:
+    class: Netzmacht\Contao\Toolkit\Data\Model\ToolkitRepositoryManager
+    arguments:
+      - '@database_connection'
+      - []
