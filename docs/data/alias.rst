@@ -62,13 +62,11 @@ alias:
 .. code-block:: php
 
     <?php
-    use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
+    // Default alias generator factory is provided as service with service id:
+    // "netzmacht.contao_toolkit.data.alias_generator.factory.default_factory"
 
-    /** @var Interop\Container\ContainerInterface */
-    $container;
-
-    $factory        = $container->get(Services::DEFAULT_ALIAS_GENERATOR_FACTORY);
-    $aliasGenerator = $factory('my_table', 'alias_field', ['value', 'fields']);
+    /** @var \Netzmacht\Contao\Toolkit\Data\Alias\Factory\AliasGeneratorFactory $factory */
+    $aliasGenerator = $factory->create('my_table', 'alias_field', ['value', 'fields']);
 
 
 Alias Generator callback
