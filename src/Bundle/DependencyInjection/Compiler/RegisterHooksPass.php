@@ -37,12 +37,13 @@ class RegisterHooksPass implements CompilerPassInterface
 
         foreach ($serviceIds as $serviceId => $tags) {
             foreach ($tags as $attributes) {
-                $this->guardRequiredAttributesExist($serviceId, $attributes);
+                $this->guardHookAttributeExists($serviceId, $attributes);
 
+                $method   = ($attributes['method'] ?? 'on' . ucfirst($attributes['hook']));
                 $priority = (int) ($attributes['priority'] ?? 0);
                 $hook     = $attributes['hook'];
 
-                $hooks[$hook][$priority][] = [$serviceId, $attributes['method']];
+                $hooks[$hook][$priority][] = [$serviceId, $method];
             }
         }
 
@@ -58,26 +59,20 @@ class RegisterHooksPass implements CompilerPassInterface
     }
 
     /**
-     * Guard that required attributes (hook and method) are defined.
+     * Guard that required attributes hook is defined.
      *
      * @param string $serviceId  Service id.
      * @param array  $attributes Tag attributes.
      *
      * @return void
      *
-     * @throws InvalidConfigurationException When an attribute is missing.
+     * @throws InvalidConfigurationException When hook attribute is missing.
      */
-    private function guardRequiredAttributesExist(string $serviceId, array $attributes)
+    private function guardHookAttributeExists(string $serviceId, array $attributes)
     {
         if (!isset($attributes['hook'])) {
             throw new InvalidConfigurationException(
                 sprintf('Missing hook attribute in tagged hook service with service id "%s"', $serviceId)
-            );
-        }
-
-        if (!isset($attributes['method'])) {
-            throw new InvalidConfigurationException(
-                sprintf('Missing method attribute in tagged hook service with service id "%s"', $serviceId)
             );
         }
     }
