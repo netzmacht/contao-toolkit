@@ -14,20 +14,15 @@ Usage of the database row updater
 ---------------------------------
 
 Toolkit ships with a `database row updater`_ supporting versioning and data callbacks are supported. It's
-provided as a service.
+provided as a service. The updater is provided as a service with service id
+:code:`netzmacht.contao_toolkit.data.database_row_updater`.
 
 .. code-block:: php
 
     <?php
-    use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
-
-    /** @var Interop\Container\ContainerInterface
-    $container;
 
     // Context object is passed to the save callback. Usually an instance of \DataContainer is passed here.
     $context = ...;
-
-    $updater = $container->get(Services::DATABASE_ROW_UPDATER);
     $data    = ['name' => 'New Name'];
 
     // Following this are done:
