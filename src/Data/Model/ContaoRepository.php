@@ -70,6 +70,8 @@ class ContaoRepository implements Repository
      */
     public function findBy(array $column, array $values, array $options = [])
     {
+        $column = $this->addTablePrefix($column);
+
         return $this->call('findBy', [$column, $values, $options]);
     }
 
@@ -78,6 +80,8 @@ class ContaoRepository implements Repository
      */
     public function findOneBy(array $column, array $values, array $options = [])
     {
+        $column = $this->addTablePrefix($column);
+
         return $this->call('findOneBy', [$column, $values, $options]);
     }
 
@@ -107,6 +111,8 @@ class ContaoRepository implements Repository
      */
     public function countBy(array $column, array $values)
     {
+        $column = $this->addTablePrefix($column);
+
         return $this->call('countBy', [$column, $values]);
     }
 
@@ -150,5 +156,28 @@ class ContaoRepository implements Repository
     protected function call(string $method, array $arguments = [])
     {
         return call_user_func_array([$this->modelClass, $method], $arguments);
+    }
+
+    /**
+     * Replace placeholder for the table prefix.
+     *
+     * @param array $column list of columns.
+     *
+     * @return array
+     */
+    protected function addTablePrefix(array $column)
+    {
+        $tableName = $this->getTableName();
+
+        return array_map(
+            function ($column) use ($tableName) {
+                if ($column[0] === '.') {
+                    $column = $tableName . $column;
+                }
+
+                return str_replace('..',  $tableName . '.', $column);
+            },
+            $column
+        );
     }
 }
