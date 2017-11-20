@@ -24,6 +24,20 @@ use Contao\Model;
 interface Repository
 {
     /**
+     * Get the table name which is handled by the repository.
+     *
+     * @return string
+     */
+    public function getTableName(): string;
+
+    /**
+     * Get the model class which is handled by the repository.
+     *
+     * @return string
+     */
+    public function getModelClass(): string;
+
+    /**
      * Find a model id it's id. Returns null if not found.
      *
      * @param int $modelId Model id.

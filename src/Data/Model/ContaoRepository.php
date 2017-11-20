@@ -48,13 +48,19 @@ class ContaoRepository implements Repository
     }
 
     /**
-     * Get the table name.
-     *
-     * @return string
+     * {@inheritDoc}
      */
-    public function getTableName()
+    public function getTableName(): string
     {
         return $this->call('getTable');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getModelClass(): string
+    {
+        return $this->modelClass;
     }
 
     /**
