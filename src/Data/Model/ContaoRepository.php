@@ -38,7 +38,7 @@ class ContaoRepository implements Repository
      *
      * @param string $modelClass Model class.
      */
-    public function __construct($modelClass)
+    public function __construct(string $modelClass)
     {
         Assert::that($modelClass)
             ->classExists()
@@ -76,7 +76,8 @@ class ContaoRepository implements Repository
      */
     public function findBy(array $column, array $values, array $options = [])
     {
-        $column = $this->addTablePrefix($column);
+        $column  = $this->addTablePrefix($column);
+        $options = $this->addTablePrefixToOrder($options);
 
         return $this->call('findBy', [$column, $values, $options]);
     }
@@ -86,7 +87,8 @@ class ContaoRepository implements Repository
      */
     public function findOneBy(array $column, array $values, array $options = [])
     {
-        $column = $this->addTablePrefix($column);
+        $column  = $this->addTablePrefix($column);
+        $options = $this->addTablePrefixToOrder($options);
 
         return $this->call('findOneBy', [$column, $values, $options]);
     }
@@ -179,19 +181,37 @@ class ContaoRepository implements Repository
      *
      * @return array
      */
-    protected function addTablePrefix(array $column)
+    protected function addTablePrefix(array $column): array
     {
         $tableName = $this->getTableName();
 
         return array_map(
             function ($column) use ($tableName) {
+                $column = str_replace('..',  $tableName . '.', $column);
+
                 if ($column[0] === '.') {
                     $column = $tableName . $column;
                 }
 
-                return str_replace('..',  $tableName . '.', $column);
+                return $column;
             },
             $column
         );
+    }
+
+    /**
+     * Add table prefix to the order.
+     *
+     * @param array $options Query options.
+     *
+     * @return array
+     */
+    private function addTablePrefixToOrder(array $options): array
+    {
+        if (isset($options['order'])) {
+            $options['order'] = $this->addTablePrefix($options['order']);
+        }
+
+        return $options;
     }
 }
