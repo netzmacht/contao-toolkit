@@ -109,7 +109,7 @@ class ContaoRepository implements Repository
     /**
      * {@inheritDoc}
      */
-    public function countBy(array $column, array $values)
+    public function countBy(array $column, array $values): int
     {
         $column = $this->addTablePrefix($column);
 
@@ -119,7 +119,7 @@ class ContaoRepository implements Repository
     /**
      * {@inheritDoc}
      */
-    public function countBySpecification(Specification $specification)
+    public function countBySpecification(Specification $specification): int
     {
         $column = [];
         $values = [];
@@ -132,7 +132,7 @@ class ContaoRepository implements Repository
     /**
      * {@inheritDoc}
      */
-    public function countAll()
+    public function countAll(): int
     {
         return $this->call('countAll');
     }
@@ -143,6 +143,14 @@ class ContaoRepository implements Repository
     public function save(Model $model)
     {
         $model->save();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function delete(Model $model)
+    {
+        $model->delete();
     }
 
     /**

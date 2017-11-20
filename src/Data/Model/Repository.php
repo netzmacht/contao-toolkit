@@ -81,7 +81,7 @@ interface Repository
      *
      * @return int
      */
-    public function countBy(array $column, array $values);
+    public function countBy(array $column, array $values): int;
 
     /**
      * Count by specification.
@@ -90,14 +90,14 @@ interface Repository
      *
      * @return int
      */
-    public function countBySpecification(Specification $specification);
+    public function countBySpecification(Specification $specification): int;
 
     /**
      * The total number of rows.
      *
      * @return int
      */
-    public function countAll();
+    public function countAll(): int;
 
     /**
      * Save a model.
@@ -107,4 +107,13 @@ interface Repository
      * @return void
      */
     public function save(Model $model);
+
+    /**
+     * Delete a model.
+     *
+     * @param Model $model Model being deleted.
+     *
+     * @return void
+     */
+    public function delete(Model $model);
 }
