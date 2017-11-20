@@ -183,20 +183,29 @@ class ContaoRepository implements Repository
      */
     protected function addTablePrefix(array $column): array
     {
-        $tableName = $this->getTableName();
-
         return array_map(
-            function ($column) use ($tableName) {
-                $column = str_replace('..',  $tableName . '.', $column);
-
-                if ($column[0] === '.') {
-                    $column = $tableName . $column;
-                }
-
-                return $column;
-            },
+            [$this, 'addTablePrefixToColumn'],
             $column
         );
+    }
+
+    /**
+     * Add table prefix to a column.
+     *
+     * @param string $column The column.
+     *
+     * @return string
+     */
+    private function addTablePrefixToColumn(string $column): string
+    {
+        $tableName = $this->getTableName();
+        $column    = str_replace('..',  $tableName . '.', $column);
+
+        if ($column[0] === '.') {
+            $column = $tableName . $column;
+        }
+
+        return $column;
     }
 
     /**
@@ -209,7 +218,7 @@ class ContaoRepository implements Repository
     private function addTablePrefixToOrder(array $options): array
     {
         if (isset($options['order'])) {
-            $options['order'] = $this->addTablePrefix($options['order']);
+            $options['order'] = $this->addTablePrefixToColumn($options['order']);
         }
 
         return $options;
