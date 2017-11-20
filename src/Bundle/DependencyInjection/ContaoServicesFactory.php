@@ -25,6 +25,7 @@ use Contao\Environment;
 use Contao\Frontend;
 use Contao\FrontendUser;
 use Contao\Input;
+use Contao\Model;
 use Contao\System;
 
 /**
@@ -151,6 +152,16 @@ final class ContaoServicesFactory
     public function createFrontendUserInstance(): FrontendUser
     {
         return $this->createInstance(FrontendUser::class);
+    }
+
+    /**
+     * Create a model adapter.
+     *
+     * @return Adapter|Model\
+     */
+    public function createModelAdapter(): Adapter
+    {
+        return $this->createAdapter(Model::class);
     }
 
     /**

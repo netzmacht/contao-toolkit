@@ -48,6 +48,10 @@ services:
     class: Contao\CoreBundle\Framework\Adapter
     factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createInputAdapter']
 
+  netzmacht.contao_toolkit.contao.model_adapter:
+      class: Contao\CoreBundle\Framework\Adapter
+      factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createModelAdapter']
+
   netzmacht.contao_toolkit.contao.system_adapter:
     class: Contao\CoreBundle\Framework\Adapter
     factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createSystemAdapter']
