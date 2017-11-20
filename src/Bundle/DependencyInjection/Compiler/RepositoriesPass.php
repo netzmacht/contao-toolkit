@@ -43,13 +43,13 @@ class RepositoriesPass implements CompilerPassInterface
 
         foreach ($services as $serviceId => $tags) {
             foreach ($tags as $attributes) {
-                if (!isset($attributes['table'])) {
+                if (!isset($attributes['model'])) {
                     throw new RuntimeException(
-                        sprintf('Service "%s" is tagged as repository but has no table attribute', $serviceId)
+                        sprintf('Service "%s" is tagged as repository but has no model attribute', $serviceId)
                     );
                 }
 
-                $repositories[$attributes['table']] = new Reference($serviceId);
+                $repositories[$attributes['model']] = new Reference($serviceId);
             }
         }
 
