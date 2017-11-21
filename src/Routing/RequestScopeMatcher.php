@@ -109,6 +109,22 @@ class RequestScopeMatcher
     }
 
     /**
+     * Check if the route of the request is to the install route.
+     *
+     * If no request is given the current request from the request scope is used.
+     *
+     * @param Request|null $request Request which should be checked.
+     *
+     * @return bool
+     */
+    public function isInstallRequest(Request $request = null): bool
+    {
+        $request = $request ?: $this->getCurrentRequest();
+
+        return $request->attributes->get('_route') === 'contao_install';
+    }
+
+    /**
      * Get the current request.
      *
      * @return Request|null

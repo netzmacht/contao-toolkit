@@ -44,6 +44,7 @@ services:
     public: true
     arguments:
       - '@netzmacht.contao_toolkit.dca.manager'
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
     tags:
       - { name: 'contao.hook', hook: 'loadDataContainer', method: 'onLoadDataContainer' }
 

@@ -13,6 +13,7 @@
 namespace Netzmacht\Contao\Toolkit\Dca\Listener;
 
 use Netzmacht\Contao\Toolkit\Dca\Manager;
+use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 
 /**
  * This listener defines an data-operation attribute for each operation which has a toolkit config section.
@@ -32,13 +33,22 @@ class SetOperationDataAttributeListener
     private $dcaManager;
 
     /**
+     * Request scope matcher.
+     *
+     * @var RequestScopeMatcher
+     */
+    private $scopeMatcher;
+
+    /**
      * SetOperationDataAttributeListener constructor.
      *
-     * @param Manager $dcaManager Data container manager.
+     * @param Manager             $dcaManager Data container manager.
+     * @param RequestScopeMatcher $scopeMatcher
      */
-    public function __construct(Manager $dcaManager)
+    public function __construct(Manager $dcaManager, RequestScopeMatcher $scopeMatcher)
     {
-        $this->dcaManager = $dcaManager;
+        $this->dcaManager   = $dcaManager;
+        $this->scopeMatcher = $scopeMatcher;
     }
 
     /**
@@ -50,6 +60,10 @@ class SetOperationDataAttributeListener
      */
     public function onLoadDataContainer(string $dataContainerName)
     {
+        if ($this->scopeMatcher->isInstallRequest()) {
+            return;
+        }
+
         $definition = $this->dcaManager->getDefinition($dataContainerName);
         $buttons    = (array) $definition->get(['list', 'operations']);
 

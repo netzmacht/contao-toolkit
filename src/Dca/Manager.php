@@ -89,6 +89,8 @@ final class Manager
         if (!isset($this->definitions[$name])) {
             $this->loader->loadDataContainer($name);
 
+            $this->assertValidDca($name);
+
             $this->definitions[$name] = new Definition($name, $GLOBALS['TL_DCA'][$name]);
         }
 
