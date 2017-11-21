@@ -79,6 +79,7 @@ final class Manager
     public function getDefinition(string $name, bool $noCache = false): Definition
     {
         if ($noCache) {
+            $this->loader->loadLanguageFile($name, null, $noCache);
             $this->loader->loadDataContainer($name, $noCache);
 
             $this->assertValidDca($name);
@@ -87,7 +88,9 @@ final class Manager
         }
 
         if (!isset($this->definitions[$name])) {
+            $this->loader->loadLanguageFile($name);
             $this->loader->loadDataContainer($name);
+
 
             $this->assertValidDca($name);
 
