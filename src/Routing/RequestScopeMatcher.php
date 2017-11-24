@@ -121,7 +121,11 @@ class RequestScopeMatcher
     {
         $request = $request ?: $this->getCurrentRequest();
 
-        return $request->attributes->get('_route') === 'contao_install';
+        if ($request) {
+            return $request->attributes->get('_route') === 'contao_install';
+        }
+
+        return false;
     }
 
     /**
