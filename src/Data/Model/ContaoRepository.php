@@ -199,7 +199,18 @@ class ContaoRepository implements Repository
     private function addTablePrefixToColumn(string $column): string
     {
         $tableName = $this->getTableName();
-        $column    = str_replace('..',  $tableName . '.', $column);
+        $column    = str_replace(
+            ['..', ' .', ',.', '>.', '<.', '=.'],
+            [
+                $tableName . '.',
+                ' ' . $tableName . '.',
+                ',' . $tableName . '.',
+                '>' . $tableName . '.',
+                '<' . $tableName . '.',
+                '=' . $tableName . '.',
+            ],
+            $column
+        );
 
         if ($column[0] === '.') {
             $column = $tableName . $column;
