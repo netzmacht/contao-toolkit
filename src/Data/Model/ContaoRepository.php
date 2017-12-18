@@ -21,6 +21,8 @@ use Netzmacht\Contao\Toolkit\Assertion\Assert;
  * Class ContaoRepository.
  *
  * @package Netzmacht\Contao\Toolkit\Data\Model
+ *
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class ContaoRepository implements Repository
 {
