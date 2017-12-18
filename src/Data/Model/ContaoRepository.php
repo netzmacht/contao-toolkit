@@ -179,7 +179,7 @@ class ContaoRepository implements Repository
     /**
      * Replace placeholder for the table prefix.
      *
-     * @param array $column list of columns.
+     * @param array $column List of columns.
      *
      * @return array
      */

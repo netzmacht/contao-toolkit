@@ -52,12 +52,12 @@ class ForeignKeyFormatterSpec extends ObjectBehavior
             'numRows' => 1
         ];
 
-        $statement->bindValue(':id', 5)->shouldBeCalled();
+        $statement->bindValue('id', 5)->shouldBeCalled();
         $statement->rowCount()->willReturn(1)->shouldBeCalledTimes(1);
 
         $database->prepare(Argument::any())->willReturn($statement);
         $statement->execute()->willReturn(true);
-        $statement->fetchColumn('value')->willReturn('Title');
+        $statement->fetchColumn(0)->willReturn('Title');
 
         $this->format(5, 'test', $definition)->shouldReturn('Title');
     }

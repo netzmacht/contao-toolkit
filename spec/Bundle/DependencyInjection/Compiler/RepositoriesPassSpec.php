@@ -25,10 +25,10 @@ class RepositoriesPassSpec extends ObjectBehavior
     {
         $taggedServices = [
             'foo' => [
-                ['table' => 'tl_foo']
+                ['model' => 'FooModel']
             ],
             'bar' => [
-                ['table' => 'tl_bar']
+                ['model' => 'BarModel']
             ]
         ];
 

@@ -42,8 +42,8 @@ class SetOperationDataAttributeListener
     /**
      * SetOperationDataAttributeListener constructor.
      *
-     * @param Manager             $dcaManager Data container manager.
-     * @param RequestScopeMatcher $scopeMatcher
+     * @param Manager             $dcaManager   Data container manager.
+     * @param RequestScopeMatcher $scopeMatcher The scope matcher.
      */
     public function __construct(Manager $dcaManager, RequestScopeMatcher $scopeMatcher)
     {
