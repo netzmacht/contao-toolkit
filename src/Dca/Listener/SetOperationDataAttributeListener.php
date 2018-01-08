@@ -10,8 +10,11 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Dca\Listener;
 
+use Netzmacht\Contao\Toolkit\Assertion\AssertionFailed;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 
@@ -60,12 +63,18 @@ class SetOperationDataAttributeListener
      */
     public function onLoadDataContainer(string $dataContainerName)
     {
-        if ($this->scopeMatcher->isInstallRequest()) {
+        if (!$this->scopeMatcher->isContaoRequest() || $this->scopeMatcher->isInstallRequest()) {
             return;
         }
 
-        $definition = $this->dcaManager->getDefinition($dataContainerName);
-        $buttons    = (array) $definition->get(['list', 'operations']);
+        try {
+            $definition = $this->dcaManager->getDefinition($dataContainerName);
+        } catch (AssertionFailed $e) {
+            // No valid dca config found. Just ignore the data container.
+            return;
+        }
+
+        $buttons = (array) $definition->get(['list', 'operations']);
 
         foreach ($buttons as $name => $config) {
             if (!isset($config['toolkit'])) {
