@@ -20,6 +20,11 @@ You can install this library using Composer. It requires at least PHP 7.0 and Co
 $ php composer.phar require netzmacht/contao-toolkit:~3.0
 ```
 
+Changelog
+---------
+
+See [CHANGELOG.md](CHANGELOG.md)
+
 Documentation
 -------------
 
