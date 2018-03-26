@@ -15,10 +15,12 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler;
 
 use Netzmacht\Contao\Toolkit\Translation\LangArrayTranslator;
+use Netzmacht\Contao\Toolkit\Translation\LangArrayTranslatorBagTranslator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\Translation\TranslatorBagInterface as TranslatorBag;
 
 /**
  * TranslatorCompilerPass registers a translator using the globals lang array used in Contao.
@@ -32,12 +34,22 @@ final class TranslatorPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
+        if (!$container->has('translator')) {
+            return;
+        }
+
         if ($container->hasDefinition('contao.translation.translator')) {
             return;
         }
 
+        $definition      = $container->findDefinition('translator');
+        $translatorClass = $container->getParameterBag()->resolveValue($definition->getClass());
+        $decoratorClass  = is_subclass_of($translatorClass, TranslatorBag::class)
+            ? LangArrayTranslatorBagTranslator::class
+            : LangArrayTranslator::class;
+
         $definition = new Definition(
-            LangArrayTranslator::class,
+            $decoratorClass,
             [
                 new Reference('netzmacht.contao_toolkit.translation.translator.inner'),
                 new Reference('contao.framework')

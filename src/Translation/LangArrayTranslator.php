@@ -19,10 +19,10 @@ use Symfony\Component\Translation\TranslatorInterface as Translator;
 /**
  * LangArrayTranslator is a translator implementation using the globals of Contao.
  *
- * It's a backport of https://github.com/contao/core-bundle/blob/develop/src/Translation/Translator.php introduced in
- * Contao 4.5.
+ * It's a backport of https://github.com/contao/core-bundle/blob/develop/src/Translation/Translator.php
+ * introduced in Contao 4.5.
  */
-final class LangArrayTranslator implements Translator
+class LangArrayTranslator implements Translator
 {
     /**
      * Translator.
@@ -106,6 +106,16 @@ final class LangArrayTranslator implements Translator
     {
         // Forward to the default translator
         return $this->translator->getLocale();
+    }
+
+    /**
+     * Get the inner translator.
+     *
+     * @return Translator
+     */
+    public function getInnerTranslator(): Translator
+    {
+        return $this->translator;
     }
 
     /**
