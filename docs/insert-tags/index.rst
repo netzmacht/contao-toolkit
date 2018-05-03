@@ -27,8 +27,7 @@ class. That's why Toolkit v1 provided a standard way to replace insert tags.
     $replacer = $container->get('netzmacht.contao_toolkit.insert_tag.replacer');
     $buffer   = $replacer->replace($buffer);
 
-.. hint:: You should be careful using the InsertTags class provided by Contao. It hassles with the right order of the
-Contao object stack.
+.. hint:: You should be careful using the InsertTags class provided by Contao. It hassles with the right order of the Contao object stack.
 
 
 Register a insert tag parser
