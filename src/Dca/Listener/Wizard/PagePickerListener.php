@@ -16,6 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\Input;
+use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
@@ -73,7 +74,7 @@ final class PagePickerListener extends AbstractFieldPickerListener
         );
 
         $cssId   = $fieldName . (($this->input->get('act') === 'editAll') ? '_' . $rowId : '');
-        $jsTitle = specialchars(
+        $jsTitle = StringUtil::specialchars(
             str_replace('\'', '\\\'', $this->translator->trans('MOD.page.0', [], 'contao_modules'))
         );
 

@@ -18,6 +18,7 @@ use Contao\Backend;
 use Contao\DataContainer;
 use Contao\Image;
 use Contao\Input;
+use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Data\Updater\Updater;
 use Netzmacht\Contao\Toolkit\Exception\AccessDenied;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
@@ -149,7 +150,7 @@ final class StateButtonCallbackListener
         return sprintf(
             '<a href="%s" title="%s"%s>%s</a> ',
             $this->backend->addToUrl($href),
-            specialchars($title),
+            StringUtil::specialchars($title),
             $attributes,
             Image::getHtml($icon, $label, $imageAttributes)
         );

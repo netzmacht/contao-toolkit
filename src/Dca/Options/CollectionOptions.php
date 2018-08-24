@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Options;
 
-use Model\Collection;
+use Contao\Model\Collection;
 
 /**
  * Class CollectionOptions maps a model collection to the option format.

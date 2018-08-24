@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 
+use Contao\StringUtil;
+
 /**
  * FilePicker wizard.
  *
@@ -39,7 +41,7 @@ final class FilePickerListener extends AbstractFieldPickerListener
         );
 
         $cssId   = $fieldName . (($this->input->get('act') === 'editAll') ? '_' . $rowId : '');
-        $jsTitle = specialchars(
+        $jsTitle = StringUtil::specialchars(
             str_replace('\'', '\\\'', $this->translator->trans('MOD.files.0', [], 'contao_modules'))
         );
 

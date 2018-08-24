@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 
+use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface as CsrfTokenManager;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
@@ -105,9 +106,9 @@ final class PopupWizardListener extends AbstractWizardListener
             $token      = $this->csrfTokenManager->getToken($this->tokenName)->getValue();
             $parameters = [
                 'href'    => sprintf($config['linkPattern'], $config['href'], $value, $token),
-                'label'   => specialchars($config['label']),
-                'title'   => specialchars($config['title']),
-                'jsTitle' => specialchars(str_replace('\'', '\\\'', $config['title'])),
+                'label'   => StringUtil::specialchars($config['label']),
+                'title'   => StringUtil::specialchars($config['title']),
+                'jsTitle' => StringUtil::specialchars(str_replace('\'', '\\\'', $config['title'])),
                 'icon'    => $config['icon'],
             ];
 

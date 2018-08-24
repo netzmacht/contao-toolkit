@@ -18,8 +18,8 @@ use Contao\ContentModel;
 use Contao\Database\Result;
 use Contao\Model;
 use Contao\ModuleModel;
-use Imagine\Exception\RuntimeException;
 use Netzmacht\Contao\Toolkit\Exception\Exception;
+use RuntimeException;
 
 /**
  * Exception class ContentElementNotFound is thrown if a content element could not be created.

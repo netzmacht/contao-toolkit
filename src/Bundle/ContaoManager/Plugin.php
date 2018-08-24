@@ -22,7 +22,6 @@ use Contao\ManagerPlugin\Config\ContainerBuilder;
 use Contao\ManagerPlugin\Config\ExtensionPluginInterface;
 use Contao\ManagerPlugin\Dependency\DependentPluginInterface;
 use Netzmacht\Contao\Toolkit\Bundle\NetzmachtContaoToolkitBundle;
-use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 
 /**
  * Class Plugin.
@@ -39,7 +38,7 @@ final class Plugin implements BundlePluginInterface, ExtensionPluginInterface, D
         return [
             BundleConfig::create(NetzmachtContaoToolkitBundle::class)
                 ->setReplace(['toolkit'])
-                ->setLoadAfter([ContaoCoreBundle::class, FrameworkBundle::class])
+                ->setLoadAfter([ContaoCoreBundle::class])
         ];
     }
 
