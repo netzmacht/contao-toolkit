@@ -296,7 +296,7 @@ abstract class AbstractComponent implements Component
         }
 
         if ($this->getModel() && $this->getModel()->classes) {
-            $cssClass .= $this->getModel()->classes;
+            $cssClass .= ' ' . implode(' ', (array) $this->getModel()->classes);
         }
 
         return $cssClass;
