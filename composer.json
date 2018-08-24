@@ -40,7 +40,8 @@
         "contao/manager-plugin": "^2.0",
         "bossa/phpspec2-expect": "^3.0",
         "phpcq/all-tasks": "~1.2",
-        "phpspec/phpspec": "~4.0"
+        "phpspec/phpspec": "~4.0",
+        "php-http/guzzle6-adapter": "^1.1"
     },
     "autoload": {
         "psr-4": {
