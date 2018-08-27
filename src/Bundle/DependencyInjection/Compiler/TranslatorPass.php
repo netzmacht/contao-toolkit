@@ -38,7 +38,9 @@ final class TranslatorPass implements CompilerPassInterface
             return;
         }
 
-        if ($container->hasDefinition('contao.translation.translator')) {
+        if ($container->hasDefinition('contao.translation.translator')
+            || $container->hasDefinition('cca.translator.backport45translator')
+        ) {
             return;
         }
 

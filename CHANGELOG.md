@@ -1,6 +1,13 @@
 Changelog
 =========
 
+3.0.6 (2018-08-27)
+------------------
+
+[Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.0.5...3.0.6)
+
+ - Fix incompatibility with contao-community
+
 3.0.5 (2018-08-24)
 ------------------
 
