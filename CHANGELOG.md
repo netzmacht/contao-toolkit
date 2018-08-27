@@ -1,6 +1,29 @@
 Changelog
 =========
 
+3.0.5 (2018-08-24)
+------------------
+
+[Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.0.4...3.0.5)
+
+ - Get travis build work again for Contao 4.5 and later
+ - Fix rendering of component classes 
+ 
+3.0.4 (2018-08-24)
+------------------
+
+[Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.0.3...3.0.4)
+
+ - Update readme
+
+3.0.3 (2018-08-24)
+------------------
+
+[Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.0.2...3.0.3)
+
+ - Allow symfony 4 components.
+ - RUn composer-require-checker and fix issues.
+
 3.0.2 (2018-03-29)
 ------------------
 
