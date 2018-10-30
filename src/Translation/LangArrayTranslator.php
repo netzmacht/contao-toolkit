@@ -135,8 +135,8 @@ class LangArrayTranslator implements Translator
         }
 
         // Split the ID into chunks allowing escaped dots (\.) and backslashes (\\)
-        preg_match_all('/(?:\\\\[.\\\\]|[^.])++/s', $messageId, $matches);
-        $parts = preg_replace('/\\\\([.\\\\])/s', '$1', $matches[0]);
+        preg_match_all('/(?:\\\\[\.\\\\]|[^\.])++/', $messageId, $matches);
+        $parts = preg_replace('/\\\\([\.\\\\])/', '$1', $matches[0]);
 
         $item = &$GLOBALS['TL_LANG'];
 
