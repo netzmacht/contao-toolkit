@@ -15,6 +15,7 @@ namespace Netzmacht\Contao\Toolkit\Translation;
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
 use Contao\System;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
+use function trigger_error;
 
 /**
  * LangArrayTranslator is a translator implementation using the globals of Contao.
@@ -68,7 +69,11 @@ class LangArrayTranslator implements Translator
         $this->framework->initialize();
         $this->loadLanguageFile($domain);
 
-        $translated = $this->getFromGlobals($messageId, $domain);
+        $translated = $this->getFromGlobals($messageId);
+
+        if (null === $translated) {
+            $translated = $this->getFromGlobals($messageId, $domain);
+        }
 
         if (null === $translated) {
             return $messageId;
@@ -121,17 +126,23 @@ class LangArrayTranslator implements Translator
     /**
      * Returns the labels from the $GLOBALS['TL_LANG'] array.
      *
-     * @param string $messageId Message id, e.g. "MSC.view".
-     * @param string $domain    Message domain, e.g. "messages" or "tl_content".
+     * @param string      $messageId Message id, e.g. "MSC.view".
+     * @param string|null $domain    Message domain, e.g. "messages" or "tl_content".
      *
      * @return string|null
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    private function getFromGlobals($messageId, $domain)
+    private function getFromGlobals($messageId, $domain = null)
     {
-        if ('default' !== $domain) {
-            $messageId = $domain.'.'.$messageId;
+        if ($domain && $domain !== 'default') {
+            $messageId = $domain . '.' . $messageId;
+
+            // @codingStandardsIgnoreStart
+            @trigger_error(
+                'Autoprefixing message domain to message id is deprecated as it\'s not supported by Contao anymore'
+            );
+            // @codingStandardsIgnoreEnd
         }
 
         // Split the ID into chunks allowing escaped dots (\.) and backslashes (\\)
