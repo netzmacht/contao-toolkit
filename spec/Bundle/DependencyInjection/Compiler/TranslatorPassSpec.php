@@ -25,6 +25,7 @@ class TranslatorPassSpec extends ObjectBehavior
     function it_creates_translator_definition_if_contao_translator_does_not_exists(ContainerBuilder $container, Definition $definition, ParameterBag $bag)
     {
         $container->has('translator')->willReturn(true);
+        $container->hasDefinition('cca.translator.backport45translator')->willReturn(false);
 
         $container->findDefinition('translator')->willReturn($definition);
         $container->getParameterBag()->willReturn($bag);
@@ -51,6 +52,29 @@ class TranslatorPassSpec extends ObjectBehavior
             'netzmacht.contao_toolkit.translation.translator',
             Argument::type(Definition::class)
         )->shouldNotBeCalled();
+
+        $this->process($container);
+    }
+
+    function it_does_not_process_if_cca_backport_translator_exists(
+        ContainerBuilder $container,
+        Definition $definition,
+        ParameterBag $bag
+    ) {
+        $container->has('translator')->willReturn(true);
+
+        $container->hasDefinition('contao.translation.translator')
+            ->willReturn(false);
+
+        $container->hasDefinition('cca.translator.backport45translator')
+            ->shouldBeCalled()
+            ->willReturn(true);
+
+        $container->findDefinition('translator')->willReturn($definition);
+        $container->getParameterBag()->willReturn($bag);
+
+        $container->setDefinition('netzmacht.contao_toolkit.translation.translator', Argument::type(Definition::class))
+            ->shouldNotBeCalled();
 
         $this->process($container);
     }

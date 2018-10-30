@@ -1,6 +1,14 @@
 Changelog
 =========
 
+3.0.7 (2018-10-30)
+------------------
+
+[Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.0.6...3.0.7)
+
+ - Fix a POSIX compilation error in the translator (See contao/core-bundle#1656)
+ - Do not add domain as message prefix by default in the translator as Contao doesn't anymore. Added BC support. 
+
 3.0.6 (2018-08-27)
 ------------------
 
