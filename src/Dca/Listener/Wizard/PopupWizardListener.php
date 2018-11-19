@@ -19,6 +19,7 @@ use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface as CsrfTokenManager;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
+use const E_USER_DEPRECATED;
 
 /**
  * Class PopupWizard.
@@ -134,13 +135,16 @@ final class PopupWizardListener extends AbstractWizardListener
      */
     public function handleWizardCallback($dataContainer): string
     {
+        // @codingStandardsIgnoreStart
         @trigger_error(
             sprintf(
                 '%1$s::handleWizardCallback is deprecated and will be removed in Version 4.0.0. '
                 . 'Use %1$s::onWizardCallback instead.',
                 static::class
-            )
+            ),
+            E_USER_DEPRECATED
         );
+        // @codingStandardsIgnoreEnd
 
         return $this->onWizardCallback($dataContainer);
     }

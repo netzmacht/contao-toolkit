@@ -15,6 +15,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Listener\Options;
 use Contao\Controller;
 use Contao\DataContainer;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
+use const E_USER_DEPRECATED;
 
 /**
  * Class TemplateOptionsListener
@@ -70,13 +71,16 @@ final class TemplateOptionsListener
      */
     public function handleOptionsCallback($dataContainer): array
     {
+        // @codingStandardsIgnoreStart
         @trigger_error(
             sprintf(
                 '%1$s::handleOptionsCallback is deprecated and will be removed in Version 4.0.0. '
                 . 'Use %1$s::onOptionsCallback instead.',
                 static::class
-            )
+            ),
+            E_USER_DEPRECATED
         );
+        // @codingStandardsIgnoreEnd
 
         return $this->onOptionsCallback($dataContainer);
     }

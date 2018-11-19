@@ -21,6 +21,7 @@ use Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator;
 use Netzmacht\Contao\Toolkit\Data\Alias\Factory\AliasGeneratorFactory;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
+use const E_USER_DEPRECATED;
 
 /**
  * Class GenerateAliasCallback is designed to create an alias of a column.
@@ -105,13 +106,16 @@ final class GenerateAliasListener
      */
     public function handleSaveCallback($value, $dataContainer)
     {
+        // @codingStandardsIgnoreStart
         @trigger_error(
             sprintf(
                 '%1$s::handleSaveCallback is deprecated and will be removed in Version 4.0.0. '
                 . 'Use %1$s::onSaveCallback instead.',
                 static::class
-            )
+            ),
+            E_USER_DEPRECATED
         );
+        // @codingStandardsIgnoreEnd
 
         return $this->onSaveCallback($value, $dataContainer);
     }

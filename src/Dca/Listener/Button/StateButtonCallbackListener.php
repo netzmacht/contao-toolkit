@@ -20,8 +20,9 @@ use Contao\Image;
 use Contao\Input;
 use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Data\Updater\Updater;
-use Netzmacht\Contao\Toolkit\Exception\AccessDenied;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
+use Netzmacht\Contao\Toolkit\Exception\AccessDenied;
+use const E_USER_DEPRECATED;
 
 /**
  * StateButtonCallback creates the state toggle button known in Contao.
@@ -194,13 +195,16 @@ final class StateButtonCallbackListener
         $next,
         $dataContainer
     ) {
+        // @codingStandardsIgnoreStart
         @trigger_error(
             sprintf(
                 '%1$s::handleButtonCallback is deprecated and will be removed in Version 4.0.0. '
                 . 'Use %1$s::onButtonCallback instead.',
                 static::class
-            )
+            ),
+            E_USER_DEPRECATED
         );
+        // @codingStandardsIgnoreEnd
 
         return $this->onButtonCallback(
             $row,

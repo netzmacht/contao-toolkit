@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 
+use const E_USER_DEPRECATED;
+
 /**
  * Class AbstractFieldPicker.
  *
@@ -51,13 +53,16 @@ abstract class AbstractFieldPickerListener extends AbstractPickerListener
      */
     public function handleWizardCallback($dataContainer): string
     {
+        // @codingStandardsIgnoreStart
         @trigger_error(
             sprintf(
                 '%1$s::handleWizardCallback is deprecated and will be removed in Version 4.0.0. '
                 . 'Use %1$s::onWizardCallback instead.',
                 static::class
-            )
+            ),
+            E_USER_DEPRECATED
         );
+        // @codingStandardsIgnoreEnd
 
         return $this->onWizardCallback($dataContainer);
     }
