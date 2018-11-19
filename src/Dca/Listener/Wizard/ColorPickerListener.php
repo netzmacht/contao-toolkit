@@ -47,9 +47,25 @@ final class ColorPickerListener extends AbstractPickerListener
     /**
      * {@inheritDoc}
      */
-    public function handleWizardCallback($dataContainer): string
+    public function onWizardCallback($dataContainer): string
     {
         return $this->generate($dataContainer->table, $dataContainer->field);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function handleWizardCallback($dataContainer): string
+    {
+        @trigger_error(
+            sprintf(
+                '%1$s::handleWizardCallback is deprecated and will be removed in Version 4.0.0. '
+                . 'Use %1$s::onWizardCallback instead.',
+                static::class
+            )
+        );
+
+        return $this->onWizardCallback($dataContainer);
     }
 
     /**

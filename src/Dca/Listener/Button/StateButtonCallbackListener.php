@@ -100,7 +100,7 @@ final class StateButtonCallbackListener
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
-    public function handleButtonCallback(
+    public function onButtonCallback(
         array $row,
         $href,
         $label,
@@ -114,7 +114,7 @@ final class StateButtonCallbackListener
         $previous,
         $next,
         $dataContainer
-    ) {
+    ): string {
         $name   = $this->getOperationName($attributes);
         $config = $this->getConfig($dataContainer, $name);
 
@@ -153,6 +153,69 @@ final class StateButtonCallbackListener
             StringUtil::specialchars($title),
             $attributes,
             Image::getHtml($icon, $label, $imageAttributes)
+        );
+    }
+
+    /**
+     * Invoke the callback.
+     *
+     * @param array         $row               Current data row.
+     * @param string|null   $href              Button link.
+     * @param string|null   $label             Button label.
+     * @param string|null   $title             Button title.
+     * @param string|null   $icon              Enabled button icon.
+     * @param string|null   $attributes        Html attributes as string.
+     * @param string        $tableName         Table name.
+     * @param array|null    $rootIds           Root ids.
+     * @param array|null    $childRecordIds    Child record ids.
+     * @param bool          $circularReference Circular reference flag.
+     * @param string|null   $previous          Previous button name.
+     * @param string|null   $next              Next button name.
+     * @param DataContainer $dataContainer     Data container driver.
+     *
+     * @return string
+     *
+     * @deprecated Deprecated and removed in Version 4.0.0. Use self::onButtonCallback instead.
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     */
+    public function handleButtonCallback(
+        array $row,
+        $href,
+        $label,
+        $title,
+        $icon,
+        $attributes,
+        string $tableName,
+        $rootIds,
+        $childRecordIds,
+        bool $circularReference,
+        $previous,
+        $next,
+        $dataContainer
+    ) {
+        @trigger_error(
+            sprintf(
+                '%1$s::handleButtonCallback is deprecated and will be removed in Version 4.0.0. '
+                . 'Use %1$s::onButtonCallback instead.',
+                static::class
+            )
+        );
+
+        return $this->onButtonCallback(
+            $row,
+            $href,
+            $label,
+            $title,
+            $icon,
+            $attributes,
+            $tableName,
+            $rootIds,
+            $childRecordIds,
+            $circularReference,
+            $previous,
+            $next,
+            $dataContainer
         );
     }
 

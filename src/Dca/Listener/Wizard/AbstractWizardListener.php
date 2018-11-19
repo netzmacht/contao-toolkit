@@ -15,10 +15,12 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 
 use Contao\DataContainer;
+use function get_called_class;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
+use function trigger_error;
 
 /**
  * AbstractWizard is the base class for a wizard.
@@ -110,5 +112,32 @@ abstract class AbstractWizardListener
      *
      * @return string
      */
-    abstract public function handleWizardCallback($dataContainer): string;
+    public function onWizardCallback($dataContainer): string
+    {
+        return $this->handleWizardCallback($dataContainer);
+    }
+
+    /**
+     * Invoke by the callback.
+     *
+     * @param DataContainer $dataContainer Data container driver.
+     *
+     * @return string
+     *
+     * @deprecated Deprecated and removed in Version 4.0.0. Use self::onWizardCallback instead.
+     *
+     * @SuppressWarning(UnusedFormalParameter)
+     */
+    public function handleWizardCallback($dataContainer): string
+    {
+        @trigger_error(
+            sprintf(
+                '%1$s::handleWizardCallback is deprecated and will be removed in Version 4.0.0. '
+                . 'Use %1$s::onWizardCallback instead.',
+                static::class
+            )
+        );
+
+        return '';
+    }
 }

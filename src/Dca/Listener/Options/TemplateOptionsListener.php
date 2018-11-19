@@ -47,7 +47,7 @@ final class TemplateOptionsListener
      *
      * @return array
      */
-    public function handleOptionsCallback($dataContainer): array
+    public function onOptionsCallback($dataContainer): array
     {
         $config    = $this->getConfig($dataContainer);
         $templates = Controller::getTemplateGroup($config['prefix']);
@@ -57,6 +57,28 @@ final class TemplateOptionsListener
         }
 
         return array_diff($templates, $config['exclude']);
+    }
+
+    /**
+     * Handle the options callback.
+     *
+     * @param DataContainer $dataContainer Data container driver.
+     *
+     * @return array
+     *
+     * @deprecated Deprecated and removed in Version 4.0.0. Use self::onOptionsCallback instead.
+     */
+    public function handleOptionsCallback($dataContainer): array
+    {
+        @trigger_error(
+            sprintf(
+                '%1$s::handleOptionsCallback is deprecated and will be removed in Version 4.0.0. '
+                . 'Use %1$s::onOptionsCallback instead.',
+                static::class
+            )
+        );
+
+        return $this->onOptionsCallback($dataContainer);
     }
 
     /**

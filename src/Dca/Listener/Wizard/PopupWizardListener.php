@@ -121,11 +121,27 @@ final class PopupWizardListener extends AbstractWizardListener
     /**
      * {@inheritDoc}
      */
-    public function handleWizardCallback($dataContainer): string
+    public function onWizardCallback($dataContainer): string
     {
         $definition = $this->getDefinition($dataContainer);
         $config     = (array) $definition->get(['fields', $dataContainer->field, 'toolkit', 'popup_wizard']);
 
         return $this->generate($dataContainer->value, $config);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function handleWizardCallback($dataContainer): string
+    {
+        @trigger_error(
+            sprintf(
+                '%1$s::handleWizardCallback is deprecated and will be removed in Version 4.0.0. '
+                . 'Use %1$s::onWizardCallback instead.',
+                static::class
+            )
+        );
+
+        return $this->onWizardCallback($dataContainer);
     }
 }

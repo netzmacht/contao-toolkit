@@ -77,9 +77,11 @@ final class GenerateAliasListener
      * @param mixed         $value         The current value.
      * @param DataContainer $dataContainer The data container driver.
      *
-     * @return mixed|null|string
+     * @return null|string
+     *
+     * @throws \Assert\AssertionFailedException If invalid data container is given.
      */
-    public function handleSaveCallback($value, $dataContainer)
+    public function onSaveCallback($value, $dataContainer): ?string
     {
         Assertion::isInstanceOf($dataContainer, DataContainer::class);
         Assertion::isInstanceOf($dataContainer->activeRecord, Result::class);
@@ -87,6 +89,31 @@ final class GenerateAliasListener
         $generator = $this->getGenerator($dataContainer);
 
         return $generator->generate($dataContainer->activeRecord, $value);
+    }
+
+    /**
+     * Generate the alias value.
+     *
+     * @param mixed         $value         The current value.
+     * @param DataContainer $dataContainer The data container driver.
+     *
+     * @return null|string
+     *
+     * @throws \Assert\AssertionFailedException If invalid data container is given.
+     *
+     * @deprecated Deprecated and removed in Version 4.0.0. Use self::handleSaveCallback instead.
+     */
+    public function handleSaveCallback($value, $dataContainer)
+    {
+        @trigger_error(
+            sprintf(
+                '%1$s::handleSaveCallback is deprecated and will be removed in Version 4.0.0. '
+                . 'Use %1$s::onSaveCallback instead.',
+                static::class
+            )
+        );
+
+        return $this->onSaveCallback($value, $dataContainer);
     }
 
     /**
