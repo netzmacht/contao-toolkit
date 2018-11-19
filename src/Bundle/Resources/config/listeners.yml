@@ -56,10 +56,10 @@ services:
       - '@netzmacht.contao_toolkit.data.database_row_updater'
       - '@netzmacht.contao_toolkit.dca.manager'
 
+  # Deprecated. Marking aliases as deprecated is not supported yet https://github.com/symfony/symfony/issues/24507
   netzmacht.contao_toolkit.dca.listeners.state_button_callback:
     alias: Netzmacht\Contao\Toolkit\Dca\Listener\Button\StateButtonCallbackListener
     public: true
-    deprecated: true
 
   Netzmacht\Contao\Toolkit\Dca\Listener\Save\GenerateAliasListener:
     public: true
@@ -68,11 +68,11 @@ services:
       - '@netzmacht.contao_toolkit.dca.manager'
       - '%netzmacht.contao_toolkit.alias_generator.default%'
 
+  # Deprecated. Marking aliases as deprecated is not supported yet https://github.com/symfony/symfony/issues/24507
   netzmacht.contao_toolkit.dca.listeners.alias_generator:
     alias: Netzmacht\Contao\Toolkit\Dca\Listener\Save\GenerateAliasListener
     public: true
-    deprecated: true
-      
+
   Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\ColorPickerListener:
     public: true
     arguments:
@@ -80,10 +80,10 @@ services:
       - '@translator'
       - '@netzmacht.contao_toolkit.dca.manager'
 
+  # Deprecated. Marking aliases as deprecated is not supported yet https://github.com/symfony/symfony/issues/24507
   netzmacht.contao_toolkit.dca.listeners.color_picker:
     alias: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\ColorPickerListener
     public: true
-    deprecated: true
 
   Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\FilePickerListener:
     public: true
@@ -93,10 +93,10 @@ services:
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@netzmacht.contao_toolkit.contao.input_adapter'
 
+  # Deprecated. Marking aliases as deprecated is not supported yet https://github.com/symfony/symfony/issues/24507
   netzmacht.contao_toolkit.dca.listeners.file_picker:
     alias: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\FilePickerListener
     public: true
-    deprecated: true
 
   Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PagePickerListener:
     public: true
@@ -106,10 +106,10 @@ services:
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@netzmacht.contao_toolkit.contao.input_adapter'
 
+  # Deprecated. Marking aliases as deprecated is not supported yet https://github.com/symfony/symfony/issues/24507
   netzmacht.contao_toolkit.dca.listeners.page_picker:
     alias: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PagePickerListener
     public: true
-    deprecated: true
 
   Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PopupWizardListener:
     public: true
@@ -120,17 +120,17 @@ services:
       - '@security.csrf.token_manager'
       - '%contao.csrf_token_name%'
 
+  # Deprecated. Marking aliases as deprecated is not supported yet https://github.com/symfony/symfony/issues/24507
   netzmacht.contao_toolkit.dca.listeners.popup_wizard:
     alias: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PopupWizardListener
     public: true
-    deprecated: true
 
   Netzmacht\Contao\Toolkit\Dca\Listener\Options\TemplateOptionsListener:
     public: true
     arguments:
       - '@netzmacht.contao_toolkit.dca.manager'
 
+  # Deprecated. Marking aliases as deprecated is not supported yet https://github.com/symfony/symfony/issues/24507
   netzmacht.contao_toolkit.dca.listeners.template_options:
     alias: Netzmacht\Contao\Toolkit\Dca\Listener\Options\TemplateOptionsListener
     public: true
-    deprecated: true
