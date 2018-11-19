@@ -22,7 +22,7 @@
         "source": "https://github.com/netzmacht/contao-toolkit"
     },
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.1",
         "contao/core-bundle": "^4.4.7",
         "symfony/config": "^3.3 || ^4.0",
         "symfony/dependency-injection": "^3.3 || ^4.0",
