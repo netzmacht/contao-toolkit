@@ -1,6 +1,16 @@
 Changelog
 =========
 
+3.1.0-rc1 (2018-11-19)
+----------------------
+
+[Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.0.7...3.1.0)
+
+ - Support `type` as alternative to `alias` for registering components
+ - Change callback method from `handleCallbackName` to `onCallbackName` for all callbacks. Deprecate `handle*` methods.
+ - Fix broken FilePickerListener.
+ - Use class name as service name for dca callback listeners. Deprecate old names.
+ 
 3.0.7 (2018-10-30)
 ------------------
 
