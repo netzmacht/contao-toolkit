@@ -48,8 +48,7 @@ services:
     tags:
       - { name: 'contao.hook', hook: 'loadDataContainer', method: 'onLoadDataContainer' }
 
-  netzmacht.contao_toolkit.dca.listeners.state_button_callback:
-    class: Netzmacht\Contao\Toolkit\Dca\Listener\Button\StateButtonCallbackListener
+  Netzmacht\Contao\Toolkit\Dca\Listener\Button\StateButtonCallbackListener:
     public: true
     arguments:
       - '@netzmacht.contao_toolkit.contao.backend_adapter'
@@ -57,32 +56,36 @@ services:
       - '@netzmacht.contao_toolkit.data.database_row_updater'
       - '@netzmacht.contao_toolkit.dca.manager'
 
-  netzmacht.contao_toolkit.dca.listeners.alias_generator:
-    class: Netzmacht\Contao\Toolkit\Dca\Listener\Save\GenerateAliasListener
+  netzmacht.contao_toolkit.dca.listeners.state_button_callback:
+    alias: Netzmacht\Contao\Toolkit\Dca\Listener\Button\StateButtonCallbackListener
+    public: true
+    deprecated: true
+
+  Netzmacht\Contao\Toolkit\Dca\Listener\Save\GenerateAliasListener:
     public: true
     arguments:
       - '@service_container'
       - '@netzmacht.contao_toolkit.dca.manager'
       - '%netzmacht.contao_toolkit.alias_generator.default%'
+
+  netzmacht.contao_toolkit.dca.listeners.alias_generator:
+    alias: Netzmacht\Contao\Toolkit\Dca\Listener\Save\GenerateAliasListener
+    public: true
+    deprecated: true
       
+  Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\ColorPickerListener:
+    public: true
+    arguments:
+      - '@templating'
+      - '@translator'
+      - '@netzmacht.contao_toolkit.dca.manager'
+
   netzmacht.contao_toolkit.dca.listeners.color_picker:
-    class: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\ColorPickerListener
+    alias: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\ColorPickerListener
     public: true
-    arguments:
-      - '@templating'
-      - '@translator'
-      - '@netzmacht.contao_toolkit.dca.manager'
+    deprecated: true
 
-  netzmacht.contao_toolkit.dca.listeners.file_picker:
-    class: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\FilePickerListener
-    public: true
-    arguments:
-      - '@templating'
-      - '@translator'
-      - '@netzmacht.contao_toolkit.dca.manager'
-
-  netzmacht.contao_toolkit.dca.listeners.page_picker:
-    class: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PagePickerListener
+  Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\FilePickerListener:
     public: true
     arguments:
       - '@templating'
@@ -90,8 +93,25 @@ services:
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@netzmacht.contao_toolkit.contao.input_adapter'
 
-  netzmacht.contao_toolkit.dca.listeners.popup_wizard:
-    class: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PopupWizardListener
+  netzmacht.contao_toolkit.dca.listeners.file_picker:
+    alias: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\FilePickerListener
+    public: true
+    deprecated: true
+
+  Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PagePickerListener:
+    public: true
+    arguments:
+      - '@templating'
+      - '@translator'
+      - '@netzmacht.contao_toolkit.dca.manager'
+      - '@netzmacht.contao_toolkit.contao.input_adapter'
+
+  netzmacht.contao_toolkit.dca.listeners.page_picker:
+    alias: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PagePickerListener
+    public: true
+    deprecated: true
+
+  Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PopupWizardListener:
     public: true
     arguments:
       - '@templating'
@@ -100,8 +120,17 @@ services:
       - '@security.csrf.token_manager'
       - '%contao.csrf_token_name%'
 
-  netzmacht.contao_toolkit.dca.listeners.template_options:
-    class: Netzmacht\Contao\Toolkit\Dca\Listener\Options\TemplateOptionsListener
+  netzmacht.contao_toolkit.dca.listeners.popup_wizard:
+    alias: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PopupWizardListener
+    public: true
+    deprecated: true
+
+  Netzmacht\Contao\Toolkit\Dca\Listener\Options\TemplateOptionsListener:
     public: true
     arguments:
       - '@netzmacht.contao_toolkit.dca.manager'
+
+  netzmacht.contao_toolkit.dca.listeners.template_options:
+    alias: Netzmacht\Contao\Toolkit\Dca\Listener\Options\TemplateOptionsListener
+    public: true
+    deprecated: true
