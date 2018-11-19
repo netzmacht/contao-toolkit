@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler;
 
+use Netzmacht\Contao\Toolkit\Assertion\Assert;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -67,7 +68,14 @@ class ComponentDecoratorPass implements CompilerPassInterface
 
         foreach ($taggedServiceIds as $tags) {
             foreach ($tags as $tag) {
-                $components[$tag['category']][] = $tag['alias'];
+                Assert::that($tag)->keyExists('category');
+                Assert::that($tag['category'])->string();
+
+                $key = isset($tag['alias']) ? 'alias' : 'type';
+                Assert::that($tag)->keyExists($key);
+                Assert::that($tag[$key])->string();
+
+                $components[$tag['category']][] = $tag[$key];
             }
         }
 
