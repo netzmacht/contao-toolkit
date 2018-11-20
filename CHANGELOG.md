@@ -6,6 +6,7 @@ Changelog
 
 [Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.0.7...3.1.0)
 
+ - Support table prefixing for columns in findBySpecification and order for findAll calls.
  - Improve wizard picker positions
  - Support `type` as alternative to `alias` for registering components
  - Change callback method from `handleCallbackName` to `onCallbackName` for all callbacks. Deprecate `handle*` methods.

@@ -100,10 +100,12 @@ class ContaoRepository implements Repository
      */
     public function findBySpecification(Specification $specification, array $options = [])
     {
-        $column = [];
-        $values = [];
+        $column  = [];
+        $values  = [];
+        $options = $this->addTablePrefixToOrder($options);
 
         $specification->buildQuery($column, $values);
+        $column = $this->addTablePrefix($column);
 
         return $this->findBy($column, $values, $options);
     }
@@ -113,6 +115,8 @@ class ContaoRepository implements Repository
      */
     public function findAll(array $options = [])
     {
+        $options = $this->addTablePrefixToOrder($options);
+
         return $this->call('findAll', [$options]);
     }
 
