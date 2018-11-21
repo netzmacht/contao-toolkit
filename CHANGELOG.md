@@ -2,17 +2,31 @@ Changelog
 =========
 
 3.1.0-rc1 (TBD)
-----------------------
+---------------
 
 [Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.0.7...3.1.0)
 
+### Added
+
+ - Provide a response tagger service for forward compatibility for Contao < 4.6
  - Support table prefixing for columns in findBySpecification and order for findAll calls.
- - Improve wizard picker positions
  - Support `type` as alternative to `alias` for registering components
- - Change callback method from `handleCallbackName` to `onCallbackName` for all callbacks. Deprecate `handle*` methods.
- - Fix broken FilePickerListener.
- - Use class name as service name for dca callback listeners. Deprecate old names.
+
+### Changed
+
+ - Improve wizard picker positions
+ - Change callback method from `handleCallbackName` to `onCallbackName` for all callbacks.
+ - Use class name as service name for dca callback listeners.
  
+### Fixed
+
+ - Fix broken FilePickerListener.
+
+### Deprecated
+
+ - Deprecate `handle*` methods for all dca callback listeners.
+ - Deprecate dotted named for dca callback listener services. Use class names instead.
+
 3.0.7 (2018-10-30)
 ------------------
 
