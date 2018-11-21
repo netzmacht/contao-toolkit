@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Translation;
 
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
@@ -133,7 +135,7 @@ class LangArrayTranslator implements Translator
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    private function getFromGlobals($messageId, $domain = null)
+    private function getFromGlobals(string $messageId, ?string $domain = null): ?string
     {
         if ($domain && $domain !== 'default') {
             $messageId = $domain . '.' . $messageId;
@@ -169,7 +171,7 @@ class LangArrayTranslator implements Translator
      *
      * @return void
      */
-    private function loadLanguageFile($name)
+    private function loadLanguageFile(string $name): void
     {
         /** @var System $system */
         $system = $this->framework->getAdapter(System::class);

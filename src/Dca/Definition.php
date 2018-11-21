@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca;
 
+use function is_array;
+
 /**
  * Definition provides easy access to the data container definition array.
  *

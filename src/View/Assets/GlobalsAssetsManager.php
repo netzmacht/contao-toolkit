@@ -61,7 +61,7 @@ final class GlobalsAssetsManager implements AssetsManager
      */
     public function addJavascript(string $path, $static = self::STATIC_PRODUCTION, string $name = null): AssetsManager
     {
-        if (static::isStatic($static)) {
+        if ($this->isStatic($static)) {
             $path .= '|static';
         }
 
@@ -86,7 +86,7 @@ final class GlobalsAssetsManager implements AssetsManager
                 $name = $identifier;
             }
 
-            static::addJavascript($path, $static, $name);
+            $this->addJavascript($path, $static, $name);
         }
 
         return $this;
@@ -101,7 +101,7 @@ final class GlobalsAssetsManager implements AssetsManager
         $static = self::STATIC_PRODUCTION,
         string $name = null
     ): AssetsManager {
-        $static = static::isStatic($static);
+        $static = $this->isStatic($static);
 
         if ($media || $static) {
             $path .= '|' . $media;
@@ -136,7 +136,7 @@ final class GlobalsAssetsManager implements AssetsManager
                 $name = $identifier;
             }
 
-            static::addStylesheet($path, $media, $static, $name);
+            $this->addStylesheet($path, $media, $static, $name);
         }
 
         return $this;

@@ -14,6 +14,7 @@ Changelog
 
 ### Changed
 
+ - Switch to strict_types everywhere. Set internal classes as final (You should treat all classes as final).
  - Improve wizard picker positions
  - Change callback method from `handleCallbackName` to `onCallbackName` for all callbacks.
  - Use class name as service name for dca callback listeners.

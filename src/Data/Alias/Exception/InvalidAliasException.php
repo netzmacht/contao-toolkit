@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Exception;
 
-use Netzmacht\Contao\Toolkit\Exception\Exception;
 use Netzmacht\Contao\Toolkit\Exception\RuntimeException;
 
 /**
@@ -22,7 +21,7 @@ use Netzmacht\Contao\Toolkit\Exception\RuntimeException;
  *
  * @package Netzmacht\Contao\Toolkit\Data\Alias\Exception
  */
-final class InvalidAliasException extends RuntimeException implements Exception
+final class InvalidAliasException extends RuntimeException
 {
     /**
      * Create exception for a database entry.

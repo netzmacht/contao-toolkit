@@ -16,6 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Options;
 
 use Contao\Database\Result;
 use Contao\Model\Collection;
+use function is_callable;
 
 /**
  * Class OptionsBuilder is designed to transfer data to the requested format for options.
@@ -57,7 +58,7 @@ final class OptionsBuilder
     /**
      * Get Options builder for collection.
      *
-     * @param Result           $result      Database result.
+     * @param Result|null      $result      Database result.
      * @param string|\callable $labelColumn Label column or callback.
      * @param string           $valueColumn Value column.
      *
@@ -65,6 +66,10 @@ final class OptionsBuilder
      */
     public static function fromResult(Result $result = null, $labelColumn = null, string $valueColumn = 'id'): self
     {
+        if (!$result) {
+            return static::fromArrayList([], $labelColumn, $valueColumn);
+        }
+
         return static::fromArrayList($result->fetchAllAssoc(), $labelColumn, $valueColumn);
     }
 
@@ -80,7 +85,7 @@ final class OptionsBuilder
      *
      * @return OptionsBuilder
      */
-    public static function fromArrayList(array $data, $labelKey = null, string $valueKey = 'id')
+    public static function fromArrayList(array $data, $labelKey = null, string $valueKey = 'id'): self
     {
         $options = new ArrayListOptions($data, $labelKey, $valueKey);
 

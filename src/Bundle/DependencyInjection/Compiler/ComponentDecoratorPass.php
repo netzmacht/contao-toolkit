@@ -23,7 +23,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  *
  * @package Netzmacht\Contao\Toolkit\DependencyInjection\Compiler
  */
-class ComponentDecoratorPass implements CompilerPassInterface
+final class ComponentDecoratorPass implements CompilerPassInterface
 {
     /**
      * Name of the tag.
@@ -54,7 +54,7 @@ class ComponentDecoratorPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $serviceId = 'netzmacht.contao_toolkit.listeners.register_component_decorators';
 

@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\View\Template;
 
 use Symfony\Component\Templating\TemplateNameParserInterface;
@@ -51,7 +53,7 @@ class ToolkitTemplateNameParser implements TemplateNameParserInterface
      *
      * @throws \RuntimeException When template scope is not supported.
      */
-    private function guardSupportedScope($scope)
+    private function guardSupportedScope(string $scope): void
     {
         if ($scope !== TemplateReference::SCOPE_FRONTEND
             && $scope !== TemplateReference::SCOPE_BACKEND) {
@@ -73,7 +75,7 @@ class ToolkitTemplateNameParser implements TemplateNameParserInterface
      *
      * @throws \RuntimeException When template engine is not supported.
      */
-    private function guardSupportedEngine($engine)
+    private function guardSupportedEngine(string $engine): void
     {
         if ($engine !== TemplateReference::ENGINE) {
             throw new \RuntimeException(

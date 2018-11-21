@@ -24,14 +24,14 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @package Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler
  */
-class RepositoriesPass implements CompilerPassInterface
+final class RepositoriesPass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}
      *
      * @throws RuntimeException When table attribute is not given for a tagged repository.
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->hasDefinition('netzmacht.contao_toolkit.repository_manager')) {
             return;

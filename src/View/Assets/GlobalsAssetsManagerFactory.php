@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Assets;
 
+use function is_array;
+
 /**
  * Class GlobalsAssetsManagerFactory creates the global assets manager.
  *
@@ -45,7 +47,7 @@ final class GlobalsAssetsManagerFactory
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function create()
+    public function create(): AssetsManager
     {
         if (!isset($GLOBALS['TL_CSS']) || !is_array($GLOBALS['TL_CSS'])) {
             $GLOBALS['TL_CSS'] = [];

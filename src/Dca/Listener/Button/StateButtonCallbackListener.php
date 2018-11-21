@@ -194,7 +194,7 @@ final class StateButtonCallbackListener
         $previous,
         $next,
         $dataContainer
-    ) {
+    ): string {
         // @codingStandardsIgnoreStart
         @trigger_error(
             sprintf(

@@ -15,6 +15,8 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Dca\Options;
 
 use Contao\Model\Collection;
+use function call_user_func;
+use function is_callable;
 
 /**
  * Class CollectionOptions maps a model collection to the option format.
@@ -30,7 +32,7 @@ final class CollectionOptions implements Options
      *
      * @var mixed
      */
-    protected $collection;
+    private $collection;
 
     /**
      * The label column.
@@ -44,7 +46,7 @@ final class CollectionOptions implements Options
      *
      * @var string
      */
-    private $valueColumn = 'id';
+    private $valueColumn;
 
     /**
      * Current position.
@@ -72,7 +74,7 @@ final class CollectionOptions implements Options
      *
      * @return string
      */
-    public function getLabelKey()
+    public function getLabelKey(): string
     {
         return $this->labelColumn;
     }
@@ -110,7 +112,7 @@ final class CollectionOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function next()
+    public function next(): void
     {
         $this->position++;
         $this->collection->next();
@@ -135,7 +137,7 @@ final class CollectionOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->position = 0;
         $this->collection->reset();
@@ -144,7 +146,7 @@ final class CollectionOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         foreach ($this->collection as $row) {
             if ($row->{$this->valueColumn} === $offset) {
@@ -172,7 +174,7 @@ final class CollectionOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         // unsupported
     }
@@ -180,7 +182,7 @@ final class CollectionOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         // unsupported
     }

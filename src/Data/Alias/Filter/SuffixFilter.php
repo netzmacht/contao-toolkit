@@ -58,7 +58,7 @@ final class SuffixFilter extends AbstractFilter
     /**
      * {@inheritDoc}
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->index = $this->start;
         $this->value = null;

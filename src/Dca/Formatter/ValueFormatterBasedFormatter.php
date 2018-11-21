@@ -16,6 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter;
 
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
+use function is_array;
 
 /**
  * Formatter handles the formatting of data container labels.

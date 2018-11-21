@@ -79,7 +79,7 @@ final class CreateFormatterSubscriber
      *
      * @return void
      */
-    public function handle(CreateFormatterEvent $event)
+    public function handle(CreateFormatterEvent $event): void
     {
         $event->addFormatter($this->formatter);
         $event->addPreFilters($this->preFilters);

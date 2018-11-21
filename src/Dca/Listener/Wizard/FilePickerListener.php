@@ -62,7 +62,7 @@ final class FilePickerListener extends AbstractFieldPickerListener
     public function generate(string $tableName, string $fieldName, int $rowId, $value = null): string
     {
         $url = sprintf(
-            'contao/file.php?do=%s&amp;table=%s&amp;field=%s&amp;value=%',
+            'contao/file.php?do=%s&amp;table=%s&amp;field=%s&amp;value=%s',
             $this->input->get('do'),
             $tableName,
             $fieldName,

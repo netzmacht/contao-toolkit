@@ -52,7 +52,7 @@ final class FilterBasedAliasGenerator implements AliasGenerator
      *
      * @var array|Filter[]
      */
-    private $filters = array();
+    private $filters;
 
     /**
      * Value separator.
@@ -175,7 +175,7 @@ final class FilterBasedAliasGenerator implements AliasGenerator
      * @return void
      * @throws InvalidAliasException When No unique alias is generated.
      */
-    private function guardValidAlias($result, $value)
+    private function guardValidAlias($result, $value): void
     {
         if (!$value || !$this->isValid($result, $value, (int) $result->id)) {
             throw InvalidAliasException::forDatabaseEntry($this->tableName, (int) $result->id, $value);

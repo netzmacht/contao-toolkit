@@ -44,7 +44,7 @@ final class ModelArrayAccess implements \ArrayAccess
     /**
      * {@inheritDoc}
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->model->$offset);
     }
@@ -60,7 +60,7 @@ final class ModelArrayAccess implements \ArrayAccess
     /**
      * {@inheritDoc}
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->model->$offset = $value;
     }
@@ -68,7 +68,7 @@ final class ModelArrayAccess implements \ArrayAccess
     /**
      * {@inheritDoc}
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         $this->model->$offset = null;
     }

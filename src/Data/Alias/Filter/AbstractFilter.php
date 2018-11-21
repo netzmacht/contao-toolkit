@@ -23,9 +23,9 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Filter;
  */
 abstract class AbstractFilter implements Filter
 {
-    const COMBINE_REPLACE = 0;
-    const COMBINE_PREPEND = 1;
-    const COMBINE_APPEND  = 2;
+    public const COMBINE_REPLACE = 0;
+    public const COMBINE_PREPEND = 1;
+    public const COMBINE_APPEND  = 2;
 
     /**
      * If true break after the filter if value is unique.

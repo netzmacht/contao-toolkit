@@ -26,7 +26,7 @@ final class GetTemplateHelpersEvent extends Event
     /**
      * The event name.
      */
-    const NAME = 'netzmacht.contao_toolkit.view.get_template_helpers';
+    public const NAME = 'netzmacht.contao_toolkit.view.get_template_helpers';
 
     /**
      * Template name.

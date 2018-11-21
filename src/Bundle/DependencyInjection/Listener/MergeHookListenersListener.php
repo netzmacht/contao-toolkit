@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Listener;
 
 use Netzmacht\Contao\Toolkit\Callback\Invoker;
+use function array_merge;
 
 /**
  * Class MergerHookListenerListener.
@@ -56,7 +57,7 @@ final class MergeHookListenersListener
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function onInitializeSystem()
+    public function onInitializeSystem(): void
     {
         // Hook initializeSystem listeners can't be merged so just invoke them.
         if (isset($this->hookListeners['initializeSystem'])) {

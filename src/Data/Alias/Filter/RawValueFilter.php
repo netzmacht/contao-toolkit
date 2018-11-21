@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
 /**
@@ -22,7 +24,7 @@ final class RawValueFilter extends AbstractValueFilter
     /**
      * {@inheritdoc}
      */
-    public function apply($model, $value, string $separator)
+    public function apply($model, $value, string $separator): string
     {
         $values = array();
 

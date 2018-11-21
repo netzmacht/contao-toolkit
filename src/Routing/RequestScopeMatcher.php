@@ -133,7 +133,7 @@ class RequestScopeMatcher
      *
      * @return Request|null
      */
-    private function getCurrentRequest()
+    private function getCurrentRequest(): ?Request
     {
         return $this->requestStack->getCurrentRequest();
     }

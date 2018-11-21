@@ -33,7 +33,7 @@ final class Plugin implements BundlePluginInterface, ExtensionPluginInterface, D
     /**
      * {@inheritdoc}
      */
-    public function getBundles(ParserInterface $parser)
+    public function getBundles(ParserInterface $parser): array
     {
         return [
             BundleConfig::create(NetzmachtContaoToolkitBundle::class)
@@ -45,7 +45,7 @@ final class Plugin implements BundlePluginInterface, ExtensionPluginInterface, D
     /**
      * {@inheritdoc}
      */
-    public function getPackageDependencies()
+    public function getPackageDependencies(): array
     {
         return ['contao/core-bundle'];
     }
@@ -53,7 +53,7 @@ final class Plugin implements BundlePluginInterface, ExtensionPluginInterface, D
     /**
      * {@inheritdoc}
      */
-    public function getExtensionConfig($extensionName, array $extensionConfigs, ContainerBuilder $container)
+    public function getExtensionConfig($extensionName, array $extensionConfigs, ContainerBuilder $container): array
     {
         if ($extensionName !== 'framework') {
             return $extensionConfigs;

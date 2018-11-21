@@ -200,7 +200,7 @@ final class CreateFormatterEvent extends Event
      *
      * @return ValueFormatter|null
      */
-    public function getOptionsFormatter()
+    public function getOptionsFormatter(): ?ValueFormatter
     {
         return $this->optionsFormatter;
     }

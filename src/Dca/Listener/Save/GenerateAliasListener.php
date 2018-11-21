@@ -104,7 +104,7 @@ final class GenerateAliasListener
      *
      * @deprecated Deprecated and removed in Version 4.0.0. Use self::handleSaveCallback instead.
      */
-    public function handleSaveCallback($value, $dataContainer)
+    public function handleSaveCallback($value, $dataContainer): ?string
     {
         // @codingStandardsIgnoreStart
         @trigger_error(
@@ -146,7 +146,7 @@ final class GenerateAliasListener
      *
      * @return void
      */
-    private function guardIsAliasGeneratorFactory($factory, string $serviceId)
+    private function guardIsAliasGeneratorFactory($factory, string $serviceId): void
     {
         Assertion::isInstanceOf(
             $factory,

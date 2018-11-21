@@ -21,7 +21,7 @@ namespace Netzmacht\Contao\Toolkit\View\Assets;
  */
 interface AssetsManager
 {
-    const STATIC_PRODUCTION = 'prod';
+    public const STATIC_PRODUCTION = 'prod';
 
     /**
      * Add a javascript file to Contao assets.
