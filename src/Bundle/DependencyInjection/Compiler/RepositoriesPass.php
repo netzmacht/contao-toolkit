@@ -5,7 +5,7 @@
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2017 netzmacht David Molineus. All rights reserved.
+ * @copyright  2015-2018 netzmacht David Molineus. All rights reserved.
  * @license    LGPL-3.0 https://github.com/netzmacht/contao-leaflet-maps/blob/master/LICENSE
  * @filesource
  */
@@ -24,14 +24,14 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @package Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler
  */
-class RepositoriesPass implements CompilerPassInterface
+final class RepositoriesPass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}
      *
      * @throws RuntimeException When table attribute is not given for a tagged repository.
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->hasDefinition('netzmacht.contao_toolkit.repository_manager')) {
             return;

@@ -5,7 +5,7 @@
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2017 netzmacht David Molineus.
+ * @copyright  2015-2018 netzmacht David Molineus.
  * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
  */
@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler;
 
+use Netzmacht\Contao\Toolkit\Assertion\Assert;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -22,7 +23,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  *
  * @package Netzmacht\Contao\Toolkit\DependencyInjection\Compiler
  */
-class ComponentDecoratorPass implements CompilerPassInterface
+final class ComponentDecoratorPass implements CompilerPassInterface
 {
     /**
      * Name of the tag.
@@ -53,7 +54,7 @@ class ComponentDecoratorPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $serviceId = 'netzmacht.contao_toolkit.listeners.register_component_decorators';
 
@@ -67,7 +68,14 @@ class ComponentDecoratorPass implements CompilerPassInterface
 
         foreach ($taggedServiceIds as $tags) {
             foreach ($tags as $tag) {
-                $components[$tag['category']][] = $tag['alias'];
+                Assert::that($tag)->keyExists('category');
+                Assert::that($tag['category'])->string();
+
+                $key = isset($tag['alias']) ? 'alias' : 'type';
+                Assert::that($tag)->keyExists($key);
+                Assert::that($tag[$key])->string();
+
+                $components[$tag['category']][] = $tag[$key];
             }
         }
 

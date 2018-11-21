@@ -5,7 +5,7 @@
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2017 netzmacht David Molineus.
+ * @copyright  2015-2018 netzmacht David Molineus.
  * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
  */
@@ -17,16 +17,17 @@ namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use function count;
 
 /**
  * Find hook services and store them in an parameter.
  */
-class RegisterHooksPass implements CompilerPassInterface
+final class RegisterHooksPass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->hasDefinition('netzmacht.contao_toolkit.listeners.merge_hook_listeners')) {
             return;
@@ -68,7 +69,7 @@ class RegisterHooksPass implements CompilerPassInterface
      *
      * @throws InvalidConfigurationException When hook attribute is missing.
      */
-    private function guardHookAttributeExists(string $serviceId, array $attributes)
+    private function guardHookAttributeExists(string $serviceId, array $attributes): void
     {
         if (!isset($attributes['hook'])) {
             throw new InvalidConfigurationException(

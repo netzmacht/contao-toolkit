@@ -5,7 +5,7 @@
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2017 netzmacht David Molineus.
+ * @copyright  2015-2018 netzmacht David Molineus.
  * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
  */
@@ -61,7 +61,7 @@ final class GlobalsAssetsManager implements AssetsManager
      */
     public function addJavascript(string $path, $static = self::STATIC_PRODUCTION, string $name = null): AssetsManager
     {
-        if (static::isStatic($static)) {
+        if ($this->isStatic($static)) {
             $path .= '|static';
         }
 
@@ -86,7 +86,7 @@ final class GlobalsAssetsManager implements AssetsManager
                 $name = $identifier;
             }
 
-            static::addJavascript($path, $static, $name);
+            $this->addJavascript($path, $static, $name);
         }
 
         return $this;
@@ -101,7 +101,7 @@ final class GlobalsAssetsManager implements AssetsManager
         $static = self::STATIC_PRODUCTION,
         string $name = null
     ): AssetsManager {
-        $static = static::isStatic($static);
+        $static = $this->isStatic($static);
 
         if ($media || $static) {
             $path .= '|' . $media;
@@ -136,7 +136,7 @@ final class GlobalsAssetsManager implements AssetsManager
                 $name = $identifier;
             }
 
-            static::addStylesheet($path, $media, $static, $name);
+            $this->addStylesheet($path, $media, $static, $name);
         }
 
         return $this;

@@ -5,7 +5,7 @@
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2017 netzmacht David Molineus.
+ * @copyright  2015-2018 netzmacht David Molineus.
  * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
  */
@@ -23,9 +23,9 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Filter;
  */
 abstract class AbstractFilter implements Filter
 {
-    const COMBINE_REPLACE = 0;
-    const COMBINE_PREPEND = 1;
-    const COMBINE_APPEND  = 2;
+    public const COMBINE_REPLACE = 0;
+    public const COMBINE_PREPEND = 1;
+    public const COMBINE_APPEND  = 2;
 
     /**
      * If true break after the filter if value is unique.

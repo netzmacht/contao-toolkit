@@ -5,16 +5,19 @@
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2017 netzmacht David Molineus.
+ * @copyright  2015-2018 netzmacht David Molineus.
  * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Options;
 
 use Contao\Controller;
 use Contao\DataContainer;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
+use const E_USER_DEPRECATED;
 
 /**
  * Class TemplateOptionsListener
@@ -47,7 +50,7 @@ final class TemplateOptionsListener
      *
      * @return array
      */
-    public function handleOptionsCallback($dataContainer): array
+    public function onOptionsCallback($dataContainer): array
     {
         $config    = $this->getConfig($dataContainer);
         $templates = Controller::getTemplateGroup($config['prefix']);
@@ -57,6 +60,31 @@ final class TemplateOptionsListener
         }
 
         return array_diff($templates, $config['exclude']);
+    }
+
+    /**
+     * Handle the options callback.
+     *
+     * @param DataContainer $dataContainer Data container driver.
+     *
+     * @return array
+     *
+     * @deprecated Deprecated and removed in Version 4.0.0. Use self::onOptionsCallback instead.
+     */
+    public function handleOptionsCallback($dataContainer): array
+    {
+        // @codingStandardsIgnoreStart
+        @trigger_error(
+            sprintf(
+                '%1$s::handleOptionsCallback is deprecated and will be removed in Version 4.0.0. '
+                . 'Use %1$s::onOptionsCallback instead.',
+                static::class
+            ),
+            E_USER_DEPRECATED
+        );
+        // @codingStandardsIgnoreEnd
+
+        return $this->onOptionsCallback($dataContainer);
     }
 
     /**

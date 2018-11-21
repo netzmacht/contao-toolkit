@@ -5,10 +5,12 @@
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2017 netzmacht David Molineus.
+ * @copyright  2015-2018 netzmacht David Molineus.
  * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Updater;
 
@@ -19,6 +21,7 @@ use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Netzmacht\Contao\Toolkit\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Exception\AccessDenied;
+use function is_array;
 
 /**
  * Class DatabaseRowUpdater.
@@ -85,7 +88,7 @@ final class DatabaseRowUpdater implements Updater
      *
      * @return array
      */
-    public function update($tableName, $recordId, array $data, $context)
+    public function update($tableName, $recordId, array $data, $context): array
     {
         $this->guardUserHasAccess($tableName, $recordId, $data);
 
@@ -110,7 +113,7 @@ final class DatabaseRowUpdater implements Updater
      *
      * @return bool
      */
-    public function hasUserAccess($tableName, $columnName)
+    public function hasUserAccess($tableName, $columnName): bool
     {
         if (TL_MODE !== 'BE') {
             return false;
@@ -129,7 +132,7 @@ final class DatabaseRowUpdater implements Updater
      * @return void
      * @throws AccessDenied When user has no access.
      */
-    private function guardUserHasAccess($tableName, $recordId, array $data)
+    private function guardUserHasAccess($tableName, $recordId, array $data): void
     {
         foreach (array_keys($data) as $columnName) {
             if (!$this->hasUserAccess($tableName, $columnName)) {
@@ -148,7 +151,7 @@ final class DatabaseRowUpdater implements Updater
      *
      * @return Versions|null
      */
-    private function initializeVersions(Definition $definition, $recordId)
+    private function initializeVersions(Definition $definition, $recordId): ?Versions
     {
         if ($definition->get(['config', 'enableVersioning'])) {
             $versions = new Versions($definition->getName(), $recordId);
@@ -169,7 +172,7 @@ final class DatabaseRowUpdater implements Updater
      *
      * @return array
      */
-    private function executeSaveCallbacks(Definition $definition, array $data, $context)
+    private function executeSaveCallbacks(Definition $definition, array $data, $context): array
     {
         foreach ($data as $column => $value) {
             $callbacks = $definition->get(['fields', $column, 'save_callback']);
@@ -191,7 +194,7 @@ final class DatabaseRowUpdater implements Updater
      *
      * @return void
      */
-    private function save(Definition $definition, $recordId, array $data)
+    private function save(Definition $definition, $recordId, array $data): void
     {
         $builder = $this->connection->createQueryBuilder()
             ->update($definition->getName())

@@ -5,7 +5,7 @@
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2017 netzmacht David Molineus.
+ * @copyright  2015-2018 netzmacht David Molineus.
  * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
  */
@@ -21,6 +21,7 @@ use Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator;
 use Netzmacht\Contao\Toolkit\Data\Alias\Factory\AliasGeneratorFactory;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
+use const E_USER_DEPRECATED;
 
 /**
  * Class GenerateAliasCallback is designed to create an alias of a column.
@@ -77,9 +78,11 @@ final class GenerateAliasListener
      * @param mixed         $value         The current value.
      * @param DataContainer $dataContainer The data container driver.
      *
-     * @return mixed|null|string
+     * @return null|string
+     *
+     * @throws \Assert\AssertionFailedException If invalid data container is given.
      */
-    public function handleSaveCallback($value, $dataContainer)
+    public function onSaveCallback($value, $dataContainer): ?string
     {
         Assertion::isInstanceOf($dataContainer, DataContainer::class);
         Assertion::isInstanceOf($dataContainer->activeRecord, Result::class);
@@ -87,6 +90,34 @@ final class GenerateAliasListener
         $generator = $this->getGenerator($dataContainer);
 
         return $generator->generate($dataContainer->activeRecord, $value);
+    }
+
+    /**
+     * Generate the alias value.
+     *
+     * @param mixed         $value         The current value.
+     * @param DataContainer $dataContainer The data container driver.
+     *
+     * @return null|string
+     *
+     * @throws \Assert\AssertionFailedException If invalid data container is given.
+     *
+     * @deprecated Deprecated and removed in Version 4.0.0. Use self::handleSaveCallback instead.
+     */
+    public function handleSaveCallback($value, $dataContainer): ?string
+    {
+        // @codingStandardsIgnoreStart
+        @trigger_error(
+            sprintf(
+                '%1$s::handleSaveCallback is deprecated and will be removed in Version 4.0.0. '
+                . 'Use %1$s::onSaveCallback instead.',
+                static::class
+            ),
+            E_USER_DEPRECATED
+        );
+        // @codingStandardsIgnoreEnd
+
+        return $this->onSaveCallback($value, $dataContainer);
     }
 
     /**
@@ -115,7 +146,7 @@ final class GenerateAliasListener
      *
      * @return void
      */
-    private function guardIsAliasGeneratorFactory($factory, string $serviceId)
+    private function guardIsAliasGeneratorFactory($factory, string $serviceId): void
     {
         Assertion::isInstanceOf(
             $factory,

@@ -10,6 +10,8 @@
     "Contao\\ManagerPlugin\\Config\\ContainerBuilder",
     "Contao\\ManagerPlugin\\Config\\ExtensionPluginInterface",
     "Contao\\ManagerPlugin\\Dependency\\DependentPluginInterface",
-    "TL_ERROR"
+    "TL_ERROR",
+    "FOS\\HttpCache\\ResponseTagger",
+    "FOS\\HttpCache\\Exception\\InvalidTagException"
   ]
 }

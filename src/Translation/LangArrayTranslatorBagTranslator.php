@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\Translation;
 
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;

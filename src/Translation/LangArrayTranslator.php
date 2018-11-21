@@ -5,10 +5,12 @@
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2017 netzmacht David Molineus.
+ * @copyright  2015-2018 netzmacht David Molineus.
  * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
  */
+
+declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Translation;
 
@@ -133,7 +135,7 @@ class LangArrayTranslator implements Translator
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    private function getFromGlobals($messageId, $domain = null)
+    private function getFromGlobals(string $messageId, ?string $domain = null): ?string
     {
         if ($domain && $domain !== 'default') {
             $messageId = $domain . '.' . $messageId;
@@ -169,7 +171,7 @@ class LangArrayTranslator implements Translator
      *
      * @return void
      */
-    private function loadLanguageFile($name)
+    private function loadLanguageFile(string $name): void
     {
         /** @var System $system */
         $system = $this->framework->getAdapter(System::class);

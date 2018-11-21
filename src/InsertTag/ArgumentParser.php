@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\InsertTag;
 
 use Contao\StringUtil;
+use function is_array;
 
 /**
  * Class ArgumentParser.
@@ -117,7 +118,7 @@ final class ArgumentParser
      *
      * @return array
      */
-    private function handleSplitBy(string $query, string $separator, array $names = null, int $limit = null)
+    private function handleSplitBy(string $query, string $separator, array $names = null, int $limit = null): array
     {
         if ($limit === null) {
             $values = explode($separator, $query);
@@ -208,7 +209,7 @@ final class ArgumentParser
      *
      * @throws \RuntimeException When another split callback is registered before.
      */
-    protected function guardNoSplitCallbackRegistered(string $separator)
+    private function guardNoSplitCallbackRegistered(string $separator): void
     {
         if ($this->splitted) {
             throw new \RuntimeException(

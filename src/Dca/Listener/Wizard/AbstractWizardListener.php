@@ -5,7 +5,7 @@
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2017 netzmacht David Molineus.
+ * @copyright  2015-2018 netzmacht David Molineus.
  * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
  */
@@ -19,6 +19,8 @@ use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
+use const E_USER_DEPRECATED;
+use function trigger_error;
 
 /**
  * AbstractWizard is the base class for a wizard.
@@ -110,5 +112,35 @@ abstract class AbstractWizardListener
      *
      * @return string
      */
-    abstract public function handleWizardCallback($dataContainer): string;
+    public function onWizardCallback($dataContainer): string
+    {
+        return $this->handleWizardCallback($dataContainer);
+    }
+
+    /**
+     * Invoke by the callback.
+     *
+     * @param DataContainer $dataContainer Data container driver.
+     *
+     * @return string
+     *
+     * @deprecated Deprecated and removed in Version 4.0.0. Use self::onWizardCallback instead.
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function handleWizardCallback($dataContainer): string
+    {
+        // @codingStandardsIgnoreStart
+        @trigger_error(
+            sprintf(
+                '%1$s::handleWizardCallback is deprecated and will be removed in Version 4.0.0. '
+                . 'Use %1$s::onWizardCallback instead.',
+                static::class
+            ),
+            E_USER_DEPRECATED
+        );
+        // @codingStandardsIgnoreEnd
+
+        return '';
+    }
 }

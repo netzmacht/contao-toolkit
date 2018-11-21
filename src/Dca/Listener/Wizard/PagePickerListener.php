@@ -5,7 +5,7 @@
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2017 netzmacht David Molineus.
+ * @copyright  2015-2018 netzmacht David Molineus.
  * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
  */
@@ -49,7 +49,7 @@ final class PagePickerListener extends AbstractFieldPickerListener
         Translator $translator,
         Manager $dcaManager,
         $input,
-        $template = null
+        string $template = ''
     ) {
         parent::__construct($templateEngine, $translator, $dcaManager, $template);
 
@@ -62,7 +62,7 @@ final class PagePickerListener extends AbstractFieldPickerListener
     public function generate(string $tableName, string $fieldName, int $rowId, $value = null): string
     {
         $url = sprintf(
-            'contao/page.php?do=%s&amp;table=%s&amp;field=%s&amp;value=%',
+            'contao/page.php?do=%s&amp;table=%s&amp;field=%s&amp;value=%s',
             $this->input->get('do'),
             $tableName,
             $fieldName,

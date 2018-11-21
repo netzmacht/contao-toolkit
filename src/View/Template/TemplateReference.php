@@ -10,6 +10,8 @@
  * @filesource
  */
 
+declare(strict_types=1);
+
 namespace Netzmacht\Contao\Toolkit\View\Template;
 
 use Symfony\Component\Templating\TemplateReference as BaseTemplateReference;
@@ -21,11 +23,11 @@ use Symfony\Component\Templating\TemplateReference as BaseTemplateReference;
  */
 class TemplateReference extends BaseTemplateReference
 {
-    const SCOPE_BACKEND = 'be';
+    public const SCOPE_BACKEND = 'be';
 
-    const SCOPE_FRONTEND = 'fe';
+    public const SCOPE_FRONTEND = 'fe';
 
-    const ENGINE = 'toolkit';
+    public const ENGINE = 'toolkit';
 
     /**
      * TemplateReference constructor.

@@ -1,7 +1,7 @@
 <?= $this->generateImage(
     $this->icon,
     $this->title,
-    'style="vertical-align:top;cursor:pointer;padding-left:3px" title="' . $this->title .'" id="moo_' . $this->field . '"'
+    'style="cursor:pointer" title="' . $this->title .'" id="moo_' . $this->field . '"'
 ); ?>
 <script>
     window.addEvent('domready', function() {

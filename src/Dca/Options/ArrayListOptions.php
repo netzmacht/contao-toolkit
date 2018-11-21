@@ -5,7 +5,7 @@
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2017 netzmacht David Molineus.
+ * @copyright  2015-2018 netzmacht David Molineus.
  * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
  */
@@ -13,6 +13,10 @@
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Options;
+
+use function call_user_func;
+use function count;
+use function is_callable;
 
 /**
  * Class ArrayListOptions extracts options from a list of associative arrays.
@@ -116,7 +120,7 @@ final class ArrayListOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function next()
+    public function next(): void
     {
         $this->position++;
     }
@@ -140,7 +144,7 @@ final class ArrayListOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->position = 0;
     }
@@ -148,7 +152,7 @@ final class ArrayListOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->list[$offset]);
     }
@@ -164,7 +168,7 @@ final class ArrayListOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->list[$offset] = $value;
     }
@@ -172,7 +176,7 @@ final class ArrayListOptions implements Options
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->list[$offset]);
     }

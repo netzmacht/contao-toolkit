@@ -125,3 +125,6 @@ services:
     arguments:
       - '@contao.routing.scope_matcher'
       - '@request_stack'
+
+  netzmacht.contao_toolkit.response_tagger:
+    class: Netzmacht\Contao\Toolkit\Response\NoOpResponseTagger

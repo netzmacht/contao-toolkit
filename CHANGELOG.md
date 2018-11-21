@@ -1,6 +1,34 @@
 Changelog
 =========
 
+3.1.0 (2018-11-21)
+------------------
+
+[Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.0.7...3.1.0)
+
+### Added
+
+ - Provide a response tagger service for forward compatibility for Contao < 4.6
+ - Support table prefixing for columns in findBySpecification and order for findAll calls.
+ - Support `type` as alternative to `alias` for registering components
+
+### Changed
+
+ - Switch to strict_types everywhere. Set internal classes as final (You should treat all classes as final).
+ - Improve wizard picker positions
+ - Change callback method from `handleCallbackName` to `onCallbackName` for all callbacks.
+ - Use class name as service name for dca callback listeners.
+ - Require PHP 7.1.
+ 
+### Fixed
+
+ - Fix broken FilePickerListener.
+
+### Deprecated
+
+ - Deprecate `handle*` methods for all dca callback listeners.
+ - Deprecate dotted named for dca callback listener services. Use class names instead.
+
 3.0.7 (2018-10-30)
 ------------------
 

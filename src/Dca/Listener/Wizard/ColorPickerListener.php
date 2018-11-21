@@ -5,7 +5,7 @@
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2017 netzmacht David Molineus.
+ * @copyright  2015-2018 netzmacht David Molineus.
  * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
  */
@@ -13,6 +13,8 @@
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
+
+use const E_USER_DEPRECATED;
 
 /**
  * Class ColorPicker.
@@ -47,9 +49,28 @@ final class ColorPickerListener extends AbstractPickerListener
     /**
      * {@inheritDoc}
      */
-    public function handleWizardCallback($dataContainer): string
+    public function onWizardCallback($dataContainer): string
     {
         return $this->generate($dataContainer->table, $dataContainer->field);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function handleWizardCallback($dataContainer): string
+    {
+        // @codingStandardsIgnoreStart
+        @trigger_error(
+            sprintf(
+                '%1$s::handleWizardCallback is deprecated and will be removed in Version 4.0.0. '
+                . 'Use %1$s::onWizardCallback instead.',
+                static::class
+            ),
+            E_USER_DEPRECATED
+        );
+        // @codingStandardsIgnoreEnd
+
+        return $this->onWizardCallback($dataContainer);
     }
 
     /**
