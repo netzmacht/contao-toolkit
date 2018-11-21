@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.1.0-rc1 (TBD)
----------------
+3.1.0 (2018-11-21)
+------------------
 
 [Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.0.7...3.1.0)
 
@@ -18,6 +18,7 @@ Changelog
  - Improve wizard picker positions
  - Change callback method from `handleCallbackName` to `onCallbackName` for all callbacks.
  - Use class name as service name for dca callback listeners.
+ - Require PHP 7.1.
  
 ### Fixed
 
