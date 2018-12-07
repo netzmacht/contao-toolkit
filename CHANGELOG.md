@@ -1,6 +1,15 @@
 Changelog
 =========
 
+3.1.1 TBD
+---------
+
+[Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.1.0...hotfix/3.1.1)
+
+### Fixed
+
+ - Do not register services tagged as contao.hook as service for Contao 4.5 and later
+
 3.1.0 (2018-11-21)
 ------------------
 
