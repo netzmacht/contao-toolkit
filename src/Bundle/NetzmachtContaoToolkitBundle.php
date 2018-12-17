@@ -6,7 +6,7 @@
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
  * @copyright  2015-2018 netzmacht David Molineus.
- * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
+ * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
  */
 
@@ -20,6 +20,7 @@ use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\FosCacheRespons
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterHooksPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RepositoriesPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\TranslatorPass;
+use OutOfBoundsException;
 use PackageVersions\Versions;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -32,6 +33,35 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 final class NetzmachtContaoToolkitBundle extends Bundle
 {
     /**
+     * Contao core version.
+     *
+     * @var string
+     */
+    private $contaoCoreVersion;
+
+    /**
+     * NetzmachtContaoToolkitBundle constructor.
+     *
+     * @param null|string $contaoCoreVersion Contao core version. Available for testing purposes.
+     */
+    public function __construct(?string $contaoCoreVersion = null)
+    {
+        if (!$contaoCoreVersion) {
+            try {
+                $contaoCoreVersion = Versions::getVersion('contao/core-bundle');
+            } catch (OutOfBoundsException $e) {
+                // contao/core-bundle seems not to be installed. Probably the single repository is used.
+                // PackageVersions doesn't support it yet. See https://github.com/Ocramius/PackageVersions/issues/74
+                $contaoCoreVersion = Versions::getVersion('contao/contao');
+            }
+
+            $contaoCoreVersion = explode('@', $contaoCoreVersion, 1)[0];
+        }
+
+        $this->contaoCoreVersion = $contaoCoreVersion;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function build(ContainerBuilder $container): void
@@ -40,7 +70,7 @@ final class NetzmachtContaoToolkitBundle extends Bundle
 
         $container->addCompilerPass(new TranslatorPass());
         $container->addCompilerPass(new RepositoriesPass());
-        $container->addCompilerPass(new FosCacheResponseTaggerPass(Versions::getVersion('contao/core-bundle')));
+        $container->addCompilerPass(new FosCacheResponseTaggerPass($this->contaoCoreVersion));
 
         $container->addCompilerPass(
             new AddTaggedServicesAsArgumentPass(
@@ -87,9 +117,8 @@ final class NetzmachtContaoToolkitBundle extends Bundle
             new ComponentDecoratorPass('netzmacht.contao_toolkit.component.content_element', 1)
         );
 
-        // Contao 4.5 will support tagged hook listeners out of the box if PR got merged
-        // https://github.com/contao/core-bundle/pull/1094/files
-        if (!class_exists('Contao\CoreBundle\DependencyInjection\Compiler\RegisterHooksPass')) {
+        // Since Contao 4.5 tagged hook listeners are supported by the Contao core
+        if (version_compare($this->contaoCoreVersion, '4.5', '<')) {
             $container->addCompilerPass(new RegisterHooksPass());
         }
     }
