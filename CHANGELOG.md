@@ -1,13 +1,14 @@
 Changelog
 =========
 
-3.1.1 TBD
----------
+3.1.1 (2018-12-17)
+------------------
 
-[Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.1.0...hotfix/3.1.1)
+[Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.1.0...3.1.1)
 
 ### Fixed
 
+ - Fix contao/core-bundle version detection if the monorepo contao/contao is used
  - Do not register services tagged as contao.hook as service for Contao 4.5 and later
 
 3.1.0 (2018-11-21)
