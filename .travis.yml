@@ -1,6 +1,9 @@
 language: php
 
+dist: xenial
+
 php:
+  - "7.3"
   - "7.2"
   - "7.1"
 
@@ -11,8 +14,6 @@ env:
 
 matrix:
   exclude:
-
-sudo: false
 
 install:
   - travis_retry composer self-update && composer --version
