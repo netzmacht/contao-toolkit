@@ -1,3 +1,7 @@
 
 exclude:
   - spec
+  -
+mapping:
+  'cboelter <christopher@boelter.eu>':
+    - 'Christopher Boelter <christopher@boelter.eu>'

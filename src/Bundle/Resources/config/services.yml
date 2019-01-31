@@ -60,6 +60,10 @@ services:
     class: Contao\CoreBundle\Framework\Adapter
     factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createControllerAdapter']
 
+  netzmacht.contao_toolkit.contao.message_adapter:
+    class: Contao\CoreBundle\Framework\Adapter
+    factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createMessageAdapter']
+
   netzmacht.contao_toolkit.contao.backend_user:
     class: Contao\BackendUser
     factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createBackendUserInstance']

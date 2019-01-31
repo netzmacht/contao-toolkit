@@ -12,6 +12,7 @@ use Contao\Environment;
 use Contao\Frontend;
 use Contao\FrontendUser;
 use Contao\Input;
+use Contao\Message;
 use Contao\System;
 use Contao\Controller;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\ContaoServicesFactory;
@@ -76,6 +77,12 @@ class ContaoServicesFactorySpec extends ObjectBehavior
     {
         $this->expectAdapterWillBeReturned($framework, System::class, $adapter);
         $this->createSystemAdapter()->shouldReturn($adapter);
+    }
+
+    function it_creates_message_adapter(ContaoFrameworkInterface $framework, Adapter $adapter)
+    {
+        $this->expectAdapterWillBeReturned($framework, Message::class, $adapter);
+        $this->createMessageAdapter()->shouldReturn($adapter);
     }
 
     function it_creates_backend_user_instance(ContaoFrameworkInterface $framework, BackendUser $backendUser)

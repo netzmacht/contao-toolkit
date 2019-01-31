@@ -5,6 +5,7 @@
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
+ * @author     Christopher Bölter <christopher@boelter.eu>
  * @copyright  2015-2018 netzmacht David Molineus.
  * @license    LGPL-3.0 https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
@@ -25,6 +26,7 @@ use Contao\Environment;
 use Contao\Frontend;
 use Contao\FrontendUser;
 use Contao\Input;
+use Contao\Message;
 use Contao\Model;
 use Contao\System;
 
@@ -162,6 +164,17 @@ final class ContaoServicesFactory
     public function createModelAdapter(): Adapter
     {
         return $this->createAdapter(Model::class);
+    }
+
+
+    /**
+     * Create a message adapter.
+     *
+     * @return Adapter|Message\
+     */
+    public function createMessageAdapter(): Adapter
+    {
+        return $this->createAdapter(Message::class);
     }
 
     /**
