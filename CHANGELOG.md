@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Unreleased
+----------
+
+### Added
+
+ - Service for Contao Message class
+
 3.1.1 (2018-12-17)
 ------------------
 
