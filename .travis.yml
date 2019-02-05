@@ -1,11 +1,17 @@
-language: php
-
 dist: xenial
+
+addons:
+  apt:
+    packages:
+      - ant-optional
+
+language: php
 
 php:
   - "7.3"
   - "7.2"
   - "7.1"
+  - "nightly"
 
 env:
   - CONTAO_VERSION=contao/core-bundle ~4.4.0
@@ -14,8 +20,11 @@ env:
 
 matrix:
   exclude:
+  allow_failures:
+    - php: "nightly"
 
-install:
+before_script:
+  - echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - travis_retry composer self-update && composer --version
   - travis_retry composer require $CONTAO_VERSION --no-update
   - travis_retry composer update --prefer-dist --no-interaction
