@@ -6,7 +6,8 @@ Unreleased
 
 ### Added
 
- - Service for Contao Message class
+ - Add service for Contao Message class
+ - Add service for Contao Dbafs class
 
 3.1.1 (2018-12-17)
 ------------------

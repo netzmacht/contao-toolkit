@@ -21,6 +21,7 @@ use Contao\Config;
 use Contao\Controller;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
+use Contao\Dbafs;
 use Contao\Encryption;
 use Contao\Environment;
 use Contao\Frontend;
@@ -166,15 +167,24 @@ final class ContaoServicesFactory
         return $this->createAdapter(Model::class);
     }
 
-
     /**
      * Create a message adapter.
      *
-     * @return Adapter|Message\
+     * @return Adapter|Message
      */
     public function createMessageAdapter(): Adapter
     {
         return $this->createAdapter(Message::class);
+    }
+
+    /**
+     * Create a message adapter.
+     *
+     * @return Adapter|Dbafs
+     */
+    public function createDbafsAdapter(): Adapter
+    {
+        return $this->createAdapter(Dbafs::class);
     }
 
     /**

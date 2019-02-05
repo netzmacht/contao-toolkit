@@ -17,6 +17,7 @@ use Contao\BackendUser;
 use Contao\Config;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
+use Contao\Dbafs;
 use Contao\Encryption;
 use Contao\Environment;
 use Contao\Frontend;
@@ -93,6 +94,12 @@ class ContaoServicesFactorySpec extends ObjectBehavior
     {
         $this->expectAdapterWillBeReturned($framework, Message::class, $adapter);
         $this->createMessageAdapter()->shouldReturn($adapter);
+    }
+
+    function it_creates_dbafs_adapter(ContaoFrameworkInterface $framework, Adapter $adapter)
+    {
+        $this->expectAdapterWillBeReturned($framework, Dbafs::class, $adapter);
+        $this->createDbafsAdapter()->shouldReturn($adapter);
     }
 
     function it_creates_backend_user_instance(ContaoFrameworkInterface $framework, BackendUser $backendUser)
