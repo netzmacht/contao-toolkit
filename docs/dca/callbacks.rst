@@ -8,19 +8,15 @@ actions. There are some useful tools which are provided by Toolkit.
 Developing own callbacks
 ------------------------
 
-If you want to create a callback class for your data container *tl_example* Toolkit provides a base callback class for
-you. The idea behind the callback class is to support dependency injection so that you can create a clean callback
-class.
-
-To use the callback simply create the class, register it as a service and use the :code:`callback($methodName)` method
-to register the callback in the data container array.
+If you want to create a callback class for your data container *tl_example* Toolkit provides an abstract listener
+containing the Data container manager.
 
 .. code-block:: php
 
    <?php
 
     // ExampleCallbacks.php
-    class ExampleCallbacks extends Netzmacht\Contao\Toolkit\Dca\Callback\Callbacks
+    class ExampleCallbacks extends Netzmacht\Contao\Toolkit\Dca\Listener\AbstractListener
     {
         /**
          * Name of the data container.
@@ -29,34 +25,10 @@ to register the callback in the data container array.
          */
         protected static $name = 'tl_example';
 
-        /**
-         * Name of the callback service. If not set, the default name would be contao.dca.tl_example
-         *
-         * @var string
-         */
-        protected static $serviceName = 'custom.dca.example-callbacks';
-
         public function onSubmit()
         {
         }
     }
-
-    // config/services.php
-    $GLOBALS['container']['custom.dca.example-callbacks'] = $GLOBALS['container']->share(
-        function ($container) {
-            return new ExampleCallbacks(
-                $container[Netzmacht\Contao\Toolkit\DependencyInjection\Services::DCA_MANAGER]
-            );
-        }
-    );
-
-    // dca/tl_example.php
-    $GLOBALS['TL_DCA']['tl_example']['config']['onsubmit_callback'][] = ExampleCallbacks::callback('onSubmit');
-
-
-As you can see in the example above you can't register the callback as usual using the array syntax of class name and
-method name. The `callback` method is a shortcut which accesses the registered service and calls the callback when
-triggered.
 
 The base `Callbacks` class provides even more helpers:
 
@@ -75,25 +47,6 @@ The base `Callbacks` class provides even more helpers:
     Gets the formatter of a specific data container. See :doc:`formatter` section for more details.
 
 
-Callback factory
-----------------
-
-Toolkit provides a set of often required callbacks. To simplify callback creation a callback factory is shipped. It
-allows to register any service as callback as well.
-
-.. code-block:: php
-
-   <?php
-
-    // dca/tl_example.php
-    $GLOBALS['TL_DCA']['tl_example']['config']['onsubmit_callback'][] = Netzmacht\Contao\Toolkit\Dca\Callback\CallbackFactory::service(
-        'service.name',
-        'methodName'
-    );
-
-The default callbacks are explained below.
-
-
 Provided callbacks
 ------------------
 
@@ -104,51 +57,72 @@ Alias generator callback
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 The alias generator uses the :doc:`../data/alias` to create an alias callback. By default a predefined alias generator
-is used. You are able to pass a custom factory as well.
+is used. You may use the configurations to the `toolkit.alias_generator` configuration. The `fields` configuration is
+required.
 
 .. code-block:: php
 
    <?php
 
-    $GLOBALS['TL_DCA']['tl_example']['fields']['alias']['save_callback'][] = Netzmacht\Contao\Toolkit\Dca\Callback\CallbackFactory::aliasGenerator(
-        'tl_example',
-        'alias',
-        ['title']
-    );
+    $GLOBALS['TL_DCA']['tl_example']['fields']['alias']['save_callback'][] = [
+        Netzmacht\Contao\Toolkit\Dca\Listener\Save\GenerateAliasListener::class,
+        'onSaveCallback'
+    ];
 
-For more details please have a look at the `GenerateAliasCallback`_.
+    $GLOBALS['TL_DCA']['tl_example']['fields']['alias']['toolkit']['alias_generator'] = [
+        'factory' => 'netzmacht.contao_toolkit.data.alias_generator.factory.default_factory',
+        'fields' => ['title']
+    ];
+
+For more details please have a look at the `GenerateAliasListener`_.
 
 
 State button callback
 ~~~~~~~~~~~~~~~~~~~~~
 
-The state button callback is used to generate the state toggle button to toggle the active state of an entry.
+The state button callback is used to generate the state toggle button to toggle the active state of an entry. The
+`stateColumn` configuration is required.
 
 .. code-block:: php
 
    <?php
 
-    $GLOBALS['TL_DCA']['tl_example']['list']['operations']['toggle']['button_callback'][] = Netzmacht\Contao\Toolkit\Dca\Callback\CallbackFactory::stateButton(
-        'tl_example',
-        'published',
-        'custom-invisible-icon.png'
-    );
+    $GLOBALS['TL_DCA']['tl_example']['list']['operations']['toggle']['button_callback'][] = [
+        Netzmacht\Contao\Toolkit\Dca\Listener\Button\SaveButtonCallbackListener::class,
+        'onButtonCallback'
+    ];
 
-For more details please have a look at the `StateButtonCallback`_.
+    $GLOBALS['TL_DCA']['tl_example']['list']['operations']['toggle']['toolkit']['state_button'] = [
+        'disabledIcon' => 'custom-invisible-icon.png,
+        'stateColumn'  => 'published',
+        'inverse'      => false
+    ];
+
+For more details please have a look at the `StateButtonCallbackListener`_.
 
 
 Color picker wizard
 ~~~~~~~~~~~~~~~~~~~
 
-The color picker wizard provides a wizard to choose a rgb color.
+The color picker wizard provides a wizard to choose a rgb color. Every configuration is optional.
 
 .. code-block:: php
 
    <?php
 
-    $GLOBALS['TL_DCA']['tl_example']['fields']['color']['wizard'][] = Netzmacht\Contao\Toolkit\Dca\Callback\CallbackFactory::colorPicker();
+    $GLOBALS['TL_DCA']['tl_example']['fields']['color']['wizard'][] = [
+        Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\ColorPickerListener::class,
+        'onWizardCallback'
+    ];
 
-For more details please have a look at the `ColorPicker`_ wizard.
+    $GLOBALS['TL_DCA']['tl_example']['fields']['color']['toolkit']['alias_generator'] = [
+        'title'      => null,
+        'template'   => null,
+        'icon'       => null,
+        'replaceHex' => null,
+    ];
+
+For more details please have a look at the `ColorPickerListener`_ wizard.
 
 
 File picker wizard
@@ -160,9 +134,12 @@ The file picker wizard provides a popup wizard to choose a file.
 
    <?php
 
-    $GLOBALS['TL_DCA']['tl_example']['fields']['file']['wizard'][] = Netzmacht\Contao\Toolkit\Dca\Callback\CallbackFactory::filePicker();
+    $GLOBALS['TL_DCA']['tl_example']['fields']['file']['wizard'][] = [
+        Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\FilePickerListener::class,
+        'onWizardCallback'
+    ];
 
-For more details please have a look at the `FilePicker`_ wizard.
+For more details please have a look at the `FilePickerListener`_ wizard.
 
 
 Page picker wizard
@@ -174,28 +151,37 @@ The page picker wizard provides a popup wizard to choose a page.
 
    <?php
 
-    $GLOBALS['TL_DCA']['tl_example']['fields']['page']['wizard'][] = Netzmacht\Contao\Toolkit\Dca\Callback\CallbackFactory::pagePicker();
+    $GLOBALS['TL_DCA']['tl_example']['fields']['page']['wizard'][] = [
+        Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PagePickerListener::class,
+        'onWizardCallback'
+    ];
 
-For more details please have a look at the `PagePicker`_ wizard.
+For more details please have a look at the `PagePickerListener`_ wizard.
 
 
 Popup wizard
 ~~~~~~~~~~~~
 
-The popup wizard opens a link in a popup overlay.
+The popup wizard opens a link in a popup overlay. The `href`, `title` and `icon` configuration is required.
 
 .. code-block:: php
 
    <?php
 
-    $GLOBALS['TL_DCA']['tl_example']['fields']['article']['wizard'][] = Netzmacht\Contao\Toolkit\Dca\Callback\CallbackFactory::popupWizard(
-        'do=article',
-        'Edit article',
-        'Open selected article',
-        'icon.png'
-    );
+    $GLOBALS['TL_DCA']['tl_example']['fields']['article']['wizard'][] = [
+        Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PopupWizardListener::class,
+        'onWizardCallback'
+    ];
 
-For more details please have a look at the `PopupWizard`_ wizard.
+    $GLOBALS['TL_DCA']['tl_example']['fields']['article']['toolkit']['popup_wizard'] = [
+        'href'        => null,
+        'title'       => null,
+        'linkPattern' => null,
+        'icon'        => null,
+        'always'      => false,
+    ];
+
+For more details please have a look at the `PopupWizardListener`_ wizard.
 
 
 Get templates callback
@@ -207,11 +193,17 @@ The get templates callback get all available templates.
 
    <?php
 
-    $GLOBALS['TL_DCA']['tl_example']['fields']['template']['options_callback'] = Netzmacht\Contao\Toolkit\Dca\Callback\CallbackFactory::getTemplates(
-        'ce_',      // Prefix
-        ['ce_text'] // Exclude these templates.
-    );
+    $GLOBALS['TL_DCA']['tl_example']['fields']['template']['options_callback'] = [
+        Netzmacht\Contao\Toolkit\Dca\Listener\Options\TemplateOptionsListener::class,
+        'onWizardCallback'
+    ];
 
+    $GLOBALS['TL_DCA']['tl_example']['fields']['template']['toolkit']['template_options'] = [
+        'prefix' => '',
+        'exclude' => null,
+    ];
+
+For more details please have a look at the `TemplateOptionsListener`_ wizard.
 
 Invoker
 -------
@@ -224,7 +216,7 @@ For this case toolkit provides an invoker which is registered as a service.
    <?php
 
     /** @var Netzmacht\Contao\Toolkit\Dca\Callback\Invoker $invoker */
-    $invoker = $container->get(Netzmacht\Contao\Toolkit\DependencyInjection\Services::CALLBACK_INVOKER);
+    $invoker = $container->get('netzmacht.contao_toolkit.callback_invoker);
 
     // Invoke the callback and get the return values.
     $options = $invoker->invoke($GLOBALS['TL_DCA']['tl_example']['fields']['template']['options_callback'], [$dc]);
@@ -234,9 +226,10 @@ For this case toolkit provides an invoker which is registered as a service.
     $value = $invoker->invokeAll($GLOBALS['TL_DCA']['tl_example']['fields']['save_callback'], [$value, $dc], 0);
 
 
-.. _GenerateAliasCallback: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Save/GenerateAliasCallback.php
-.. _StateButtonCallback: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Button/StateButtonCallback.php
-.. _ColorPicker: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Wizard/ColorPicker.php
-.. _FilePicker: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Wizard/FilePicker.php
-.. _PagePicker: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Wizard/PagePicker.php
-.. _PopupWizard: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Wizard/PopupWizard.php
+.. _GenerateAliasListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Save/GenerateAliasListener.php
+.. _StateButtonCallbackListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Button/StateButtonCallbackListener.php
+.. _ColorPickerListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Wizard/ColorPickerListener.php
+.. _FilePickerListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Wizard/FilePickerListener.php
+.. _PagePickerListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Wizard/PagePickerListener.php
+.. _PopupWizardListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Wizard/PopupWizardListener.php
+.. _TemplateOptionsListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Wizard/TemplateOptionsListener.php

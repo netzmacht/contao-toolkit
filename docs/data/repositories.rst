@@ -42,7 +42,7 @@ service has to implement the :code:`Netzmacht\Contao\Toolkit\Data\Model\Reposito
       custom.repository.example_model:
          class: Custom\Model\ExampleRepository
          tags:
-            { name: "netzmacht.contao_toolkit.repository" }
+            { name: "netzmacht.contao_toolkit.repository" model: "Custom\Model\ExampleModel" }
 
 .. warning:: You should **never** define repositories for 3rd party models unless you are not really sure what you're
    doing.

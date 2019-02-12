@@ -17,8 +17,6 @@ Instead of magic properties the template interface provides `set` and `get` meth
 
    <?php
 
-   use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
-
    /** @var Netzmacht\Contao\Toolkit\View\Template\TemplateFactory $templateFactory */
    $templateFactory = $container->get('netzmacht.contao_toolkit.view.template_factory');
 

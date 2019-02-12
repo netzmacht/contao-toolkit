@@ -11,8 +11,6 @@ For instance, then creating an ajax response the assets could get easily collect
 
    <?php
 
-   use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
-
    /** @var Netzmacht\Contao\Toolkit\View\AssetsManager\AssetsManager $assetsManager */
    $assetsManager = $container->get('netzmacht.contao_toolkit.assets_manager');
 
@@ -30,7 +28,7 @@ Toolkit also automates the handling of `static` assets. For debug reasons combin
 To avoid combining all assets when debugging a pain, the assets manager uses the :code:`AssetsManager::STATIC_PRODUCTION`
 flag by default. This means that only in production mode the assets get the `static` flag.
 
-.. hint:: The production mode is set by the dependency container using the service id `Services::PRODUCTION_MODE`.
+.. hint:: The production mode is set by the dependency container using the symfony debug environment setting.
 
 
 Template helper

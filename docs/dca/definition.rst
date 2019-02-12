@@ -9,17 +9,15 @@ definitions. Accessing superglobals is not required anymore which makes your cod
 DCA Manager
 -----------
 
-The entry point to access a data container file is the dca manager. If you want to access informations from a dca
+The entry point to access a data container file is the dca manager. If you want to access information from a dca
 definition, simply get the definition from the dca manager.
 
 .. code-block:: php
 
    <?php
 
-   use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
-
    /** @var Netzmacht\Contao\Toolkit\Dca\Manager $dcaManager */
-   $dcaManger  = $container->get(Services::DCA_MANAGER);
+   $dcaManger  = $container->get('netzmacht.contao_toolkit.dca.manager');
 
    /** @var Netzmacht\Contao\Toolkit\Dca\Definition $definition */
    $definition = $dcaManger->getDefinition('tl_content');
