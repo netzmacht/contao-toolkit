@@ -289,17 +289,17 @@ abstract class AbstractComponent implements Component
     protected function compileCssClass(): string
     {
         $cssID    = $this->get('cssID');
-        $cssClass = 'ce_' . $this->get('type');
+        $cssClass = '';
 
         if (!empty($cssID[1])) {
-            $cssClass .= ' ' . $cssID[1];
+            $cssClass .= $cssID[1];
         }
 
         if ($this->getModel() && $this->getModel()->classes) {
             $cssClass .= ' ' . implode(' ', (array) $this->getModel()->classes);
         }
 
-        return $cssClass;
+        return trim($cssClass);
     }
 
     /**

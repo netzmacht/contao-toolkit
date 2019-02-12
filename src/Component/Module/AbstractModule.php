@@ -111,4 +111,12 @@ abstract class AbstractModule extends AbstractComponent implements Module
     {
         return $this->translator;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function compileCssClass(): string
+    {
+        return trim('mod_' . $this->get('type') . ' ' . parent::compileCssClass());
+    }
 }

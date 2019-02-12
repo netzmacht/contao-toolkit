@@ -61,4 +61,12 @@ abstract class AbstractContentElement extends AbstractComponent implements Conte
 
         return true;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function compileCssClass(): string
+    {
+        return trim('ce_' . $this->get('type') . ' ' . parent::compileCssClass());
+    }
 }
