@@ -74,6 +74,7 @@ services:
 
   netzmacht.contao_toolkit.data.alias_generator.factory.default_factory:
     class: Netzmacht\Contao\Toolkit\Data\Alias\Factory\ToolkitAliasGeneratorFactory
+    public: true
     arguments:
       - '@database_connection'
 

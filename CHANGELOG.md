@@ -8,6 +8,10 @@ Unreleased
 
  - Add service for Contao Message class
  - Add service for Contao Dbafs class
+ 
+### Fixed
+
+ - Default alias generator factory has to be a public service.
 
 3.1.1 (2018-12-17)
 ------------------
