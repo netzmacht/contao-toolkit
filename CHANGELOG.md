@@ -8,6 +8,7 @@ Unreleased
 
  - Add service for Contao Message class
  - Add service for Contao Dbafs class
+ - Add `Definition#modify` method to modify given defintion.
  
 ### Fixed
 
