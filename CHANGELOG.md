@@ -1,8 +1,11 @@
 Changelog
 =========
 
-Unreleased
-----------
+[Unreleased]
+------------
+
+[3.2.0] (2019-02-12)
+--------------------
 
 ### Added
 
@@ -14,20 +17,16 @@ Unreleased
 
  - Default alias generator factory has to be a public service.
 
-3.1.1 (2018-12-17)
+[3.1.1] (2018-12-17)
 ------------------
-
-[Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.1.0...3.1.1)
 
 ### Fixed
 
  - Fix contao/core-bundle version detection if the monorepo contao/contao is used
  - Do not register services tagged as contao.hook as service for Contao 4.5 and later
 
-3.1.0 (2018-11-21)
-------------------
-
-[Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.0.7...3.1.0)
+[3.1.0] (2018-11-21)
+--------------------
 
 ### Added
 
@@ -52,56 +51,54 @@ Unreleased
  - Deprecate `handle*` methods for all dca callback listeners.
  - Deprecate dotted named for dca callback listener services. Use class names instead.
 
-3.0.7 (2018-10-30)
-------------------
-
-[Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.0.6...3.0.7)
+[3.0.7] (2018-10-30)
+--------------------
 
  - Fix a POSIX compilation error in the translator (See contao/core-bundle#1656)
  - Do not add domain as message prefix by default in the translator as Contao doesn't anymore. Added BC support. 
 
-3.0.6 (2018-08-27)
-------------------
+[3.0.6] (2018-08-27)
+--------------------
 
-[Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.0.5...3.0.6)
+ - Fix incompatibility with contao-community/translator
 
- - Fix incompatibility with contao-community
-
-3.0.5 (2018-08-24)
-------------------
-
-[Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.0.4...3.0.5)
+[3.0.5] (2018-08-24)
+--------------------
 
  - Get travis build work again for Contao 4.5 and later
  - Fix rendering of component classes 
  
-3.0.4 (2018-08-24)
-------------------
-
-[Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.0.3...3.0.4)
+[3.0.4] (2018-08-24)
+--------------------
 
  - Update readme
 
-3.0.3 (2018-08-24)
-------------------
-
-[Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.0.2...3.0.3)
+[3.0.3] (2018-08-24)
+--------------------
 
  - Allow symfony 4 components.
  - RUn composer-require-checker and fix issues.
 
-3.0.2 (2018-03-29)
-------------------
-
-[Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.0.1...3.0.2)
+[3.0.2] (2018-03-29)
+--------------------
 
  - Fix the order of the labels in the options builder
  - Improve the translator compatibility by supporting catalogs
 
-3.0.1 (2018-01-12)
-------------------
-
-[Full Changelog](https://github.com/netzmacht/contao-toolkit/compare/3.0.0...3.0.1)
+[3.0.1] (2018-01-12)
+--------------------
 
  - Prevent error than no dca array is loaded (See [contao-leaflet-maps/issues/54](https://github.com/netzmacht/contao-leaflet-maps/issues/54)
  - Added changelog (#9)
+
+[Unreleased]: https://github.com/netzmacht/contao-toolkit/compare/3.2.0...dev-master
+[3.2.0]: https://github.com/netzmacht/contao-toolkit/compare/3.1.1...3.2.0
+[3.1.1]: https://github.com/netzmacht/contao-toolkit/compare/3.1.0...3.1.1
+[3.1.0]: https://github.com/netzmacht/contao-toolkit/compare/3.0.7...3.1.0
+[3.0.8]: https://github.com/netzmacht/contao-toolkit/compare/3.0.6...3.0.7
+[3.0.6]: https://github.com/netzmacht/contao-toolkit/compare/3.0.5...3.0.6
+[3.0.5]: https://github.com/netzmacht/contao-toolkit/compare/3.0.4...3.0.5
+[3.0.4]: https://github.com/netzmacht/contao-toolkit/compare/3.0.3...3.0.4
+[3.0.3]: https://github.com/netzmacht/contao-toolkit/compare/3.0.2...3.0.3
+[3.0.2]: https://github.com/netzmacht/contao-toolkit/compare/3.0.1...3.0.2
+[3.0.1]: https://github.com/netzmacht/contao-toolkit/compare/3.0.0...3.0.1
