@@ -35,6 +35,8 @@ Provided tags:
 
 .. code-block:: php
 
+    <?php
+
     // src/ExampleFactory.php
     class ExampleFactory implements Netzmacht\Contao\Toolkit\Component\ComponentFactory
     {

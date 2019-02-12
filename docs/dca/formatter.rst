@@ -16,10 +16,8 @@ get the formatter for your data container:
 
    <?php
 
-   use Netzmacht\Contao\Toolkit\DependencyInjection\Services;
-
    /** @var Netzmacht\Contao\Toolkit\Dca\Manager $dcaManager */
-   $dcaManger  = $container->get(Services::DCA_MANAGER);
+   $dcaManger  = $container->get('netzmacht.contao_toolkit.dca.manager');
 
    /** @var Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter $formatter */
    $formatter = $dcaManager->getFormatter('tl_content');

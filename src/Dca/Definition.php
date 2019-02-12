@@ -150,6 +150,19 @@ final class Definition
     }
 
     /**
+     * Modify given configuration value.
+     *
+     * @param array|string $path    The path as string or array.
+     * @param callable     $handler A handler getting the current value passed and has to return the modified value.
+     *
+     * @return void
+     */
+    public function modify($path, callable $handler): void
+    {
+        $this->set($path, $handler($this->get($path)));
+    }
+
+    /**
      * Get the name.
      *
      * @return string
