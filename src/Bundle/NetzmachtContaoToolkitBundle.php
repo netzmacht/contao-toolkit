@@ -120,7 +120,7 @@ final class NetzmachtContaoToolkitBundle extends Bundle
         );
 
         $container->addCompilerPass(
-            new RegisterContaoModelPass('netzmacht.contao_toolkit.repository', 0)
+            new RegisterContaoModelPass()
         );
 
         // Since Contao 4.5 tagged hook listeners are supported by the Contao core

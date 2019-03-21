@@ -45,7 +45,7 @@ services:
     arguments:
       - []
     tags:
-      - { name: 'contao.hook', hook: 'initializeSystem', method: 'onInitializeSystem', priority: 101 }
+      - { name: 'contao.hook', hook: 'initializeSystem', method: 'onInitializeSystem', priority: 100 }
 
   netzmacht.contao_toolkit.listeners.set_operation_data_attribute:
     class: Netzmacht\Contao\Toolkit\Dca\Listener\SetOperationDataAttributeListener

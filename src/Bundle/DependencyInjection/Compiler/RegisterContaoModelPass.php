@@ -27,51 +27,27 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 final class RegisterContaoModelPass implements CompilerPassInterface
 {
     /**
-     * Name of the tag.
-     *
-     * @var string
-     */
-    private $tagName;
-
-    /**
-     * Index of the argument which should get the tagged references.
-     *
-     * @var int
-     */
-    private $argumentIndex;
-
-    /**
-     * ComponentFactoryCompilePass constructor.
-     *
-     * @param string $tagName       Name of the tag.
-     * @param int    $argumentIndex Index of the argument which should get the tagged references.
-     */
-    public function __construct(string $tagName, int $argumentIndex)
-    {
-        $this->tagName       = $tagName;
-        $this->argumentIndex = $argumentIndex;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function process(ContainerBuilder $container): void
     {
         $serviceId = 'netzmacht.contao_toolkit.listeners.register_models';
+        
         if (!$container->has($serviceId)) {
             return;
         }
 
         $definition       = $container->findDefinition($serviceId);
-        $taggedServiceIds = $container->findTaggedServiceIds($this->tagName);
-        $repositories     = (array) $definition->getArgument($this->argumentIndex);
+        $taggedServiceIds = $container->findTaggedServiceIds('netzmacht.contao_toolkit.repository');
+        $repositories     = (array) $definition->getArgument(0);
 
         foreach ($taggedServiceIds as $tags) {
             foreach ($tags as $tag) {
                 Assert::that($tag)->keyExists('model');
-                Assert::that($tag['model'])->string();
-                Assert::that($tag['model'])->classExists();
-                Assert::that($tag['model'])->subclassOf(Model::class);
+                Assert::that($tag['model'])
+                    ->string()
+                    ->classExists()
+                    ->subclassOf(Model::class);
 
                 /** @var Model $model */
                 $model = $tag['model'];
@@ -80,6 +56,6 @@ final class RegisterContaoModelPass implements CompilerPassInterface
             }
         }
 
-        $definition->replaceArgument($this->argumentIndex, $repositories);
+        $definition->replaceArgument(0, $repositories);
     }
 }
