@@ -44,7 +44,6 @@ services:
     public: true
     arguments:
       - []
-      - []
     tags:
       - { name: 'contao.hook', hook: 'initializeSystem', method: 'onInitializeSystem', priority: 101 }
 
