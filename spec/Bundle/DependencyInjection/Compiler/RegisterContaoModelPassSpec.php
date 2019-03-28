@@ -13,6 +13,7 @@
 namespace spec\Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler;
 
 use Contao\ContentModel;
+use Contao\ModuleModel;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterContaoModelPass;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -35,11 +36,11 @@ class RegisterContaoModelPassSpec extends ObjectBehavior
     function it_registeres_models_to_contao_models(ContainerBuilder $container, Definition $definition)
     {
         $taggedServices = [
-            'foo' => [
+            'content' => [
                 ['model' => ContentModel::class]
             ],
-            'bar' => [
-                ['model' => ContentModel::class]
+            'module'  => [
+                ['model' => ModuleModel::class]
             ]
         ];
 
@@ -59,7 +60,8 @@ class RegisterContaoModelPassSpec extends ObjectBehavior
             ->shouldBeCalled()
             ->willReturn($taggedServices);
 
-        $definition->replaceArgument(0, Argument::size(1))->shouldBeCalled();
+        $definition->replaceArgument(0, ['tl_content' => ContentModel::class, 'tl_module' => ModuleModel::class])
+            ->shouldBeCalled();
 
         $this->process($container);
     }
