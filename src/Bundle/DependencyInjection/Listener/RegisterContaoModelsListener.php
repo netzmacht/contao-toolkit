@@ -14,9 +14,6 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Listener;
 
-use Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElementDecorator;
-use Netzmacht\Contao\Toolkit\Component\Module\ModuleDecorator;
-
 /**
  * Class RegisterContaoModelsListener.
  *
