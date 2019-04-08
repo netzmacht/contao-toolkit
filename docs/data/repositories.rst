@@ -44,6 +44,9 @@ service has to implement the :code:`Netzmacht\Contao\Toolkit\Data\Model\Reposito
          tags:
             { name: "netzmacht.contao_toolkit.repository" model: "Custom\Model\ExampleModel" }
 
+If you register a custom repository the model you specified in the model tag is automatically added to Contao's
+:code:`$GLOBALS['TL_MODELS']`.
+
 .. warning:: You should **never** define repositories for 3rd party models unless you are not really sure what you're
    doing.
 

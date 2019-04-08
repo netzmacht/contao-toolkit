@@ -5,6 +5,7 @@
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
+ * @author     Christopher Bölter <christopher@boelter.eu>
  * @copyright  2015-2018 netzmacht David Molineus.
  * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
@@ -15,6 +16,7 @@ declare(strict_types=1);
 namespace spec\Netzmacht\Contao\Toolkit\Bundle;
 
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\FosCacheResponseTaggerPass;
+use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterContaoModelPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterHooksPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RepositoriesPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\TranslatorPass;
@@ -41,6 +43,14 @@ final class NetzmachtContaoToolkitBundleSpec extends ObjectBehavior
     public function it_registers_repositories_pass(ContainerBuilder $container): void
     {
         $container->addCompilerPass(Argument::type(RepositoriesPass::class))->shouldBeCalledOnce();
+        $container->addCompilerPass(Argument::any())->shouldBeCalled();
+
+        $this->build($container);
+    }
+
+    public function it_registers_contao_model_pass(ContainerBuilder $container): void
+    {
+        $container->addCompilerPass(Argument::type(RegisterContaoModelPass::class))->shouldBeCalledOnce();
         $container->addCompilerPass(Argument::any())->shouldBeCalled();
 
         $this->build($container);

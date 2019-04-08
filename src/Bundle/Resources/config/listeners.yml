@@ -39,6 +39,14 @@ services:
     tags:
       - { name: 'contao.hook', hook: 'initializeSystem', method: 'onInitializeSystem', priority: 100 }
 
+  netzmacht.contao_toolkit.listeners.register_models:
+    class: Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Listener\RegisterContaoModelsListener
+    public: true
+    arguments:
+      - []
+    tags:
+      - { name: 'contao.hook', hook: 'initializeSystem', method: 'onInitializeSystem', priority: 100 }
+
   netzmacht.contao_toolkit.listeners.set_operation_data_attribute:
     class: Netzmacht\Contao\Toolkit\Dca\Listener\SetOperationDataAttributeListener
     public: true

@@ -5,6 +5,7 @@
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
+ * @author     Christopher Bölter <christopher@boelter.eu>
  * @copyright  2015-2018 netzmacht David Molineus.
  * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
@@ -17,6 +18,7 @@ namespace Netzmacht\Contao\Toolkit\Bundle;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\AddTaggedServicesAsArgumentPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\ComponentDecoratorPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\FosCacheResponseTaggerPass;
+use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterContaoModelPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterHooksPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RepositoriesPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\TranslatorPass;
@@ -115,6 +117,10 @@ final class NetzmachtContaoToolkitBundle extends Bundle
 
         $container->addCompilerPass(
             new ComponentDecoratorPass('netzmacht.contao_toolkit.component.content_element', 1)
+        );
+
+        $container->addCompilerPass(
+            new RegisterContaoModelPass()
         );
 
         // Since Contao 4.5 tagged hook listeners are supported by the Contao core
