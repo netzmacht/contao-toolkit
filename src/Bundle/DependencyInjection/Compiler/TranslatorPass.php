@@ -67,6 +67,14 @@ final class TranslatorPass implements CompilerPassInterface
         );
 
         $definition->setDecoratedService('translator');
+        $definition->addTag('monolog.logger', ['channel' => 'translation']);
+
         $container->setDefinition('netzmacht.contao_toolkit.translation.translator', $definition);
+
+        if ($container->getParameter('kernel.debug') && $container->hasDefinition('translator.data_collector')) {
+            $container
+                ->getDefinition('translator.data_collector')
+                ->setDecoratedService('netzmacht.contao_toolkit.translation.translator');
+        }
     }
 }

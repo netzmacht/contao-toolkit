@@ -88,7 +88,7 @@ class LangArrayTranslator implements Translator
 
         if (null === $translated && $domain !== 'default') {
             $this->logger->warning(
-                'Translation not found. Try autoprefixing message domain to message id.',
+                'Translation not found. Try autoprefixing message with domain.',
                 ['id' => $messageId, 'domain' => $domain, 'locale' => $this->getLocale()]
             );
 
@@ -96,10 +96,18 @@ class LangArrayTranslator implements Translator
         }
 
         if (null === $translated) {
-            $this->logger->warning(
-                'Translation not found.',
-                ['id' => $messageId, 'domain' => $domain, 'locale' => $this->getLocale()]
-            );
+            if ($domain !== 'default') {
+                $this->logger->warning(
+                    'Translation with autoprefixed domain not found.',
+                    ['id' => $messageId, 'domain' => $domain, 'locale' => $this->getLocale()]
+                );
+            } else {
+                $this->logger->warning(
+                    'Translation not found.',
+                    ['id' => $messageId, 'domain' => $domain, 'locale' => $this->getLocale()]
+                );
+            }
+
 
             return $messageId;
         }
