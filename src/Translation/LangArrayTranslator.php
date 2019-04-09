@@ -14,10 +14,14 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Translation;
 
+use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
 use Contao\System;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
+use function array_unshift;
 use function trigger_error;
+use const E_USER_DEPRECATED;
 
 /**
  * LangArrayTranslator is a translator implementation using the globals of Contao.
@@ -42,15 +46,24 @@ class LangArrayTranslator implements Translator
     private $framework;
 
     /**
+     * Logger.
+     *
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * Constructor.
      *
      * @param Translator      $translator The translator to decorate.
      * @param ContaoFramework $framework  Contao framework.
+     * @param LoggerInterface $logger     Logger.
      */
-    public function __construct(Translator $translator, ContaoFramework $framework)
+    public function __construct(Translator $translator, ContaoFramework $framework, LoggerInterface $logger)
     {
         $this->translator = $translator;
         $this->framework  = $framework;
+        $this->logger     = $logger;
     }
 
     /**
@@ -73,11 +86,29 @@ class LangArrayTranslator implements Translator
 
         $translated = $this->getFromGlobals($messageId);
 
-        if (null === $translated) {
+        if (null === $translated && $domain !== 'default') {
+            $this->logger->warning(
+                'Translation not found. Try autoprefixing message with domain.',
+                ['id' => $messageId, 'domain' => $domain, 'locale' => $this->getLocale()]
+            );
+
             $translated = $this->getFromGlobals($messageId, $domain);
         }
 
         if (null === $translated) {
+            if ($domain !== 'default') {
+                $this->logger->warning(
+                    'Translation with autoprefixed domain not found.',
+                    ['id' => $messageId, 'domain' => $domain, 'locale' => $this->getLocale()]
+                );
+            } else {
+                $this->logger->warning(
+                    'Translation not found.',
+                    ['id' => $messageId, 'domain' => $domain, 'locale' => $this->getLocale()]
+                );
+            }
+
+
             return $messageId;
         }
 
@@ -137,19 +168,20 @@ class LangArrayTranslator implements Translator
      */
     private function getFromGlobals(string $messageId, ?string $domain = null): ?string
     {
-        if ($domain && $domain !== 'default') {
-            $messageId = $domain . '.' . $messageId;
-
-            // @codingStandardsIgnoreStart
-            @trigger_error(
-                'Autoprefixing message domain to message id is deprecated as it\'s not supported by Contao anymore'
-            );
-            // @codingStandardsIgnoreEnd
-        }
-
         // Split the ID into chunks allowing escaped dots (\.) and backslashes (\\)
         preg_match_all('/(?:\\\\[\.\\\\]|[^\.])++/', $messageId, $matches);
         $parts = preg_replace('/\\\\([\.\\\\])/', '$1', $matches[0]);
+
+        if ($domain) {
+            array_unshift($parts, $domain);
+
+            // @codingStandardsIgnoreStart
+            @trigger_error(
+                'Autoprefixing message domain to message id is deprecated as it\'s not supported by Contao anymore',
+                E_USER_DEPRECATED
+            );
+            // @codingStandardsIgnoreEnd
+        }
 
         $item = &$GLOBALS['TL_LANG'];
 
@@ -173,7 +205,7 @@ class LangArrayTranslator implements Translator
      */
     private function loadLanguageFile(string $name): void
     {
-        /** @var System $system */
+        /** @var System|Adapter $system */
         $system = $this->framework->getAdapter(System::class);
 
         $system->loadLanguageFile($name);

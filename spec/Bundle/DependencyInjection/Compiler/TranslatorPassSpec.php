@@ -40,6 +40,7 @@ class TranslatorPassSpec extends ObjectBehavior
         $container->findDefinition('translator')->willReturn($definition);
         $container->getParameterBag()->willReturn($bag);
 
+        $container->getParameter('kernel.debug')->willReturn(false);
 
         $container->hasDefinition('contao.translation.translator')->willReturn(false);
         $container->setDefinition(

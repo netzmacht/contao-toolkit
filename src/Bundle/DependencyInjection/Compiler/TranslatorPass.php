@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler;
 
+use function is_subclass_of;
 use Netzmacht\Contao\Toolkit\Translation\LangArrayTranslator;
 use Netzmacht\Contao\Toolkit\Translation\LangArrayTranslatorBagTranslator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -50,15 +51,30 @@ final class TranslatorPass implements CompilerPassInterface
             ? LangArrayTranslatorBagTranslator::class
             : LangArrayTranslator::class;
 
+        if ($container->getParameter('kernel.debug')) {
+            $logger = new Reference('logger');
+        } else {
+            $logger = new Reference('netzmacht.contao_toolkit.logger.null_logger');
+        }
+
         $definition = new Definition(
             $decoratorClass,
             [
                 new Reference('netzmacht.contao_toolkit.translation.translator.inner'),
-                new Reference('contao.framework')
+                new Reference('contao.framework'),
+                $logger
             ]
         );
 
         $definition->setDecoratedService('translator');
+        $definition->addTag('monolog.logger', ['channel' => 'translation']);
+
         $container->setDefinition('netzmacht.contao_toolkit.translation.translator', $definition);
+
+        if ($container->getParameter('kernel.debug') && $container->hasDefinition('translator.data_collector')) {
+            $container
+                ->getDefinition('translator.data_collector')
+                ->setDecoratedService('netzmacht.contao_toolkit.translation.translator');
+        }
     }
 }

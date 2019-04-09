@@ -4,6 +4,15 @@ Changelog
 [Unreleased]
 ------------
 
+[3.3.0] (2019-04-09)
+--------------------
+
+### Added
+
+ - Auto register models in globals registry if defined as repository.
+ - Log if translated message does not exist.
+ - Generate deprecated error if domain prefix is added to a translated message.
+
 [3.2.0] (2019-02-12)
 --------------------
 
@@ -91,7 +100,8 @@ Changelog
  - Prevent error than no dca array is loaded (See [contao-leaflet-maps/issues/54](https://github.com/netzmacht/contao-leaflet-maps/issues/54)
  - Added changelog (#9)
 
-[Unreleased]: https://github.com/netzmacht/contao-toolkit/compare/3.2.0...dev-master
+[Unreleased]: https://github.com/netzmacht/contao-toolkit/compare/3.3.0...dev-master
+[3.3.0]: https://github.com/netzmacht/contao-toolkit/compare/3.2.0...3.3.0
 [3.2.0]: https://github.com/netzmacht/contao-toolkit/compare/3.1.1...3.2.0
 [3.1.1]: https://github.com/netzmacht/contao-toolkit/compare/3.1.0...3.1.1
 [3.1.0]: https://github.com/netzmacht/contao-toolkit/compare/3.0.7...3.1.0
