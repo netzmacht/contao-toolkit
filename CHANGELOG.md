@@ -4,6 +4,12 @@ Changelog
 [Unreleased]
 ------------
 
+### Added
+
+ - Auto register models in globals registry if defined as repository.
+ - Log if translated message does not exist.
+ - Generate deprecated error if domain prefix is added to a translated message.
+
 [3.2.0] (2019-02-12)
 --------------------
 
