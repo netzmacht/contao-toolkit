@@ -17,6 +17,7 @@ namespace Netzmacht\Contao\Toolkit\Translation;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
 use Contao\System;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 use function array_unshift;
 use function trigger_error;
@@ -45,15 +46,24 @@ class LangArrayTranslator implements Translator
     private $framework;
 
     /**
+     * Logger.
+     *
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * Constructor.
      *
      * @param Translator      $translator The translator to decorate.
      * @param ContaoFramework $framework  Contao framework.
+     * @param LoggerInterface $logger     Logger.
      */
-    public function __construct(Translator $translator, ContaoFramework $framework)
+    public function __construct(Translator $translator, ContaoFramework $framework, LoggerInterface $logger)
     {
         $this->translator = $translator;
         $this->framework  = $framework;
+        $this->logger     = $logger;
     }
 
     /**
@@ -77,10 +87,20 @@ class LangArrayTranslator implements Translator
         $translated = $this->getFromGlobals($messageId);
 
         if (null === $translated && $domain !== 'default') {
+            $this->logger->warning(
+                'Translation not found. Try autoprefixing message domain to message id.',
+                ['id' => $messageId, 'domain' => $domain, 'locale' => $this->getLocale()]
+            );
+
             $translated = $this->getFromGlobals($messageId, $domain);
         }
 
         if (null === $translated) {
+            $this->logger->warning(
+                'Translation not found.',
+                ['id' => $messageId, 'domain' => $domain, 'locale' => $this->getLocale()]
+            );
+
             return $messageId;
         }
 

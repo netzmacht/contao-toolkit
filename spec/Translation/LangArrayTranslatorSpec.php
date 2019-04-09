@@ -8,13 +8,14 @@ use Contao\System;
 use Netzmacht\Contao\Toolkit\Translation\LangArrayTranslator;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 use function set_error_handler;
 use const E_USER_DEPRECATED;
 
 final class LangArrayTranslatorSpec extends ObjectBehavior
 {
-    public function let(Translator $translator, ContaoFrameworkInterface $framework): void
+    public function let(Translator $translator, ContaoFrameworkInterface $framework, LoggerInterface $logger): void
     {
         $systemAdapter = new class(System::class) extends Adapter {
             public function loadLanguageFile() {
@@ -25,7 +26,9 @@ final class LangArrayTranslatorSpec extends ObjectBehavior
         $framework->initialize()->willReturn(null);
         $framework->getAdapter(System::class)->willReturn($systemAdapter);
 
-        $this->beConstructedWith($translator, $framework);
+        $translator->getLocale()->willReturn('en');
+
+        $this->beConstructedWith($translator, $framework, $logger);
     }
 
     public function it_is_initializable(): void

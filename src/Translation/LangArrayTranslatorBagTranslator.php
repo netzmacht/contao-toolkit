@@ -16,6 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Translation;
 
 use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
 use Netzmacht\Contao\Toolkit\Assertion\Assertion;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Translation\TranslatorBagInterface as TranslatorBag;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 
@@ -32,14 +33,15 @@ class LangArrayTranslatorBagTranslator extends LangArrayTranslator implements Tr
      *
      * @param Translator      $translator The translator to decorate.
      * @param ContaoFramework $framework  Contao framework.
+     * @param LoggerInterface $logger     Logger.
      *
      * @throws \Assert\AssertionFailedException When a translator is passed not implementing TranslatorBag interface.
      */
-    public function __construct(Translator $translator, ContaoFramework $framework)
+    public function __construct(Translator $translator, ContaoFramework $framework, LoggerInterface $logger)
     {
         Assertion::implementsInterface($translator, TranslatorBag::class);
 
-        parent::__construct($translator, $framework);
+        parent::__construct($translator, $framework, $logger);
     }
 
     /**
