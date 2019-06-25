@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Contao toolkit.
+ *
+ * @package    contao-toolkit
+ * @author     David Molineus <david.molineus@netzmacht.de>
+ * @copyright  2015-2019 netzmacht David Molineus.
+ * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
+ * @filesource
+ */
+
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Security\Csrf;
@@ -43,7 +53,6 @@ final class CsrfTokenProvider
     /**
      * Get the token from the token manager.
      *
-     *
      * @param string|null $name Optional name of the token. If empty default name is used.
      *
      * @return CsrfToken
@@ -55,7 +64,6 @@ final class CsrfTokenProvider
 
     /**
      * Get the token value from a token from the token manager.
-     *
      *
      * @param string|null $name Optional name of the token. If empty default name is used.
      *
