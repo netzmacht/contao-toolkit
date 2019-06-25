@@ -136,3 +136,9 @@ services:
 
   netzmacht.contao_toolkit.logger.null_logger:
     class: Psr\Log\NullLogger
+
+  netzmacht.contao_toolkit.csrf.token_provider:
+    class: Netzmacht\Contao\Toolkit\Security\Csrf\CsrfTokenProvider
+    arguments:
+      - '@contao.csrf.token_manager'
+      - '%contao.csrf_token_name%'
