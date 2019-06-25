@@ -55,7 +55,6 @@ Provided tags:
     foo.content_element.factory:
         class: ExampleFactory
         tags:
-            - { name: 'netzmacht.contao_toolkit.component.content_element_factory' }
             - { name: 'netzmacht.contao_toolkit.component.content_element', category: 'texts', type: 'example' }
 
 .. hint:: It's possible to create multiple types with a factory. Just add multiple tags.

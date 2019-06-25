@@ -75,6 +75,22 @@ final class NetzmachtContaoToolkitBundle extends Bundle
         $container->addCompilerPass(new FosCacheResponseTaggerPass($this->contaoCoreVersion));
 
         $container->addCompilerPass(
+            new ComponentDecoratorPass(
+                'netzmacht.contao_toolkit.component.frontend_module',
+                0,
+                'netzmacht.contao_toolkit.component.frontend_module_factory'
+            )
+        );
+
+        $container->addCompilerPass(
+            new ComponentDecoratorPass(
+                'netzmacht.contao_toolkit.component.content_element',
+                1,
+                'netzmacht.contao_toolkit.component.content_element_factory'
+            )
+        );
+
+        $container->addCompilerPass(
             new AddTaggedServicesAsArgumentPass(
                 'netzmacht.contao_toolkit.component.content_element_factory',
                 'netzmacht.contao_toolkit.component.content_element_factory'
@@ -109,14 +125,6 @@ final class NetzmachtContaoToolkitBundle extends Bundle
                 'netzmacht.contao_toolkit.dca.formatter.post_filter',
                 2
             )
-        );
-
-        $container->addCompilerPass(
-            new ComponentDecoratorPass('netzmacht.contao_toolkit.component.frontend_module', 0)
-        );
-
-        $container->addCompilerPass(
-            new ComponentDecoratorPass('netzmacht.contao_toolkit.component.content_element', 1)
         );
 
         $container->addCompilerPass(

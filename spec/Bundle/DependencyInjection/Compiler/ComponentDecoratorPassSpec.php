@@ -26,11 +26,13 @@ final class ComponentDecoratorPassSpec extends ObjectBehavior
 
     private const ARGUMENT_INDEX = 1;
 
+    private const FACTORY_TAG = 'foo.factory';
+
     private const DECORATOR_SERVICE = 'netzmacht.contao_toolkit.listeners.register_component_decorators';
 
     public function let(): void
     {
-        $this->beConstructedWith(self::TAG, self::ARGUMENT_INDEX);
+        $this->beConstructedWith(self::TAG, self::ARGUMENT_INDEX, self::FACTORY_TAG);
     }
 
     public function it_is_initializable(): void
@@ -98,9 +100,13 @@ final class ComponentDecoratorPassSpec extends ObjectBehavior
             ->shouldBeCalled()
             ->willReturn($definition);
 
+        $container->getDefinition(self::DECORATOR_SERVICE)
+            ->shouldBeCalled()
+            ->willReturn($definition);
+
         $container->findTaggedServiceIds(self::TAG)
             ->shouldBeCalled()
-            ->willReturn(['service' => [['category' => 'foo', 'alias' => 'bar']]]);
+            ->willReturn([self::DECORATOR_SERVICE => [['category' => 'foo', 'alias' => 'bar']]]);
 
         $this->process($container);
     }
@@ -117,9 +123,13 @@ final class ComponentDecoratorPassSpec extends ObjectBehavior
             ->shouldBeCalled()
             ->willReturn($definition);
 
+        $container->getDefinition(self::DECORATOR_SERVICE)
+            ->shouldBeCalled()
+            ->willReturn($definition);
+
         $container->findTaggedServiceIds(self::TAG)
             ->shouldBeCalled()
-            ->willReturn(['service' => [['category' => 'foo', 'type' => 'bar']]]);
+            ->willReturn([self::DECORATOR_SERVICE=> [['category' => 'foo', 'type' => 'bar']]]);
 
         $this->process($container);
     }
@@ -134,13 +144,92 @@ final class ComponentDecoratorPassSpec extends ObjectBehavior
             ->shouldBeCalled()
             ->willReturn($definition);
 
+        $container->getDefinition(self::DECORATOR_SERVICE)
+            ->shouldBeCalled()
+            ->willReturn($definition);
+
         $definition->getArgument(self::ARGUMENT_INDEX)
             ->shouldBeCalled()
             ->willReturn(['foo' => ['baz']]);
 
         $container->findTaggedServiceIds(self::TAG)
             ->shouldBeCalled()
-            ->willReturn(['service' => [['category' => 'foo', 'type' => 'bar']]]);
+            ->willReturn([self::DECORATOR_SERVICE => [['category' => 'foo', 'type' => 'bar']]]);
+
+        $definition->hasTag(self::FACTORY_TAG)
+            ->shouldBeCalled()
+            ->willReturn(true);
+
+        $definition->replaceArgument(self::ARGUMENT_INDEX, ['foo' => ['baz', 'bar']])
+            ->shouldBeCalled();
+
+        $this->process($container);
+    }
+
+    public function it_adds_factory_tag_if_not_exists(ContainerBuilder $container, Definition $definition): void
+    {
+        $container->has(self::DECORATOR_SERVICE)
+            ->shouldBeCalled()
+            ->willReturn(true);
+
+        $container->findDefinition(self::DECORATOR_SERVICE)
+            ->shouldBeCalled()
+            ->willReturn($definition);
+
+        $container->getDefinition(self::DECORATOR_SERVICE)
+            ->shouldBeCalled()
+            ->willReturn($definition);
+
+        $definition->getArgument(self::ARGUMENT_INDEX)
+            ->shouldBeCalled()
+            ->willReturn(['foo' => ['baz']]);
+
+        $container->findTaggedServiceIds(self::TAG)
+            ->shouldBeCalled()
+            ->willReturn([self::DECORATOR_SERVICE => [['category' => 'foo', 'type' => 'bar']]]);
+
+        $definition->hasTag(self::FACTORY_TAG)
+            ->shouldBeCalled()
+            ->willReturn(false);
+
+        $definition->addTag(self::FACTORY_TAG)
+            ->shouldBeCalledOnce();
+
+        $definition->replaceArgument(self::ARGUMENT_INDEX, ['foo' => ['baz', 'bar']])
+            ->shouldBeCalled();
+
+        $this->process($container);
+    }
+
+
+    public function it_doesnt_add_factory_tag_if_already_exists(ContainerBuilder $container, Definition $definition): void
+    {
+        $container->has(self::DECORATOR_SERVICE)
+            ->shouldBeCalled()
+            ->willReturn(true);
+
+        $container->findDefinition(self::DECORATOR_SERVICE)
+            ->shouldBeCalled()
+            ->willReturn($definition);
+
+        $container->getDefinition(self::DECORATOR_SERVICE)
+            ->shouldBeCalled()
+            ->willReturn($definition);
+
+        $definition->getArgument(self::ARGUMENT_INDEX)
+            ->shouldBeCalled()
+            ->willReturn(['foo' => ['baz']]);
+
+        $container->findTaggedServiceIds(self::TAG)
+            ->shouldBeCalled()
+            ->willReturn([self::DECORATOR_SERVICE => [['category' => 'foo', 'type' => 'bar']]]);
+
+        $definition->hasTag(self::FACTORY_TAG)
+            ->shouldBeCalled()
+            ->willReturn(true);
+
+        $definition->addTag(self::FACTORY_TAG)
+            ->shouldNotBeCalled();
 
         $definition->replaceArgument(self::ARGUMENT_INDEX, ['foo' => ['baz', 'bar']])
             ->shouldBeCalled();
