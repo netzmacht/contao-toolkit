@@ -5,11 +5,14 @@ Changelog
 ------------
 
 [3.3.1] (2019-05-07)
---------------------
 
 ### Fixed
 
  - Fix visibility of content elements
+
+### Added
+
+ - Add CsrfTokenProvider to simplify access to the request token
 
 [3.3.0] (2019-04-09)
 --------------------
@@ -107,8 +110,12 @@ Changelog
  - Prevent error than no dca array is loaded (See [contao-leaflet-maps/issues/54](https://github.com/netzmacht/contao-leaflet-maps/issues/54)
  - Added changelog (#9)
 
+<<<<<<< HEAD
 [Unreleased]: https://github.com/netzmacht/contao-toolkit/compare/3.3.1...dev-master
 [3.3.1]: https://github.com/netzmacht/contao-toolkit/compare/3.3.0...3.3.1
+=======
+[Unreleased]: https://github.com/netzmacht/contao-toolkit/compare/3.3.0...dev-develop
+>>>>>>> 055d34a... Implement a CsrfTokenProvider
 [3.3.0]: https://github.com/netzmacht/contao-toolkit/compare/3.2.0...3.3.0
 [3.2.0]: https://github.com/netzmacht/contao-toolkit/compare/3.1.1...3.2.0
 [3.1.1]: https://github.com/netzmacht/contao-toolkit/compare/3.1.0...3.1.1
