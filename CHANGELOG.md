@@ -7,6 +7,11 @@ Changelog
 ### Added
 
  - Add CsrfTokenProvider to simplify access to the request token
+ 
+### Changed
+
+ - Adding `netzmacht.contao_toolkit.component.content_element_factory` and
+   `netzmacht.contao_toolkit.component.frontend_module_factory` isn't required anymore 
 
 [3.3.0] (2019-04-09)
 --------------------
