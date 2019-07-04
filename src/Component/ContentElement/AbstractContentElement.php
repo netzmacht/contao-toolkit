@@ -42,11 +42,11 @@ abstract class AbstractContentElement extends AbstractComponent implements Conte
      */
     protected function isVisible(): bool
     {
-        if (TL_MODE !== 'FE' || !BE_USER_LOGGED_IN) {
+        if (TL_MODE === 'FE' && BE_USER_LOGGED_IN) {
             return true;
         }
 
-        if (!$this->get('invisible')) {
+        if ($this->get('invisible')) {
             return false;
         }
 
@@ -54,10 +54,10 @@ abstract class AbstractContentElement extends AbstractComponent implements Conte
         $start = $this->get('start');
         $stop  = $this->get('stop');
 
-        if (($start != '' && $start > $now) || ($stop != '' && $stop < $now)) {
-            return false;
+        if (($start === "" || $start <= $now) && ($stop === "" || $stop > $now)) {
+            return true;
         }
 
-        return true;
+        return false;
     }
 }
