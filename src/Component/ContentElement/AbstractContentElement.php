@@ -46,7 +46,7 @@ abstract class AbstractContentElement extends AbstractComponent implements Conte
             return true;
         }
 
-        if (!$this->get('invisible')) {
+        if ($this->get('invisible')) {
             return false;
         }
 
