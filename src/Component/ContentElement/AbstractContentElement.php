@@ -42,11 +42,11 @@ abstract class AbstractContentElement extends AbstractComponent implements Conte
      */
     protected function isVisible(): bool
     {
-        if (TL_MODE !== 'FE' || !BE_USER_LOGGED_IN) {
+        if (TL_MODE === 'FE' && BE_USER_LOGGED_IN) {
             return true;
         }
 
-        if (!$this->get('invisible')) {
+        if ($this->get('invisible')) {
             return false;
         }
 
