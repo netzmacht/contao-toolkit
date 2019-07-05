@@ -5,6 +5,7 @@
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
+ * @author     Dennis Bohn <dennis.bohn@bohn.media>
  * @copyright  2015-2018 netzmacht David Molineus.
  * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
@@ -42,11 +43,11 @@ abstract class AbstractContentElement extends AbstractComponent implements Conte
      */
     protected function isVisible(): bool
     {
-        if (TL_MODE !== 'FE' || !BE_USER_LOGGED_IN) {
+        if (TL_MODE !== 'FE' || BE_USER_LOGGED_IN) {
             return true;
         }
 
-        if (!$this->get('invisible')) {
+        if ($this->get('invisible')) {
             return false;
         }
 
