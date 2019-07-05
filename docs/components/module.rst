@@ -55,7 +55,6 @@ Provided tags:
     foo.frontend_module.factory:
         class: ExampleFactory
         tags:
-            - { name: 'netzmacht.contao_toolkit.component.frontend_module' }
             - { name: 'netzmacht.contao_toolkit.component.frontend_module', category: 'texts', type: 'example' }
 
 

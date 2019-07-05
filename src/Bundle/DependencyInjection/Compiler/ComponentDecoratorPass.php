@@ -40,15 +40,24 @@ final class ComponentDecoratorPass implements CompilerPassInterface
     private $argumentIndex;
 
     /**
+     * Tag name of the factory to auto register the factory.
+     *
+     * @var string
+     */
+    private $factoryTagName;
+
+    /**
      * ComponentFactoryCompilePass constructor.
      *
-     * @param string $tagName       Name of the tag.
-     * @param int    $argumentIndex Index of the argument which should get the tagged references.
+     * @param string $tagName        Name of the tag.
+     * @param int    $argumentIndex  Index of the argument which should get the tagged references.
+     * @param string $factoryTagName Tag name of the factory to auto register the factory.
      */
-    public function __construct(string $tagName, int $argumentIndex)
+    public function __construct(string $tagName, int $argumentIndex, string $factoryTagName)
     {
-        $this->tagName       = $tagName;
-        $this->argumentIndex = $argumentIndex;
+        $this->tagName        = $tagName;
+        $this->argumentIndex  = $argumentIndex;
+        $this->factoryTagName = $factoryTagName;
     }
 
     /**
@@ -66,7 +75,7 @@ final class ComponentDecoratorPass implements CompilerPassInterface
         $taggedServiceIds = $container->findTaggedServiceIds($this->tagName);
         $components       = (array) $definition->getArgument($this->argumentIndex);
 
-        foreach ($taggedServiceIds as $tags) {
+        foreach ($taggedServiceIds as $taggedServiceId => $tags) {
             foreach ($tags as $tag) {
                 Assert::that($tag)->keyExists('category');
                 Assert::that($tag['category'])->string();
@@ -76,6 +85,11 @@ final class ComponentDecoratorPass implements CompilerPassInterface
                 Assert::that($tag[$key])->string();
 
                 $components[$tag['category']][] = $tag[$key];
+            }
+
+            $serviceDefinition = $container->getDefinition($taggedServiceId);
+            if (!$serviceDefinition->hasTag($this->factoryTagName)) {
+                $serviceDefinition->addTag($this->factoryTagName);
             }
         }
 

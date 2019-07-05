@@ -4,12 +4,18 @@ Changelog
 [Unreleased]
 ------------
 
+### Added
+
+ - Add CsrfTokenProvider to simplify access to the request token
+
 ### Changed
 
  - Do not depend on constant TL_MODE to detect request scope. Use `RequestScopeMatcher` instead for components. Not
    passing `RequestScopeMatcher` as constructor argument to components (content elements, modules) is deprecated now.
  - Do not detect preview mode using BE_USER_LOGGED_IN constant. State has to be passed to the constructor for content 
    elements. Deprecate not passing the `isPreviewMode` state as constructor argument.
+ - Adding `netzmacht.contao_toolkit.component.content_element_factory` and
+   `netzmacht.contao_toolkit.component.frontend_module_factory` isn't required anymore 
 
 [3.3.0] (2019-04-09)
 --------------------
@@ -107,7 +113,7 @@ Changelog
  - Prevent error than no dca array is loaded (See [contao-leaflet-maps/issues/54](https://github.com/netzmacht/contao-leaflet-maps/issues/54)
  - Added changelog (#9)
 
-[Unreleased]: https://github.com/netzmacht/contao-toolkit/compare/3.3.0...dev-master
+[Unreleased]: https://github.com/netzmacht/contao-toolkit/compare/3.3.0...dev-develop
 [3.3.0]: https://github.com/netzmacht/contao-toolkit/compare/3.2.0...3.3.0
 [3.2.0]: https://github.com/netzmacht/contao-toolkit/compare/3.1.1...3.2.0
 [3.1.1]: https://github.com/netzmacht/contao-toolkit/compare/3.1.0...3.1.1
