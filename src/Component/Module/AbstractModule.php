@@ -18,6 +18,7 @@ use Contao\Database\Result;
 use Contao\Model;
 use Contao\Model\Collection;
 use Netzmacht\Contao\Toolkit\Component\AbstractComponent;
+use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 
@@ -45,14 +46,20 @@ abstract class AbstractModule extends AbstractComponent implements Module
     /**
      * AbstractModule constructor.
      *
-     * @param Model|Collection|Result $model          Object model or result.
-     * @param TemplateEngine          $templateEngine Template engine.
-     * @param Translator              $translator     Translator.
-     * @param string                  $column         Column.
+     * @param Model|Collection|Result  $model               Object model or result.
+     * @param TemplateEngine           $templateEngine      Template engine.
+     * @param Translator               $translator          Translator.
+     * @param string                   $column              Column.
+     * @param RequestScopeMatcher|null $requestScopeMatcher Request scope matcher.
      */
-    public function __construct($model, TemplateEngine $templateEngine, Translator $translator, $column = 'main')
-    {
-        parent::__construct($model, $templateEngine, $column);
+    public function __construct(
+        $model,
+        TemplateEngine $templateEngine,
+        Translator $translator,
+        $column = 'main',
+        ?RequestScopeMatcher $requestScopeMatcher = null
+    ) {
+        parent::__construct($model, $templateEngine, $column, $requestScopeMatcher);
 
         $this->translator = $translator;
     }
@@ -62,7 +69,7 @@ abstract class AbstractModule extends AbstractComponent implements Module
      */
     public function generate(): string
     {
-        if (TL_MODE === 'BE' && !$this->renderInBackendMode) {
+        if (!$this->renderInBackendMode && $this->isBackendRequest()) {
             return $this->generateBackendView();
         }
 

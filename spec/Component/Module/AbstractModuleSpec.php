@@ -13,6 +13,7 @@
 namespace spec\Netzmacht\Contao\Toolkit\Component\Module;
 
 use Netzmacht\Contao\Toolkit\Component\Module\AbstractModule;
+use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\Templating\EngineInterface;
@@ -34,8 +35,11 @@ class AbstractModuleSpec extends ObjectBehavior
 
     private $modelData;
 
-    function let(EngineInterface $templateEngine, TranslatorInterface $translator)
-    {
+    function let(
+        EngineInterface $templateEngine,
+        TranslatorInterface $translator,
+        RequestScopeMatcher $requestScopeMatcher
+    ) {
         $this->modelData = [
             'type' => 'test',
             'headline' => serialize(['unit' => 'h1', 'value' => 'test']),
@@ -45,8 +49,10 @@ class AbstractModuleSpec extends ObjectBehavior
 
         $this->model = new Model($this->modelData);
 
+        $requestScopeMatcher->isFrontendRequest()->willReturn(true);
+
         $this->beAnInstanceOf('spec\Netzmacht\Contao\Toolkit\Component\Module\ConcreteModule');
-        $this->beConstructedWith($this->model, $templateEngine, $translator);
+        $this->beConstructedWith($this->model, $templateEngine, $translator, 'main', $requestScopeMatcher);
     }
 
     function it_is_initializable()
@@ -64,12 +70,27 @@ class AbstractModuleSpec extends ObjectBehavior
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Component\Module\Module');
     }
 
-    function it_generates_output(EngineInterface $templateEngine)
+    function it_generates_output(EngineInterface $templateEngine, RequestScopeMatcher $requestScopeMatcher)
     {
+        $requestScopeMatcher->isBackendRequest()->willReturn(false);
+
         $templateEngine->render(Argument::cetera())->willReturn('output');
 
         $this->generate()->shouldBeString();
         $this->generate()->shouldReturn('output');
+    }
+
+    function it_generates_backend_view_on_backend_request(
+        EngineInterface $templateEngine,
+        RequestScopeMatcher $requestScopeMatcher
+    ) {
+        $requestScopeMatcher->isBackendRequest()->willReturn(true);
+
+        $templateEngine->render('toolkit:be:be_wildcard.html5', Argument::cetera())->willReturn('backend');
+        $templateEngine->render(Argument::cetera())->willReturn('output');
+
+        $this->generate()->shouldBeString();
+        $this->generate()->shouldReturn('backend');
     }
 }
 
