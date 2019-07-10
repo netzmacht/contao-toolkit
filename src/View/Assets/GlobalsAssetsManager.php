@@ -72,11 +72,11 @@ final class GlobalsAssetsManager implements HtmlPageAssetsManager
         array &$body,
         $debugMode = false
     ) {
-        $this->stylesheets =& $stylesheets;
-        $this->javascripts =& $javascripts;
+        $this->stylesheets = &$stylesheets;
+        $this->javascripts = &$javascripts;
+        $this->head        = &$head;
+        $this->body        = &$body;
         $this->debugMode   = $debugMode;
-        $this->head        = $head;
-        $this->body        = $body;
     }
 
     /**
