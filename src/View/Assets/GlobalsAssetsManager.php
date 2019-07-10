@@ -206,6 +206,46 @@ final class GlobalsAssetsManager implements HtmlPageAssetsManager
     }
 
     /**
+     * Get javascripts.
+     *
+     * @return array
+     */
+    public function getJavascripts(): array
+    {
+        return $this->javascripts;
+    }
+
+    /**
+     * Get stylesheets.
+     *
+     * @return array
+     */
+    public function getStylesheets(): array
+    {
+        return $this->stylesheets;
+    }
+
+    /**
+     * Get body.
+     *
+     * @return array|string[]
+     */
+    public function getBody(): array
+    {
+        return $this->body;
+    }
+
+    /**
+     * Get head.
+     *
+     * @return array|string[]
+     */
+    public function getHead(): array
+    {
+        return $this->head;
+    }
+
+    /**
      * {@inheritDoc}
      */
     private function isStatic($flag): bool
