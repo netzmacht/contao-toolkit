@@ -168,7 +168,7 @@ final class GlobalsAssetsManager implements HtmlPageAssetsManager
     /**
      * {@inheritDoc}
      */
-    public function addToBody(string $name, string $html): self
+    public function addToBody(string $name, string $html): HtmlPageAssetsManager
     {
         $this->body[$name] = $html;
 
@@ -178,7 +178,7 @@ final class GlobalsAssetsManager implements HtmlPageAssetsManager
     /**
      * {@inheritDoc}
      */
-    public function appendToBody(string $html): self
+    public function appendToBody(string $html): HtmlPageAssetsManager
     {
         $this->body[] = $html;
 
@@ -188,7 +188,7 @@ final class GlobalsAssetsManager implements HtmlPageAssetsManager
     /**
      * {@inheritDoc}
      */
-    public function addToHead(string $name, string $html): self
+    public function addToHead(string $name, string $html): HtmlPageAssetsManager
     {
         $this->head[$name] = $html;
 
@@ -198,7 +198,7 @@ final class GlobalsAssetsManager implements HtmlPageAssetsManager
     /**
      * {@inheritDoc}
      */
-    public function appendToHead(string $html): self
+    public function appendToHead(string $html): HtmlPageAssetsManager
     {
         $this->head[] = $html;
 
