@@ -4,16 +4,11 @@ Changelog
 [Unreleased]
 ------------
 
-[3.3.1] (2019-05-07)
-
-### Fixed
-
- - Fix visibility of content elements
-
 ### Added
 
  - Add CsrfTokenProvider to simplify access to the request token
- 
+ - Add `Netzmacht\Contao\Toolkit\View\Assets\HtmlPageAssetsManager` interface which extends the AssetsManager
+
 ### Changed
 
  - Adding `netzmacht.contao_toolkit.component.content_element_factory` and
@@ -22,6 +17,21 @@ Changelog
    passing `RequestScopeMatcher` as constructor argument to components (content elements, modules) is deprecated now.
  - Do not detect preview mode using BE_USER_LOGGED_IN constant. State has to be passed to the constructor for content 
    elements. Deprecate not passing the `isPreviewMode` state as constructor argument.
+ - Adding `netzmacht.contao_toolkit.component.content_element_factory` and
+   `netzmacht.contao_toolkit.component.frontend_module_factory` isn't required anymore
+ - Service `netzmacht.contao_toolkit.assets_manager` has to implement 
+   `Netzmacht\Contao\Toolkit\View\Assets\HtmlPageAssetsManager` now.
+
+### Fixed
+
+ - Fix css class for frontend modules
+
+[3.3.1] (2019-05-07)
+--------------------
+
+### Fixed
+
+ - Fix visibility of content elements
 
 [3.3.0] (2019-04-09)
 --------------------
