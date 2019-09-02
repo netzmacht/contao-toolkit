@@ -140,5 +140,5 @@ services:
   netzmacht.contao_toolkit.csrf.token_provider:
     class: Netzmacht\Contao\Toolkit\Security\Csrf\CsrfTokenProvider
     arguments:
-      - '@contao.csrf.token_manager'
+      - '@security.csrf.token_manager'
       - '%contao.csrf_token_name%'
