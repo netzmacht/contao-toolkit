@@ -16,6 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Security\Csrf;
 
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
 
 /**
  * Class CsrfTokenProvider is a wrapper of the Csrf token manager to provide access to a default token
