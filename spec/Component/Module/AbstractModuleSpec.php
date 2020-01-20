@@ -40,6 +40,7 @@ class AbstractModuleSpec extends ObjectBehavior
             'type' => 'test',
             'headline' => serialize(['unit' => 'h1', 'value' => 'test']),
             'id'   => 1,
+            'cssID' => serialize(['', '']),
             'customTpl' => 'custom_tpl'
         ];
 
