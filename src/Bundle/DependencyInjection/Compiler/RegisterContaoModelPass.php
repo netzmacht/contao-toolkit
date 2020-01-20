@@ -5,7 +5,7 @@
  *
  * @package    contao-toolkit
  * @author     Christopher Bölter <christopher@boelter.eu>
- * @copyright  2015-2018 netzmacht David Molineus.
+ * @copyright  2015-2020 netzmacht David Molineus.
  * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
  */
