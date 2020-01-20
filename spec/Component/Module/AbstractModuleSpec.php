@@ -5,7 +5,7 @@
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2018 netzmacht David Molineus.
+ * @copyright  2015-2020 netzmacht David Molineus.
  * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
  * @filesource
  */
@@ -40,6 +40,7 @@ class AbstractModuleSpec extends ObjectBehavior
             'type' => 'test',
             'headline' => serialize(['unit' => 'h1', 'value' => 'test']),
             'id'   => 1,
+            'cssID' => serialize(['', '']),
             'customTpl' => 'custom_tpl'
         ];
 
