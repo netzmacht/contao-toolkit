@@ -25,13 +25,13 @@
         "php": ">=7.1",
         "contao/core-bundle": "^4.4.7",
         "symfony/config": "^3.3 || ^4.0",
-        "symfony/dependency-injection": "^3.3 || ^4.0",
+        "symfony/dependency-injection": "^3.4.26 || ^4.1.12",
         "symfony/event-dispatcher": "^3.3 || ^4.0",
         "symfony/http-kernel": "^3.3 || ^4.0",
         "symfony/http-foundation": "^3.3 || ^4.0",
         "symfony/security": "^3.3 || ^4.0",
         "symfony/translation": "^3.3 || ^4.0",
-        "symfony/templating": "^3.3 || ^4.0",
+        "symfony/templating": "^3.3 || ^4.0 || ^5.0",
         "doctrine/dbal": "^2.5",
         "beberlei/assert": "^2.7 || ^3.0",
         "patchwork/utf8": "^1.2",
@@ -62,8 +62,7 @@
         "contao-manager-plugin": "Netzmacht\\Contao\\Toolkit\\Bundle\\ContaoManager\\Plugin",
         "branch-alias": {
             "dev-master": "3.3.x-dev",
-            "dev-develop": "3.4.x-dev",
-            "dev-support/2.0.x": "2.0.x-dev"
+            "dev-develop": "3.4.x-dev"
         }
     }
 }
