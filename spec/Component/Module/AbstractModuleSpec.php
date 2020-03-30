@@ -17,6 +17,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use function serialize;
 
 if (!defined('BE_USER_LOGGED_IN')) {
     define('BE_USER_LOGGED_IN', false);
@@ -40,7 +41,8 @@ class AbstractModuleSpec extends ObjectBehavior
             'type' => 'test',
             'headline' => serialize(['unit' => 'h1', 'value' => 'test']),
             'id'   => 1,
-            'customTpl' => 'custom_tpl'
+            'customTpl' => 'custom_tpl',
+            'cssID' => serialize(['', ''])
         ];
 
         $this->model = new Model($this->modelData);

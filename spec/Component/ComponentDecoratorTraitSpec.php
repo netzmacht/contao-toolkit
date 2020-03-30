@@ -16,6 +16,7 @@ use Netzmacht\Contao\Toolkit\Component\Component;
 use Netzmacht\Contao\Toolkit\Component\ComponentDecoratorTrait;
 use Netzmacht\Contao\Toolkit\Component\ComponentFactory;
 use PhpSpec\ObjectBehavior;
+use function serialize;
 
 /**
  * Class ComponentDecoratorTraitSpec
@@ -35,7 +36,8 @@ class ComponentDecoratorTraitSpec extends ObjectBehavior
             'type' => 'test',
             'headline' => serialize(['unit' => 'h1', 'value' => 'test']),
             'id' => 1,
-            'customTpl' => 'custom_tpl'
+            'customTpl' => 'custom_tpl',
+            'cssID' => serialize(['', ''])
         ];
 
         $this->model = new Model($this->modelData);

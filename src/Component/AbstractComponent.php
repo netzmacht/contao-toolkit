@@ -23,6 +23,7 @@ use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateReference as ToolkitTemplateReference;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Templating\TemplateReferenceInterface as TemplateReference;
+use function var_dump;
 
 /**
  * Base element.
