@@ -53,8 +53,6 @@ final class NetzmachtContaoToolkitBundle extends Bundle
             try {
                 $contaoCoreVersion = Versions::getVersion('contao/core-bundle');
             } catch (OutOfBoundsException $e) {
-                // contao/core-bundle seems not to be installed. Probably the single repository is used.
-                // PackageVersions doesn't support it yet. See https://github.com/Ocramius/PackageVersions/issues/74
                 $contaoCoreVersion = Versions::getVersion('contao/contao');
             }
 
