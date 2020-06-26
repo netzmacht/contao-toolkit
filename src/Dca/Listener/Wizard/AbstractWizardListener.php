@@ -15,8 +15,8 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 
 use Contao\DataContainer;
+use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
-use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 use const E_USER_DEPRECATED;
@@ -53,7 +53,7 @@ abstract class AbstractWizardListener
     /**
      * Data container manager.
      *
-     * @var Manager
+     * @var DcaManager
      */
     protected $dcaManager;
 
@@ -62,13 +62,13 @@ abstract class AbstractWizardListener
      *
      * @param TemplateEngine $templateEngine Template engine.
      * @param Translator     $translator     Translator.
-     * @param Manager        $dcaManager     Data container manager.
+     * @param DcaManager     $dcaManager     Data container manager.
      * @param string         $template       Template name.
      */
     public function __construct(
         TemplateEngine $templateEngine,
         Translator $translator,
-        Manager $dcaManager,
+        DcaManager $dcaManager,
         string $template = ''
     ) {
         $this->translator     = $translator;

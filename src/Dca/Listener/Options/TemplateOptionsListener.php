@@ -16,7 +16,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Listener\Options;
 
 use Contao\Controller;
 use Contao\DataContainer;
-use Netzmacht\Contao\Toolkit\Dca\Manager;
+use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use const E_USER_DEPRECATED;
 
 /**
@@ -29,16 +29,16 @@ final class TemplateOptionsListener
     /**
      * Data container manager.
      *
-     * @var Manager
+     * @var DcaManager
      */
     private $dcaManager;
 
     /**
      * TemplateOptionsListener constructor.
      *
-     * @param Manager $dcaManager Data container manager.
+     * @param DcaManager $dcaManager Data container manager.
      */
-    public function __construct(Manager $dcaManager)
+    public function __construct(DcaManager $dcaManager)
     {
         $this->dcaManager = $dcaManager;
     }

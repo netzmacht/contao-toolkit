@@ -15,9 +15,9 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Dca\Listener;
 
 use Netzmacht\Contao\Toolkit\Assertion\Assert;
+use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
-use Netzmacht\Contao\Toolkit\Dca\Manager;
 
 /**
  * Base class for data container callback classes.
@@ -36,16 +36,16 @@ abstract class AbstractListener
     /**
      * Data container manager.
      *
-     * @var Manager
+     * @var DcaManager
      */
     private $dcaManager;
 
     /**
      * Callbacks constructor.
      *
-     * @param Manager $dcaManager Data container manager.
+     * @param DcaManager $dcaManager Data container manager.
      */
-    public function __construct(Manager $dcaManager)
+    public function __construct(DcaManager $dcaManager)
     {
         $this->dcaManager = $dcaManager;
 

@@ -41,10 +41,10 @@ class AbstractModuleSpec extends ObjectBehavior
         RequestScopeMatcher $requestScopeMatcher
     ) {
         $this->modelData = [
-            'type' => 'test',
-            'headline' => serialize(['unit' => 'h1', 'value' => 'test']),
-            'id'   => 1,
-            'cssID' => serialize(['', '']),
+            'type'      => 'test',
+            'headline'  => serialize(['unit' => 'h1', 'value' => 'test']),
+            'id'        => 1,
+            'cssID'     => serialize(['', '']),
             'customTpl' => 'custom_tpl'
         ];
 
