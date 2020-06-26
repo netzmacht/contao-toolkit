@@ -18,6 +18,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use function serialize;
 
 if (!defined('BE_USER_LOGGED_IN')) {
     define('BE_USER_LOGGED_IN', false);

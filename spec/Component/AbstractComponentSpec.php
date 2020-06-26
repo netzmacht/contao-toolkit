@@ -16,6 +16,7 @@ use Netzmacht\Contao\Toolkit\Component\AbstractComponent;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\Templating\EngineInterface;
+use function serialize;
 
 if (!defined('TL_MODE')) {
     define('TL_MODE', 'FE');
