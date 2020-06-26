@@ -33,11 +33,11 @@ class ComponentDecoratorTraitSpec extends ObjectBehavior
     function let(ComponentFactory $componentFactory, Component $component)
     {
         $this->modelData = [
-            'type' => 'test',
-            'headline' => serialize(['unit' => 'h1', 'value' => 'test']),
-            'id' => 1,
+            'type'      => 'test',
+            'headline'  => serialize(['unit' => 'h1', 'value' => 'test']),
+            'id'        => 1,
             'customTpl' => 'custom_tpl',
-            'cssID' => serialize(['', ''])
+            'cssID'     => serialize(['', ''])
         ];
 
         $this->model = new Model($this->modelData);

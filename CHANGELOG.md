@@ -4,7 +4,14 @@ Changelog
 [Unreleased]
 ------------
 
-[3.4.0] (2019-05-07)
+[3.4.0] (2020-06-26)
+--------------------
+
+### Fixed
+
+ - Fix specs from missing merge
+
+[3.4.0] (2019-06-26)
 --------------------
 
 ### Added
@@ -154,7 +161,8 @@ Changelog
  - Prevent error than no dca array is loaded (See [contao-leaflet-maps/issues/54](https://github.com/netzmacht/contao-leaflet-maps/issues/54)
  - Added changelog (#9)
 
-[Unreleased]: https://github.com/netzmacht/contao-toolkit/compare/3.3.1...dev-master
+[Unreleased]: https://github.com/netzmacht/contao-toolkit/compare/3.4.1...dev-master
+[3.4.1]: https://github.com/netzmacht/contao-toolkit/compare/3.4.0...3.4.1
 [3.4.0]: https://github.com/netzmacht/contao-toolkit/compare/3.3.3...3.4.0
 [3.3.3]: https://github.com/netzmacht/contao-toolkit/compare/3.3.2...3.3.3
 [3.3.2]: https://github.com/netzmacht/contao-toolkit/compare/3.3.1...3.3.2
