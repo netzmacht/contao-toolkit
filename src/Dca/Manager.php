@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca;
 
-use Netzmacht\Contao\Toolkit\Assertion\Assert;
 use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory;
@@ -24,7 +23,7 @@ use Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory;
  *
  * @package Netzmacht\Contao\Toolkit\Dca
  */
-final class Manager
+final class Manager implements DcaManager
 {
     /**
      * Data definition cache.

@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 
 use Contao\StringUtil;
-use Netzmacht\Contao\Toolkit\Dca\Manager;
+use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface as CsrfTokenManager;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
@@ -61,7 +61,7 @@ final class PopupWizardListener extends AbstractWizardListener
      *
      * @param TemplateEngine   $templateEngine   Template Engine.
      * @param Translator       $translator       Translator.
-     * @param Manager          $dcaManager       Data container manager.
+     * @param DcaManager       $dcaManager       Data container manager.
      * @param CsrfTokenManager $csrfTokenManager Csrf Token manager.
      * @param string           $csrfTokenName    Csrf Token name.
      * @param string           $template         Template name.
@@ -71,7 +71,7 @@ final class PopupWizardListener extends AbstractWizardListener
     public function __construct(
         TemplateEngine $templateEngine,
         Translator $translator,
-        Manager $dcaManager,
+        DcaManager $dcaManager,
         CsrfTokenManager $csrfTokenManager,
         string $csrfTokenName,
         string $template = ''

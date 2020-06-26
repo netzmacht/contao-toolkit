@@ -17,7 +17,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\Input;
 use Contao\StringUtil;
-use Netzmacht\Contao\Toolkit\Dca\Manager;
+use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 
@@ -40,14 +40,14 @@ final class PagePickerListener extends AbstractFieldPickerListener
      *
      * @param TemplateEngine $templateEngine Template engine.
      * @param Translator     $translator     Translator.
-     * @param Manager        $dcaManager     Data container manager.
+     * @param DcaManager     $dcaManager     Data container manager.
      * @param Input|Adapter  $input          Request input.
      * @param string|null    $template       Template name.
      */
     public function __construct(
         TemplateEngine $templateEngine,
         Translator $translator,
-        Manager $dcaManager,
+        DcaManager $dcaManager,
         $input,
         string $template = ''
     ) {

@@ -20,7 +20,7 @@ use Contao\Image;
 use Contao\Input;
 use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Data\Updater\Updater;
-use Netzmacht\Contao\Toolkit\Dca\Manager;
+use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Exception\AccessDenied;
 use const E_USER_DEPRECATED;
 
@@ -48,7 +48,7 @@ final class StateButtonCallbackListener
     /**
      * Data container manager.
      *
-     * @var Manager
+     * @var DcaManager
      */
     private $dcaManager;
 
@@ -62,16 +62,16 @@ final class StateButtonCallbackListener
     /**
      * StateButtonCallback constructor.
      *
-     * @param Backend $backend    Contao backend adapter.
-     * @param Input   $input      Request Input.
-     * @param Updater $updater    Data record updater.
-     * @param Manager $dcaManager Data container manager.
+     * @param Backend    $backend    Contao backend adapter.
+     * @param Input      $input      Request Input.
+     * @param Updater    $updater    Data record updater.
+     * @param DcaManager $dcaManager Data container manager.
      */
     public function __construct(
         $backend,
         $input,
         Updater $updater,
-        Manager $dcaManager
+        DcaManager $dcaManager
     ) {
         $this->input      = $input;
         $this->updater    = $updater;

@@ -20,9 +20,13 @@ use Contao\Model\Collection;
 use Contao\StringUtil;
 use InvalidArgumentException;
 use Netzmacht\Contao\Toolkit\Assertion\Assertion;
+use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateReference as ToolkitTemplateReference;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Templating\TemplateReferenceInterface as TemplateReference;
+use function trigger_error;
+use const E_USER_DEPRECATED;
+use const TL_MODE;
 
 /**
  * Base element.
@@ -67,16 +71,28 @@ abstract class AbstractComponent implements Component
     private $templateEngine;
 
     /**
+     * Request scope matcher.
+     *
+     * @var RequestScopeMatcher|null
+     */
+    protected $requestScopeMatcher;
+
+    /**
      * AbstractContentElement constructor.
      *
-     * @param Model|Collection|Result $model          Object model or result.
-     * @param TemplateEngine          $templateEngine Template engine.
-     * @param string                  $column         Column.
+     * @param Model|Collection|Result  $model               Object model or result.
+     * @param TemplateEngine           $templateEngine      Template engine.
+     * @param string                   $column              Column.
+     * @param RequestScopeMatcher|null $requestScopeMatcher Request scope matcher.
      *
      * @throws InvalidArgumentException When model does not have a row method.
      */
-    public function __construct($model, TemplateEngine $templateEngine, $column = 'main')
-    {
+    public function __construct(
+        $model,
+        TemplateEngine $templateEngine,
+        $column = 'main',
+        ?RequestScopeMatcher $requestScopeMatcher = null
+    ) {
         if ($model instanceof Collection) {
             $model = $model->current();
         }
@@ -85,13 +101,23 @@ abstract class AbstractComponent implements Component
             $this->model = $model;
         }
 
+        if ($requestScopeMatcher === null) {
+            // @codingStandardsIgnoreStart
+            @trigger_error(
+                'RequestScopeMatcher not passed as forth argument. RequestScopeMatcher will be required in version 4.0.0',
+                E_USER_DEPRECATED
+            );
+            // @codingStandardsIgnoreEnd
+        }
+
         Assertion::methodExists('row', $model);
 
-        $this->templateEngine = $templateEngine;
-        $this->column         = $column;
-        $this->data           = $this->deserializeData($model->row());
+        $this->templateEngine      = $templateEngine;
+        $this->column              = $column;
+        $this->requestScopeMatcher = $requestScopeMatcher;
+        $this->data                = $this->deserializeData($model->row());
 
-        if ($this->get('customTpl') != '' && TL_MODE == 'FE') {
+        if ($this->get('customTpl') !== '' && $this->isFrontendRequest()) {
             $this->setTemplateName((string) $this->get('customTpl'));
         }
     }
@@ -289,17 +315,17 @@ abstract class AbstractComponent implements Component
     protected function compileCssClass(): string
     {
         $cssID    = $this->get('cssID');
-        $cssClass = 'ce_' . $this->get('type');
+        $cssClass = '';
 
         if (!empty($cssID[1])) {
-            $cssClass .= ' ' . $cssID[1];
+            $cssClass .= $cssID[1];
         }
 
         if ($this->getModel() && $this->getModel()->classes) {
             $cssClass .= ' ' . implode(' ', (array) $this->getModel()->classes);
         }
 
-        return $cssClass;
+        return trim($cssClass);
     }
 
     /**
@@ -324,5 +350,33 @@ abstract class AbstractComponent implements Component
             'html5',
             ToolkitTemplateReference::SCOPE_FRONTEND
         );
+    }
+
+    /**
+     * Check if current request is a Contao frontend request.
+     *
+     * @return bool
+     */
+    protected function isFrontendRequest(): bool
+    {
+        if ($this->requestScopeMatcher) {
+            return $this->requestScopeMatcher->isFrontendRequest();
+        }
+
+        return TL_MODE === 'FE';
+    }
+
+    /**
+     * Check if current request is a Contao backend request.
+     *
+     * @return bool
+     */
+    protected function isBackendRequest(): bool
+    {
+        if ($this->requestScopeMatcher) {
+            return $this->requestScopeMatcher->isBackendRequest();
+        }
+
+        return TL_MODE === 'BE';
     }
 }

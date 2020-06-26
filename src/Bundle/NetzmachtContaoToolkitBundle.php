@@ -17,6 +17,7 @@ namespace Netzmacht\Contao\Toolkit\Bundle;
 
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\AddTaggedServicesAsArgumentPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\ComponentDecoratorPass;
+use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\CsrfTokenManagerPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\FosCacheResponseTaggerPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterContaoModelPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterHooksPass;
@@ -52,8 +53,6 @@ final class NetzmachtContaoToolkitBundle extends Bundle
             try {
                 $contaoCoreVersion = Versions::getVersion('contao/core-bundle');
             } catch (OutOfBoundsException $e) {
-                // contao/core-bundle seems not to be installed. Probably the single repository is used.
-                // PackageVersions doesn't support it yet. See https://github.com/Ocramius/PackageVersions/issues/74
                 $contaoCoreVersion = Versions::getVersion('contao/contao');
             }
 
@@ -70,9 +69,26 @@ final class NetzmachtContaoToolkitBundle extends Bundle
     {
         parent::build($container);
 
+        $container->addCompilerPass(new CsrfTokenManagerPass());
         $container->addCompilerPass(new TranslatorPass());
         $container->addCompilerPass(new RepositoriesPass());
         $container->addCompilerPass(new FosCacheResponseTaggerPass($this->contaoCoreVersion));
+
+        $container->addCompilerPass(
+            new ComponentDecoratorPass(
+                'netzmacht.contao_toolkit.component.frontend_module',
+                0,
+                'netzmacht.contao_toolkit.component.frontend_module_factory'
+            )
+        );
+
+        $container->addCompilerPass(
+            new ComponentDecoratorPass(
+                'netzmacht.contao_toolkit.component.content_element',
+                1,
+                'netzmacht.contao_toolkit.component.content_element_factory'
+            )
+        );
 
         $container->addCompilerPass(
             new AddTaggedServicesAsArgumentPass(
@@ -109,14 +125,6 @@ final class NetzmachtContaoToolkitBundle extends Bundle
                 'netzmacht.contao_toolkit.dca.formatter.post_filter',
                 2
             )
-        );
-
-        $container->addCompilerPass(
-            new ComponentDecoratorPass('netzmacht.contao_toolkit.component.frontend_module', 0)
-        );
-
-        $container->addCompilerPass(
-            new ComponentDecoratorPass('netzmacht.contao_toolkit.component.content_element', 1)
         );
 
         $container->addCompilerPass(

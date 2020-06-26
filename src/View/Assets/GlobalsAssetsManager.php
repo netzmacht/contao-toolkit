@@ -19,7 +19,7 @@ namespace Netzmacht\Contao\Toolkit\View\Assets;
  *
  * @package Netzmacht\Contao\Toolkit
  */
-final class GlobalsAssetsManager implements AssetsManager
+final class GlobalsAssetsManager implements HtmlPageAssetsManager
 {
     /**
      * The registered stylesheets.
@@ -36,6 +36,20 @@ final class GlobalsAssetsManager implements AssetsManager
     private $stylesheets;
 
     /**
+     * The registered body content.
+     *
+     * @var array|string[]
+     */
+    private $body;
+
+    /**
+     * The registered head content.
+     *
+     * @var array|string[]
+     */
+    private $head;
+
+    /**
      * Debug mode of the environment.
      *
      * @var bool
@@ -45,14 +59,23 @@ final class GlobalsAssetsManager implements AssetsManager
     /**
      * AssetsManager constructor.
      *
-     * @param array  $stylesheets The registered stylesheets.
-     * @param array  $javascripts The registered javascripts.
-     * @param bool   $debugMode   Debug mode of the environment.
+     * @param array $stylesheets The registered stylesheets.
+     * @param array $javascripts The registered javascripts.
+     * @param array $head        The registered body content.
+     * @param array $body        The registered head content.
+     * @param bool  $debugMode   Debug mode of the environment.
      */
-    public function __construct(array &$stylesheets, array &$javascripts, $debugMode = false)
-    {
-        $this->stylesheets =& $stylesheets;
-        $this->javascripts =& $javascripts;
+    public function __construct(
+        array &$stylesheets,
+        array &$javascripts,
+        array &$head,
+        array &$body,
+        $debugMode = false
+    ) {
+        $this->stylesheets = &$stylesheets;
+        $this->javascripts = &$javascripts;
+        $this->head        = &$head;
+        $this->body        = &$body;
         $this->debugMode   = $debugMode;
     }
 
@@ -140,6 +163,86 @@ final class GlobalsAssetsManager implements AssetsManager
         }
 
         return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addToBody(string $name, string $html): HtmlPageAssetsManager
+    {
+        $this->body[$name] = $html;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function appendToBody(string $html): HtmlPageAssetsManager
+    {
+        $this->body[] = $html;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addToHead(string $name, string $html): HtmlPageAssetsManager
+    {
+        $this->head[$name] = $html;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function appendToHead(string $html): HtmlPageAssetsManager
+    {
+        $this->head[] = $html;
+
+        return $this;
+    }
+
+    /**
+     * Get javascripts.
+     *
+     * @return array
+     */
+    public function getJavascripts(): array
+    {
+        return $this->javascripts;
+    }
+
+    /**
+     * Get stylesheets.
+     *
+     * @return array
+     */
+    public function getStylesheets(): array
+    {
+        return $this->stylesheets;
+    }
+
+    /**
+     * Get body.
+     *
+     * @return array|string[]
+     */
+    public function getBody(): array
+    {
+        return $this->body;
+    }
+
+    /**
+     * Get head.
+     *
+     * @return array|string[]
+     */
+    public function getHead(): array
+    {
+        return $this->head;
     }
 
     /**

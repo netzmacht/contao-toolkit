@@ -22,6 +22,7 @@ use Contao\Encryption;
 use Contao\Environment;
 use Contao\Frontend;
 use Contao\FrontendUser;
+use Contao\Image;
 use Contao\Input;
 use Contao\Message;
 use Contao\System;
@@ -82,6 +83,12 @@ class ContaoServicesFactorySpec extends ObjectBehavior
     {
         $this->expectAdapterWillBeReturned($framework, Input::class, $adapter);
         $this->createInputAdapter()->shouldReturn($adapter);
+    }
+
+    function it_creates_image_adapter(ContaoFrameworkInterface $framework, Adapter $adapter)
+    {
+        $this->expectAdapterWillBeReturned($framework, Image::class, $adapter);
+        $this->createImageAdapter()->shouldReturn($adapter);
     }
 
     function it_creates_system_adapter(ContaoFrameworkInterface $framework, Adapter $adapter)

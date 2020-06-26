@@ -19,7 +19,7 @@ use Contao\DataContainer;
 use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator;
 use Netzmacht\Contao\Toolkit\Data\Alias\Factory\AliasGeneratorFactory;
-use Netzmacht\Contao\Toolkit\Dca\Manager;
+use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use const E_USER_DEPRECATED;
 
@@ -40,7 +40,7 @@ final class GenerateAliasListener
     /**
      * Data container manager.
      *
-     * @var Manager
+     * @var DcaManager
      */
     private $dcaManager;
 
@@ -61,11 +61,11 @@ final class GenerateAliasListener
     /**
      * Construct.
      *
-     * @param Container $container               Dependency container.
-     * @param Manager   $dcaManager              Data container manager.
-     * @param string    $defaultFactoryServiceId Default alias generator factory service id.
+     * @param Container  $container               Dependency container.
+     * @param DcaManager $dcaManager              Data container manager.
+     * @param string     $defaultFactoryServiceId Default alias generator factory service id.
      */
-    public function __construct(Container $container, Manager $dcaManager, $defaultFactoryServiceId)
+    public function __construct(Container $container, DcaManager $dcaManager, $defaultFactoryServiceId)
     {
         $this->container               = $container;
         $this->defaultFactoryServiceId = $defaultFactoryServiceId;

@@ -49,17 +49,17 @@ final class GlobalsAssetsManagerFactory
      */
     public function create(): AssetsManager
     {
-        if (!isset($GLOBALS['TL_CSS']) || !is_array($GLOBALS['TL_CSS'])) {
-            $GLOBALS['TL_CSS'] = [];
-        }
-
-        if (!isset($GLOBALS['TL_JAVASCRIPT']) || !is_array($GLOBALS['TL_JAVASCRIPT'])) {
-            $GLOBALS['TL_JAVASCRIPT'] = [];
+        foreach (['TL_CSS', 'TL_JAVASCRIPT', 'TL_HEAD', 'TL_BODY'] as $key) {
+            if (!isset($GLOBALS[$key]) || !is_array($GLOBALS[$key])) {
+                $GLOBALS[$key] = [];
+            }
         }
 
         return new GlobalsAssetsManager(
             $GLOBALS['TL_CSS'],
             $GLOBALS['TL_JAVASCRIPT'],
+            $GLOBALS['TL_HEAD'],
+            $GLOBALS['TL_BODY'],
             $this->debug
         );
     }

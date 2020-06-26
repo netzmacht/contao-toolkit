@@ -44,6 +44,10 @@ services:
     class: Contao\CoreBundle\Framework\Adapter
     factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createEnvironmentAdapter']
 
+  netzmacht.contao_toolkit.contao.image_adapter:
+    class: Contao\CoreBundle\Framework\Adapter
+    factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createImageAdapter']
+
   netzmacht.contao_toolkit.contao.input_adapter:
     class: Contao\CoreBundle\Framework\Adapter
     factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createInputAdapter']
@@ -136,3 +140,9 @@ services:
 
   netzmacht.contao_toolkit.logger.null_logger:
     class: Psr\Log\NullLogger
+
+  netzmacht.contao_toolkit.csrf.token_provider:
+    class: Netzmacht\Contao\Toolkit\Security\Csrf\CsrfTokenProvider
+    arguments:
+      - '@netzmacht.contao_toolkit.csrf.token_manager'
+      - '%contao.csrf_token_name%'

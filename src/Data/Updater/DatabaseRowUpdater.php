@@ -17,8 +17,8 @@ namespace Netzmacht\Contao\Toolkit\Data\Updater;
 use Contao\BackendUser;
 use Contao\Versions;
 use Doctrine\DBAL\Connection;
-use Netzmacht\Contao\Toolkit\Dca\Manager;
 use Netzmacht\Contao\Toolkit\Callback\Invoker;
+use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Exception\AccessDenied;
 use function is_array;
@@ -54,7 +54,7 @@ final class DatabaseRowUpdater implements Updater
     /**
      * Data container manager.
      *
-     * @var Manager
+     * @var DcaManager
      */
     private $dcaManager;
 
@@ -63,13 +63,13 @@ final class DatabaseRowUpdater implements Updater
      *
      * @param BackendUser $backendUser Backend user.
      * @param Connection  $connection  Database connection.
-     * @param Manager     $dcaManager  Data container manager.
+     * @param DcaManager  $dcaManager  Data container manager.
      * @param Invoker     $invoker     Callback invoker.
      */
     public function __construct(
         BackendUser $backendUser,
         Connection $connection,
-        Manager $dcaManager,
+        DcaManager $dcaManager,
         Invoker $invoker
     ) {
         $this->backendUser = $backendUser;
