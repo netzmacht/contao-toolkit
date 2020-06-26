@@ -4,6 +4,9 @@ Changelog
 [Unreleased]
 ------------
 
+[3.4.0] (2019-05-07)
+--------------------
+
 ### Added
 
  - Add `netzmacht.contao_toolkit.contao.image_adapter` for the `Contao\Image` class
@@ -24,10 +27,25 @@ Changelog
    `netzmacht.contao_toolkit.component.frontend_module_factory` isn't required anymore
  - Service `netzmacht.contao_toolkit.assets_manager` has to implement 
    `Netzmacht\Contao\Toolkit\View\Assets\HtmlPageAssetsManager` now.
-
+   
 ### Fixed
 
  - Fix css class for frontend modules
+
+[3.3.3] (2020-03-30)
+--------------------
+
+### Fixed
+
+ - Fixed potential security issues of symfony components [CVE-2019-10913](https://github.com/advisories/GHSA-x92h-wmg2-6hp7) 
+   and [CVE-2019-18888](https://github.com/advisories/GHSA-xhh6-956q-4q69)
+   
+[3.3.2] (2020-01-20)
+--------------------
+
+### Fixed
+
+ - Fixed specs and coding standards
 
 [3.3.1] (2019-05-07)
 --------------------
@@ -137,6 +155,9 @@ Changelog
  - Added changelog (#9)
 
 [Unreleased]: https://github.com/netzmacht/contao-toolkit/compare/3.3.1...dev-master
+[3.4.0]: https://github.com/netzmacht/contao-toolkit/compare/3.3.3...3.4.0
+[3.3.3]: https://github.com/netzmacht/contao-toolkit/compare/3.3.2...3.3.3
+[3.3.2]: https://github.com/netzmacht/contao-toolkit/compare/3.3.1...3.3.2
 [3.3.1]: https://github.com/netzmacht/contao-toolkit/compare/3.3.0...3.3.1
 [3.3.0]: https://github.com/netzmacht/contao-toolkit/compare/3.2.0...3.3.0
 [3.2.0]: https://github.com/netzmacht/contao-toolkit/compare/3.1.1...3.2.0
