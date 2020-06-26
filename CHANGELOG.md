@@ -6,6 +6,7 @@ Changelog
 
 ### Added
 
+ - Add `netzmacht.contao_toolkit.contao.image_adapter` for the `Contao\Image` class
  - Introduce interface `Netzmacht\Contao\Toolkit\Dca\DcaManager`
  - Add alias `netzmacht.contao_toolkit.csrf.token_manager` which refers to the token manager used in Contao
  - Add CsrfTokenProvider to simplify access to the request token

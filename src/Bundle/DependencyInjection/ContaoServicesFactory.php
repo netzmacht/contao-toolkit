@@ -26,6 +26,7 @@ use Contao\Encryption;
 use Contao\Environment;
 use Contao\Frontend;
 use Contao\FrontendUser;
+use Contao\Image;
 use Contao\Input;
 use Contao\Message;
 use Contao\Model;
@@ -60,7 +61,7 @@ final class ContaoServicesFactory
     /**
      * Create the backend adapter.
      *
-     * @return Adapter|Backend
+     * @return Adapter<Backend>
      */
     public function createBackendAdapter(): Adapter
     {
@@ -70,7 +71,7 @@ final class ContaoServicesFactory
     /**
      * Create input adapter.
      *
-     * @return Adapter|Input
+     * @return Adapter<Input>
      */
     public function createInputAdapter(): Adapter
     {
@@ -80,7 +81,7 @@ final class ContaoServicesFactory
     /**
      * Create the config adapter.
      *
-     * @return Adapter|Config
+     * @return Adapter<Config>
      */
     public function createConfigAdapter(): Adapter
     {
@@ -90,7 +91,7 @@ final class ContaoServicesFactory
     /**
      * Create the controller adapter.
      *
-     * @return Adapter|Controller
+     * @return Adapter<Controller>
      */
     public function createControllerAdapter(): Adapter
     {
@@ -100,7 +101,7 @@ final class ContaoServicesFactory
     /**
      * Create the system adapter.
      *
-     * @return Adapter
+     * @return Adapter<System>
      */
     public function createSystemAdapter(): Adapter
     {
@@ -110,7 +111,7 @@ final class ContaoServicesFactory
     /**
      * Create an environment adapter.
      *
-     * @return Adapter|Environment
+     * @return Adapter<Environment>
      */
     public function createEnvironmentAdapter(): Adapter
     {
@@ -118,9 +119,9 @@ final class ContaoServicesFactory
     }
 
     /**
-     * Create an environment adapter.
+     * Create an encryption adapter.
      *
-     * @return Adapter|Encryption
+     * @return Adapter<Encryption>
      */
     public function createEncryptionAdapter(): Adapter
     {
@@ -130,11 +131,21 @@ final class ContaoServicesFactory
     /**
      * Create a frontend adapter.
      *
-     * @return Adapter|Frontend
+     * @return Adapter<Frontend>
      */
     public function createFrontendAdapter(): Adapter
     {
         return $this->createAdapter(Frontend::class);
+    }
+
+    /**
+     * Create an image adapter.
+     *
+     * @return Adapter<Image>
+     */
+    public function createImageAdapter(): Adapter
+    {
+        return $this->createAdapter(Image::class);
     }
 
     /**
