@@ -29,7 +29,7 @@
         "symfony/event-dispatcher": "^3.3 || ^4.0",
         "symfony/http-foundation": "^3.4.37 || ^4.2.12",
         "symfony/http-kernel": "^3.3 || ^4.0",
-        "symfony/security-csrf": "^3.3 || ^4.0",
+        "symfony/security-csrf": "^3.3 || ^4.0 || ^5.0",
         "symfony/templating": "^3.3 || ^4.0 || ^5.0",
         "symfony/translation": "^3.3 || ^4.0"
     },
