@@ -4,6 +4,10 @@ Changelog
 [Unreleased]
 ------------
 
+### Fixed
+
+ - Prevent initialization error caused by not initialized contao framework
+
 [3.4.2] (2020-06-30)
 --------------------
 

@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Dca;
 
 use Contao\Controller;
+use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
 
 /**
  * Class Loader loads the data container.
@@ -27,11 +28,13 @@ final class DcaLoader extends Controller
 {
     /**
      * Construct.
+     *
+     * @param ContaoFrameworkInterface $framework Contao framework interface.
      */
-    // @codingStandardsIgnoreStart - Override it to make it public. Codesniffer is buggy here.
-    public function __construct()
+    public function __construct(ContaoFrameworkInterface $framework)
     {
+        $framework->initialize();
+
         parent::__construct();
     }
-    // @codingStandardsIgnoreEnd
 }

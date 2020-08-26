@@ -103,6 +103,8 @@ services:
 
   netzmacht.contao_toolkit.dca.loader:
     class: Netzmacht\Contao\Toolkit\Dca\DcaLoader
+    arguments:
+      - '@contao.framework'
 
   netzmacht.contao_toolkit.view.template_factory:
     class: Netzmacht\Contao\Toolkit\View\Template\ToolkitTemplateFactory
