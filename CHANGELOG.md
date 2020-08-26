@@ -4,6 +4,9 @@ Changelog
 [Unreleased]
 ------------
 
+[3.4.3] (2020-08-26)
+--------------------
+
 ### Fixed
 
  - Prevent initialization error caused by not initialized contao framework
@@ -172,7 +175,9 @@ Changelog
  - Prevent error than no dca array is loaded (See [contao-leaflet-maps/issues/54](https://github.com/netzmacht/contao-leaflet-maps/issues/54)
  - Added changelog (#9)
 
-[Unreleased]: https://github.com/netzmacht/contao-toolkit/compare/3.4.1...dev-master
+[Unreleased]: https://github.com/netzmacht/contao-toolkit/compare/3.4.3...master
+[3.4.3]: https://github.com/netzmacht/contao-toolkit/compare/3.4.2...3.4.3
+[3.4.2]: https://github.com/netzmacht/contao-toolkit/compare/3.4.1...3.4.2
 [3.4.1]: https://github.com/netzmacht/contao-toolkit/compare/3.4.0...3.4.1
 [3.4.0]: https://github.com/netzmacht/contao-toolkit/compare/3.3.3...3.4.0
 [3.3.3]: https://github.com/netzmacht/contao-toolkit/compare/3.3.2...3.3.3
