@@ -22,7 +22,9 @@ services:
       - { name: 'netzmacht.contao_toolkit.dca.formatter'}
 
   netzmacht.contao_toolkit.dca.formatter.yes_no:
-    class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\HtmlFormatter
+    class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\YesNoFormatter
+    arguments:
+      - '@translator'
     tags:
       - { name: 'netzmacht.contao_toolkit.dca.formatter'}
 

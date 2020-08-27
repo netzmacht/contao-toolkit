@@ -4,6 +4,13 @@ Changelog
 [Unreleased]
 ------------
 
+[3.4.4] (2020-08-27)
+--------------------
+
+### Fixed
+
+ - `ỲesNoLabelFormatter` was not registered
+
 [3.4.3] (2020-08-26)
 --------------------
 
@@ -175,7 +182,8 @@ Changelog
  - Prevent error than no dca array is loaded (See [contao-leaflet-maps/issues/54](https://github.com/netzmacht/contao-leaflet-maps/issues/54)
  - Added changelog (#9)
 
-[Unreleased]: https://github.com/netzmacht/contao-toolkit/compare/3.4.3...master
+[Unreleased]: https://github.com/netzmacht/contao-toolkit/compare/3.4.4...master
+[3.4.4]: https://github.com/netzmacht/contao-toolkit/compare/3.4.2...3.4.4
 [3.4.3]: https://github.com/netzmacht/contao-toolkit/compare/3.4.2...3.4.3
 [3.4.2]: https://github.com/netzmacht/contao-toolkit/compare/3.4.1...3.4.2
 [3.4.1]: https://github.com/netzmacht/contao-toolkit/compare/3.4.0...3.4.1
