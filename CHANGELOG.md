@@ -4,6 +4,13 @@ Changelog
 [Unreleased]
 ------------
 
+[3.4.5] (2020-08-28)
+--------------------
+
+### Fixed
+
+ - Fix type class for content elements based on hybrids
+
 [3.4.4] (2020-08-27)
 --------------------
 
@@ -182,8 +189,9 @@ Changelog
  - Prevent error than no dca array is loaded (See [contao-leaflet-maps/issues/54](https://github.com/netzmacht/contao-leaflet-maps/issues/54)
  - Added changelog (#9)
 
-[Unreleased]: https://github.com/netzmacht/contao-toolkit/compare/3.4.4...master
-[3.4.4]: https://github.com/netzmacht/contao-toolkit/compare/3.4.2...3.4.4
+[Unreleased]: https://github.com/netzmacht/contao-toolkit/compare/3.4.5...master
+[3.4.5]: https://github.com/netzmacht/contao-toolkit/compare/3.4.4...3.4.5
+[3.4.4]: https://github.com/netzmacht/contao-toolkit/compare/3.4.3...3.4.4
 [3.4.3]: https://github.com/netzmacht/contao-toolkit/compare/3.4.2...3.4.3
 [3.4.2]: https://github.com/netzmacht/contao-toolkit/compare/3.4.1...3.4.2
 [3.4.1]: https://github.com/netzmacht/contao-toolkit/compare/3.4.0...3.4.1

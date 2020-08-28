@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Component\Hybrid;
 
 use Contao\ContentModel;
+use Netzmacht\Contao\Toolkit\Component\AbstractComponent;
 use Netzmacht\Contao\Toolkit\Component\Module\AbstractModule;
 
 /**
@@ -69,11 +70,23 @@ abstract class AbstractHybrid extends AbstractModule implements Hybrid
     }
 
     /**
+     * {@inheritdoc}
+     */
+    protected function compileCssClass(): string
+    {
+        if ($this->isContentElement()) {
+            return trim('ce_' . $this->get('type') . ' ' . AbstractComponent::compileCssClass());
+        }
+
+        return parent::compileCssClass();
+    }
+
+    /**
      * Check if hybrid is used as content element.
      *
      * @return bool
      */
-    private function isContentElement(): bool
+    protected function isContentElement(): bool
     {
         return $this->getModel() instanceof ContentModel;
     }
