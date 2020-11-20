@@ -19,7 +19,7 @@ use Contao\Model;
 /**
  * The ComponentDecorator trait is designed to provide a decorator for content elements and frontend modules.
  *
- * @package Netzmacht\Contao\Toolkit\Component
+ * @deprecated Since 3.5.0 and get removed in 4.0.0
  */
 trait ComponentDecoratorTrait
 {

@@ -5,6 +5,7 @@
  *
  * @package    contao-toolkit
  * @author     David Molineus <david.molineus@netzmacht.de>
+ * @author     Christopher Bölter <christopher@boelter.eu>
  * @copyright  2017 netzmacht David Molineus. All rights reserved.
  * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-leaflet-maps/blob/master/LICENSE
  * @filesource

@@ -31,7 +31,7 @@ use const TL_MODE;
 /**
  * Base element.
  *
- * @package Netzmacht\Contao\Toolkit\Component\ContentElement
+ * @deprecated Since 3.5.0 and get removed in 4.0.0
  */
 abstract class AbstractComponent implements Component
 {

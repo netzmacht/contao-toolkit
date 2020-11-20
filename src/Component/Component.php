@@ -19,7 +19,7 @@ use Contao\Model;
 /**
  * The component is the interface describing content elements and modules.
  *
- * @package Netzmacht\Contao\Toolkit\Component
+ * @deprecated Since 3.5.0 and get removed in 4.0.0
  */
 interface Component
 {

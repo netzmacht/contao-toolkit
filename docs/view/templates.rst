@@ -5,32 +5,31 @@ Toolkit provides some improvements to the default Contao template. It provides a
 template helpers and a simple to use template factory.
 
 
-Template factory
+Template renderer
 ----------------
 
-Since toolkit supports template helpers creating a template would require to pass all registered helpers to a template.
-Using the template factory makes it easy. You don't have to worry about any helpers.
+The toolkit provides a template renderer service which wraps the rendering of the Contao templates and twig templates.
 
-Instead of magic properties the template interface provides `set` and `get` methods.
 
 .. code-block:: php
 
    <?php
 
-   /** @var Netzmacht\Contao\Toolkit\View\Template\TemplateFactory $templateFactory */
-   $templateFactory = $container->get('netzmacht.contao_toolkit.view.template_factory');
+   declare(strict_types=1);
 
-   /** @var Netzmacht\Contao\Toolkit\View\Template\Template $frontendTemplate */
-   $frontendTemplate = $templateFactory->createFrontendTemplate('mod_test');
-   echo $frontendTemplate->parse();
+   $renderer = $container->get('netzmacht.contao_toolkit.template_renderer');
+   assert($renderer instanceof \Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer);
 
-   /** @var Netzmacht\Contao\Toolkit\View\Template\Template $frontendTemplate */
-   $backendTemplate = $templateFactory->createBackendTemplate('be_test');
-   echo $backendTemplate->parse();
+   echo $renderer->render('toolkit:be:be_main', ['foo' => 'bar']);
+   echo $renderer->render('toolkit:fe:fe_pgae', ['foo' => 'bar']);
+   echo $renderer->render('templates/views.html.twig', ['foo' => 'bar']);
+   echo $renderer->render('@Bundle/templates/views.html.twig', ['foo' => 'bar']);
 
-.. hint:: Internal the Contao classes BackendTemplate and FrontendTemplate are used. So inside your templates you can
-   access all methods and magic properties as you are used to.
+Since toolkit supports template helpers creating a template would require to pass all registered helpers to a template.
+Using the template renderer makes it easy. You don't have to worry about any helpers.
 
+.. hint:: Right now the Symfony templating engine is wrapped. Due of the deprecation of the templating support in
+   Symfony 5 you should not rely on it. It get's removed
 
 .. _template-helpers:
 

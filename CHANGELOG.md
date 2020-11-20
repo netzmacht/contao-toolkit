@@ -4,6 +4,19 @@ Changelog
 [Unreleased]
 ------------
 
+[3.5.0] (2020-11-20)
+--------------------
+
+### Added
+
+ - Add a new template renderer service which will replace the integration of the templating engine
+ 
+### Deprecated
+
+ - Integration in the templating engine. Will be removed in version 4.0.
+ - Deprecate the components (Frontend module and content elements) - Use contao fragments instead
+
+
 [3.4.5] (2020-08-28)
 --------------------
 

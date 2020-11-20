@@ -14,12 +14,14 @@ services:
   netzmacht.contao_toolkit.component.content_element_factory:
     class: Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory
     public: true
+    deprecated: ~
     arguments:
       - []
 
   netzmacht.contao_toolkit.component.frontend_module_factory:
     class: Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory
     public: true
+    deprecated: ~
     arguments:
       - []
 
@@ -116,9 +118,15 @@ services:
 
   templating.engine.toolkit:
     class: Netzmacht\Contao\Toolkit\View\Template\ToolkitTemplateEngine
+    deprecated: ~
     arguments:
       - '@netzmacht.contao_toolkit.view.template_factory'
       - '@netzmacht.contao_toolkit.view.template_name_parser'
+
+  netzmacht.contao_toolkit.template_renderer:
+    class: Netzmacht\Contao\Toolkit\View\Template\TemplatingEngineTemplateRenderer
+    arguments:
+      - '@templating'
 
   netzmacht.contao_toolkit.globals_assets_manager_factory:
     class: Netzmacht\Contao\Toolkit\View\Assets\GlobalsAssetsManagerFactory
