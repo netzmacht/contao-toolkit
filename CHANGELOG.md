@@ -4,6 +4,9 @@ Changelog
 [Unreleased]
 ------------
 
+[3.5.0] (2020-11-20)
+--------------------
+
 ### Added
 
  - Add a new template renderer service which will replace the integration of the templating engine
