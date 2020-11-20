@@ -21,7 +21,7 @@ use Netzmacht\Contao\Toolkit\Component\ComponentFactory;
 /**
  * Class ContentElementDecorator.
  *
- * @package Netzmacht\Contao\Toolkit\Component\ContentElement
+ * @deprecated Since 3.5.0 and get removed in 4.0.0
  */
 final class ContentElementDecorator extends ContentElement
 {

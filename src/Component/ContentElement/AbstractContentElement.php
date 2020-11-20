@@ -29,7 +29,7 @@ use const E_USER_DEPRECATED;
 /**
  * Class AbstractContentElement.
  *
- * @package Netzmacht\Contao\Toolkit\Component\ContentElement
+ * @deprecated Since 3.5.0 and get removed in 4.0.0
  */
 abstract class AbstractContentElement extends AbstractComponent implements ContentElement
 {

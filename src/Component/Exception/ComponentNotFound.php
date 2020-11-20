@@ -24,7 +24,7 @@ use RuntimeException;
 /**
  * Exception class ContentElementNotFound is thrown if a content element could not be created.
  *
- * @package Netzmacht\Contao\Toolkit\Component\ContentElement
+ * @deprecated Since 3.5.0 and get removed in 4.0.0
  */
 final class ComponentNotFound extends RuntimeException implements Exception
 {

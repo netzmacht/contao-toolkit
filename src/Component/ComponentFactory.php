@@ -21,7 +21,7 @@ use Netzmacht\Contao\Toolkit\Component\Exception\ComponentNotFound;
 /**
  * Class ComponentFactory.
  *
- * @package Netzmacht\Contao\Toolkit\Component
+ * @deprecated Since 3.5.0 and get removed in 4.0.0
  */
 interface ComponentFactory
 {

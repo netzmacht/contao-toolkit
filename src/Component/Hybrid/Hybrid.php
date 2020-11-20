@@ -20,7 +20,7 @@ use Netzmacht\Contao\Toolkit\Component\Module\Module;
 /**
  * Interface Hybrid.
  *
- * @package Netzmacht\Contao\Toolkit\Component\Hybrid
+ * @deprecated Since 3.5.0 and get removed in 4.0.0
  */
 interface Hybrid extends ContentElement, Module
 {

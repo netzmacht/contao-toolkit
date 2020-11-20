@@ -19,7 +19,7 @@ use Netzmacht\Contao\Toolkit\Component\Component;
 /**
  * Interface ContentElement describing content elements.
  *
- * @package Netzmacht\Contao\Toolkit\Component\ContentElement
+ * @deprecated Since 3.5.0 and get removed in 4.0.0
  */
 interface ContentElement extends Component
 {

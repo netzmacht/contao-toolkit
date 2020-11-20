@@ -23,7 +23,7 @@ use Netzmacht\Contao\Toolkit\Component\Module\AbstractModule;
  *
  * It does not depend on an foreign element being loaded and merged as the Contao hybrid does.
  *
- * @package Netzmacht\Contao\Toolkit\Component\Hybrid
+ * @deprecated Since 3.5.0 and get removed in 4.0.0
  */
 abstract class AbstractHybrid extends AbstractModule implements Hybrid
 {
