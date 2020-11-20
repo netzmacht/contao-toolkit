@@ -121,10 +121,9 @@ services:
       - '@netzmacht.contao_toolkit.view.template_name_parser'
 
   netzmacht.contao_toolkit.template_renderer:
-    class: Netzmacht\Contao\Toolkit\View\Template\ToolkitTemplateEngine
+    class: Netzmacht\Contao\Toolkit\View\Template\TemplatingEngineTemplateRenderer
     arguments:
-      - '@netzmacht.contao_toolkit.view.template_factory'
-      - '@netzmacht.contao_toolkit.view.template_name_parser'
+      - '@templating'
 
   netzmacht.contao_toolkit.globals_assets_manager_factory:
     class: Netzmacht\Contao\Toolkit\View\Assets\GlobalsAssetsManagerFactory

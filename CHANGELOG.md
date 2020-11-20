@@ -4,6 +4,15 @@ Changelog
 [Unreleased]
 ------------
 
+### Added
+
+ - Add a new template renderer service which will replace the integration of the templating engine
+ 
+### Deprecated
+
+ - Integration in the templating engine. Will be removed in version 4.0.
+
+
 [3.4.5] (2020-08-28)
 --------------------
 
