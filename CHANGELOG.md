@@ -4,6 +4,10 @@ Changelog
 [Unreleased]
 ------------
 
+### Changed
+
+ - Require at least Contao `^4.9`
+
 [3.5.0] (2020-11-20)
 --------------------
 
