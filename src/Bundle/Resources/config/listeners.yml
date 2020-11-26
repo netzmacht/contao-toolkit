@@ -77,7 +77,7 @@ services:
   Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\ColorPickerListener:
     public: true
     arguments:
-      - '@templating'
+      - '@netzmacht.contao_toolkit.template_renderer'
       - '@translator'
       - '@netzmacht.contao_toolkit.dca.manager'
 
@@ -89,7 +89,7 @@ services:
   Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\FilePickerListener:
     public: true
     arguments:
-      - '@templating'
+      - '@netzmacht.contao_toolkit.template_renderer'
       - '@translator'
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@netzmacht.contao_toolkit.contao.input_adapter'
@@ -102,7 +102,7 @@ services:
   Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PagePickerListener:
     public: true
     arguments:
-      - '@templating'
+      - '@netzmacht.contao_toolkit.template_renderer'
       - '@translator'
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@netzmacht.contao_toolkit.contao.input_adapter'
@@ -115,7 +115,7 @@ services:
   Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PopupWizardListener:
     public: true
     arguments:
-      - '@templating'
+      - '@netzmacht.contao_toolkit.template_renderer'
       - '@translator'
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@security.csrf.token_manager'

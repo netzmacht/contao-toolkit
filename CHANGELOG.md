@@ -8,6 +8,7 @@ Changelog
 
  - Require at least Contao `^4.9`
  - Always activate the fos cache response tagger if available
+ - Wizard listeners now support `netzmacht.contao_toolkit.template_renderer`. Support for `templating` is deprecated.
  
 ### Removed
 
