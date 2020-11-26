@@ -7,6 +7,10 @@ Changelog
 ### Changed
 
  - Require at least Contao `^4.9`
+ 
+### Removed
+
+ - Remove Contao translator backport
 
 [3.5.0] (2020-11-20)
 --------------------

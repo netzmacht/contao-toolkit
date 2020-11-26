@@ -22,7 +22,6 @@ use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\FosCacheRespons
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterContaoModelPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterHooksPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RepositoriesPass;
-use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\TranslatorPass;
 use OutOfBoundsException;
 use PackageVersions\Versions;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -70,7 +69,6 @@ final class NetzmachtContaoToolkitBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new CsrfTokenManagerPass());
-        $container->addCompilerPass(new TranslatorPass());
         $container->addCompilerPass(new RepositoriesPass());
         $container->addCompilerPass(new FosCacheResponseTaggerPass($this->contaoCoreVersion));
 

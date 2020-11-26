@@ -19,7 +19,6 @@ use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\FosCacheRespons
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterContaoModelPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterHooksPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RepositoriesPass;
-use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\TranslatorPass;
 use Netzmacht\Contao\Toolkit\Bundle\NetzmachtContaoToolkitBundle;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -30,14 +29,6 @@ final class NetzmachtContaoToolkitBundleSpec extends ObjectBehavior
     public function it_is_initializable(): void
     {
         $this->shouldHaveType(NetzmachtContaoToolkitBundle::class);
-    }
-
-    public function it_registers_translator_pass(ContainerBuilder $container): void
-    {
-        $container->addCompilerPass(Argument::type(TranslatorPass::class))->shouldBeCalledOnce();
-        $container->addCompilerPass(Argument::any())->shouldBeCalled();
-
-        $this->build($container);
     }
 
     public function it_registers_repositories_pass(ContainerBuilder $container): void
