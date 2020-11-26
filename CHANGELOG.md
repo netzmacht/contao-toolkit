@@ -7,10 +7,12 @@ Changelog
 ### Changed
 
  - Require at least Contao `^4.9`
+ - Always activate the fos cache response tagger if available
  
 ### Removed
 
  - Remove Contao translator backport
+ - Remove tagged hook listener backport
 
 [3.5.0] (2020-11-20)
 --------------------

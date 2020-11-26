@@ -54,25 +54,4 @@ final class NetzmachtContaoToolkitBundleSpec extends ObjectBehavior
 
         $this->build($container);
     }
-
-    public function it_registers_hook_listener_pass_for_contao_44(ContainerBuilder $container): void
-    {
-        $this->beConstructedWith('4.4.0@123');
-
-        $container->addCompilerPass(Argument::type(RegisterHooksPass::class))->shouldBeCalledOnce();
-        $container->addCompilerPass(Argument::any())->shouldBeCalled();
-
-        $this->build($container);
-    }
-
-    public function it_doesnt_register_hook_listener_pass_for_contao_45_and_up(
-        ContainerBuilder $container
-    ): void {
-        $this->beConstructedWith('4.5.0@123');
-
-        $container->addCompilerPass(Argument::type(RegisterHooksPass::class))->shouldNotBeCalled();
-        $container->addCompilerPass(Argument::any())->shouldBeCalled();
-
-        $this->build($container);
-    }
 }

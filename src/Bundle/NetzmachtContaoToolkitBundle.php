@@ -20,10 +20,7 @@ use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\ComponentDecora
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\CsrfTokenManagerPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\FosCacheResponseTaggerPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterContaoModelPass;
-use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterHooksPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RepositoriesPass;
-use OutOfBoundsException;
-use PackageVersions\Versions;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -35,33 +32,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 final class NetzmachtContaoToolkitBundle extends Bundle
 {
     /**
-     * Contao core version.
-     *
-     * @var string
-     */
-    private $contaoCoreVersion;
-
-    /**
-     * NetzmachtContaoToolkitBundle constructor.
-     *
-     * @param null|string $contaoCoreVersion Contao core version. Available for testing purposes.
-     */
-    public function __construct(?string $contaoCoreVersion = null)
-    {
-        if (!$contaoCoreVersion) {
-            try {
-                $contaoCoreVersion = Versions::getVersion('contao/core-bundle');
-            } catch (OutOfBoundsException $e) {
-                $contaoCoreVersion = Versions::getVersion('contao/contao');
-            }
-
-            $contaoCoreVersion = explode('@', $contaoCoreVersion, 1)[0];
-        }
-
-        $this->contaoCoreVersion = $contaoCoreVersion;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function build(ContainerBuilder $container): void
@@ -70,7 +40,7 @@ final class NetzmachtContaoToolkitBundle extends Bundle
 
         $container->addCompilerPass(new CsrfTokenManagerPass());
         $container->addCompilerPass(new RepositoriesPass());
-        $container->addCompilerPass(new FosCacheResponseTaggerPass($this->contaoCoreVersion));
+        $container->addCompilerPass(new FosCacheResponseTaggerPass());
 
         $container->addCompilerPass(
             new ComponentDecoratorPass(
@@ -128,10 +98,5 @@ final class NetzmachtContaoToolkitBundle extends Bundle
         $container->addCompilerPass(
             new RegisterContaoModelPass()
         );
-
-        // Since Contao 4.5 tagged hook listeners are supported by the Contao core
-        if (version_compare($this->contaoCoreVersion, '4.5', '<')) {
-            $container->addCompilerPass(new RegisterHooksPass());
-        }
     }
 }

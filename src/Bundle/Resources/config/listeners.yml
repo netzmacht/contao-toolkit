@@ -23,13 +23,6 @@ services:
     tags:
       - { name: 'kernel.event_listener', event: 'netzmacht.contao_toolkit.dca.create_formatter', method: 'handle' }
 
-  netzmacht.contao_toolkit.listeners.merge_hook_listeners:
-    class: Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Listener\MergeHookListenersListener
-    public: true
-    arguments:
-      - '@netzmacht.contao_toolkit.callback_invoker'
-      - []
-
   netzmacht.contao_toolkit.listeners.register_component_decorators:
     class: Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Listener\RegisterComponentDecoratorsListener
     public: true
