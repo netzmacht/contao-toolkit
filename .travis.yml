@@ -38,6 +38,7 @@ before_script:
     else
       travis_retry composer update --prefer-dist --no-interaction --no-suggest
     fi
+  - vendor/bin/phpcq install
 
 script: vendor/bin/phpcq -v -o github-action -o default
 
