@@ -19,7 +19,6 @@ use PhpSpec\ObjectBehavior;
  * Class GetTemplateHelpersEventSpec
  *
  * @package spec\Netzmacht\Contao\Toolkit\View\Template\Event
- * @mixin GetTemplateHelpersEvent
  */
 class GetTemplateHelpersEventSpec extends ObjectBehavior
 {
@@ -27,34 +26,33 @@ class GetTemplateHelpersEventSpec extends ObjectBehavior
 
     const CONTENT_TYPE = 'content/type';
 
-    function let()
+    public function let()
     {
         $this->beConstructedWith(static::TEMPLATE_NAME, static::CONTENT_TYPE);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\View\Template\Event\GetTemplateHelpersEvent');
     }
 
-    function it_knows_template_name()
+    public function it_knows_template_name()
     {
         $this->getTemplateName()->shouldReturn(static::TEMPLATE_NAME);
-
     }
 
-    function it_knows_content_type()
+    public function it_knows_content_type()
     {
         $this->getContentType()->shouldReturn(static::CONTENT_TYPE);
     }
 
-    function it_adds_helper()
+    public function it_adds_helper()
     {
         $this->addHelper('foo', 'bar')->shouldReturn($this);
         $this->getHelpers()->shouldReturn(['foo' => 'bar']);
     }
 
-    function it_adds_helpers()
+    public function it_adds_helpers()
     {
         $helpers = [
             'foo' => 'fooHelper',
@@ -65,7 +63,7 @@ class GetTemplateHelpersEventSpec extends ObjectBehavior
         $this->getHelpers()->shouldReturn($helpers);
     }
 
-    function it_only_store_latest_named_helper()
+    public function it_only_store_latest_named_helper()
     {
         $this->addHelper('foo', 'fooHelper');
         $this->getHelpers()->shouldReturn(['foo' => 'fooHelper']);

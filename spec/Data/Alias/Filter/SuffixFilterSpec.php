@@ -18,8 +18,6 @@ use Prophecy\Argument;
 
 /**
  * Class SuffixFilterSpec
- * @package spec\Netzmacht\Contao\Toolkit\Data\Alias\Filter
- * @mixin SuffixFilter
  */
 class SuffixFilterSpec extends ObjectBehavior
 {
@@ -27,33 +25,33 @@ class SuffixFilterSpec extends ObjectBehavior
 
     const ALIAS_VALUE = 'alias-value';
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Data\Alias\Filter\SuffixFilter');
     }
 
-    function it_is_an_alias_filter()
+    public function it_is_an_alias_filter()
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Data\Alias\Filter');
     }
 
-    function it_breaks_by_default()
+    public function it_breaks_by_default()
     {
         $this->breakIfValid()->shouldReturn(true);
     }
 
-    function it_accepts_break_option()
+    public function it_accepts_break_option()
     {
         $this->beConstructedWith(false);
         $this->breakIfValid()->shouldReturn(false);
     }
 
-    function it_supports_repeating()
+    public function it_supports_repeating()
     {
         $this->repeatUntilValid()->shouldReturn(true);
     }
 
-    function it_appends_suffix()
+    public function it_appends_suffix()
     {
         $model = (object) [];
 
@@ -63,7 +61,7 @@ class SuffixFilterSpec extends ObjectBehavior
         );
     }
 
-    function it_accepts_custom_separator()
+    public function it_accepts_custom_separator()
     {
         $model = (object) [];
 
@@ -73,7 +71,7 @@ class SuffixFilterSpec extends ObjectBehavior
         );
     }
 
-    function it_increases_suffix_when_repeating()
+    public function it_increases_suffix_when_repeating()
     {
         $model = (object) [];
 
@@ -89,7 +87,7 @@ class SuffixFilterSpec extends ObjectBehavior
         );
     }
 
-    function it_accepts_custom_start_value()
+    public function it_accepts_custom_start_value()
     {
         $model = (object) [];
 

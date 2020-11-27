@@ -1,0 +1,149 @@
+phpcq:
+  repositories:
+    - ./.phpcq/local/repository.json
+    - https://phpcq.github.io/repository/repository.json
+  directories:
+    - src
+    - spec
+  artifact: .phpcq/build
+
+  plugins:
+    box:
+      version: ^1.0
+      signed: false
+      requirements:
+        box:
+          signed: false
+    composer-require-checker:
+      version: ^1.0
+      signed: false
+    phpmd:
+      version: ^1.0
+      signed: false
+    phpcpd:
+      version: ^1.0
+      signed: false
+    phploc:
+      version: ^1.0
+      signed: false
+    phpcs:
+      version: ^1.0
+      signed: false
+    phpcbf:
+      version: ^1.0
+      signed: false
+    composer-normalize:
+      version: ^1.0
+      signed: false
+    phpspec:
+      version: ^1.0
+      signed: false
+  trusted-keys:
+    # sb@sebastian-bergmann.de
+    - 4AA394086372C20A
+    # magl@magll.net
+    - D2CCAC42F6295E7D
+    # PHP_CodeSniffer
+    - 31C7E470E2138192
+    # Composer normalize
+    - C00543248C87FB13
+    # phpmd
+    - 0F9684B8B16B7AB0
+
+  chains:
+    fix:
+      - composer-normalize
+      - phpcbf
+    verify:
+      - composer-require-checker
+      - composer-normalize
+    analyze:
+      - phploc
+      - phpcpd
+      - phpmd_src
+      - phpmd_spec
+      - phpcs
+      - phpspec
+    build:
+      - box
+    default:
+      - composer-require-checker
+      - composer-normalize
+      - phploc
+      - phpcpd
+      - phpmd_src
+      - phpmd_spec
+      - phpcs
+      - phpspec
+
+tasks:
+  box:
+    config:
+      algorithm: "SHA512"
+      alias: "phpcq"
+      banner: |
+        This file is part of the phpcq project.
+
+        Copyright (c) Christian Schiffler <c.schiffler@cyberspectrum.de>
+        David Molineus <david.molineus@netzmacht.de>
+
+        This source file is subject to the MIT license that is bundled
+        with this source code in the file LICENSE.
+      check_requirements: false
+      compression: "GZ"
+      compactors:
+        - "KevinGH\\Box\\Compactor\\Php"
+        - "KevinGH\\Box\\Compactor\\PhpScoper"
+        - "KevinGH\\Box\\Compactor\\Json"
+      datetime: "release-date"
+      git_version: "git-version"
+      php_scoper: ".phpcq/phar/scoper.inc.php"
+
+  phpcpd:
+    plugin: phpcpd
+    config:
+    #  exclude:
+    #  names:
+      names_exclude:
+        - UniqueDatabaseValueValidatorSpec.php
+        - ComponentDecoratorPassSpec.php
+        - SlugifyFilterSpec.php
+        - RawValueFilterSpec.php
+    #  regexps_exclude:
+    #  log:
+    #  min_lines:
+    #  min_tokens:
+    #  fuzzy: true
+    #  custom_flags:
+
+  phpmd_src:
+    plugin: phpmd
+    directories:
+      - src
+    config:
+      ruleset:
+        - ./vendor/phpcq/coding-standard/phpmd/ruleset.xml
+
+  phpmd_spec:
+    plugin: phpmd
+    directories:
+      - spec
+    config:
+      ruleset:
+        - unusedcode
+
+  composer-require-checker:
+    plugin: composer-require-checker
+    config:
+      config_file: '.composer-require-checker.json'
+
+  phpcs:
+    plugin: phpcs
+    config: &phpcs-config
+      standard: ~
+
+  phpcbf:
+    plugin: phpcs
+    config:
+      <<: *phpcs-config
+      fix: true

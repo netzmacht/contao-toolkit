@@ -21,19 +21,19 @@ use PhpSpec\ObjectBehavior;
 
 class PluginSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(Plugin::class);
     }
 
-    function it_provides_bundle_config(ParserInterface $parser)
+    public function it_provides_bundle_config(ParserInterface $parser)
     {
         $this->shouldImplement(BundlePluginInterface::class);
 
         $this->getBundles($parser)->shouldBeArray();
     }
 
-    function it_depends_on_core_bundle(ParserInterface $parser)
+    public function it_depends_on_core_bundle(ParserInterface $parser)
     {
         $this->shouldImplement(DependentPluginInterface::class);
 

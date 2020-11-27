@@ -20,28 +20,27 @@ use PhpSpec\ObjectBehavior;
  * Class FileUuidFormatterSpec
  *
  * @package spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value
- * @mixin FileUuidFormatter
  */
 class FileUuidFormatterSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FileUuidFormatter');
     }
 
-    function it_is_a_value_formatter()
+    public function it_is_a_value_formatter()
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
     }
 
-    function it_accepts_file_trees()
+    public function it_accepts_file_trees()
     {
         $definition['inputType'] = 'fileTree';
 
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
-    function it_does_not_accept_other_types()
+    public function it_does_not_accept_other_types()
     {
         $this->accepts('test', [])->shouldReturn(false);
 
@@ -52,7 +51,7 @@ class FileUuidFormatterSpec extends ObjectBehavior
         }
     }
 
-    function it_formats_binary_uuid()
+    public function it_formats_binary_uuid()
     {
         $uuid   = '31092867-468d-11e5-945d-e766493b4cce';
         $binary = StringUtil::uuidToBin($uuid);
@@ -60,7 +59,7 @@ class FileUuidFormatterSpec extends ObjectBehavior
         $this->format($binary, 'test', [])->shouldReturn($uuid);
     }
 
-    function it_formats_binary_uuids()
+    public function it_formats_binary_uuids()
     {
         $uuids = [
             '31092867-468d-11e5-945d-e766493b4cce',
@@ -72,7 +71,7 @@ class FileUuidFormatterSpec extends ObjectBehavior
         $this->format($binary, 'test', [])->shouldReturn($uuids);
     }
 
-    function it_filters_empty_values()
+    public function it_filters_empty_values()
     {
         $uuids = [
             '31092867-468d-11e5-945d-e766493b4cce',

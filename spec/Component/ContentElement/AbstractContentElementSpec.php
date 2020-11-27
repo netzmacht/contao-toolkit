@@ -12,6 +12,7 @@
 
 namespace spec\Netzmacht\Contao\Toolkit\Component\ContentElement;
 
+use Contao\Model;
 use Netzmacht\Contao\Toolkit\Component\ContentElement\AbstractContentElement;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use PhpSpec\ObjectBehavior;
@@ -29,15 +30,16 @@ if (!defined('BE_USER_LOGGED_IN')) {
  * Class AbstractContentElementSpec
  *
  * @package spec\Netzmacht\Contao\Toolkit\Component\ContentElement
- * @mixin AbstractContentElement
  */
 class AbstractContentElementSpec extends ObjectBehavior
 {
+    /** @var Model */
     private $model;
 
+    /** @var array */
     private $modelData;
 
-    function let(EngineInterface $templateEngine, RequestScopeMatcher $requestScopeMatcher)
+    public function let(EngineInterface $templateEngine, RequestScopeMatcher $requestScopeMatcher)
     {
         $this->modelData = [
             'type'      => 'test',
@@ -47,30 +49,40 @@ class AbstractContentElementSpec extends ObjectBehavior
             'customTpl' => 'custom_tpl'
         ];
 
-        $this->model = new Model($this->modelData);
+        $this->model = new class($this->modelData) extends Model {
+            /**
+             * Model constructor.
+             *
+             * @param array $data Model data.
+             */
+            public function __construct(array $data)
+            {
+                $this->arrData = $data;
+            }
+        };
 
         $requestScopeMatcher->isFrontendRequest()->willReturn(true);
 
-        $this->beAnInstanceOf(ConcreteContentElement::class);
+        $this->beAnInstanceOf(\spec\Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElement::class);
         $this->beConstructedWith($this->model, $templateEngine, 'main', $requestScopeMatcher);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(AbstractContentElement::class);
     }
 
-    function it_is_a_component()
+    public function it_is_a_component()
     {
         $this->shouldImplement(Component::class);
     }
 
-    function it_is_a_content_element()
+    public function it_is_a_content_element()
     {
         $this->shouldImplement(ContentElement::class);
     }
 
-    function it_generates_output(EngineInterface $templateEngine)
+    public function it_generates_output(EngineInterface $templateEngine)
     {
         $templateEngine->render(Argument::cetera())->willReturn('output');
 
@@ -78,7 +90,7 @@ class AbstractContentElementSpec extends ObjectBehavior
         $this->generate()->shouldReturn('output');
     }
 
-    function it_doesnt_generate_output_if_invisible(
+    public function it_doesnt_generate_output_if_invisible(
         EngineInterface $templateEngine,
         RequestScopeMatcher $requestScopeMatcher
     ) {
@@ -92,13 +104,13 @@ class AbstractContentElementSpec extends ObjectBehavior
         $this->generate()->shouldReturn('');
     }
 
-    function it_doesnt_generate_output_if_starts_in_future(
+    public function it_doesnt_generate_output_if_starts_in_future(
         EngineInterface $templateEngine,
         RequestScopeMatcher $requestScopeMatcher
     ) {
         $this->beConstructedWith($this->model, $templateEngine, 'main', $requestScopeMatcher);
 
-        $this->model->start = time() + 3600;
+        $this->model->start = (time() + 3600);
 
         $templateEngine->render(Argument::cetera())->shouldNotBeCalled();
 
@@ -106,14 +118,14 @@ class AbstractContentElementSpec extends ObjectBehavior
         $this->generate()->shouldReturn('');
     }
 
-    function it_doesnt_generate_output_if_stopped_in_past(
+    public function it_doesnt_generate_output_if_stopped_in_past(
         EngineInterface $templateEngine,
         RequestScopeMatcher $requestScopeMatcher
     ) {
         $this->beConstructedWith($this->model, $templateEngine, 'main', $requestScopeMatcher);
 
-        $this->model->start = time() - 3600;
-        $this->model->stop = time() - 3600;
+        $this->model->start = (time() - 3600);
+        $this->model->stop  = (time() - 3600);
 
         $templateEngine->render(Argument::cetera())->shouldNotBeCalled();
 
@@ -121,7 +133,7 @@ class AbstractContentElementSpec extends ObjectBehavior
         $this->generate()->shouldReturn('');
     }
 
-    function it_ignores_visibility_settings_on_non_frontend_request(
+    public function it_ignores_visibility_settings_on_non_frontend_request(
         EngineInterface $templateEngine,
         RequestScopeMatcher $requestScopeMatcher
     ) {
@@ -137,7 +149,7 @@ class AbstractContentElementSpec extends ObjectBehavior
         $this->generate()->shouldReturn('output');
     }
 
-    function it_ignores_visibility_settings_on_preview_mode(
+    public function it_ignores_visibility_settings_on_preview_mode(
         EngineInterface $templateEngine,
         RequestScopeMatcher $requestScopeMatcher
     ) {
@@ -151,24 +163,5 @@ class AbstractContentElementSpec extends ObjectBehavior
 
         $this->generate()->shouldBeString();
         $this->generate()->shouldReturn('output');
-    }
-}
-
-
-class ConcreteContentElement extends AbstractContentElement
-{
-
-}
-
-class Model extends \Contao\Model
-{
-    /**
-     * Model constructor.
-     *
-     * @param array $data
-     */
-    public function __construct($data)
-    {
-        $this->arrData = $data;
     }
 }

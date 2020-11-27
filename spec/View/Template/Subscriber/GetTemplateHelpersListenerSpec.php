@@ -26,21 +26,20 @@ use Symfony\Component\Translation\TranslatorInterface;
  * Class GetTemplateHelpersListenerSpec
  *
  * @package spec\Netzmacht\Contao\Toolkit\View\Template\Subscriber
- * @mixin GetTemplateHelpersListener
  */
 class GetTemplateHelpersListenerSpec extends ObjectBehavior
 {
-    function let(AssetsManager $assetsManager, TranslatorInterface $translator)
+    public function let(AssetsManager $assetsManager, TranslatorInterface $translator)
     {
         $this->beConstructedWith($assetsManager, $translator);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\View\Template\Subscriber\GetTemplateHelpersListener');
     }
 
-    function it_registers_default_helpers()
+    public function it_registers_default_helpers()
     {
         $event = new GetTemplateHelpersEvent('example');
 

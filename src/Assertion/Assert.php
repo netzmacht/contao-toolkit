@@ -19,7 +19,7 @@ use Assert\Assert as BaseAssert;
 /**
  * Class Assert
  *
- * @package Netzmacht\Contao\Toolkit\Assertion
+ * @SuppressWarnings(PHPMD.LongVariable)
  */
 class Assert extends BaseAssert
 {

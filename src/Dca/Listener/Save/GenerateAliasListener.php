@@ -27,6 +27,8 @@ use const E_USER_DEPRECATED;
  * Class GenerateAliasCallback is designed to create an alias of a column.
  *
  * @package Netzmacht\Contao\Toolkit\Dca\Callback
+ *
+ * @SuppressWarnings(PHPMD.LongVariable)
  */
 final class GenerateAliasListener
 {

@@ -23,26 +23,49 @@ use Prophecy\Argument;
 /**
  * Class ComponentFactorySpec
  *
- * @package spec\Netzmacht\Contao\Toolkit\Component
- * @mixin ToolkitComponentFactory
+ * @SuppressWarnings(PHPMD.UnusedFormalParameter)
  */
 class ToolkitComponentFactorySpec extends ObjectBehavior
 {
+    /** @var Component */
     private $example;
 
-    function let(ComponentFactory $factory)
+    public function let(ComponentFactory $factory)
     {
-        $this->example = new ComponentExample();
+        $this->example = new class() implements Component {
+            public function set(string $name, $value): Component
+            {
+                return $this;
+            }
+
+            public function get(string $name)
+            {
+            }
+
+            public function has(string $name): bool
+            {
+                return true;
+            }
+
+            public function getModel()
+            {
+            }
+
+            public function generate(): string
+            {
+                return '';
+            }
+        };
 
         $this->beConstructedWith([$factory]);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(ComponentFactory::class);
     }
 
-    function it_should_throw_component_not_found_for_unknown_types(ComponentFactory $factory)
+    public function it_should_throw_component_not_found_for_unknown_types(ComponentFactory $factory)
     {
         $model = (object) ['type' => 'unknown', 'id' => '4'];
         $factory->supports($model)->willReturn(false);
@@ -51,7 +74,7 @@ class ToolkitComponentFactorySpec extends ObjectBehavior
             ->duringCreate($model, 'main');
     }
 
-    function it_should_throw_component_not_found_for_created_non_components(ComponentFactory $factory)
+    public function it_should_throw_component_not_found_for_created_non_components(ComponentFactory $factory)
     {
         $model = (object) ['type' => 'invalid', 'id' => '4'];
         $factory->supports($model)->willReturn(false);
@@ -61,35 +84,11 @@ class ToolkitComponentFactorySpec extends ObjectBehavior
             ->duringCreate($model, 'main');
     }
 
-    function it_creates_component_calling_responsible_factory(ComponentFactory $factory, Model $model)
+    public function it_creates_component_calling_responsible_factory(ComponentFactory $factory, Model $model)
     {
         $factory->supports($model)->willReturn(true);
         $factory->create($model, 'main')->willReturn($this->example)->shouldBeCalled();
 
         $this->create($model, 'main')->shouldReturn($this->example);
-    }
-}
-
-class ComponentExample implements Component
-{
-    public function set(string $name, $value): Component
-    {
-        return $this;
-    }
-
-    public function get(string $name)
-    {
-    }
-
-    public function has(string $name): bool
-    {
-    }
-
-    public function getModel()
-    {
-    }
-
-    public function generate(): string
-    {
     }
 }

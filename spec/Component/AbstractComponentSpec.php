@@ -12,7 +12,7 @@
 
 namespace spec\Netzmacht\Contao\Toolkit\Component;
 
-use Netzmacht\Contao\Toolkit\Component\AbstractComponent;
+use Contao\Model;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\Templating\EngineInterface;
@@ -26,15 +26,16 @@ if (!defined('TL_MODE')) {
  * Class AbstractComponentSpec
  *
  * @package spec\Netzmacht\Contao\Toolkit\Component
- * @mixin AbstractComponent
  */
 class AbstractComponentSpec extends ObjectBehavior
 {
+    /** @var \Contao\Model */
     private $model;
 
+    /** @var array */
     private $modelData;
 
-    function let(EngineInterface $templateEngine)
+    public function let(EngineInterface $templateEngine)
     {
         $this->modelData = [
             'type'      => 'test',
@@ -44,78 +45,66 @@ class AbstractComponentSpec extends ObjectBehavior
             'customTpl' => 'custom_tpl'
         ];
 
-        $this->model = new Model($this->modelData);
+        $this->model = new class($this->modelData) extends Model {
+            /**
+             * Model constructor.
+             *
+             * @param array $data Model data.
+             */
+            public function __construct(array $data)
+            {
+                $this->arrData = $data;
+            }
+        };
 
         $this->beAnInstanceOf('spec\Netzmacht\Contao\Toolkit\Component\ConcreteComponent');
         $this->beConstructedWith($this->model, $templateEngine);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Component\AbstractComponent');
     }
 
-    function it_is_a_component()
+    public function it_is_a_component()
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Component\Component');
     }
 
-    function it_provides_data_read_access()
+    public function it_provides_data_read_access()
     {
         $this->get('id')->shouldReturn(1);
     }
 
-    function it_provides_data_write_access()
+    public function it_provides_data_write_access()
     {
         $this->set('foo', 'bar')->shouldReturn($this);
         $this->get('foo')->shouldReturn('bar');
     }
 
-    function it_knows_with_data_exist()
+    public function it_knows_with_data_exist()
     {
         $this->has('id')->shouldReturn(true);
         $this->has('invalid')->shouldreturn(false);
     }
 
-    function it_deserializes_headline()
+    public function it_deserializes_headline()
     {
         $this->get('headline')->shouldReturn('test');
         $this->get('hl')->shouldReturn('h1');
     }
 
-    function it_uses_custom_tpl()
+    public function it_uses_custom_tpl()
     {
         // Only works in FE MODE!
         $this->getTemplateName()->shouldReturn('custom_tpl');
     }
 
-    function it_generates_output(EngineInterface $templateEngine)
+    public function it_generates_output(EngineInterface $templateEngine)
     {
         $templateEngine->render(Argument::cetera())->willReturn('output');
 
         $this->generate()->shouldBeString();
         $this->generate()->shouldReturn('output');
-    }
-}
-
-class ConcreteComponent extends AbstractComponent
-{
-    public function getTemplateName(): string
-    {
-        return parent::getTemplateName();
-    }
-
-}
-
-class Model extends \Contao\Model
-{
-    /**
-     * Model constructor.
-     *
-     * @param array $data
-     */
-    public function __construct($data)
-    {
-        $this->arrData = $data;
     }
 }

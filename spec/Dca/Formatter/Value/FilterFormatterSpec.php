@@ -21,31 +21,30 @@ use Prophecy\Argument;
  * Class FilterFormatterSpec
  *
  * @package spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value
- * @mixin FilterFormatter
  */
 class FilterFormatterSpec extends ObjectBehavior
 {
-    function let(ValueFormatter $formatterA, ValueFormatter $formatterB)
+    public function let(ValueFormatter $formatterA, ValueFormatter $formatterB)
     {
         $this->beConstructedWith([$formatterA, $formatterB]);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FilterFormatter');
     }
 
-    function it_is_a_value_formatter()
+    public function it_is_a_value_formatter()
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
     }
 
-    function it_accepts_anything()
+    public function it_accepts_anything()
     {
         $this->accepts('test', [])->shouldReturn(true);
     }
 
-    function it_applies_matching_formatters(ValueFormatter $formatterA, ValueFormatter $formatterB)
+    public function it_applies_matching_formatters(ValueFormatter $formatterA, ValueFormatter $formatterB)
     {
         $formatterA->accepts(Argument::cetera())->willReturn(false);
         $formatterA->format(Argument::cetera())->shouldNotBeCalled();

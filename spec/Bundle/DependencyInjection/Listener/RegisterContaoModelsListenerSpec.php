@@ -29,7 +29,7 @@ final class RegisterContaoModelsListenerSpec extends ObjectBehavior
 
     public function it_registers_models_in_global_registry(): void
     {
-        $GLOBALS['TL_MODELS'] = $GLOBALS['TL_MODELS'] ?? [];
+        $GLOBALS['TL_MODELS'] = ($GLOBALS['TL_MODELS'] ?? []);
 
         expect($GLOBALS['TL_MODELS'])->shouldNotHaveKeyWithValue('foo', 'bar');
 
@@ -40,7 +40,7 @@ final class RegisterContaoModelsListenerSpec extends ObjectBehavior
 
     public function it_overrides_existing_configuration(): void
     {
-        $GLOBALS['TL_MODELS']        = $GLOBALS['TL_MODELS'] ?? [];
+        $GLOBALS['TL_MODELS']        = ($GLOBALS['TL_MODELS'] ?? []);
         $GLOBALS['TL_MODELS']['foo'] = 'Baz';
 
         expect($GLOBALS['TL_MODELS'])->shouldHaveKeyWithValue('foo', 'Baz');

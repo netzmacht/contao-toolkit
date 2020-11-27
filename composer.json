@@ -1,70 +1,71 @@
 {
-    "name": "netzmacht/contao-toolkit",
-    "type": "contao-bundle",
-    "description": "This library provides tools to simplify common tasks when developing with Contao.",
-    "keywords": [
-        "contao",
-        "dev",
-        "tools"
-    ],
-    "license": "LGPL-3.0-or-later",
-    "authors": [
-        {
-            "name": "David Molineus",
-            "email": "mail@netzmacht.de",
-            "homepage": "https://netzmacht.de",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": ">=7.1",
-        "beberlei/assert": "^2.7 || ^3.0",
-        "contao/core-bundle": "^4.9",
-        "doctrine/dbal": "^2.5",
-        "ocramius/package-versions": "^1.3",
-        "patchwork/utf8": "^1.2",
-        "psr/log": "^1.1",
-        "symfony/config": "^4.4",
-        "symfony/dependency-injection": "^4.4",
-        "symfony/event-dispatcher": "^4.4",
-        "symfony/http-foundation": "^4.4",
-        "symfony/http-kernel": "^4.4",
-        "symfony/security-csrf": "^4.4 || ^5.0",
-        "symfony/templating": "^4.4 || ^5.0",
-        "symfony/translation": "^4.4"
-    },
-    "conflict": {
-        "contao/manager-plugin": "<2.0 || >=3.0",
-        "friendsofsymfony/http-cache": "<2.0 || >=3.0"
-    },
-    "require-dev": {
-        "bossa/phpspec2-expect": "^3.0",
-        "contao/manager-plugin": "^2.0",
-        "friendsofsymfony/http-cache": "^2.0",
-        "php-http/guzzle6-adapter": "^1.1",
-        "phpcq/all-tasks": "~1.3",
-        "phpspec/phpspec": "^5.0 || ^6.0"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "3.5.x-dev",
-            "dev-develop": "3.6.x-dev"
-        },
-        "contao-manager-plugin": "Netzmacht\\Contao\\Toolkit\\Bundle\\ContaoManager\\Plugin"
-    },
-    "autoload": {
-        "psr-4": {
-            "Netzmacht\\Contao\\Toolkit\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "files": [
-            "vendor/phpcq/autoload-validation/hacks/contao-hack.php"
-        ]
-    },
-    "support": {
-        "email": "mail@netzmacht.de",
-        "issues": "https://github.com/netzmacht/contao-toolkit/issues",
-        "source": "https://github.com/netzmacht/contao-toolkit"
+  "name": "netzmacht/contao-toolkit",
+  "type": "contao-bundle",
+  "description": "This library provides tools to simplify common tasks when developing with Contao.",
+  "keywords": [
+    "contao",
+    "dev",
+    "tools"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "David Molineus",
+      "email": "mail@netzmacht.de",
+      "homepage": "https://netzmacht.de",
+      "role": "Developer"
     }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "beberlei/assert": "^2.7 || ^3.0",
+    "contao/core-bundle": "^4.9",
+    "doctrine/dbal": "^2.5",
+    "ocramius/package-versions": "^1.3",
+    "patchwork/utf8": "^1.2",
+    "psr/log": "^1.1",
+    "symfony/config": "^4.4",
+    "symfony/dependency-injection": "^4.4",
+    "symfony/event-dispatcher": "^4.4",
+    "symfony/http-foundation": "^4.4",
+    "symfony/http-kernel": "^4.4",
+    "symfony/security-csrf": "^4.4 || ^5.0",
+    "symfony/templating": "^4.4 || ^5.0",
+    "symfony/translation": "^4.4"
+  },
+  "conflict": {
+    "contao/manager-plugin": "<2.0 || >=3.0",
+    "friendsofsymfony/http-cache": "<2.0 || >=3.0"
+  },
+  "require-dev": {
+    "bossa/phpspec2-expect": "^3.0",
+    "contao/manager-plugin": "^2.0",
+    "friendsofsymfony/http-cache": "^2.0",
+    "php-http/guzzle6-adapter": "^1.1",
+    "phpcq/coding-standard": "^2.1",
+    "phpcq/runner-bootstrap": "^1.0@dev",
+    "phpspec/phpspec": "^5.0 || ^6.0"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "3.5.x-dev",
+      "dev-develop": "3.6.x-dev"
+    },
+    "contao-manager-plugin": "Netzmacht\\Contao\\Toolkit\\Bundle\\ContaoManager\\Plugin"
+  },
+  "autoload": {
+    "psr-4": {
+      "Netzmacht\\Contao\\Toolkit\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "spec\\Netzmacht\\Contao\\Toolkit\\": "spec/"
+    }
+  },
+  "support": {
+    "email": "mail@netzmacht.de",
+    "issues": "https://github.com/netzmacht/contao-toolkit/issues",
+    "source": "https://github.com/netzmacht/contao-toolkit"
+  }
 }

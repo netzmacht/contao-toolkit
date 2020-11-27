@@ -19,8 +19,6 @@ use Prophecy\Argument;
 
 /**
  * Class SlugifyFilterSpec
- * @package spec\Netzmacht\Contao\Toolkit\Data\Alias\Filter
- * @mixin SlugifyFilter
  */
 class SlugifyFilterSpec extends ObjectBehavior
 {
@@ -32,48 +30,48 @@ class SlugifyFilterSpec extends ObjectBehavior
 
     const COLUMN = 'title';
 
-    function let()
+    public function let()
     {
         $GLOBALS['TL_CONFIG']['characterSet'] = 'utf-8';
     }
 
-    function createInstance()
+    public function createInstance()
     {
         $this->beConstructedWith([static::COLUMN]);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->createInstance();
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Data\Alias\Filter\SlugifyFilter');
     }
 
-    function it_is_an_alias_filter()
+    public function it_is_an_alias_filter()
     {
         $this->createInstance();
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Data\Alias\Filter');
     }
 
-    function it_breaks_by_default()
+    public function it_breaks_by_default()
     {
         $this->createInstance();
         $this->breakIfValid()->shouldReturn(true);
     }
 
 
-    function it_accepts_break_option()
+    public function it_accepts_break_option()
     {
         $this->beConstructedWith([static::COLUMN], false);
         $this->breakIfValid()->shouldReturn(false);
     }
 
-    function it_does_not_support_repeating()
+    public function it_does_not_support_repeating()
     {
         $this->createInstance();
         $this->repeatUntilValid()->shouldReturn(false);
     }
 
-    function it_slugifies_value()
+    public function it_slugifies_value()
     {
         $model = (object) [static::COLUMN => static::RAW_VALUE];
 
@@ -81,7 +79,7 @@ class SlugifyFilterSpec extends ObjectBehavior
         $this->apply($model, '', static::SEPARATOR)->shouldReturn(static::ALIAS_VALUE);
     }
 
-    function it_supports_multiple_columns()
+    public function it_supports_multiple_columns()
     {
         $aliasValue = 'aa0032a-12';
         $model      = (object) [
@@ -95,10 +93,10 @@ class SlugifyFilterSpec extends ObjectBehavior
         );
     }
 
-    function it_supports_custom_separator()
+    public function it_supports_custom_separator()
     {
         $aliasValue = 'aa0032a_12';
-        $model       = (object) [
+        $model      = (object) [
             static::COLUMN => static::RAW_VALUE,
             'test' => 'aa0032a-´12'
         ];
@@ -109,7 +107,7 @@ class SlugifyFilterSpec extends ObjectBehavior
         );
     }
 
-    function it_replaces_existing_value_by_default()
+    public function it_replaces_existing_value_by_default()
     {
         $model = (object) [
             static::COLUMN => static::RAW_VALUE,
@@ -122,7 +120,7 @@ class SlugifyFilterSpec extends ObjectBehavior
         );
     }
 
-    function it_supports_appending()
+    public function it_supports_appending()
     {
         $model = (object) [
             'id' => 5
@@ -134,7 +132,7 @@ class SlugifyFilterSpec extends ObjectBehavior
         );
     }
 
-    function it_supports_prepending()
+    public function it_supports_prepending()
     {
         $model = (object) [
             'id' => 5

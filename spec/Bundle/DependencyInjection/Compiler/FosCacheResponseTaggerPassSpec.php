@@ -36,7 +36,8 @@ final class FosCacheResponseTaggerPassSpec extends ObjectBehavior
         $this->shouldHaveType(FosCacheResponseTaggerPass::class);
     }
 
-    public function it_doesnt_register_response_tagger_if_fos_response_tagger_not_available(ContainerBuilder $container
+    public function it_doesnt_register_response_tagger_if_fos_response_tagger_not_available(
+        ContainerBuilder $container
     ): void {
         $container->has(self::FOS_TAGGER_SERVICE_ID)
             ->shouldBeCalled()

@@ -23,3 +23,9 @@ docs/_build
 
 # Translations
 .tx
+
+# phpcq
+.phpcq.yaml
+.phpcq/*
+!.phpcq
+!.phpcq/local

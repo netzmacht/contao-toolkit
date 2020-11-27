@@ -1,10 +1,5 @@
 dist: xenial
 
-addons:
-  apt:
-    packages:
-      - ant-optional
-
 language: php
 
 php:
@@ -44,7 +39,7 @@ before_script:
       travis_retry composer update --prefer-dist --no-interaction --no-suggest
     fi
 
-script: ant -keep-going
+script: vendor/bin/phpcq -v -o github-action -o default
 
 git:
   depth: false

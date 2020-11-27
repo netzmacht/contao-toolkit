@@ -19,8 +19,6 @@ use Prophecy\Argument;
 
 /**
  * Class RawValueFilterSpec
- * @package spec\Netzmacht\Contao\Toolkit\Data\Alias\Filter
- * @mixin RawValueFilter
  */
 class RawValueFilterSpec extends ObjectBehavior
 {
@@ -30,43 +28,43 @@ class RawValueFilterSpec extends ObjectBehavior
 
     const COLUMN = 'title';
 
-    function createInstance()
+    public function createInstance()
     {
         $this->beConstructedWith([static::COLUMN]);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->createInstance();
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Data\Alias\Filter\RawValueFilter');
     }
 
-    function it_is_an_alias_filter()
+    public function it_is_an_alias_filter()
     {
         $this->createInstance();
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Data\Alias\Filter');
     }
 
-    function it_breaks_by_default()
+    public function it_breaks_by_default()
     {
         $this->createInstance();
         $this->breakIfValid()->shouldReturn(true);
     }
 
 
-    function it_accepts_break_option()
+    public function it_accepts_break_option()
     {
         $this->beConstructedWith([static::COLUMN], false);
         $this->breakIfValid()->shouldReturn(false);
     }
 
-    function it_does_not_support_repeating()
+    public function it_does_not_support_repeating()
     {
         $this->createInstance();
         $this->repeatUntilValid()->shouldReturn(false);
     }
 
-    function it_uses_raw_column_value()
+    public function it_uses_raw_column_value()
     {
         $model = (object) [static::COLUMN => static::ALIAS_VALUE];
 
@@ -74,7 +72,7 @@ class RawValueFilterSpec extends ObjectBehavior
         $this->apply($model, '', static::SEPARATOR)->shouldReturn(static::ALIAS_VALUE);
     }
 
-    function it_supports_multiple_columns()
+    public function it_supports_multiple_columns()
     {
         $model = (object) [
             static::COLUMN => static::ALIAS_VALUE,
@@ -87,7 +85,7 @@ class RawValueFilterSpec extends ObjectBehavior
         );
     }
 
-    function it_supports_custom_separator()
+    public function it_supports_custom_separator()
     {
         $model = (object) [
             static::COLUMN => static::ALIAS_VALUE,
@@ -100,7 +98,7 @@ class RawValueFilterSpec extends ObjectBehavior
         );
     }
 
-    function it_replaces_existing_value_by_default()
+    public function it_replaces_existing_value_by_default()
     {
         $model = (object) [
             static::COLUMN => static::ALIAS_VALUE,
@@ -113,7 +111,7 @@ class RawValueFilterSpec extends ObjectBehavior
         );
     }
 
-    function it_supports_appending()
+    public function it_supports_appending()
     {
         $model = (object) [
             'id' => 5
@@ -125,7 +123,7 @@ class RawValueFilterSpec extends ObjectBehavior
         );
     }
 
-    function it_supports_prepending()
+    public function it_supports_prepending()
     {
         $model = (object) [
             'id' => 5
