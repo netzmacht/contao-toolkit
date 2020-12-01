@@ -17,6 +17,7 @@ namespace Netzmacht\Contao\Toolkit\Controller\FrontendModule;
 use Contao\Model;
 use Contao\ModuleModel;
 use Netzmacht\Contao\Toolkit\Controller\AbstractFragmentController;
+use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,16 +37,18 @@ abstract class AbstractModuleController extends AbstractFragmentController
      *
      * @param TemplateRenderer    $templateRenderer The template renderer.
      * @param RequestScopeMatcher $scopeMatcher     The scope matcher.
+     * @param ResponseTagger      $responseTagger   The response tagger.
      * @param RouterInterface     $router           The router.
      * @param TranslatorInterface $translator       The translator.
      */
     public function __construct(
         TemplateRenderer $templateRenderer,
         RequestScopeMatcher $scopeMatcher,
+        ResponseTagger $responseTagger,
         RouterInterface $router,
         TranslatorInterface $translator
     ) {
-        parent::__construct($templateRenderer, $scopeMatcher);
+        parent::__construct($templateRenderer, $scopeMatcher, $responseTagger);
 
         $this->router     = $router;
         $this->translator = $translator;

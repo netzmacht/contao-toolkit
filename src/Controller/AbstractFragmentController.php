@@ -17,6 +17,7 @@ namespace Netzmacht\Contao\Toolkit\Controller;
 use Contao\CoreBundle\Fragment\FragmentOptionsAwareInterface;
 use Contao\Model;
 use Contao\StringUtil;
+use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
 use Symfony\Component\DependencyInjection\Container;
@@ -51,6 +52,13 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
     protected $scopeMatcher;
 
     /**
+     * The http request response tagger.
+     *
+     * @var ResponseTagger
+     */
+    private $responseTagger;
+
+    /**
      * Fragment options.
      *
      * @var array
@@ -62,11 +70,16 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      *
      * @param TemplateRenderer    $templateRenderer The template renderer.
      * @param RequestScopeMatcher $scopeMatcher     The scope matcher.
+     * @param ResponseTagger      $responseTagger   The http request response tagger.
      */
-    public function __construct(TemplateRenderer $templateRenderer, RequestScopeMatcher $scopeMatcher)
-    {
+    public function __construct(
+        TemplateRenderer $templateRenderer,
+        RequestScopeMatcher $scopeMatcher,
+        ResponseTagger $responseTagger
+    ) {
         $this->templateRenderer = $templateRenderer;
         $this->scopeMatcher     = $scopeMatcher;
+        $this->responseTagger   = $responseTagger;
     }
 
     /**
@@ -109,6 +122,8 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
         if ($response !== null) {
             return $response;
         }
+
+        $this->tagResponse(sprintf('contao.db.%s.%s', $model::getTable(), $model->id));
 
         return new Response($buffer);
     }
@@ -294,4 +309,16 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      * @return string
      */
     abstract protected function getFallbackTemplateName(Model $model): string;
+
+    /**
+     * Tag the current response.
+     *
+     * @param string ...$tags The list of tags.
+     *
+     * @return void
+     */
+    protected function tagResponse(string ...$tags): void
+    {
+        $this->responseTagger->addTags($tags);
+    }
 }

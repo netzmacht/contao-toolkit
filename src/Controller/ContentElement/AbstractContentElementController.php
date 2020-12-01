@@ -18,6 +18,7 @@ use Contao\ContentModel;
 use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\Model;
 use Netzmacht\Contao\Toolkit\Controller\AbstractFragmentController;
+use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,14 +36,16 @@ abstract class AbstractContentElementController extends AbstractFragmentControll
      *
      * @param TemplateRenderer    $templateRenderer The template renderer.
      * @param RequestScopeMatcher $scopeMatcher     The scope matcher.
+     * @param ResponseTagger      $responseTagger   The response tagger.
      * @param TokenChecker        $tokenChecker     The token checker.
      */
     public function __construct(
         TemplateRenderer $templateRenderer,
         RequestScopeMatcher $scopeMatcher,
+        ResponseTagger $responseTagger,
         TokenChecker $tokenChecker
     ) {
-        parent::__construct($templateRenderer, $scopeMatcher);
+        parent::__construct($templateRenderer, $scopeMatcher, $responseTagger);
 
         $this->tokenChecker = $tokenChecker;
     }

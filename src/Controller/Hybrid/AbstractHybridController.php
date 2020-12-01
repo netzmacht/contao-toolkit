@@ -21,6 +21,7 @@ use Contao\ModuleModel;
 use Netzmacht\Contao\Toolkit\Controller\AbstractFragmentController;
 use Netzmacht\Contao\Toolkit\Controller\ContentElement\IsHiddenTrait;
 use Netzmacht\Contao\Toolkit\Controller\FrontendModule\RenderBackendViewTrait;
+use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,6 +45,7 @@ abstract class AbstractHybridController extends AbstractFragmentController
      *
      * @param TemplateRenderer    $templateRenderer The template renderer.
      * @param RequestScopeMatcher $scopeMatcher     The scope matcher.
+     * @param ResponseTagger      $responseTagger   The response tagger.
      * @param RouterInterface     $router           The router.
      * @param TranslatorInterface $translator       The translator.
      * @param TokenChecker        $tokenChecker     The token checker.
@@ -51,11 +53,12 @@ abstract class AbstractHybridController extends AbstractFragmentController
     public function __construct(
         TemplateRenderer $templateRenderer,
         RequestScopeMatcher $scopeMatcher,
+        ResponseTagger $responseTagger,
         RouterInterface $router,
         TranslatorInterface $translator,
         TokenChecker $tokenChecker
     ) {
-        parent::__construct($templateRenderer, $scopeMatcher);
+        parent::__construct($templateRenderer, $scopeMatcher, $responseTagger);
 
         $this->router       = $router;
         $this->translator   = $translator;
