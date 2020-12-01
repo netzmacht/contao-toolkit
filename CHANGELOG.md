@@ -4,6 +4,10 @@ Changelog
 [Unreleased]
 ------------
 
+### Added
+
+ - Provide base fragment controllers for content elements, modules and hybrids
+
 ### Changed
 
  - Require at least Contao `^4.9`
