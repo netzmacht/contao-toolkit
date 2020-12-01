@@ -14,11 +14,13 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Exception;
 
+use Throwable;
+
 /**
  * Exception interface.
  *
  * @package Netzmacht\Contao\Toolkit\Exception
  */
-interface Exception
+interface Exception extends Throwable
 {
 }
