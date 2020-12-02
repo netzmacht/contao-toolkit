@@ -117,7 +117,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
         $data     = $this->prepareDefaultTemplateData($model, $section, $classes);
         $data     = $this->prepareTemplateData($data, $request, $model);
         $buffer   = $this->render($this->getTemplateName($model), $data);
-        $response = $this->postGenerate($buffer, $data, $response, $model);
+        $response = $this->postGenerate($buffer, $data, $request, $model);
 
         if ($response !== null) {
             return $response;
