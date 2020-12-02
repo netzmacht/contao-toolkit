@@ -176,7 +176,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    private function prepareTemplateData(array $data, Request $request, Model $model): array
+    protected function prepareTemplateData(array $data, Request $request, Model $model): array
     {
         return $data;
     }
