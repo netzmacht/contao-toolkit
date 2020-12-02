@@ -15,12 +15,14 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Controller\Hybrid;
 
 use Contao\ContentModel;
+use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\Model;
 use Contao\ModuleModel;
 use Netzmacht\Contao\Toolkit\Controller\AbstractFragmentController;
 use Netzmacht\Contao\Toolkit\Controller\ContentElement\IsHiddenTrait;
-use Netzmacht\Contao\Toolkit\Controller\FrontendModule\RenderBackendViewTrait;
+use Netzmacht\Contao\Toolkit\Controller\ContentElement\RenderBackendViewTrait as ContentRenderBackendViewTrait;
+use Netzmacht\Contao\Toolkit\Controller\FrontendModule\ModuleRenderBackendViewTrait;
 use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
@@ -38,7 +40,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 abstract class AbstractHybridController extends AbstractFragmentController
 {
     use IsHiddenTrait;
-    use RenderBackendViewTrait;
+    use ModuleRenderBackendViewTrait;
+    use ContentRenderBackendViewTrait;
 
     /**
      * Constructor.
@@ -49,6 +52,7 @@ abstract class AbstractHybridController extends AbstractFragmentController
      * @param RouterInterface     $router           The router.
      * @param TranslatorInterface $translator       The translator.
      * @param TokenChecker        $tokenChecker     The token checker.
+     * @param Adapter             $inputAdapter     The input adapter.
      */
     public function __construct(
         TemplateRenderer $templateRenderer,
@@ -56,13 +60,15 @@ abstract class AbstractHybridController extends AbstractFragmentController
         ResponseTagger $responseTagger,
         RouterInterface $router,
         TranslatorInterface $translator,
-        TokenChecker $tokenChecker
+        TokenChecker $tokenChecker,
+        Adapter $inputAdapter
     ) {
         parent::__construct($templateRenderer, $scopeMatcher, $responseTagger);
 
         $this->router       = $router;
         $this->translator   = $translator;
         $this->tokenChecker = $tokenChecker;
+        $this->inputAdapter = $inputAdapter;
     }
 
     /**
@@ -85,6 +91,10 @@ abstract class AbstractHybridController extends AbstractFragmentController
             return new Response();
         }
 
+        if ($this->isBackendRequest($request)) {
+            return $this->renderContentBackendView($model);
+        }
+
         return $this->generate($request, $model, $section, $classes);
     }
 
@@ -105,7 +115,7 @@ abstract class AbstractHybridController extends AbstractFragmentController
         ?array $classes = null
     ): Response {
         if ($this->isBackendRequest($request)) {
-            return $this->renderBackendView($model);
+            return $this->renderModuleBackendView($model);
         }
 
         return $this->generate($request, $model, $section, $classes);

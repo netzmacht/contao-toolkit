@@ -30,7 +30,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 abstract class AbstractModuleController extends AbstractFragmentController
 {
-    use RenderBackendViewTrait;
+    use ModuleRenderBackendViewTrait;
 
     /**
      * Constructor.
@@ -67,7 +67,7 @@ abstract class AbstractModuleController extends AbstractFragmentController
     public function __invoke(Request $request, ModuleModel $model, string $section, ?array $classes = null): Response
     {
         if ($this->isBackendRequest($request)) {
-            return $this->renderBackendView($model);
+            return $this->renderModuleBackendView($model);
         }
 
         return $this->generate($request, $model, $section, $classes);

@@ -24,7 +24,7 @@ use function sprintf;
 /**
  * The RenderBackendViewTrait renders the backend placeholder view for modules
  */
-trait RenderBackendViewTrait
+trait ModuleRenderBackendViewTrait
 {
     /**
      * The router.
@@ -47,7 +47,7 @@ trait RenderBackendViewTrait
      *
      * @return Response
      */
-    protected function renderBackendView(ModuleModel $module): Response
+    protected function renderModuleBackendView(ModuleModel $module): Response
     {
         $name = $this->translator->trans(sprintf('FMD.%s.0', $this->getType()), [], 'contao_modules');
         $href = $this->router->generate(
