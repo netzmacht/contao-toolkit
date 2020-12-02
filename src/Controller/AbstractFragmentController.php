@@ -149,7 +149,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
 
         $data['inColumn'] = $section;
         $data['cssID']    = ($cssID[0] !== '') ? ' id="' . $cssID[0] . '"' : '';
-        $data['class']    = implode(' ', $classes);
+        $data['class']    = trim($this->getTemplateName($model) . ' ' . implode(' ', $classes));
 
         $headline = StringUtil::deserialize($data['headline']);
         if (is_array($headline)) {
