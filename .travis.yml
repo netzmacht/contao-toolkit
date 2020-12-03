@@ -7,7 +7,7 @@ php:
   - "7.3"
   - "7.2"
   - "7.1"
-  - "nightly"
+  - "8.0snapshot"
 
 env:
   - CONTAO_VERSION=~4.9.0
@@ -16,7 +16,7 @@ env:
 matrix:
   fast_finish: true
   allow_failures:
-    - php: "nightly"
+    - php: 8.0snapshot
 
 before_script:
   - echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
@@ -38,9 +38,10 @@ before_script:
     else
       travis_retry composer update --prefer-dist --no-interaction --no-suggest
     fi
+  - vendor/bin/phpcq self-update
   - vendor/bin/phpcq install
 
-script: vendor/bin/phpcq -v -o github-action -o default
+script: vendor/bin/phpcq run -v -o github-action -o default
 
 git:
   depth: false
