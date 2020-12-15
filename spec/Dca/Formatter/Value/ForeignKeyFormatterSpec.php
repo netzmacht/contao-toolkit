@@ -22,45 +22,39 @@ use Prophecy\Argument;
  * Class ForeignKeyFormatterSpec
  *
  * @package spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value
- * @mixin ForeignKeyFormatter
  */
 class ForeignKeyFormatterSpec extends ObjectBehavior
 {
-    function let(Connection $database)
+    public function let(Connection $database)
     {
         $this->beConstructedWith($database);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ForeignKeyFormatter');
     }
 
-    function it_is_a_value_formatter()
+    public function it_is_a_value_formatter()
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
     }
 
-    function it_accepts_foreign_key_fields()
+    public function it_accepts_foreign_key_fields()
     {
         $definition['foreignKey'] = 'tl_test.title';
 
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
-    function it_does_not_accept_non_foreign_key_fields()
+    public function it_does_not_accept_non_foreign_key_fields()
     {
         $this->accepts('test', [])->shouldReturn(false);
     }
 
-    function it_format_by_parsing_foreign_key(Connection $database, Statement $statement)
+    public function it_format_by_parsing_foreign_key(Connection $database, Statement $statement)
     {
         $definition['foreignKey'] = 'tl_test.title';
-
-        $result = (object) [
-            'value'   => 'Title',
-            'numRows' => 1
-        ];
 
         $statement->bindValue('id', 5)->shouldBeCalled();
         $statement->rowCount()->willReturn(1)->shouldBeCalledTimes(1);

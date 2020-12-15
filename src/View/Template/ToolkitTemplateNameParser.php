@@ -16,6 +16,8 @@ namespace Netzmacht\Contao\Toolkit\View\Template;
 
 use Symfony\Component\Templating\TemplateNameParserInterface;
 
+use function preg_match;
+
 /**
  * Class ContaoTemplateNameParser.
  *
@@ -37,6 +39,10 @@ class ToolkitTemplateNameParser implements TemplateNameParserInterface
             $contentType = $matches[5] ?: 'text/html';
 
             return new TemplateReference($matches[3], $matches[4], $matches[2], $contentType, $matches[1]);
+        }
+
+        if (preg_match('/^(be|fe):([^:]+)$/', $name, $matches)) {
+            return new TemplateReference($matches[2], 'html5', $matches[1], 'text/html');
         }
 
         throw new \RuntimeException(

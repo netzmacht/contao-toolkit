@@ -12,7 +12,7 @@
 
 namespace spec\Netzmacht\Contao\Toolkit\Component\Module;
 
-use Netzmacht\Contao\Toolkit\Component\Module\AbstractModule;
+use Contao\Model;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -28,15 +28,16 @@ if (!defined('BE_USER_LOGGED_IN')) {
  * Class AbstractModuleSpec
  *
  * @package spec\Netzmacht\Contao\Toolkit\Component\Module
- * @mixin AbstractModule
  */
 class AbstractModuleSpec extends ObjectBehavior
 {
+    /** @var Model */
     private $model;
 
+    /** @var array */
     private $modelData;
 
-    function let(
+    public function let(
         EngineInterface $templateEngine,
         TranslatorInterface $translator,
         RequestScopeMatcher $requestScopeMatcher
@@ -49,30 +50,40 @@ class AbstractModuleSpec extends ObjectBehavior
             'customTpl' => 'custom_tpl'
         ];
 
-        $this->model = new Model($this->modelData);
+        $this->model = new class($this->modelData) extends Model {
+            /**
+             * Model constructor.
+             *
+             * @param array $data Model data.
+             */
+            public function __construct(array $data)
+            {
+                $this->arrData = $data;
+            }
+        };
 
         $requestScopeMatcher->isFrontendRequest()->willReturn(true);
 
-        $this->beAnInstanceOf('spec\Netzmacht\Contao\Toolkit\Component\Module\ConcreteModule');
+        $this->beAnInstanceOf(FrontendModule::class);
         $this->beConstructedWith($this->model, $templateEngine, $translator, 'main', $requestScopeMatcher);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Component\Module\AbstractModule');
     }
 
-    function it_is_a_component()
+    public function it_is_a_component()
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Component\Component');
     }
 
-    function it_is_a_content_element()
+    public function it_is_a_content_element()
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Component\Module\Module');
     }
 
-    function it_generates_output(EngineInterface $templateEngine, RequestScopeMatcher $requestScopeMatcher)
+    public function it_generates_output(EngineInterface $templateEngine, RequestScopeMatcher $requestScopeMatcher)
     {
         $requestScopeMatcher->isBackendRequest()->willReturn(false);
 
@@ -82,7 +93,7 @@ class AbstractModuleSpec extends ObjectBehavior
         $this->generate()->shouldReturn('output');
     }
 
-    function it_generates_backend_view_on_backend_request(
+    public function it_generates_backend_view_on_backend_request(
         EngineInterface $templateEngine,
         RequestScopeMatcher $requestScopeMatcher
     ) {
@@ -93,24 +104,5 @@ class AbstractModuleSpec extends ObjectBehavior
 
         $this->generate()->shouldBeString();
         $this->generate()->shouldReturn('backend');
-    }
-}
-
-
-class ConcreteModule extends AbstractModule
-{
-
-}
-
-class Model extends \Contao\Model
-{
-    /**
-     * Model constructor.
-     *
-     * @param array $data
-     */
-    public function __construct($data)
-    {
-        $this->arrData = $data;
     }
 }

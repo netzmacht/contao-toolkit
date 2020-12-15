@@ -20,6 +20,8 @@ use Symfony\Component\Templating\TemplateReference as BaseTemplateReference;
  * Class TemplateReference
  *
  * @package Netzmacht\Contao\Toolkit\View\Template
+ *
+ * @deprecated Since 3.6.0 and get removed in 4.0.0
  */
 class TemplateReference extends BaseTemplateReference
 {

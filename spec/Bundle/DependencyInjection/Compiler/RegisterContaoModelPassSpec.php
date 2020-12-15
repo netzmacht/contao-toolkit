@@ -23,17 +23,17 @@ use Symfony\Component\DependencyInjection\Definition;
 
 class RegisterContaoModelPassSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(RegisterContaoModelPass::class);
     }
 
-    function it_is_a_compiler_pass()
+    public function it_is_a_compiler_pass()
     {
         $this->shouldImplement(CompilerPassInterface::class);
     }
 
-    function it_registeres_models_to_contao_models(ContainerBuilder $container, Definition $definition)
+    public function it_registeres_models_to_contao_models(ContainerBuilder $container, Definition $definition)
     {
         $taggedServices = [
             'content' => [

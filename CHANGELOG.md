@@ -4,6 +4,25 @@ Changelog
 [Unreleased]
 ------------
 
+[3.6.0] (2020-12-15)
+--------------------
+
+### Added
+
+ - Provide base fragment controllers for content elements, modules and hybrids
+ - Support short templates names (`fe:template_name`, `be:template_name`) 
+
+### Changed
+
+ - Require at least Contao `^4.9`
+ - Always activate the fos cache response tagger if available
+ - Wizard listeners now support `netzmacht.contao_toolkit.template_renderer`. Support for `templating` is deprecated.
+ 
+### Removed
+
+ - Remove Contao translator backport
+ - Remove tagged hook listener backport
+
 [3.5.0] (2020-11-20)
 --------------------
 
@@ -203,6 +222,8 @@ Changelog
  - Added changelog (#9)
 
 [Unreleased]: https://github.com/netzmacht/contao-toolkit/compare/3.4.5...master
+[3.6.0]: https://github.com/netzmacht/contao-toolkit/compare/3.5.0...3.6.0
+[3.5.0]: https://github.com/netzmacht/contao-toolkit/compare/3.4.5...3.5.0
 [3.4.5]: https://github.com/netzmacht/contao-toolkit/compare/3.4.4...3.4.5
 [3.4.4]: https://github.com/netzmacht/contao-toolkit/compare/3.4.3...3.4.4
 [3.4.3]: https://github.com/netzmacht/contao-toolkit/compare/3.4.2...3.4.3

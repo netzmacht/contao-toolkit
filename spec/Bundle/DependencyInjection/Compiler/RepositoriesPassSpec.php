@@ -21,18 +21,20 @@ use Symfony\Component\DependencyInjection\Definition;
 
 class RepositoriesPassSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(RepositoriesPass::class);
     }
 
-    function it_is_a_compiler_pass()
+    public function it_is_a_compiler_pass()
     {
         $this->shouldImplement(CompilerPassInterface::class);
     }
 
-    function it_registeres_tagged_services_to_the_repository_manager(ContainerBuilder $container, Definition $definition)
-    {
+    public function it_registeres_tagged_services_to_the_repository_manager(
+        ContainerBuilder $container,
+        Definition $definition
+    ) {
         $taggedServices = [
             'foo' => [
                 ['model' => 'FooModel']

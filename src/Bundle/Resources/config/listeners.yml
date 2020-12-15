@@ -23,13 +23,6 @@ services:
     tags:
       - { name: 'kernel.event_listener', event: 'netzmacht.contao_toolkit.dca.create_formatter', method: 'handle' }
 
-  netzmacht.contao_toolkit.listeners.merge_hook_listeners:
-    class: Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Listener\MergeHookListenersListener
-    public: true
-    arguments:
-      - '@netzmacht.contao_toolkit.callback_invoker'
-      - []
-
   netzmacht.contao_toolkit.listeners.register_component_decorators:
     class: Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Listener\RegisterComponentDecoratorsListener
     public: true
@@ -84,7 +77,7 @@ services:
   Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\ColorPickerListener:
     public: true
     arguments:
-      - '@templating'
+      - '@netzmacht.contao_toolkit.template_renderer'
       - '@translator'
       - '@netzmacht.contao_toolkit.dca.manager'
 
@@ -96,7 +89,7 @@ services:
   Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\FilePickerListener:
     public: true
     arguments:
-      - '@templating'
+      - '@netzmacht.contao_toolkit.template_renderer'
       - '@translator'
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@netzmacht.contao_toolkit.contao.input_adapter'
@@ -109,7 +102,7 @@ services:
   Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PagePickerListener:
     public: true
     arguments:
-      - '@templating'
+      - '@netzmacht.contao_toolkit.template_renderer'
       - '@translator'
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@netzmacht.contao_toolkit.contao.input_adapter'
@@ -122,7 +115,7 @@ services:
   Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PopupWizardListener:
     public: true
     arguments:
-      - '@templating'
+      - '@netzmacht.contao_toolkit.template_renderer'
       - '@translator'
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@security.csrf.token_manager'

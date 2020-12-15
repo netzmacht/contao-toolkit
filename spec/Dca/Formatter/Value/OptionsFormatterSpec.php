@@ -18,30 +18,32 @@ use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\OptionsFormatter;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
+//phpcs:disable Squiz.Classes.ClassFileName.NoMatch
+//phpcs:disable Generic.Files.OneClassPerFile.MultipleFound
+//phpcs:disable Squiz.Classes.ClassFileName.NoMatch
 /**
  * Class OptionsFormatterSpec
  *
  * @package spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value
- * @mixin OptionsFormatter
  */
 class OptionsFormatterSpec extends ObjectBehavior
 {
-    function let(Adapter $adapter)
+    public function let(Adapter $adapter)
     {
         $this->beConstructedWith(new Invoker($adapter));
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\OptionsFormatter');
     }
 
-    function it_is_a_value_formatter()
+    public function it_is_a_value_formatter()
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
     }
 
-    function it_accepts_fields_with_options()
+    public function it_accepts_fields_with_options()
     {
         $definition['options'] = [
             'foo' => 'bar'
@@ -50,28 +52,30 @@ class OptionsFormatterSpec extends ObjectBehavior
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
-    function it_accepts_fields_with_is_associative_flag()
+    public function it_accepts_fields_with_is_associative_flag()
     {
         $definition['eval']['isAssociative'] = true;
 
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
-    function it_accepts_fields_with_options_callback()
+    public function it_accepts_fields_with_options_callback()
     {
-        $definition['options_callback'] = function () { return []; };
+        $definition['options_callback'] = function () {
+            return [];
+        };
         $this->accepts('test', $definition)->shouldReturn(true);
 
         $definition['options_callback'] = ['Foo', 'bar'];
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
-    function it_does_not_accept_a_field_by_default()
+    public function it_does_not_accept_a_field_by_default()
     {
         $this->accepts('test', [])->shouldReturn(false);
     }
 
-    function it_formats_option_from_associative_array()
+    public function it_formats_option_from_associative_array()
     {
         $definition = [
             'options' => ['test' => 'foo'],
@@ -80,7 +84,7 @@ class OptionsFormatterSpec extends ObjectBehavior
         $this->format('test', 'bar', $definition)->shouldReturn('foo');
     }
 
-    function it_formats_option_of_associative_flagged_field()
+    public function it_formats_option_of_associative_flagged_field()
     {
         $definition = [
             'options' => array(1 => 'foo'),
@@ -90,29 +94,14 @@ class OptionsFormatterSpec extends ObjectBehavior
         $this->format(1, 'test', $definition)->shouldReturn('foo');
     }
 
-    function it_formats_option_calling_options_callback(MockableOptionsCallback $callback)
+    public function it_formats_option_calling_options_callback()
     {
-        $callback
-            ->__invoke()
-            ->shouldBeCalled()
-            ->willReturn(['foo' => 'bar']);
-
         $definition = [
-           'options_callback' => $callback
+           'options_callback' => function () {
+               return ['foo' => 'Bar'];
+           }
         ];
 
-        $this->format('foo', 'test', $definition);
-    }
-}
-
-class MockableOptionsCallback
-{
-    public function __invoke()
-    {
-        return $this->invoke();
-    }
-
-    public function invoke()
-    {
+        $this->format('foo', 'test', $definition)->shouldReturn('Bar');
     }
 }

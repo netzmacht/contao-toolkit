@@ -21,11 +21,10 @@ use Symfony\Component\Translation\TranslatorInterface;
  * Class YesNoFormatterSpec
  *
  * @package spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value
- * @mixin YesNoFormatter
  */
 class YesNoFormatterSpec extends ObjectBehavior
 {
-    function let(TranslatorInterface $translator)
+    public function let(TranslatorInterface $translator)
     {
         $translator->trans('MSC.yes', [], 'contao_default', Argument::any())->willReturn('ja');
         $translator->trans('MSC.no', [], 'contao_default', Argument::any())->willReturn('nein');
@@ -33,17 +32,17 @@ class YesNoFormatterSpec extends ObjectBehavior
         $this->beConstructedWith($translator);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\YesNoFormatter');
     }
 
-    function it_is_a_value_formatter()
+    public function it_is_a_value_formatter()
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
     }
 
-    function it_accepts_non_multiple_checkboxes()
+    public function it_accepts_non_multiple_checkboxes()
     {
         $definition = [
             'inputType' => 'checkbox',
@@ -55,7 +54,7 @@ class YesNoFormatterSpec extends ObjectBehavior
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
-    function it_does_not_accept_multiple_checkboxes()
+    public function it_does_not_accept_multiple_checkboxes()
     {
         $definition = [
             'inputType' => 'checkbox',
@@ -65,7 +64,7 @@ class YesNoFormatterSpec extends ObjectBehavior
         $this->accepts('test', $definition)->shouldReturn(false);
     }
 
-    function it_does_not_accept_other_input_types()
+    public function it_does_not_accept_other_input_types()
     {
         $definition = [];
         $inputTypes = ['text', 'select', 'radio', 'password', 'textarea'];
@@ -77,12 +76,12 @@ class YesNoFormatterSpec extends ObjectBehavior
         } while ($definition['inputType']);
     }
 
-    function it_translate_checkbox_state(TranslatorInterface $translator)
+    public function it_translate_checkbox_state(TranslatorInterface $translator)
     {
         $translator->trans('MSC.yes', [], 'contao_default')->shouldBeCalled();
         $this->format('1', 'test', [])->shouldReturn('ja');
 
-        $translator->trans('MSC.no',  [], 'contao_default')->shouldBeCalled();
+        $translator->trans('MSC.no', [], 'contao_default')->shouldBeCalled();
         $this->format('', 'test', [])->shouldReturn('nein');
     }
 }

@@ -202,8 +202,10 @@ final class ComponentDecoratorPassSpec extends ObjectBehavior
     }
 
 
-    public function it_doesnt_add_factory_tag_if_already_exists(ContainerBuilder $container, Definition $definition): void
-    {
+    public function it_doesnt_add_factory_tag_if_already_exists(
+        ContainerBuilder $container,
+        Definition $definition
+    ): void {
         $container->has(self::DECORATOR_SERVICE)
             ->shouldBeCalled()
             ->willReturn(true);

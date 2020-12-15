@@ -59,6 +59,7 @@ final class Plugin implements BundlePluginInterface, ExtensionPluginInterface, D
             return $extensionConfigs;
         }
 
+        // DEPRECATED: Enabling of the templating engine will be removed in version 4.0
         $extensionConfigs[] = [
             'templating' => [
                 'engines' => ['toolkit']

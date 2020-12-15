@@ -20,18 +20,21 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class RequestScopeMatcherSpec extends ObjectBehavior
 {
-    function let(ScopeMatcher $scopeMatcher, RequestStack $requestStack)
+    public function let(ScopeMatcher $scopeMatcher, RequestStack $requestStack)
     {
         $this->beConstructedWith($scopeMatcher, $requestStack);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(RequestScopeMatcher::class);
     }
 
-    function it_detects_frontend_request_from_argument(ScopeMatcher $scopeMatcher, Request $request, Request $request2)
-    {
+    public function it_detects_frontend_request_from_argument(
+        ScopeMatcher $scopeMatcher,
+        Request $request,
+        Request $request2
+    ) {
         $scopeMatcher
             ->isFrontendRequest($request)
             ->shouldBeCalled()
@@ -46,7 +49,7 @@ class RequestScopeMatcherSpec extends ObjectBehavior
         $this->isFrontendRequest($request2)->shouldReturn(false);
     }
 
-    function it_detects_frontend_request_from_the_request_stack(
+    public function it_detects_frontend_request_from_the_request_stack(
         ScopeMatcher $scopeMatcher,
         RequestStack $requestStack,
         Request $request
@@ -61,8 +64,11 @@ class RequestScopeMatcherSpec extends ObjectBehavior
         $this->isFrontendRequest()->shouldReturn(true);
     }
 
-    function it_detects_backend_request_from_argument(ScopeMatcher $scopeMatcher, Request $request, Request $request2)
-    {
+    public function it_detects_backend_request_from_argument(
+        ScopeMatcher $scopeMatcher,
+        Request $request,
+        Request $request2
+    ) {
         $scopeMatcher
             ->isBackendRequest($request)
             ->shouldBeCalled()
@@ -77,7 +83,7 @@ class RequestScopeMatcherSpec extends ObjectBehavior
         $this->isBackendRequest($request2)->shouldReturn(false);
     }
 
-    function it_detects_backend_request_from_the_request_stack(
+    public function it_detects_backend_request_from_the_request_stack(
         ScopeMatcher $scopeMatcher,
         RequestStack $requestStack,
         Request $request
@@ -92,8 +98,11 @@ class RequestScopeMatcherSpec extends ObjectBehavior
         $this->isBackendRequest()->shouldReturn(true);
     }
 
-    function it_detects_contao_request_from_argument(ScopeMatcher $scopeMatcher, Request $request, Request $request2)
-    {
+    public function it_detects_contao_request_from_argument(
+        ScopeMatcher $scopeMatcher,
+        Request $request,
+        Request $request2
+    ) {
         $scopeMatcher
             ->isContaoRequest($request)
             ->shouldBeCalled()
@@ -108,7 +117,7 @@ class RequestScopeMatcherSpec extends ObjectBehavior
         $this->isContaoRequest($request2)->shouldReturn(false);
     }
 
-    function it_detects_contao_request_from_the_request_stack(
+    public function it_detects_contao_request_from_the_request_stack(
         ScopeMatcher $scopeMatcher,
         RequestStack $requestStack,
         Request $request

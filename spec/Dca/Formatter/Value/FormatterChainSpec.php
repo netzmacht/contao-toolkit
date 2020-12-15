@@ -12,7 +12,6 @@
 
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FormatterChain;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -21,21 +20,20 @@ use Prophecy\Argument;
  * Class FormatterChainSpec
  *
  * @package spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value
- * @mixin FormatterChain
  */
 class FormatterChainSpec extends ObjectBehavior
 {
-    function let(ValueFormatter $formatterA, ValueFormatter $formatterB)
+    public function let(ValueFormatter $formatterA, ValueFormatter $formatterB)
     {
         $this->beConstructedWith([$formatterA, $formatterB]);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FormatterChain');
     }
 
-    function it_accepts_if_one_child_does(ValueFormatter $formatterA, ValueFormatter $formatterB)
+    public function it_accepts_if_one_child_does(ValueFormatter $formatterA, ValueFormatter $formatterB)
     {
         $formatterA->accepts(Argument::cetera())->willReturn(false);
         $formatterB->accepts(Argument::cetera())->willReturn(true);
@@ -43,7 +41,7 @@ class FormatterChainSpec extends ObjectBehavior
         $this->accepts('test', [])->shouldReturn(true);
     }
 
-    function it_does_not_accept_if_none_child_does(ValueFormatter $formatterA, ValueFormatter $formatterB)
+    public function it_does_not_accept_if_none_child_does(ValueFormatter $formatterA, ValueFormatter $formatterB)
     {
         $formatterA->accepts(Argument::cetera())->willReturn(false);
         $formatterB->accepts(Argument::cetera())->willReturn(false);
@@ -51,7 +49,7 @@ class FormatterChainSpec extends ObjectBehavior
         $this->accepts('test', [])->shouldReturn(false);
     }
 
-    function it_applies_matching_formatter(ValueFormatter $formatterA, ValueFormatter $formatterB)
+    public function it_applies_matching_formatter(ValueFormatter $formatterA, ValueFormatter $formatterB)
     {
         $formatterA->accepts(Argument::cetera())->willReturn(false);
         $formatterA->format(Argument::cetera())->shouldNotBeCalled();
@@ -62,7 +60,7 @@ class FormatterChainSpec extends ObjectBehavior
         $this->format('foo', 'test', [])->shouldReturn('bar');
     }
 
-    function it_applies_first_matching_formatter(ValueFormatter $formatterA, ValueFormatter $formatterB)
+    public function it_applies_first_matching_formatter(ValueFormatter $formatterA, ValueFormatter $formatterB)
     {
         $formatterA->accepts(Argument::cetera())->willReturn(true);
         $formatterA->format(Argument::cetera())->willReturn('bar')->shouldBeCalled();
@@ -74,8 +72,10 @@ class FormatterChainSpec extends ObjectBehavior
         $this->format('foo', 'test', [])->shouldReturn('bar');
     }
 
-    function it_returns_initial_value_when_no_formatter_matches(ValueFormatter $formatterA, ValueFormatter $formatterB)
-    {
+    public function it_returns_initial_value_when_no_formatter_matches(
+        ValueFormatter $formatterA,
+        ValueFormatter $formatterB
+    ) {
         $formatterA->accepts(Argument::cetera())->willReturn(false);
         $formatterB->accepts(Argument::cetera())->willReturn(false);
 

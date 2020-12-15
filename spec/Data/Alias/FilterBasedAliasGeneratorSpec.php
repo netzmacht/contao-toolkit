@@ -22,7 +22,6 @@ use Prophecy\Argument;
  * Class GeneratorSpec
  *
  * @package spec\Netzmacht\Contao\Toolkit\Data\Alias
- * @mixin FilterBasedAliasGenerator
  */
 class FilterBasedAliasGeneratorSpec extends ObjectBehavior
 {
@@ -30,14 +29,14 @@ class FilterBasedAliasGeneratorSpec extends ObjectBehavior
 
     const ALIAS_VALUE = 'alias';
 
-    function it_is_initializable(Filter $filter, Validator $validator)
+    public function it_is_initializable(Filter $filter, Validator $validator)
     {
         $this->beConstructedWith([$filter], $validator, static::TABLE_NAME);
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Data\Alias\FilterBasedAliasGenerator');
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator');
     }
 
-    function it_applies_filter(Filter $filter, Validator $validator)
+    public function it_applies_filter(Filter $filter, Validator $validator)
     {
         $this->beConstructedWith([$filter], $validator, static::TABLE_NAME);
 
@@ -50,12 +49,12 @@ class FilterBasedAliasGeneratorSpec extends ObjectBehavior
         $filter->initialize()->shouldBeCalled();
         $filter->breakIfValid()->willReturn(true);
         $filter->apply($model, null, Argument::any())->willReturn(static::ALIAS_VALUE);
-        $validator->validate(static::ALIAS_VALUE, [$model->id])->willReturn(true);
+        $validator->validate($model, static::ALIAS_VALUE, [$model->id])->willReturn(true);
 
         $this->generate($model)->shouldReturn(static::ALIAS_VALUE);
     }
 
-    function it_applies_filters(Filter $filter, Filter $filterB, Validator $validator)
+    public function it_applies_filters(Filter $filter, Filter $filterB, Validator $validator)
     {
         $this->beConstructedWith([$filter, $filterB], $validator, static::TABLE_NAME);
 
@@ -74,13 +73,13 @@ class FilterBasedAliasGeneratorSpec extends ObjectBehavior
         $filterB->breakIfValid()->willReturn(true);
         $filterB->apply($model, 'foo', Argument::any())->willReturn(static::ALIAS_VALUE);
 
-        $validator->validate('foo', [$model->id])->willReturn(false);
-        $validator->validate(static::ALIAS_VALUE, [$model->id])->willReturn(true);
+        $validator->validate($model, 'foo', [$model->id])->willReturn(false);
+        $validator->validate($model, static::ALIAS_VALUE, [$model->id])->willReturn(true);
 
         $this->generate($model)->shouldReturn(static::ALIAS_VALUE);
     }
 
-    function it_throws_when_no_alias_is_generated(Validator $validator)
+    public function it_throws_when_no_alias_is_generated(Validator $validator)
     {
         $model = (object) [
             'id' => 5
@@ -89,10 +88,12 @@ class FilterBasedAliasGeneratorSpec extends ObjectBehavior
         $validator->validate(Argument::cetera())->willReturn(true);
 
         $this->beConstructedWith([], $validator, static::TABLE_NAME);
-        $this->shouldThrow('Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException')->during('generate', [$model]);
+        $this
+            ->shouldThrow('Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException')
+            ->during('generate', [$model]);
     }
 
-    function it_throws_when_invalid_alias_is_generated(Validator $validator)
+    public function it_throws_when_invalid_alias_is_generated(Validator $validator)
     {
         $model = (object) [
             'id' => 5
@@ -101,6 +102,8 @@ class FilterBasedAliasGeneratorSpec extends ObjectBehavior
         $validator->validate(Argument::cetera())->willReturn(false);
 
         $this->beConstructedWith([], $validator, static::TABLE_NAME);
-        $this->shouldThrow('Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException')->during('generate', [$model, static::ALIAS_VALUE]);
+        $this
+            ->shouldThrow('Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException')
+            ->during('generate', [$model, static::ALIAS_VALUE]);
     }
 }

@@ -1,32 +1,27 @@
-dist: xenial
-
-addons:
-  apt:
-    packages:
-      - ant-optional
+dist: focal
 
 language: php
 
 php:
+  - "7.4"
   - "7.3"
   - "7.2"
   - "7.1"
-  - "7.4"
-  - "nightly"
+  - "8.0snapshot"
 
 env:
-  - CONTAO_VERSION=contao/core-bundle ~4.4.0
-  - CONTAO_VERSION=contao/core-bundle ~4.9.0
+  - CONTAO_VERSION=~4.9.0
+  - CONTAO_VERSION=~4.10.0
 
 matrix:
   fast_finish: true
   allow_failures:
-    - php: "nightly"
+    - php: 8.0snapshot
 
 before_script:
   - echo "memory_limit=-1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - travis_retry composer self-update && composer --version
-  - travis_retry composer require contao/core-bundle $CONTAO_VERSION --no-update
+  - travis_retry composer require contao/core-bundle contao/core-bundle $CONTAO_VERSION --no-update
   - >
     if [ "x${TRAVIS_TAG}" != "x" ]; then
       export COMPOSER_ROOT_VERSION=${TRAVIS_TAG}
@@ -43,8 +38,10 @@ before_script:
     else
       travis_retry composer update --prefer-dist --no-interaction --no-suggest
     fi
+  - vendor/bin/phpcq self-update
+  - vendor/bin/phpcq install
 
-script: ant -keep-going
+script: vendor/bin/phpcq run travis-v -o github-action -o default
 
 git:
   depth: false
@@ -52,3 +49,5 @@ git:
 cache:
   directories:
     - vendor
+    - .phpcq/gnupg
+    - .phpcq/plugins

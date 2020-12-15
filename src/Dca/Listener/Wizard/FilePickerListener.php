@@ -18,6 +18,7 @@ use Contao\CoreBundle\Framework\Adapter;
 use Contao\Input;
 use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
+use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 
@@ -38,14 +39,14 @@ final class FilePickerListener extends AbstractFieldPickerListener
     /**
      * PagePickerCallback constructor.
      *
-     * @param TemplateEngine $templateEngine Template engine.
-     * @param Translator     $translator     Translator.
-     * @param DcaManager     $dcaManager     Data container manager.
-     * @param Input|Adapter  $input          Request input.
-     * @param string         $template       Template name.
+     * @param TemplateEngine|TemplateRenderer $templateEngine Template Engine.
+     * @param Translator                      $translator     Translator.
+     * @param DcaManager                      $dcaManager     Data container manager.
+     * @param Input|Adapter                   $input          Request input.
+     * @param string                          $template       Template name.
      */
     public function __construct(
-        TemplateEngine $templateEngine,
+        $templateEngine,
         Translator $translator,
         DcaManager $dcaManager,
         $input,
