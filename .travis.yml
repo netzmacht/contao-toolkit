@@ -41,7 +41,7 @@ before_script:
   - vendor/bin/phpcq self-update
   - vendor/bin/phpcq install
 
-script: vendor/bin/phpcq -v -o github-action -o default
+script: vendor/bin/phpcq run travis-v -o github-action -o default
 
 git:
   depth: false
