@@ -19,7 +19,7 @@
   "require": {
     "php": ">=7.1",
     "beberlei/assert": "^2.7 || ^3.0",
-    "contao/core-bundle": "^4.9",
+    "contao/core-bundle": "^4.9.10",
     "doctrine/dbal": "^2.5",
     "patchwork/utf8": "^1.2",
     "psr/log": "^1.1",
@@ -27,7 +27,7 @@
     "symfony/dependency-injection": "^4.4",
     "symfony/event-dispatcher": "^4.4",
     "symfony/http-foundation": "^4.4",
-    "symfony/http-kernel": "^4.4",
+    "symfony/http-kernel": "^4.4.13",
     "symfony/routing": "^4.4",
     "symfony/security-csrf": "^4.4 || ^5.0",
     "symfony/templating": "^4.4 || ^5.0",
