@@ -67,7 +67,16 @@ phpcq:
       - phpmd_spec
       - phpcs
       - phpspec
-
+    travis:
+      - composer-require-checker
+      - composer-normalize
+      - phploc
+      # Travis uses xdebug 3.0.0 which is not compatible with the of phpcq supported version of phpcpd
+      # - phpcpd
+      - phpmd_src
+      - phpmd_spec
+      - phpcs
+      - phpspec
 tasks:
   phpcpd:
     plugin: phpcpd
