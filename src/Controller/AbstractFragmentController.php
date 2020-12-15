@@ -229,8 +229,12 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      */
     protected function render(string $templateName, array $data): string
     {
-        if (substr($templateName, -5) !== '.twig' && strpos($templateName, 'toolkit:') !== 0) {
-            $templateName = 'toolkit:fe:' . $templateName . '.html5';
+        if (substr($templateName, -5) !== '.twig'
+            && strpos($templateName, 'toolkit:') !== 0
+            && strpos($templateName, 'fe:') !== 0
+            && strpos($templateName, 'be:') !== 0
+        ) {
+            $templateName = 'fe:' . $templateName;
         }
 
         return $this->templateRenderer->render($templateName, $data);

@@ -79,6 +79,9 @@ tasks:
         - ComponentDecoratorPassSpec.php
         - SlugifyFilterSpec.php
         - RawValueFilterSpec.php
+        - AbstractContentElementControllerSpec.php
+        - AbstractFrontendModuleControllerSpec.php
+        - AbstractHybridControllerSpec.php
     #  regexps_exclude:
     #  log:
     #  min_lines:

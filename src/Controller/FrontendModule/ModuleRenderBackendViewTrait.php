@@ -56,7 +56,7 @@ trait ModuleRenderBackendViewTrait
         );
 
         return $this->renderResponse(
-            'toolkit:be:be_wildcard.html5',
+            'be:be_wildcard',
             [
                 'wildcard' => sprintf('###%s###', $name),
                 'id'       => $module->id,

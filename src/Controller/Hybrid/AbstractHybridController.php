@@ -15,7 +15,6 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Controller\Hybrid;
 
 use Contao\ContentModel;
-use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\Model;
 use Contao\ModuleModel;
@@ -52,7 +51,6 @@ abstract class AbstractHybridController extends AbstractFragmentController
      * @param RouterInterface     $router           The router.
      * @param TranslatorInterface $translator       The translator.
      * @param TokenChecker        $tokenChecker     The token checker.
-     * @param Adapter             $inputAdapter     The input adapter.
      */
     public function __construct(
         TemplateRenderer $templateRenderer,
@@ -60,15 +58,13 @@ abstract class AbstractHybridController extends AbstractFragmentController
         ResponseTagger $responseTagger,
         RouterInterface $router,
         TranslatorInterface $translator,
-        TokenChecker $tokenChecker,
-        Adapter $inputAdapter
+        TokenChecker $tokenChecker
     ) {
         parent::__construct($templateRenderer, $scopeMatcher, $responseTagger);
 
         $this->router       = $router;
         $this->translator   = $translator;
         $this->tokenChecker = $tokenChecker;
-        $this->inputAdapter = $inputAdapter;
     }
 
     /**
