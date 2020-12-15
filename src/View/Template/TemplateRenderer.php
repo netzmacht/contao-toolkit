@@ -22,8 +22,10 @@ namespace Netzmacht\Contao\Toolkit\View\Template;
  * wrapper for rendering toolkit based Contao templates and twig templates.
  *
  * Supported template names are:
- *  - toolkit:be:be_main
- *  - toolkit:fe:fe_page
+ *  - be:be_main
+ *  - fe:fe_page
+ *  - toolkit:be:be_main.html5
+ *  - toolkit:fe:fe_page.html5
  *  - twig/template.html.twig
  *  - @Bundle/twig/template.html.twig
  */

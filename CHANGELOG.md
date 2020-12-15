@@ -7,6 +7,7 @@ Changelog
 ### Added
 
  - Provide base fragment controllers for content elements, modules and hybrids
+ - Support short templates names (`fe:template_name`, `be:template_name`) 
 
 ### Changed
 
