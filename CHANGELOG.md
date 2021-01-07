@@ -4,6 +4,12 @@ Changelog
 [Unreleased]
 ------------
 
+[3.6.1] (2021-01-07)
+
+### Fixed
+
+ - Introduce new template renderer which does not require the templating engine to support twig templates 
+
 [3.6.0] (2020-12-15)
 --------------------
 
