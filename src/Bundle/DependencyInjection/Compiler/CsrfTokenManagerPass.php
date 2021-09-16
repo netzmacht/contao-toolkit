@@ -27,7 +27,7 @@ final class CsrfTokenManagerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container) : void
     {
-        if ($container->hasDefinition('contao.csrf.token_manager')) {
+        if ($container->hasAlias('contao.csrf.token_manager')) {
             $container->setAlias('netzmacht.contao_toolkit.csrf.token_manager', 'contao.csrf.token_manager');
         } else {
             $container->setAlias('netzmacht.contao_toolkit.csrf.token_manager', 'security.csrf.token_manager');
