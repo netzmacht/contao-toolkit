@@ -159,4 +159,4 @@ services:
       - '%contao.csrf_token_name%'
 
   netzmacht.contao_toolkit.csrf.token_manager:
-    alias: Contao\CoreBundle\Csrf\ContaoCsrfTokenManager
+    alias: 'contao.csrf.token_manager'
