@@ -108,7 +108,7 @@ class AbstractContentElementSpec extends ObjectBehavior
         EngineInterface $templateEngine,
         RequestScopeMatcher $requestScopeMatcher
     ) {
-        $this->beConstructedWith($this->model, $templateEngine, 'main', $requestScopeMatcher,false);
+        $this->beConstructedWith($this->model, $templateEngine, 'main', $requestScopeMatcher, false);
 
         $this->model->start = (time() + 3600);
 
