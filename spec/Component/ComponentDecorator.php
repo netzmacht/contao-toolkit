@@ -43,7 +43,7 @@ class ComponentDecorator extends Module
      *
      * @return ComponentFactory
      */
-    protected function getFactory()
+    protected function getFactory(): ComponentFactory
     {
         return $this->factory;
     }

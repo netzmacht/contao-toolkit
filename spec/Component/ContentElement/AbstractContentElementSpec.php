@@ -64,7 +64,7 @@ class AbstractContentElementSpec extends ObjectBehavior
         $requestScopeMatcher->isFrontendRequest()->willReturn(true);
 
         $this->beAnInstanceOf(\spec\Netzmacht\Contao\Toolkit\Component\ContentElement\ContentElement::class);
-        $this->beConstructedWith($this->model, $templateEngine, 'main', $requestScopeMatcher);
+        $this->beConstructedWith($this->model, $templateEngine, 'main', $requestScopeMatcher, false);
     }
 
     public function it_is_initializable()
@@ -94,7 +94,7 @@ class AbstractContentElementSpec extends ObjectBehavior
         EngineInterface $templateEngine,
         RequestScopeMatcher $requestScopeMatcher
     ) {
-        $this->beConstructedWith($this->model, $templateEngine, 'main', $requestScopeMatcher);
+        $this->beConstructedWith($this->model, $templateEngine, 'main', $requestScopeMatcher, false);
 
         $this->model->invisible = true;
 
@@ -108,7 +108,7 @@ class AbstractContentElementSpec extends ObjectBehavior
         EngineInterface $templateEngine,
         RequestScopeMatcher $requestScopeMatcher
     ) {
-        $this->beConstructedWith($this->model, $templateEngine, 'main', $requestScopeMatcher);
+        $this->beConstructedWith($this->model, $templateEngine, 'main', $requestScopeMatcher,false);
 
         $this->model->start = (time() + 3600);
 
@@ -122,7 +122,7 @@ class AbstractContentElementSpec extends ObjectBehavior
         EngineInterface $templateEngine,
         RequestScopeMatcher $requestScopeMatcher
     ) {
-        $this->beConstructedWith($this->model, $templateEngine, 'main', $requestScopeMatcher);
+        $this->beConstructedWith($this->model, $templateEngine, 'main', $requestScopeMatcher, false);
 
         $this->model->start = (time() - 3600);
         $this->model->stop  = (time() - 3600);
@@ -137,7 +137,7 @@ class AbstractContentElementSpec extends ObjectBehavior
         EngineInterface $templateEngine,
         RequestScopeMatcher $requestScopeMatcher
     ) {
-        $this->beConstructedWith($this->model, $templateEngine, 'main', $requestScopeMatcher);
+        $this->beConstructedWith($this->model, $templateEngine, 'main', $requestScopeMatcher, false);
 
         $requestScopeMatcher->isFrontendRequest()->willReturn(false);
 

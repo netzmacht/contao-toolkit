@@ -13,6 +13,7 @@
 namespace spec\Netzmacht\Contao\Toolkit\Component;
 
 use Contao\Model;
+use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\Templating\EngineInterface;
@@ -35,7 +36,7 @@ class AbstractComponentSpec extends ObjectBehavior
     /** @var array */
     private $modelData;
 
-    public function let(EngineInterface $templateEngine)
+    public function let(EngineInterface $templateEngine, RequestScopeMatcher $requestScopeMatcher)
     {
         $this->modelData = [
             'type'      => 'test',
@@ -57,8 +58,10 @@ class AbstractComponentSpec extends ObjectBehavior
             }
         };
 
+        $requestScopeMatcher->isFrontendRequest(Argument::any())->willReturn(true);
+
         $this->beAnInstanceOf('spec\Netzmacht\Contao\Toolkit\Component\ConcreteComponent');
-        $this->beConstructedWith($this->model, $templateEngine);
+        $this->beConstructedWith($this->model, $templateEngine, 'main', $requestScopeMatcher);
     }
 
     public function it_is_initializable()
