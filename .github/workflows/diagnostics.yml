@@ -76,5 +76,5 @@ jobs:
         uses: actions/upload-artifact@v2
         if: ${{ success() }} || ${{ failure() }}
         with:
-          name: phpcq-builds-${{ matrix.php }}
+          name: phpcq-builds-php-${{ matrix.php }}
           path: .phpcq/build/

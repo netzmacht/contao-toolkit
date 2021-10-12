@@ -4,7 +4,19 @@ Changelog
 [Unreleased]
 ------------
 
+[3.6.2] (2021-10-12)
+--------------------
+
+### Changed
+
+ - Unlock more symfony 5 components
+
+### Fixed
+
+ - Use the correct csrf token manager ([#28](https://github.com/netzmacht/contao-toolkit/pull/28))
+
 [3.6.1] (2021-01-07)
+--------------------
 
 ### Fixed
 
