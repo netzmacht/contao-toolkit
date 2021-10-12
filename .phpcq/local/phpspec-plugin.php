@@ -26,7 +26,7 @@ return new class implements DiagnosticsPluginInterface {
 
         $configOptionsBuilder->describeStringListOption(
             'custom_flags',
-            'Any custom flags to pass to phpunit. For valid flags refer to the phpunit documentation.',
+            'Any custom flags to pass to phpunit. For valid flags refer to the phpunit documentation.'
         );
 
         $configOptionsBuilder
@@ -42,7 +42,7 @@ return new class implements DiagnosticsPluginInterface {
             ->getTaskFactory()
             ->buildPhpProcess('phpspec', $this->buildArguments($config))
             ->withWorkingDirectory($projectRoot)
-            ->withOutputTransformer($this->createOutputTransformer($projectRoot))
+            ->withOutputTransformer($this->createOutputTransformer($projectRoot, $environment))
             ->build();
     }
 
@@ -64,7 +64,7 @@ return new class implements DiagnosticsPluginInterface {
         return $arguments;
     }
 
-    private function createOutputTransformer(string $rootDir): OutputTransformerFactoryInterface
+    private function createOutputTransformer(string $rootDir, EnvironmentInterface $environment): OutputTransformerFactoryInterface
     {
         return new class($rootDir) implements OutputTransformerFactoryInterface {
             /** @var string */
@@ -83,6 +83,8 @@ return new class implements DiagnosticsPluginInterface {
                     private $buffer = '';
                     /** @var string */
                     private $rootDir;
+                    /** @var string */
+                    private $errors = '';
 
                     public function __construct(TaskReportInterface $report, string $rootDir)
                     {
@@ -92,13 +94,28 @@ return new class implements DiagnosticsPluginInterface {
 
                     public function write(string $data, int $channel): void
                     {
-                        if (OutputInterface::CHANNEL_STDOUT === $channel) {
-                            $this->buffer .= $data;
+                        switch ($channel) {
+                            case OutputInterface::CHANNEL_STDOUT:
+                                $this->buffer .= $data;
+                                break;
+                            case OutputInterface::CHANNEL_STDERR:
+                                $this->errors .= $data;
                         }
                     }
 
                     public function finish(int $exitCode): void
                     {
+                        if ($this->errors) {
+                            $this->report
+                                ->addAttachment('error.log')
+                                ->fromString($this->errors)
+                                ->setMimeType('text/plain');
+                        }
+
+                        if (!$this->buffer) {
+                            return;
+                        }
+
                         $xmlDocument = new DOMDocument('1.0');
                         $xmlDocument->loadXML($this->buffer);
 
