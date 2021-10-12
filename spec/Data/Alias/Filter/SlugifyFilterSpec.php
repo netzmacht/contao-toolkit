@@ -24,7 +24,7 @@ class SlugifyFilterSpec extends ObjectBehavior
 {
     const SEPARATOR = '-';
 
-    const RAW_VALUE = 'Aou -?^°#.test';
+    const RAW_VALUE = 'Aou -?^#.test';
 
     const ALIAS_VALUE = 'aou-test';
 
@@ -84,7 +84,7 @@ class SlugifyFilterSpec extends ObjectBehavior
         $aliasValue = 'aa0032a-12';
         $model      = (object) [
             static::COLUMN => static::RAW_VALUE,
-            'test' => 'aa0032a-´12'
+            'test' => 'aa0032a-#12'
         ];
 
         $this->beConstructedWith([static::COLUMN, 'test']);
@@ -98,7 +98,7 @@ class SlugifyFilterSpec extends ObjectBehavior
         $aliasValue = 'aa0032a_12';
         $model      = (object) [
             static::COLUMN => static::RAW_VALUE,
-            'test' => 'aa0032a-´12'
+            'test' => 'aa0032a-#12'
         ];
 
         $this->beConstructedWith([static::COLUMN, 'test']);
