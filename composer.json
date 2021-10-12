@@ -17,7 +17,7 @@
     }
   ],
   "require": {
-    "php": ">=7.1",
+    "php": "^7.1 || ^8.0",
     "beberlei/assert": "^2.7 || ^3.0",
     "contao/core-bundle": "^4.9.10",
     "doctrine/dbal": "^2.5",
@@ -49,8 +49,8 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "3.6.x-dev",
-      "dev-develop": "3.7.x-dev"
+      "dev-develop": "3.7.x-dev",
+      "dev-master": "3.6.x-dev"
     },
     "contao-manager-plugin": "Netzmacht\\Contao\\Toolkit\\Bundle\\ContaoManager\\Plugin"
   },
