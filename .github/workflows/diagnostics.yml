@@ -16,12 +16,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - php: 7.1
-            output: '-o default'
-            phpcq_install: 'update'
-          - php: 7.2
-            output: '-o default'
-            phpcq_install: 'update'
           - php: 7.3
             output: '-o default'
             phpcq_install: 'update'
