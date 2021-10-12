@@ -52,9 +52,9 @@ jobs:
           cache-name: vendor
         with:
           path: vendor
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
+          key: ${{ runner.os }}-${{ matrix.php }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-${{ matrix.php }}-build-${{ env.cache-name }}-
 
       - name: Install phpcq toolchain
         run: ./vendor/bin/phpcq ${{ matrix.phpcq_install }} -v
