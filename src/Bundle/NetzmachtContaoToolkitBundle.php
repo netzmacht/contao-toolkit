@@ -39,7 +39,6 @@ final class NetzmachtContaoToolkitBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new CsrfTokenManagerPass());
         $container->addCompilerPass(new RepositoriesPass());
         $container->addCompilerPass(new FosCacheResponseTaggerPass());
 
