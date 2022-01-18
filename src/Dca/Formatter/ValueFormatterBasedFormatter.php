@@ -1,27 +1,16 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter;
 
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
+
 use function is_array;
 
 /**
  * Formatter handles the formatting of data container labels.
- *
- * @package Netzmacht\Contao\Toolkit\Dca
  */
 final class ValueFormatterBasedFormatter implements Formatter
 {
@@ -47,8 +36,6 @@ final class ValueFormatterBasedFormatter implements Formatter
     private $optionsFormatter;
 
     /**
-     * Formatter constructor.
-     *
      * @param Definition     $definition       Data container definition.
      * @param ValueFormatter $valueFormatter   Value formatter.
      * @param ValueFormatter $optionsFormatter Options formatter.
@@ -70,14 +57,14 @@ final class ValueFormatterBasedFormatter implements Formatter
      * @param mixed  $value   Field value.
      * @param mixed  $context Context object, usually the data container driver.
      *
-     * @return array|null|string
+     * @return array<int|string, string>|string|null
      */
     public function formatValue(string $field, $value, $context = null)
     {
         $fieldDefinition = $this->definition->get(['fields', $field]);
 
         // Not found.
-        if (!is_array($fieldDefinition)) {
+        if (! is_array($fieldDefinition)) {
             return '';
         }
 
@@ -92,8 +79,6 @@ final class ValueFormatterBasedFormatter implements Formatter
      * Format the field label.
      *
      * @param string $field Field name.
-     *
-     * @return string
      */
     public function formatFieldLabel(string $field): string
     {
@@ -104,8 +89,6 @@ final class ValueFormatterBasedFormatter implements Formatter
      * Format the field description.
      *
      * @param string $field Field name.
-     *
-     * @return mixed
      */
     public function formatFieldDescription(string $field): string
     {
@@ -115,16 +98,16 @@ final class ValueFormatterBasedFormatter implements Formatter
     /**
      * Format field options.
      *
-     * @param string $field   Field name.
-     * @param array  $values  Field values.
-     * @param mixed  $context Data container object.
+     * @param string                                            $field   Field name.
+     * @param array<int|string,string|array<int|string,string>> $values  Field values.
+     * @param mixed                                             $context Data container object.
      *
-     * @return array
+     * @return array<int|string,string|array<int|string,string>>
      */
     public function formatOptions(string $field, array $values, $context = null): array
     {
         $definition = $this->definition->get(['fields', $field]);
 
-        return $this->optionsFormatter->format($values, $field, $definition, $context);
+        return (array) $this->optionsFormatter->format($values, $field, $definition, $context);
     }
 }

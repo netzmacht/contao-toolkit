@@ -1,14 +1,6 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Data\Model;
 
@@ -20,46 +12,49 @@ use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\Contao\Toolkit\Data\Model\ToolkitRepositoryManager;
 use Netzmacht\Contao\Toolkit\Exception\InvalidArgumentException;
 use PhpSpec\ObjectBehavior;
+use stdClass;
 
 class ToolkitRepositoryManagerSpec extends ObjectBehavior
 {
-    public function let(Connection $connection)
+    public function let(Connection $connection): void
     {
         $this->beConstructedWith($connection, []);
     }
-    public function it_is_initializable()
+
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ToolkitRepositoryManager::class);
     }
 
-    public function it_is_a_repository_manager()
+    public function it_is_a_repository_manager(): void
     {
         $this->shouldImplement(RepositoryManager::class);
     }
 
-    public function it_gets_registered_repository(Connection $connection, Repository $repository)
+    public function it_gets_registered_repository(Connection $connection, Repository $repository): void
     {
         $this->beConstructedWith($connection, ['example' => $repository]);
         $this->getRepository('example')->shouldReturn($repository);
     }
 
-    public function it_created_default_repository_for_non_registered_contao_models()
+    public function it_created_default_repository_for_non_registered_contao_models(): void
     {
         $this->getRepository(ModelExample::class)->shouldHaveType(ContaoRepository::class);
     }
 
-    public function it_throws_invalid_argument_exception_when_no_repository_is_registered_nor_a_contao_model_is_passed()
+    // phpcs:ignore Generic.Files.LineLength.MaxExceeded
+    public function it_throws_invalid_argument_exception_when_no_repository_is_registered_nor_a_contao_model_is_passed(): void
     {
         $this->shouldThrow(InvalidArgumentException::class)->during('getRepository', ['foo']);
     }
 
-    public function it_throws_exception_if_no_repository_is_passed(Connection $connection)
+    public function it_throws_exception_if_no_repository_is_passed(Connection $connection): void
     {
-        $this->beConstructedWith($connection, ['foo' => new \stdClass()]);
+        $this->beConstructedWith($connection, ['foo' => new stdClass()]);
         $this->shouldThrow(AssertionFailed::class)->duringInstantiation();
     }
 
-    public function it_has_the_database_connection(Connection $connection)
+    public function it_has_the_database_connection(Connection $connection): void
     {
         $this->getConnection()->shouldReturn($connection);
     }

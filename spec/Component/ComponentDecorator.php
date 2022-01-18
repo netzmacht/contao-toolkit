@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Component;
@@ -27,8 +17,6 @@ class ComponentDecorator extends Module
     private $factory;
 
     /**
-     * ComponentDecorator constructor.
-     *
      * @param Component        $component The component.
      * @param ComponentFactory $factory   The component factory.
      */
@@ -40,8 +28,6 @@ class ComponentDecorator extends Module
 
     /**
      * Get the component factory.
-     *
-     * @return ComponentFactory
      */
     protected function getFactory(): ComponentFactory
     {

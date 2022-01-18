@@ -1,14 +1,6 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Bundle\ContaoManager;
 
@@ -21,19 +13,19 @@ use PhpSpec\ObjectBehavior;
 
 class PluginSpec extends ObjectBehavior
 {
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(Plugin::class);
     }
 
-    public function it_provides_bundle_config(ParserInterface $parser)
+    public function it_provides_bundle_config(ParserInterface $parser): void
     {
         $this->shouldImplement(BundlePluginInterface::class);
 
         $this->getBundles($parser)->shouldBeArray();
     }
 
-    public function it_depends_on_core_bundle(ParserInterface $parser)
+    public function it_depends_on_core_bundle(ParserInterface $parser): void
     {
         $this->shouldImplement(DependentPluginInterface::class);
 

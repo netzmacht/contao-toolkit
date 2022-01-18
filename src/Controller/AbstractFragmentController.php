@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Controller;
@@ -28,9 +18,11 @@ use function array_unshift;
 use function implode;
 use function is_array;
 use function ltrim;
+use function sprintf;
 use function strpos;
 use function strrchr;
 use function substr;
+use function trim;
 
 /**
  * This class a the base class for the base fragment controller provided by the Toolkit.
@@ -61,13 +53,11 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
     /**
      * Fragment options.
      *
-     * @var array
+     * @var array<string,mixed>
      */
     protected $options = [];
 
     /**
-     * AbstractFragmentController constructor.
-     *
      * @param TemplateRenderer    $templateRenderer The template renderer.
      * @param RequestScopeMatcher $scopeMatcher     The scope matcher.
      * @param ResponseTagger      $responseTagger   The http request response tagger.
@@ -85,9 +75,9 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
     /**
      * Set the fragment options.
      *
-     * @param array $options The fragment options.
+     * @param array<string,mixed> $options The fragment options.
      *
-     * @return void
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function setFragmentOptions(array $options): void
     {
@@ -100,12 +90,10 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      * This method executed the preGenerate() and postGenerate() method which might also return a response and intercept
      * the default rendering.
      *
-     * @param Request    $request The given request.
-     * @param Model      $model   The related model providing the configuration.
-     * @param string     $section The section in which the fragment is rendered.
-     * @param array|null $classes Additional classes.
-     *
-     * @return Response
+     * @param Request           $request The given request.
+     * @param Model             $model   The related model providing the configuration.
+     * @param string            $section The section in which the fragment is rendered.
+     * @param list<string>|null $classes Additional classes.
      */
     protected function generate(Request $request, Model $model, string $section, ?array $classes = null): Response
     {
@@ -131,11 +119,11 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
     /**
      * Prepare the default template data.
      *
-     * @param Model      $model   The related model providing the configuration.
-     * @param string     $section The section in which the fragment is rendered.
-     * @param array|null $classes Additional classes.
+     * @param Model             $model   The related model providing the configuration.
+     * @param string            $section The section in which the fragment is rendered.
+     * @param list<string>|null $classes Additional classes.
      *
-     * @return array
+     * @return array<string,mixed>
      */
     private function prepareDefaultTemplateData(Model $model, string $section, ?array $classes = null): array
     {
@@ -143,12 +131,12 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
         $cssID   = StringUtil::deserialize($data['cssID'], true);
         $classes = $classes ?: [];
 
-        if (!$cssID[1] !== '') {
+        if ($cssID[1] !== '') {
             array_unshift($classes, $cssID[1]);
         }
 
         $data['inColumn'] = $section;
-        $data['cssID']    = ($cssID[0] !== '') ? ' id="' . $cssID[0] . '"' : '';
+        $data['cssID']    = $cssID[0] !== '' ? ' id="' . $cssID[0] . '"' : '';
         $data['class']    = trim($this->getTemplateName($model) . ' ' . implode(' ', $classes));
 
         $headline = StringUtil::deserialize($data['headline']);
@@ -168,11 +156,11 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      *
      * The method has to extend the existing data and return the modified one as return value.
      *
-     * @param array   $data    The parsed template data.
-     * @param Request $request The current request.
-     * @param Model   $model   The model containing the configuration.
+     * @param array<string,mixed> $data    The parsed template data.
+     * @param Request             $request The current request.
+     * @param Model               $model   The model containing the configuration.
      *
-     * @return array
+     * @return array<string,mixed>
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
@@ -186,12 +174,10 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      *
      * Use it to intercept the default behaviour.
      *
-     * @param Request    $request The given request.
-     * @param Model      $model   The related model providing the configuration.
-     * @param string     $section The section in which the fragment is rendered.
-     * @param array|null $classes Additional classes.
-     *
-     * @return Response|null
+     * @param Request           $request The given request.
+     * @param Model             $model   The related model providing the configuration.
+     * @param string            $section The section in which the fragment is rendered.
+     * @param list<string>|null $classes Additional classes.
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
@@ -205,12 +191,10 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      *
      * Return a custom response if you want to modify the output.
      *
-     * @param string  $buffer  The generated output.
-     * @param array   $data    The parsed data.
-     * @param Request $request The given request.
-     * @param Model   $model   The related model providing the configuration.
-     *
-     * @return Response|null
+     * @param string              $buffer  The generated output.
+     * @param array<string,mixed> $data    The parsed data.
+     * @param Request             $request The given request.
+     * @param Model               $model   The related model providing the configuration.
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
@@ -222,14 +206,13 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
     /**
      * Render a template and return the result as string.
      *
-     * @param string $templateName The template name.
-     * @param array  $data         The template data.
-     *
-     * @return string
+     * @param string              $templateName The template name.
+     * @param array<string,mixed> $data         The template data.
      */
     protected function render(string $templateName, array $data): string
     {
-        if (substr($templateName, -5) !== '.twig'
+        if (
+            substr($templateName, -5) !== '.twig'
             && strpos($templateName, 'toolkit:') !== 0
             && strpos($templateName, 'fe:') !== 0
             && strpos($templateName, 'be:') !== 0
@@ -243,10 +226,8 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
     /**
      * Render a template and return the result as response.
      *
-     * @param string $templateName The template name.
-     * @param array  $data         The template data.
-     *
-     * @return Response
+     * @param string              $templateName The template name.
+     * @param array<string,mixed> $data         The template data.
      */
     protected function renderResponse(string $templateName, array $data): Response
     {
@@ -257,8 +238,6 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      * Get the template name from the fragment options and or the provided model.
      *
      * @param Model $model The model containing the fragment configuration.
-     *
-     * @return string
      */
     protected function getTemplateName(Model $model): string
     {
@@ -275,8 +254,6 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
 
     /**
      * Get the type of the fragment.
-     *
-     * @return string
      */
     protected function getType(): string
     {
@@ -286,7 +263,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
 
         $className = ltrim(strrchr(static::class, '\\'), '\\');
 
-        if ('Controller' === substr($className, -10)) {
+        if (substr($className, -10) === 'Controller') {
             $className = substr($className, 0, -10);
         }
 
@@ -297,8 +274,6 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      * Check if the request is a backend request.
      *
      * @param Request $request The current request.
-     *
-     * @return bool
      */
     protected function isBackendRequest(Request $request): bool
     {
@@ -309,8 +284,6 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      * Get the fallback template name.
      *
      * @param Model $model The model containing the fragment configuration.
-     *
-     * @return string
      */
     abstract protected function getFallbackTemplateName(Model $model): string;
 
@@ -318,8 +291,6 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      * Tag the current response.
      *
      * @param string ...$tags The list of tags.
-     *
-     * @return void
      */
     protected function tagResponse(string ...$tags): void
     {

@@ -1,28 +1,17 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Model;
 
+use ArrayAccess;
 use Contao\Database\Result;
 use Contao\Model;
 
 /**
  * ModelArrayAccess decorates a Contao data model to provide array access.
- *
- * @package Netzmacht\Contao\Toolkit\Data
  */
-final class ModelArrayAccess implements \ArrayAccess
+final class ModelArrayAccess implements ArrayAccess
 {
     /**
      * Data model.
@@ -32,8 +21,6 @@ final class ModelArrayAccess implements \ArrayAccess
     private $model;
 
     /**
-     * ModelArrayAccess constructor.
-     *
      * @param Result|Model $model Data model as database result of model.
      */
     public function __construct($model)

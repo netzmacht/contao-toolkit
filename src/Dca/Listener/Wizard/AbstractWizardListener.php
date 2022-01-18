@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
@@ -19,14 +9,14 @@ use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
-use Symfony\Component\Translation\TranslatorInterface as Translator;
-use const E_USER_DEPRECATED;
+use Symfony\Contracts\Translation\TranslatorInterface as Translator;
+
 use function trigger_error;
+
+use const E_USER_DEPRECATED;
 
 /**
  * AbstractWizard is the base class for a wizard.
- *
- * @package Netzmacht\Contao\Toolkit\View\Wizard
  */
 abstract class AbstractWizardListener
 {
@@ -35,7 +25,7 @@ abstract class AbstractWizardListener
      *
      * @var string
      */
-    protected $template;
+    protected $template = '';
 
     /**
      * Translator.
@@ -59,8 +49,6 @@ abstract class AbstractWizardListener
     protected $dcaManager;
 
     /**
-     * PagePickerCallback constructor.
-     *
      * @param TemplateEngine|TemplateRenderer $templateEngine Template Engine.
      * @param Translator                      $translator     Translator.
      * @param DcaManager                      $dcaManager     Data container manager.
@@ -76,18 +64,18 @@ abstract class AbstractWizardListener
         $this->templateEngine = $templateEngine;
         $this->dcaManager     = $dcaManager;
 
-        if ($template) {
-            $this->template = $template;
+        if (! $template) {
+            return;
         }
+
+        $this->template = $template;
     }
 
     /**
      * Render a template.
      *
-     * @param string|null $name       Custom template name. If null main wizard template is used.
-     * @param array       $parameters Parameters.
-     *
-     * @return string
+     * @param string|null         $name       Custom template name. If null main wizard template is used.
+     * @param array<string,mixed> $parameters Parameters.
      */
     protected function render($name = null, array $parameters = []): string
     {
@@ -98,8 +86,6 @@ abstract class AbstractWizardListener
      * Get the data container definition.
      *
      * @param DataContainer $dataContainer Data container driver.
-     *
-     * @return Definition
      */
     protected function getDefinition($dataContainer): Definition
     {
@@ -110,22 +96,19 @@ abstract class AbstractWizardListener
      * Invoke by the callback.
      *
      * @param DataContainer $dataContainer Data container driver.
-     *
-     * @return string
      */
     public function onWizardCallback($dataContainer): string
     {
+        /** @psalm-suppress DeprecatedMethod */
         return $this->handleWizardCallback($dataContainer);
     }
 
     /**
      * Invoke by the callback.
      *
-     * @param DataContainer $dataContainer Data container driver.
-     *
-     * @return string
-     *
      * @deprecated Deprecated and removed in Version 4.0.0. Use self::onWizardCallback instead.
+     *
+     * @param DataContainer $dataContainer Data container driver.
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

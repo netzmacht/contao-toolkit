@@ -1,37 +1,29 @@
 <?php
 
-/**
- * Contao Toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-leaflet-maps/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Template;
 
+use RuntimeException;
 use Symfony\Component\Templating\TemplateNameParserInterface;
+use Symfony\Component\Templating\TemplateReferenceInterface;
 
 use function preg_match;
+use function sprintf;
 
-/**
- * Class ContaoTemplateNameParser.
- *
- * @package Netzmacht\Contao\Toolkit\View\Template
- */
 class ToolkitTemplateNameParser implements TemplateNameParserInterface
 {
     /**
      * {@inheritdoc}
      *
-     * @throws \RuntimeException If template name could not be parsed.
+     * @throws RuntimeException If template name could not be parsed.
      */
     public function parse($name)
     {
+        if ($name instanceof TemplateReferenceInterface) {
+            $name = (string) $name;
+        }
+
         if (preg_match('/^([^\:]{1,})\:([^\:]{1,})\:(.{1,})\.([^\.\:]{1,})\:?([^\:]*)$/', $name, $matches)) {
             $this->guardSupportedEngine($matches[1]);
             $this->guardSupportedScope($matches[2]);
@@ -45,7 +37,7 @@ class ToolkitTemplateNameParser implements TemplateNameParserInterface
             return new TemplateReference($matches[2], 'html5', $matches[1], 'text/html');
         }
 
-        throw new \RuntimeException(
+        throw new RuntimeException(
             sprintf('Could not parse template name "%s". Expected format is "scope:name.format"', $name)
         );
     }
@@ -55,15 +47,15 @@ class ToolkitTemplateNameParser implements TemplateNameParserInterface
      *
      * @param string $scope Given scope.
      *
-     * @return void
-     *
-     * @throws \RuntimeException When template scope is not supported.
+     * @throws RuntimeException When template scope is not supported.
      */
     private function guardSupportedScope(string $scope): void
     {
-        if ($scope !== TemplateReference::SCOPE_FRONTEND
-            && $scope !== TemplateReference::SCOPE_BACKEND) {
-            throw new \RuntimeException(
+        if (
+            $scope !== TemplateReference::SCOPE_FRONTEND
+            && $scope !== TemplateReference::SCOPE_BACKEND
+        ) {
+            throw new RuntimeException(
                 sprintf(
                     'Template scope "%s" is not supported. Has to be contao_frontend or contao_backend.',
                     $scope
@@ -77,14 +69,12 @@ class ToolkitTemplateNameParser implements TemplateNameParserInterface
      *
      * @param string $engine Given engine.
      *
-     * @return void
-     *
-     * @throws \RuntimeException When template engine is not supported.
+     * @throws RuntimeException When template engine is not supported.
      */
     private function guardSupportedEngine(string $engine): void
     {
         if ($engine !== TemplateReference::ENGINE) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 sprintf(
                     'Template engine "%s" is not supported. Has to be toolkit.',
                     $engine

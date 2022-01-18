@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-leaflet-maps/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Model;
@@ -19,11 +9,9 @@ use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Exception\InvalidArgumentException;
 
-/**
- * Class ToolkitRepositoryManager
- *
- * @package Netzmacht\Contao\Toolkit\Data\Model
- */
+use function is_subclass_of;
+use function sprintf;
+
 final class ToolkitRepositoryManager implements RepositoryManager
 {
     /**
@@ -41,19 +29,19 @@ final class ToolkitRepositoryManager implements RepositoryManager
     private $connection;
 
     /**
-     * ToolkitRepositoryManager constructor.
-     *
-     * @param Connection $connection   Database connection.
-     * @param array      $repositories List of repositories.
+     * @param Connection                            $connection   Database connection.
+     * @param array<class-string<Model>,Repository> $repositories List of repositories.
      */
     public function __construct(Connection $connection, array $repositories)
     {
         Assertion::allImplementsInterface($repositories, Repository::class);
 
         foreach ($repositories as $repository) {
-            if ($repository instanceof RepositoryManagerAware) {
-                $repository->setRepositoryManager($this);
+            if (! ($repository instanceof RepositoryManagerAware)) {
+                continue;
             }
+
+            $repository->setRepositoryManager($this);
         }
 
         $this->repositories = $repositories;
@@ -85,9 +73,6 @@ final class ToolkitRepositoryManager implements RepositoryManager
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConnection(): Connection
     {
         return $this->connection;

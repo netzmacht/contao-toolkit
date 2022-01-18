@@ -1,23 +1,18 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
+use function array_map;
+use function get_object_vars;
+use function implode;
+use function is_array;
+use function is_object;
+use function is_string;
+
 /**
  * FlattenFormatter takes an array and creates an csv value from it.
- *
- * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
 final class FlattenFormatter implements ValueFormatter
 {
@@ -26,7 +21,7 @@ final class FlattenFormatter implements ValueFormatter
      */
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
-        return !empty($fieldDefinition['eval']['multiple']);
+        return ! empty($fieldDefinition['eval']['multiple']);
     }
 
     /**
@@ -47,11 +42,12 @@ final class FlattenFormatter implements ValueFormatter
      * @param mixed $value    Current value.
      * @param bool  $brackets If true the value get brackets.
      *
-     * @return array|string
+     * @return array<int|string,string>|string
      */
     private function flatten($value, bool $brackets = false)
     {
         if (is_array($value)) {
+            /** @psalm-var array<int,string> $value */
             $value = array_map(
                 function ($value) {
                     return $this->flatten($value, true);
@@ -66,8 +62,8 @@ final class FlattenFormatter implements ValueFormatter
             return $value;
         }
 
-        if ($brackets) {
-            $value = '[' . $value .']';
+        if ($brackets && is_string($value)) {
+            $value = '[' . $value . ']';
         }
 
         return $value;

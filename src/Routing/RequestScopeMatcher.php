@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Routing;
@@ -18,11 +8,6 @@ use Contao\CoreBundle\Routing\ScopeMatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-/**
- * Class RequestScopeMatcher
- *
- * @package Netzmacht\Contao\Toolkit\Routing
- */
 class RequestScopeMatcher
 {
     /**
@@ -40,8 +25,6 @@ class RequestScopeMatcher
     private $requestStack;
 
     /**
-     * RequestScopeMatcher constructor.
-     *
      * @param ScopeMatcher $scopeMatcher Contao request scope matcher.
      * @param RequestStack $requestStack Request stack.
      */
@@ -57,10 +40,8 @@ class RequestScopeMatcher
      * If no request is given the current request from the request scope is used.
      *
      * @param Request|null $request Request which should be checked.
-     *
-     * @return bool
      */
-    public function isFrontendRequest(Request $request = null): bool
+    public function isFrontendRequest(?Request $request = null): bool
     {
         $request = $request ?: $this->getCurrentRequest();
         if ($request) {
@@ -76,10 +57,8 @@ class RequestScopeMatcher
      * If no request is given the current request from the request scope is used.
      *
      * @param Request|null $request Request which should be checked.
-     *
-     * @return bool
      */
-    public function isBackendRequest(Request $request = null): bool
+    public function isBackendRequest(?Request $request = null): bool
     {
         $request = $request ?: $this->getCurrentRequest();
         if ($request) {
@@ -95,10 +74,8 @@ class RequestScopeMatcher
      * If no request is given the current request from the request scope is used.
      *
      * @param Request|null $request Request which should be checked.
-     *
-     * @return bool
      */
-    public function isContaoRequest(Request $request = null): bool
+    public function isContaoRequest(?Request $request = null): bool
     {
         $request = $request ?: $this->getCurrentRequest();
         if ($request) {
@@ -114,10 +91,8 @@ class RequestScopeMatcher
      * If no request is given the current request from the request scope is used.
      *
      * @param Request|null $request Request which should be checked.
-     *
-     * @return bool
      */
-    public function isInstallRequest(Request $request = null): bool
+    public function isInstallRequest(?Request $request = null): bool
     {
         $request = $request ?: $this->getCurrentRequest();
 
@@ -130,8 +105,6 @@ class RequestScopeMatcher
 
     /**
      * Get the current request.
-     *
-     * @return Request|null
      */
     private function getCurrentRequest(): ?Request
     {

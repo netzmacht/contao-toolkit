@@ -1,24 +1,11 @@
 <?php
 
-/**
- * Contao Toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-leaflet-maps/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\InsertTag;
 
-/**
- * Class AbstractInsertTagParser.
- *
- * @package Netzmacht\Contao\Toolkit\InsertTag
- */
+use function explode;
+
 abstract class AbstractInsertTagParser
 {
     /**
@@ -34,7 +21,7 @@ abstract class AbstractInsertTagParser
         $parts = explode('::', $raw, 2);
         $tag   = $parts[0];
 
-        if (!$this->supports($tag, $cache)) {
+        if (! $this->supports($tag, $cache)) {
             return false;
         }
 
@@ -48,8 +35,6 @@ abstract class AbstractInsertTagParser
      *
      * @param string $tag   The tag name.
      * @param bool   $cache If false non cacheable tags should are replaced.
-     *
-     * @return bool
      */
     abstract protected function supports(string $tag, bool $cache): bool;
 
@@ -58,16 +43,16 @@ abstract class AbstractInsertTagParser
      *
      * @param string $query Argument query.
      *
-     * @return array
+     * @return array<string|int,mixed>
      */
     abstract protected function parseArguments(string $query): array;
 
     /**
      * Parse the insert tag.
      *
-     * @param array  $arguments Insert tag arguments.
-     * @param string $tag       Insert tag name.
-     * @param string $raw       The raw insert tag string.
+     * @param array<string|int,mixed> $arguments Insert tag arguments.
+     * @param string                  $tag       Insert tag name.
+     * @param string                  $raw       The raw insert tag string.
      *
      * @return string|false
      */

@@ -1,50 +1,36 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FilterFormatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-/**
- * Class FilterFormatterSpec
- *
- * @package spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value
- */
 class FilterFormatterSpec extends ObjectBehavior
 {
-    public function let(ValueFormatter $formatterA, ValueFormatter $formatterB)
+    public function let(ValueFormatter $formatterA, ValueFormatter $formatterB): void
     {
         $this->beConstructedWith([$formatterA, $formatterB]);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FilterFormatter');
     }
 
-    public function it_is_a_value_formatter()
+    public function it_is_a_value_formatter(): void
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
     }
 
-    public function it_accepts_anything()
+    public function it_accepts_anything(): void
     {
         $this->accepts('test', [])->shouldReturn(true);
     }
 
-    public function it_applies_matching_formatters(ValueFormatter $formatterA, ValueFormatter $formatterB)
+    public function it_applies_matching_formatters(ValueFormatter $formatterA, ValueFormatter $formatterB): void
     {
         $formatterA->accepts(Argument::cetera())->willReturn(false);
         $formatterA->format(Argument::cetera())->shouldNotBeCalled();

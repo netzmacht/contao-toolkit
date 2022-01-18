@@ -1,14 +1,6 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Controller\ContentElement;
 
@@ -75,7 +67,7 @@ class AbstractContentElementControllerSpec extends ObjectBehavior
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = false;
-        $model->start     = (time() + 3600);
+        $model->start     = time() + 3600;
 
         $scopeMatcher->isBackendRequest($request)->willReturn(false);
         $tokenChecker->hasBackendUser()->willReturn(false);
@@ -92,7 +84,7 @@ class AbstractContentElementControllerSpec extends ObjectBehavior
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = false;
-        $model->stop      = (time() - 3600);
+        $model->stop      = time() - 3600;
 
         $scopeMatcher->isBackendRequest($request)->willReturn(false);
         $tokenChecker->hasBackendUser()->willReturn(false);
@@ -156,7 +148,6 @@ class AbstractContentElementControllerSpec extends ObjectBehavior
 
         $this->__invoke($request, $model, 'main')->getContent()->shouldBe('HTML');
     }
-
 
     public function it_passes_template_data(
         Request $request,
@@ -237,7 +228,6 @@ class AbstractContentElementControllerSpec extends ObjectBehavior
 
         $this->__invoke($request, $model, 'main')->getContent()->shouldBe('HTML');
     }
-
 
     public function it_tags_response(
         Request $request,

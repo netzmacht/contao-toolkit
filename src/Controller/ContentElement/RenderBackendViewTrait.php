@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Controller\ContentElement;
@@ -45,7 +35,7 @@ trait RenderBackendViewTrait
     /**
      * The input adapter.
      *
-     * @var Adapter<Input>
+     * @var Adapter<Input>|null
      */
     protected $inputAdapter;
 
@@ -53,15 +43,14 @@ trait RenderBackendViewTrait
      * Render backend view.
      *
      * @param ContentModel $model The content model.
-     *
-     * @return Response
      */
     protected function renderContentBackendView(ContentModel $model): Response
     {
-        $name = $this->translator->trans(sprintf('CTE.%s.0', $this->getType()), [], 'contao_tl_content');
-        $href = $this->router->generate(
+        $module = $this->inputAdapter ? $this->inputAdapter->get('do') : Input::get('do');
+        $name   = $this->translator->trans(sprintf('CTE.%s.0', $this->getType()), [], 'contao_tl_content');
+        $href   = $this->router->generate(
             'contao_backend',
-            ['do' => $this->inputAdapter->get('do'), 'table' => 'tl_content', 'act' => 'edit', 'id' => $model->id]
+            ['do' => $module, 'table' => 'tl_content', 'act' => 'edit', 'id' => $model->id]
         );
 
         return $this->renderResponse(
@@ -80,17 +69,13 @@ trait RenderBackendViewTrait
      *
      * The template name.
      *
-     * @param string $templateName The template name.
-     * @param array  $data         The data being passed to the template.
-     *
-     * @return Response
+     * @param string              $templateName The template name.
+     * @param array<string,mixed> $data         The data being passed to the template.
      */
     abstract protected function renderResponse(string $templateName, array $data): Response;
 
     /**
      * Get the type of the fragment.
-     *
-     * @return string
      */
     abstract protected function getType(): string;
 }

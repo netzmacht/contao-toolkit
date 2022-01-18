@@ -1,21 +1,13 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Controller\Hybrid;
 
 use Contao\ContentModel;
+use Contao\CoreBundle\Routing\ScopeMatcher;
 use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\ModuleModel;
-use Contao\CoreBundle\Routing\ScopeMatcher;
 use Netzmacht\Contao\Toolkit\Controller\Hybrid\AbstractHybridController;
 use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
@@ -27,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+
 use function serialize;
 use function time;
 
@@ -250,7 +243,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = false;
-        $model->start     = (time() + 3600);
+        $model->start     = time() + 3600;
 
         $scopeMatcher->isBackendRequest($request)->willReturn(false);
         $tokenChecker->hasBackendUser()->willReturn(false);
@@ -267,7 +260,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = false;
-        $model->stop      = (time() - 3600);
+        $model->stop      = time() - 3600;
 
         $scopeMatcher->isBackendRequest($request)->willReturn(false);
         $tokenChecker->hasBackendUser()->willReturn(false);
@@ -331,7 +324,6 @@ class AbstractHybridControllerSpec extends ObjectBehavior
 
         $this->renderAsContentElement($request, $model, 'main')->getContent()->shouldBe('HTML');
     }
-
 
     public function it_passes_element_template_data(
         Request $request,
@@ -412,7 +404,6 @@ class AbstractHybridControllerSpec extends ObjectBehavior
 
         $this->renderAsContentElement($request, $model, 'main')->getContent()->shouldBe('HTML');
     }
-
 
     public function it_tags_element_response(
         Request $request,

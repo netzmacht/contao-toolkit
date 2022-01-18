@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener;
@@ -21,8 +11,6 @@ use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
 
 /**
  * Base class for data container callback classes.
- *
- * @package Netzmacht\Contao\Toolkit\Dca
  */
 abstract class AbstractListener
 {
@@ -41,8 +29,6 @@ abstract class AbstractListener
     private $dcaManager;
 
     /**
-     * Callbacks constructor.
-     *
      * @param DcaManager $dcaManager Data container manager.
      */
     public function __construct(DcaManager $dcaManager)
@@ -56,8 +42,6 @@ abstract class AbstractListener
 
     /**
      * Get data container name.
-     *
-     * @return string
      */
     public static function getName(): string
     {
@@ -68,8 +52,6 @@ abstract class AbstractListener
      * Get a definition.
      *
      * @param string $name Data definition name. If empty the default name is used.
-     *
-     * @return Definition
      */
     protected function getDefinition(string $name = ''): Definition
     {
@@ -80,8 +62,6 @@ abstract class AbstractListener
      * Get a formatter.
      *
      * @param string $name Data definition name. If empty the default name is used.
-     *
-     * @return Formatter
      */
     protected function getFormatter(string $name = ''): Formatter
     {

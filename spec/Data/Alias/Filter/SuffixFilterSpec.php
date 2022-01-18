@@ -1,100 +1,87 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
-use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SuffixFilter;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
-/**
- * Class SuffixFilterSpec
- */
 class SuffixFilterSpec extends ObjectBehavior
 {
-    const SEPARATOR = '-';
+    public const SEPARATOR = '-';
 
-    const ALIAS_VALUE = 'alias-value';
+    public const ALIAS_VALUE = 'alias-value';
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Data\Alias\Filter\SuffixFilter');
     }
 
-    public function it_is_an_alias_filter()
+    public function it_is_an_alias_filter(): void
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Data\Alias\Filter');
     }
 
-    public function it_breaks_by_default()
+    public function it_breaks_by_default(): void
     {
         $this->breakIfValid()->shouldReturn(true);
     }
 
-    public function it_accepts_break_option()
+    public function it_accepts_break_option(): void
     {
         $this->beConstructedWith(false);
         $this->breakIfValid()->shouldReturn(false);
     }
 
-    public function it_supports_repeating()
+    public function it_supports_repeating(): void
     {
         $this->repeatUntilValid()->shouldReturn(true);
     }
 
-    public function it_appends_suffix()
+    public function it_appends_suffix(): void
     {
         $model = (object) [];
 
         $this->initialize();
-        $this->apply($model, static::ALIAS_VALUE, static::SEPARATOR)->shouldReturn(
-            static::ALIAS_VALUE . static::SEPARATOR . 2
+        $this->apply($model, self::ALIAS_VALUE, self::SEPARATOR)->shouldReturn(
+            self::ALIAS_VALUE . self::SEPARATOR . 2
         );
     }
 
-    public function it_accepts_custom_separator()
+    public function it_accepts_custom_separator(): void
     {
         $model = (object) [];
 
         $this->initialize();
-        $this->apply($model, static::ALIAS_VALUE, '_')->shouldReturn(
-            static::ALIAS_VALUE . '_' . 2
+        $this->apply($model, self::ALIAS_VALUE, '_')->shouldReturn(
+            self::ALIAS_VALUE . '_' . 2
         );
     }
 
-    public function it_increases_suffix_when_repeating()
+    public function it_increases_suffix_when_repeating(): void
     {
         $model = (object) [];
 
         $this->initialize();
-        $this->apply($model, static::ALIAS_VALUE, static::SEPARATOR)->shouldReturn(
-            static::ALIAS_VALUE . static::SEPARATOR . 2
+        $this->apply($model, self::ALIAS_VALUE, self::SEPARATOR)->shouldReturn(
+            self::ALIAS_VALUE . self::SEPARATOR . 2
         );
-        $this->apply($model, static::ALIAS_VALUE, static::SEPARATOR)->shouldReturn(
-            static::ALIAS_VALUE . static::SEPARATOR . 3
+        $this->apply($model, self::ALIAS_VALUE, self::SEPARATOR)->shouldReturn(
+            self::ALIAS_VALUE . self::SEPARATOR . 3
         );
-        $this->apply($model, static::ALIAS_VALUE, static::SEPARATOR)->shouldReturn(
-            static::ALIAS_VALUE . static::SEPARATOR . 4
+        $this->apply($model, self::ALIAS_VALUE, self::SEPARATOR)->shouldReturn(
+            self::ALIAS_VALUE . self::SEPARATOR . 4
         );
     }
 
-    public function it_accepts_custom_start_value()
+    public function it_accepts_custom_start_value(): void
     {
         $model = (object) [];
 
         $this->beConstructedWith(true, 5);
         $this->initialize();
-        $this->apply($model, static::ALIAS_VALUE, '_')->shouldReturn(
-            static::ALIAS_VALUE . '_' . 5
+        $this->apply($model, self::ALIAS_VALUE, '_')->shouldReturn(
+            self::ALIAS_VALUE . '_' . 5
         );
     }
 }

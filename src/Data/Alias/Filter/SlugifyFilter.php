@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
@@ -17,10 +7,15 @@ namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 use Contao\StringUtil;
 use Patchwork\Utf8;
 
+use function html_entity_decode;
+use function preg_replace;
+use function strtolower;
+use function trim;
+
+use const ENT_QUOTES;
+
 /**
  * SlugifyFilter creates a slug value of the columns being represented.
- *
- * @package Netzmacht\Contao\Toolkit\Data\Alias\Filter
  */
 final class SlugifyFilter extends AbstractValueFilter
 {
@@ -41,11 +36,11 @@ final class SlugifyFilter extends AbstractValueFilter
     /**
      * Construct.
      *
-     * @param array  $columns           Columns being used for the value.
-     * @param bool   $break             If true break after the filter if value is unique.
-     * @param int    $combine           Combine flag.
-     * @param bool   $preserveUppercase If true uppercase values are not transformed.
-     * @param string $charset           Encoding charset.
+     * @param list<string> $columns           Columns being used for the value.
+     * @param bool         $break             If true break after the filter if value is unique.
+     * @param int          $combine           Combine flag.
+     * @param bool|mixed   $preserveUppercase If true uppercase values are not transformed.
+     * @param string       $charset           Encoding charset.
      */
     public function __construct(
         array $columns,
@@ -65,7 +60,7 @@ final class SlugifyFilter extends AbstractValueFilter
      */
     public function apply($model, $value, string $separator): string
     {
-        $values = array();
+        $values = [];
 
         foreach ($this->columns as $column) {
             $values[] = $this->slugify((string) $model->$column, $separator);
@@ -79,20 +74,18 @@ final class SlugifyFilter extends AbstractValueFilter
      *
      * @param string $value     Given value.
      * @param string $separator Separator string.
-     *
-     * @return string
      */
     private function slugify(string $value, string $separator): string
     {
-        $arrSearch  = array('/[^a-zA-Z0-9 \.\&\/_-]+/', '/[ \.\&\/-]+/');
-        $arrReplace = array('', $separator);
+        $arrSearch  = ['/[^a-zA-Z0-9 \.\&\/_-]+/', '/[ \.\&\/-]+/'];
+        $arrReplace = ['', $separator];
 
         $value = html_entity_decode($value, ENT_QUOTES, $this->charset);
         $value = StringUtil::stripInsertTags($value);
         $value = Utf8::toAscii($value);
         $value = preg_replace($arrSearch, $arrReplace, $value);
 
-        if (!$this->preserveUppercase) {
+        if (! $this->preserveUppercase) {
             $value = strtolower($value);
         }
 

@@ -1,14 +1,6 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Component\Module;
 
@@ -17,44 +9,40 @@ use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\Templating\EngineInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+use function define;
+use function defined;
 use function serialize;
 
-if (!defined('BE_USER_LOGGED_IN')) {
+if (! defined('BE_USER_LOGGED_IN')) {
     define('BE_USER_LOGGED_IN', false);
 }
 
-/**
- * Class AbstractModuleSpec
- *
- * @package spec\Netzmacht\Contao\Toolkit\Component\Module
- */
 class AbstractModuleSpec extends ObjectBehavior
 {
     /** @var Model */
     private $model;
 
-    /** @var array */
+    /** @var array<string,mixed> */
     private $modelData;
 
     public function let(
         EngineInterface $templateEngine,
         TranslatorInterface $translator,
         RequestScopeMatcher $requestScopeMatcher
-    ) {
+    ): void {
         $this->modelData = [
             'type'      => 'test',
             'headline'  => serialize(['unit' => 'h1', 'value' => 'test']),
             'id'        => 1,
             'cssID'     => serialize(['', '']),
-            'customTpl' => 'custom_tpl'
+            'customTpl' => 'custom_tpl',
         ];
 
-        $this->model = new class($this->modelData) extends Model {
+        $this->model = new class ($this->modelData) extends Model {
             /**
-             * Model constructor.
-             *
-             * @param array $data Model data.
+             * @param array<string,mixed> $data Model data.
              */
             public function __construct(array $data)
             {
@@ -68,22 +56,22 @@ class AbstractModuleSpec extends ObjectBehavior
         $this->beConstructedWith($this->model, $templateEngine, $translator, 'main', $requestScopeMatcher);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Component\Module\AbstractModule');
     }
 
-    public function it_is_a_component()
+    public function it_is_a_component(): void
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Component\Component');
     }
 
-    public function it_is_a_content_element()
+    public function it_is_a_content_element(): void
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Component\Module\Module');
     }
 
-    public function it_generates_output(EngineInterface $templateEngine, RequestScopeMatcher $requestScopeMatcher)
+    public function it_generates_output(EngineInterface $templateEngine, RequestScopeMatcher $requestScopeMatcher): void
     {
         $requestScopeMatcher->isBackendRequest()->willReturn(false);
 
@@ -96,7 +84,7 @@ class AbstractModuleSpec extends ObjectBehavior
     public function it_generates_backend_view_on_backend_request(
         EngineInterface $templateEngine,
         RequestScopeMatcher $requestScopeMatcher
-    ) {
+    ): void {
         $requestScopeMatcher->isBackendRequest()->willReturn(true);
 
         $templateEngine->render('toolkit:be:be_wildcard.html5', Argument::cetera())->willReturn('backend');

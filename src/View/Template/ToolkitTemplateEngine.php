@@ -1,30 +1,18 @@
 <?php
 
-/**
- * Contao Toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @author     Christopher Bölter <christopher@boelter.eu>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-leaflet-maps/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Template;
 
 use Contao\Controller;
+use RuntimeException;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Templating\TemplateNameParserInterface;
 use Symfony\Component\Templating\TemplateReferenceInterface;
+use Throwable;
 
-/**
- * Class ContaoTemplateEngine.
- *
- * @package Netzmacht\Contao\Toolkit\View\Template
- */
+use function sprintf;
+
 class ToolkitTemplateEngine implements EngineInterface
 {
     /**
@@ -42,8 +30,6 @@ class ToolkitTemplateEngine implements EngineInterface
     private $nameParser;
 
     /**
-     * ContaoTemplateEngine constructor.
-     *
      * @param TemplateFactory             $templateFactory Template factory.
      * @param TemplateNameParserInterface $nameParser      Template name parser.
      */
@@ -58,7 +44,7 @@ class ToolkitTemplateEngine implements EngineInterface
     /**
      * {@inheritdoc}
      *
-     * @throws \RuntimeException If template scope is not supported.
+     * @throws RuntimeException If template scope is not supported.
      */
     public function render($name, array $parameters = [])
     {
@@ -82,7 +68,7 @@ class ToolkitTemplateEngine implements EngineInterface
                 break;
 
             default:
-                throw new \RuntimeException(
+                throw new RuntimeException(
                     sprintf(
                         'Rendering template "%s" failed. Template scope "%s" is not supported.',
                         $reference->getLogicalName(),
@@ -101,10 +87,10 @@ class ToolkitTemplateEngine implements EngineInterface
     {
         try {
             $reference = $this->getTemplateReference($name);
-            Controller::getTemplate($reference->getLogicalName(), $reference->get('format'));
+            Controller::getTemplate($reference->getLogicalName());
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             return false;
         }
     }
@@ -116,7 +102,7 @@ class ToolkitTemplateEngine implements EngineInterface
     {
         try {
             $reference = $this->getTemplateReference($name);
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             return false;
         }
 
@@ -128,9 +114,7 @@ class ToolkitTemplateEngine implements EngineInterface
      *
      * @param TemplateReferenceInterface|string $name Given template reference.
      *
-     * @return TemplateReferenceInterface
-     *
-     * @throws \RuntimeException If template name is not supported.
+     * @throws RuntimeException If template name is not supported.
      */
     private function getTemplateReference($name): TemplateReferenceInterface
     {

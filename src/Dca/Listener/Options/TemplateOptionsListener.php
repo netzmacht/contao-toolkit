@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Options;
@@ -17,13 +7,12 @@ namespace Netzmacht\Contao\Toolkit\Dca\Listener\Options;
 use Contao\Controller;
 use Contao\DataContainer;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
+
+use function array_diff;
+use function array_merge;
+
 use const E_USER_DEPRECATED;
 
-/**
- * Class TemplateOptionsListener
- *
- * @package Netzmacht\Contao\Toolkit\Dca\Listener\Options
- */
 final class TemplateOptionsListener
 {
     /**
@@ -34,8 +23,6 @@ final class TemplateOptionsListener
     private $dcaManager;
 
     /**
-     * TemplateOptionsListener constructor.
-     *
      * @param DcaManager $dcaManager Data container manager.
      */
     public function __construct(DcaManager $dcaManager)
@@ -48,7 +35,7 @@ final class TemplateOptionsListener
      *
      * @param DataContainer $dataContainer Data container driver.
      *
-     * @return array
+     * @return list<string>
      */
     public function onOptionsCallback($dataContainer): array
     {
@@ -65,11 +52,11 @@ final class TemplateOptionsListener
     /**
      * Handle the options callback.
      *
+     * @deprecated Deprecated and removed in Version 4.0.0. Use self::onOptionsCallback instead.
+     *
      * @param DataContainer $dataContainer Data container driver.
      *
-     * @return array
-     *
-     * @deprecated Deprecated and removed in Version 4.0.0. Use self::onOptionsCallback instead.
+     * @return list<string>
      */
     public function handleOptionsCallback($dataContainer): array
     {
@@ -92,19 +79,18 @@ final class TemplateOptionsListener
      *
      * @param DataContainer $dataContainer Data container driver.
      *
-     * @return array
+     * @return array<string,mixed>
      */
     private function getConfig($dataContainer): array
     {
         $definition = $this->dcaManager->getDefinition($dataContainer->table);
-        $config     = array_merge(
+
+        return array_merge(
             [
                 'prefix' => '',
-                'exclude' => null
+                'exclude' => null,
             ],
             (array) $definition->get(['fields', $dataContainer->field, 'toolkit', 'template_options'])
         );
-
-        return $config;
     }
 }

@@ -1,137 +1,119 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\AbstractValueFilter;
-use Netzmacht\Contao\Toolkit\Data\Alias\Filter\RawValueFilter;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
-/**
- * Class RawValueFilterSpec
- */
 class RawValueFilterSpec extends ObjectBehavior
 {
-    const SEPARATOR = '-';
+    public const SEPARATOR = '-';
 
-    const ALIAS_VALUE = 'alias-value';
+    public const ALIAS_VALUE = 'alias-value';
 
-    const COLUMN = 'title';
+    public const COLUMN = 'title';
 
-    public function createInstance()
+    public function createInstance(): void
     {
-        $this->beConstructedWith([static::COLUMN]);
+        $this->beConstructedWith([self::COLUMN]);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->createInstance();
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Data\Alias\Filter\RawValueFilter');
     }
 
-    public function it_is_an_alias_filter()
+    public function it_is_an_alias_filter(): void
     {
         $this->createInstance();
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Data\Alias\Filter');
     }
 
-    public function it_breaks_by_default()
+    public function it_breaks_by_default(): void
     {
         $this->createInstance();
         $this->breakIfValid()->shouldReturn(true);
     }
 
-
-    public function it_accepts_break_option()
+    public function it_accepts_break_option(): void
     {
-        $this->beConstructedWith([static::COLUMN], false);
+        $this->beConstructedWith([self::COLUMN], false);
         $this->breakIfValid()->shouldReturn(false);
     }
 
-    public function it_does_not_support_repeating()
+    public function it_does_not_support_repeating(): void
     {
         $this->createInstance();
         $this->repeatUntilValid()->shouldReturn(false);
     }
 
-    public function it_uses_raw_column_value()
+    public function it_uses_raw_column_value(): void
     {
-        $model = (object) [static::COLUMN => static::ALIAS_VALUE];
+        $model = (object) [self::COLUMN => self::ALIAS_VALUE];
 
         $this->createInstance();
-        $this->apply($model, '', static::SEPARATOR)->shouldReturn(static::ALIAS_VALUE);
+        $this->apply($model, '', self::SEPARATOR)->shouldReturn(self::ALIAS_VALUE);
     }
 
-    public function it_supports_multiple_columns()
+    public function it_supports_multiple_columns(): void
     {
         $model = (object) [
-            static::COLUMN => static::ALIAS_VALUE,
-            'id' => 5
+            self::COLUMN => self::ALIAS_VALUE,
+            'id' => 5,
         ];
 
-        $this->beConstructedWith([static::COLUMN, 'id']);
-        $this->apply($model, '', static::SEPARATOR)->shouldReturn(
-            static::ALIAS_VALUE . static::SEPARATOR . 5
+        $this->beConstructedWith([self::COLUMN, 'id']);
+        $this->apply($model, '', self::SEPARATOR)->shouldReturn(
+            self::ALIAS_VALUE . self::SEPARATOR . 5
         );
     }
 
-    public function it_supports_custom_separator()
+    public function it_supports_custom_separator(): void
     {
         $model = (object) [
-            static::COLUMN => static::ALIAS_VALUE,
-            'id' => 5
+            self::COLUMN => self::ALIAS_VALUE,
+            'id' => 5,
         ];
 
-        $this->beConstructedWith([static::COLUMN, 'id']);
+        $this->beConstructedWith([self::COLUMN, 'id']);
         $this->apply($model, '', '_')->shouldReturn(
-            static::ALIAS_VALUE . '_' . 5
+            self::ALIAS_VALUE . '_' . 5
         );
     }
 
-    public function it_replaces_existing_value_by_default()
+    public function it_replaces_existing_value_by_default(): void
     {
         $model = (object) [
-            static::COLUMN => static::ALIAS_VALUE,
-            'id' => 5
+            self::COLUMN => self::ALIAS_VALUE,
+            'id' => 5,
         ];
 
-        $this->beConstructedWith([static::COLUMN, 'id']);
+        $this->beConstructedWith([self::COLUMN, 'id']);
         $this->apply($model, 'test', '_')->shouldReturn(
-            static::ALIAS_VALUE . '_' . 5
+            self::ALIAS_VALUE . '_' . 5
         );
     }
 
-    public function it_supports_appending()
+    public function it_supports_appending(): void
     {
-        $model = (object) [
-            'id' => 5
-        ];
+        $model = (object) ['id' => 5];
 
         $this->beConstructedWith(['id'], true, AbstractValueFilter::COMBINE_APPEND);
-        $this->apply($model, static::ALIAS_VALUE, static::SEPARATOR)->shouldReturn(
-            static::ALIAS_VALUE . static::SEPARATOR . 5
+        $this->apply($model, self::ALIAS_VALUE, self::SEPARATOR)->shouldReturn(
+            self::ALIAS_VALUE . self::SEPARATOR . 5
         );
     }
 
-    public function it_supports_prepending()
+    public function it_supports_prepending(): void
     {
-        $model = (object) [
-            'id' => 5
-        ];
+        $model = (object) ['id' => 5];
 
         $this->beConstructedWith(['id'], true, AbstractValueFilter::COMBINE_PREPEND);
-        $this->apply($model, static::ALIAS_VALUE, static::SEPARATOR)->shouldReturn(
-            5 . static::SEPARATOR . static::ALIAS_VALUE
+        $this->apply($model, self::ALIAS_VALUE, self::SEPARATOR)->shouldReturn(
+            5 . self::SEPARATOR . self::ALIAS_VALUE
         );
     }
 }

@@ -1,14 +1,6 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Routing;
 
@@ -20,12 +12,12 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class RequestScopeMatcherSpec extends ObjectBehavior
 {
-    public function let(ScopeMatcher $scopeMatcher, RequestStack $requestStack)
+    public function let(ScopeMatcher $scopeMatcher, RequestStack $requestStack): void
     {
         $this->beConstructedWith($scopeMatcher, $requestStack);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(RequestScopeMatcher::class);
     }
@@ -34,7 +26,7 @@ class RequestScopeMatcherSpec extends ObjectBehavior
         ScopeMatcher $scopeMatcher,
         Request $request,
         Request $request2
-    ) {
+    ): void {
         $scopeMatcher
             ->isFrontendRequest($request)
             ->shouldBeCalled()
@@ -53,7 +45,7 @@ class RequestScopeMatcherSpec extends ObjectBehavior
         ScopeMatcher $scopeMatcher,
         RequestStack $requestStack,
         Request $request
-    ) {
+    ): void {
         $requestStack->getCurrentRequest()->willReturn($request);
 
         $scopeMatcher
@@ -68,7 +60,7 @@ class RequestScopeMatcherSpec extends ObjectBehavior
         ScopeMatcher $scopeMatcher,
         Request $request,
         Request $request2
-    ) {
+    ): void {
         $scopeMatcher
             ->isBackendRequest($request)
             ->shouldBeCalled()
@@ -87,7 +79,7 @@ class RequestScopeMatcherSpec extends ObjectBehavior
         ScopeMatcher $scopeMatcher,
         RequestStack $requestStack,
         Request $request
-    ) {
+    ): void {
         $requestStack->getCurrentRequest()->willReturn($request);
 
         $scopeMatcher
@@ -102,7 +94,7 @@ class RequestScopeMatcherSpec extends ObjectBehavior
         ScopeMatcher $scopeMatcher,
         Request $request,
         Request $request2
-    ) {
+    ): void {
         $scopeMatcher
             ->isContaoRequest($request)
             ->shouldBeCalled()
@@ -121,7 +113,7 @@ class RequestScopeMatcherSpec extends ObjectBehavior
         ScopeMatcher $scopeMatcher,
         RequestStack $requestStack,
         Request $request
-    ) {
+    ): void {
         $requestStack->getCurrentRequest()->willReturn($request);
 
         $scopeMatcher

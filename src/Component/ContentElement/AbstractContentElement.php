@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @author     Dennis Bohn <dennis.bohn@bohn.media>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Component\ContentElement;
@@ -22,14 +11,20 @@ use InvalidArgumentException;
 use Netzmacht\Contao\Toolkit\Component\AbstractComponent;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
+
+use function defined;
+use function time;
 use function trigger_error;
+use function trim;
+
 use const BE_USER_LOGGED_IN;
 use const E_USER_DEPRECATED;
 
 /**
- * Class AbstractContentElement.
- *
  * @deprecated Since 3.5.0 and get removed in 4.0.0
+ *
+ * @psalm-suppress DeprecatedClass
+ * @psalm-suppress DeprecatedInterface
  */
 abstract class AbstractContentElement extends AbstractComponent implements ContentElement
 {
@@ -41,8 +36,6 @@ abstract class AbstractContentElement extends AbstractComponent implements Conte
     private $isPreviewMode;
 
     /**
-     * AbstractContentElement constructor.
-     *
      * @param Model|Collection|Result  $model               Object model or result.
      * @param TemplateEngine           $templateEngine      Template engine.
      * @param string                   $column              Column.
@@ -68,18 +61,16 @@ abstract class AbstractContentElement extends AbstractComponent implements Conte
             );
             // @codingStandardsIgnoreEnd
 
-            $isPreviewMode = BE_USER_LOGGED_IN;
+            $isPreviewMode = defined('BE_USER_LOGGED_IN') && BE_USER_LOGGED_IN;
         }
 
         $this->isPreviewMode = $isPreviewMode;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** @psalm-suppress DeprecatedClass */
     public function generate(): string
     {
-        if (!$this->isVisible()) {
+        if (! $this->isVisible()) {
             return '';
         }
 
@@ -88,12 +79,10 @@ abstract class AbstractContentElement extends AbstractComponent implements Conte
 
     /**
      * Check if content element is visible.
-     *
-     * @return bool
      */
     protected function isVisible(): bool
     {
-        if ($this->isPreviewMode || !$this->isFrontendRequest()) {
+        if ($this->isPreviewMode || ! $this->isFrontendRequest()) {
             return true;
         }
 
@@ -105,16 +94,12 @@ abstract class AbstractContentElement extends AbstractComponent implements Conte
         $start = $this->get('start');
         $stop  = $this->get('stop');
 
-        if (($start != '' && $start > $now) || ($stop != '' && $stop < $now)) {
-            return false;
-        }
-
-        return true;
+        // phpcs:disable SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedEqualOperator
+        return ($start == '' || $start <= $now) && ($stop == '' || $stop >= $now);
+        // phpcs:enable SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedEqualOperator
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** @psalm-suppress DeprecatedClass */
     protected function compileCssClass(): string
     {
         return trim('ce_' . $this->get('type') . ' ' . parent::compileCssClass());

@@ -1,21 +1,13 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Controller\Hybrid;
 
 use Contao\ContentModel;
+use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
+use Contao\Input;
 use Contao\Model;
 use Contao\ModuleModel;
 use Netzmacht\Contao\Toolkit\Controller\AbstractFragmentController;
@@ -43,14 +35,13 @@ abstract class AbstractHybridController extends AbstractFragmentController
     use ContentRenderBackendViewTrait;
 
     /**
-     * Constructor.
-     *
      * @param TemplateRenderer    $templateRenderer The template renderer.
      * @param RequestScopeMatcher $scopeMatcher     The scope matcher.
      * @param ResponseTagger      $responseTagger   The response tagger.
      * @param RouterInterface     $router           The router.
      * @param TranslatorInterface $translator       The translator.
      * @param TokenChecker        $tokenChecker     The token checker.
+     * @param Adapter<Input>|null $inputAdapter     Input adapter
      */
     public function __construct(
         TemplateRenderer $templateRenderer,
@@ -58,24 +49,24 @@ abstract class AbstractHybridController extends AbstractFragmentController
         ResponseTagger $responseTagger,
         RouterInterface $router,
         TranslatorInterface $translator,
-        TokenChecker $tokenChecker
+        TokenChecker $tokenChecker,
+        ?Adapter $inputAdapter = null
     ) {
         parent::__construct($templateRenderer, $scopeMatcher, $responseTagger);
 
         $this->router       = $router;
         $this->translator   = $translator;
         $this->tokenChecker = $tokenChecker;
+        $this->inputAdapter = $inputAdapter;
     }
 
     /**
      * Handle the fragment action for the content element.
      *
-     * @param Request      $request The current request.
-     * @param ContentModel $model   The content model.
-     * @param string       $section The section in which the content element is rendered.
-     * @param array|null   $classes Additional css classes.
-     *
-     * @return Response
+     * @param Request           $request The current request.
+     * @param ContentModel      $model   The content model.
+     * @param string            $section The section in which the content element is rendered.
+     * @param list<string>|null $classes Additional css classes.
      */
     public function renderAsContentElement(
         Request $request,
@@ -97,12 +88,10 @@ abstract class AbstractHybridController extends AbstractFragmentController
     /**
      * Handle the fragment action for the frontend module.
      *
-     * @param Request     $request The current request.
-     * @param ModuleModel $model   The module model.
-     * @param string      $section The section in which the module is rendered.
-     * @param array|null  $classes Additional css classes.
-     *
-     * @return Response
+     * @param Request           $request The current request.
+     * @param ModuleModel       $model   The module model.
+     * @param string            $section The section in which the module is rendered.
+     * @param list<string>|null $classes Additional css classes.
      */
     public function renderAsFrontendModule(
         Request $request,
@@ -117,9 +106,6 @@ abstract class AbstractHybridController extends AbstractFragmentController
         return $this->generate($request, $model, $section, $classes);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getFallbackTemplateName(Model $model): string
     {
         if ($model instanceof ContentModel) {

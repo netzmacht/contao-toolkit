@@ -1,14 +1,6 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler;
 
@@ -21,12 +13,12 @@ use Symfony\Component\DependencyInjection\Definition;
 
 class RepositoriesPassSpec extends ObjectBehavior
 {
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(RepositoriesPass::class);
     }
 
-    public function it_is_a_compiler_pass()
+    public function it_is_a_compiler_pass(): void
     {
         $this->shouldImplement(CompilerPassInterface::class);
     }
@@ -34,14 +26,14 @@ class RepositoriesPassSpec extends ObjectBehavior
     public function it_registeres_tagged_services_to_the_repository_manager(
         ContainerBuilder $container,
         Definition $definition
-    ) {
+    ): void {
         $taggedServices = [
             'foo' => [
-                ['model' => 'FooModel']
+                ['model' => 'FooModel'],
             ],
             'bar' => [
-                ['model' => 'BarModel']
-            ]
+                ['model' => 'BarModel'],
+            ],
         ];
 
         $definition->getArgument(1)->shouldBeCalled();

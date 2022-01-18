@@ -1,36 +1,23 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Template\Exception;
 
+use Exception;
 use Netzmacht\Contao\Toolkit\Exception\RuntimeException;
+use Throwable;
 
-/**
- * Class HelperNotFound.
- *
- * @package Netzmacht\Contao\Toolkit\View
- */
+use function sprintf;
+
 final class HelperNotFound extends RuntimeException
 {
     /**
-     * HelperNotFound constructor.
-     *
-     * @param string     $helperName Name of the helper.
-     * @param int        $code       Error code.
-     * @param \Exception $previous   Previous exception.
+     * @param string    $helperName Name of the helper.
+     * @param int       $code       Error code.
+     * @param Exception $previous   Previous exception.
      */
-    public function __construct($helperName, $code = 0, \Exception $previous = null)
+    public function __construct($helperName, $code = 0, ?Throwable $previous = null)
     {
         $message = sprintf('No helper with name "%s" found.', $helperName);
 

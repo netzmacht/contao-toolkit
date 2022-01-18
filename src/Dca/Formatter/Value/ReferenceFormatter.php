@@ -1,23 +1,13 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
+use function is_array;
+
 /**
  * ReferenceFormatter formats fields which has a reference defined.
- *
- * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
 final class ReferenceFormatter implements ValueFormatter
 {
@@ -26,7 +16,7 @@ final class ReferenceFormatter implements ValueFormatter
      */
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
-        return !empty($fieldDefinition['reference']);
+        return ! empty($fieldDefinition['reference']);
     }
 
     /**
@@ -36,7 +26,7 @@ final class ReferenceFormatter implements ValueFormatter
     {
         if (isset($fieldDefinition['reference'][$value])) {
             if (is_array($fieldDefinition['reference'][$value])) {
-                list($value) = $fieldDefinition['reference'][$value];
+                [$value] = $fieldDefinition['reference'][$value];
             } else {
                 $value = $fieldDefinition['reference'][$value];
             }

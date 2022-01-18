@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
@@ -20,12 +10,13 @@ use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
-use Symfony\Component\Translation\TranslatorInterface as Translator;
+use Symfony\Contracts\Translation\TranslatorInterface as Translator;
+
+use function sprintf;
+use function str_replace;
 
 /**
  * FilePicker wizard.
- *
- * @package Netzmacht\Contao\Toolkit\View\Wizard
  */
 final class FilePickerListener extends AbstractFieldPickerListener
 {
@@ -37,8 +28,6 @@ final class FilePickerListener extends AbstractFieldPickerListener
     private $input;
 
     /**
-     * PagePickerCallback constructor.
-     *
      * @param TemplateEngine|TemplateRenderer $templateEngine Template Engine.
      * @param Translator                      $translator     Translator.
      * @param DcaManager                      $dcaManager     Data container manager.
@@ -68,13 +57,13 @@ final class FilePickerListener extends AbstractFieldPickerListener
             $tableName,
             $fieldName,
             str_replace(
-                array('{{link_url::', '}}'),
+                ['{{link_url::', '}}'],
                 '',
                 $value
             )
         );
 
-        $cssId   = $fieldName . (($this->input->get('act') === 'editAll') ? '_' . $rowId : '');
+        $cssId   = $fieldName . ($this->input->get('act') === 'editAll' ? '_' . $rowId : '');
         $jsTitle = StringUtil::specialchars(
             str_replace('\'', '\\\'', $this->translator->trans('MOD.files.0', [], 'contao_modules'))
         );
@@ -85,7 +74,7 @@ final class FilePickerListener extends AbstractFieldPickerListener
             'jsTitle' => $jsTitle,
             'field' => $fieldName,
             'icon' => 'pickfile.svg',
-            'id' => $cssId
+            'id' => $cssId,
         ];
 
         return $this->render($this->template, $parameters);

@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Component\Exception;
@@ -20,6 +10,8 @@ use Contao\Model;
 use Contao\ModuleModel;
 use Netzmacht\Contao\Toolkit\Exception\Exception;
 use RuntimeException;
+
+use function sprintf;
 
 /**
  * Exception class ContentElementNotFound is thrown if a content element could not be created.
@@ -44,15 +36,13 @@ final class ComponentNotFound extends RuntimeException implements Exception
             $model->id
         );
 
-        return new static($message);
+        return new self($message);
     }
 
     /**
      * Describe the model.
      *
-     * @param Model $model Component model.
-     *
-     * @return string
+     * @param Model|Result $model Component model.
      */
     private static function describeModel($model): string
     {

@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Component;
@@ -20,6 +10,8 @@ use Contao\Model;
  * The component is the interface describing content elements and modules.
  *
  * @deprecated Since 3.5.0 and get removed in 4.0.0
+ *
+ * phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
  */
 interface Component
 {
@@ -46,8 +38,6 @@ interface Component
      * Check if parameter exists.
      *
      * @param string $name Parameter name.
-     *
-     * @return bool
      */
     public function has(string $name): bool;
 
@@ -60,8 +50,6 @@ interface Component
 
     /**
      * Generate the component.
-     *
-     * @return string
      */
     public function generate(): string;
 }

@@ -1,70 +1,55 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\HiddenValueFormatter;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
-/**
- * Class HiddenValueFormatterSpec
- *
- * @package spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value
- */
 class HiddenValueFormatterSpec extends ObjectBehavior
 {
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\HiddenValueFormatter');
     }
 
-    public function it_is_a_value_formatter()
+    public function it_is_a_value_formatter(): void
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
     }
 
-    public function it_accepts_password_field()
+    public function it_accepts_password_field(): void
     {
         $definition['inputType'] = 'password';
 
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
-    public function it_accepts_do_not_show_option()
+    public function it_accepts_do_not_show_option(): void
     {
         $definition['eval']['doNotShow'] = true;
 
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
-    public function it_accepts_hide_input_option()
+    public function it_accepts_hide_input_option(): void
     {
         $definition['eval']['hideInput'] = true;
 
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
-    public function it_does_not_accept_a_field_by_default()
+    public function it_does_not_accept_a_field_by_default(): void
     {
         $this->accepts('test', [])->shouldReturn(false);
     }
 
-    public function it_hides_value()
+    public function it_hides_value(): void
     {
         $this->format('test', 'test', [])->shouldReturn('');
     }
 
-    public function it_has_a_password_mask_option_for_password_fields()
+    public function it_has_a_password_mask_option_for_password_fields(): void
     {
         $this->beConstructedWith('*****');
         $definition['inputType'] = 'password';
@@ -72,7 +57,7 @@ class HiddenValueFormatterSpec extends ObjectBehavior
         $this->format('test', 'test', $definition)->shouldReturn('*****');
     }
 
-    public function it_ignores_the_password_mask_option_for_non_password_fields()
+    public function it_ignores_the_password_mask_option_for_non_password_fields(): void
     {
         $this->beConstructedWith('*****');
         $definition['inputType'] = 'text';

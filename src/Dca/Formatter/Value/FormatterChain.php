@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
@@ -18,8 +8,6 @@ use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 
 /**
  * Set of multiple formatter.
- *
- * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
 final class FormatterChain implements ValueFormatter
 {
@@ -28,11 +16,9 @@ final class FormatterChain implements ValueFormatter
      *
      * @var ValueFormatter[]
      */
-    private $formatter = array();
+    private $formatter = [];
 
     /**
-     * FormatterChain constructor.
-     *
      * @param ValueFormatter[]|array $formatter Value formatter.
      */
     public function __construct(array $formatter)

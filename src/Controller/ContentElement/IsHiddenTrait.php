@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Controller\ContentElement;
@@ -17,6 +7,8 @@ namespace Netzmacht\Contao\Toolkit\Controller\ContentElement;
 use Contao\ContentModel;
 use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Symfony\Component\HttpFoundation\Request;
+
+use function time;
 
 /**
  * The IsHiddenTrait provides the isHidden() method to check is
@@ -37,8 +29,6 @@ trait IsHiddenTrait
      *
      * @param ContentModel $model   The content element.
      * @param Request      $request The current request.
-     *
-     * @return bool
      */
     protected function isHidden(ContentModel $model, Request $request): bool
     {
@@ -47,7 +37,7 @@ trait IsHiddenTrait
             || ($model->stop && $model->stop <= time());
 
         // The element is visible, so show it
-        if (!$isInvisible) {
+        if (! $isInvisible) {
             return false;
         }
 
@@ -57,19 +47,13 @@ trait IsHiddenTrait
         }
 
         // We are in the back end, so show the element
-        if ($this->isBackendRequest($request)) {
-            return false;
-        }
-
-        return true;
+        return ! $this->isBackendRequest($request);
     }
 
     /**
      * Check if the request is a backend request.
      *
      * @param Request $request The current request.
-     *
-     * @return bool
      */
     abstract protected function isBackendRequest(Request $request): bool;
 }

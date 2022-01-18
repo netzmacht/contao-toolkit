@@ -1,23 +1,11 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Assets;
 
 /**
  * Assets manager describes an asset manager which handles assets being added by components.
- *
- * @package Netzmacht\Contao\Toolkit
  */
 interface AssetsManager
 {
@@ -31,17 +19,21 @@ interface AssetsManager
      * @param string|null $name   Optional assets name.
      *
      * @return $this
+     *
+     * phpcs:disable SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilityTypeMissing
      */
     public function addJavascript(string $path, $static = self::STATIC_PRODUCTION, string $name = null): self;
 
     /**
      * Add javascript files to Contao assets.
      *
-     * @param array       $paths  The assets paths.
-     * @param string|bool $static Register it as static entry.
-     * @param string|null $name   Optional assets name.
+     * @param array<int|string,string> $paths  The assets paths.
+     * @param string|bool              $static Register it as static entry.
+     * @param string|null              $name   Optional assets name.
      *
      * @return $this
+     *
+     * phpcs:disable SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilityTypeMissing
      */
     public function addJavascripts(array $paths, $static = self::STATIC_PRODUCTION, string $name = null): self;
 
@@ -54,6 +46,8 @@ interface AssetsManager
      * @param string|null $name   Optional assets name.
      *
      * @return $this
+     *
+     * phpcs:disable SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilityTypeMissing
      */
     public function addStylesheet(
         string $path,
@@ -65,12 +59,14 @@ interface AssetsManager
     /**
      * Add stylesheet files to Contao assets.
      *
-     * @param array       $paths  The assets paths.
-     * @param string      $media  The media type.
-     * @param string|bool $static Register it as static entry.
-     * @param string|null $name   Optional assets name.
+     * @param array<int|string,string> $paths  The assets paths.
+     * @param string                   $media  The media type.
+     * @param string|bool              $static Register it as static entry.
+     * @param string|null              $name   Optional assets name.
      *
      * @return $this
+     *
+     * phpcs:disable SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilityTypeMissing
      */
     public function addStylesheets(
         array $paths,

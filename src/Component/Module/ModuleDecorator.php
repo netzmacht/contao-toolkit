@@ -1,45 +1,42 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Component\Module;
 
+use Contao\Database\Result;
 use Contao\Module;
+use Contao\ModuleModel;
 use Netzmacht\Contao\Toolkit\Component\ComponentDecoratorTrait;
 use Netzmacht\Contao\Toolkit\Component\ComponentFactory;
 
+use function assert;
+
 /**
- * Class ModuleDecorator.
+ * @deprecated Since 3.5.0 and get removed in 4.0.0
  *
- * @package Netzmacht\Contao\Toolkit\Component\ContentElement
+ * @psalm-suppress PropertyNotSetInConstructor
+ * @psalm-suppress DeprecatedTrait
  */
 final class ModuleDecorator extends Module
 {
     use ComponentDecoratorTrait;
 
     /**
-     * {@inheritDoc}
+     * @param ModuleModel|Result $moduleModel
      */
-    public function __construct($contentModel, $column = 'main')
+    public function __construct($moduleModel, string $column = 'main')
     {
-        $this->component = $this->getFactory()->create($contentModel, $column);
+        $this->component = $this->getFactory()->create($moduleModel, $column);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** @psalm-suppress DeprecatedClass */
     protected function getFactory(): ComponentFactory
     {
-        return $this->getContainer()->get('netzmacht.contao_toolkit.component.frontend_module_factory');
+        $factory = self::getContainer()->get('netzmacht.contao_toolkit.component.frontend_module_factory');
+        /** @psalm-suppress DeprecatedClass */
+        assert($factory instanceof ComponentFactory);
+
+        return $factory;
     }
 }

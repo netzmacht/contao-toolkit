@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="7"
+    hideExternalErrors="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <projectFiles>
+        <directory name="src" />
+        <ignoreFiles>
+            <directory name="vendor/contao/core-bundle/src/Resources/contao"/>
+        </ignoreFiles>
+    </projectFiles>
+    <issueHandlers>
+        <DeprecatedClass>
+            <errorLevel type="suppress">
+                <referencedClass name="Netzmacht\Contao\Toolkit\View\Template\TemplateReference"/>
+                <referencedClass name="Contao\Encryption"/>
+                <referencedClass name="Netzmacht\Contao\Toolkit\Component\Component"/>
+            </errorLevel>
+        </DeprecatedClass>
+        <DeprecatedMethod>
+            <errorLevel type="suppress">
+                <referencedMethod name="Contao\Encryption::decrypt"/>
+            </errorLevel>
+        </DeprecatedMethod>
+        <TooManyArguments>
+            <errorLevel type="suppress">
+                <referencedFunction name="Symfony\Contracts\EventDispatcher\EventDispatcherInterface::dispatch"/>
+            </errorLevel>
+        </TooManyArguments>
+        <InternalMethod>
+            <errorLevel type="suppress">
+                <referencedMethod name="Contao\CoreBundle\Framework\Adapter::__call"/>
+                <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::initialize"/>
+                <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::createInstance"/>
+                <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::getAdapter"/>
+            </errorLevel>
+        </InternalMethod>
+    </issueHandlers>
+
+    <universalObjectCrates>
+        <class name="Contao\Database\Result"/>
+        <class name="Contao\Model"/>
+    </universalObjectCrates>
+</psalm>

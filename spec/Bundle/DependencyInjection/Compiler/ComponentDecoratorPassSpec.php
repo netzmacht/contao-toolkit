@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler;
@@ -129,7 +119,7 @@ final class ComponentDecoratorPassSpec extends ObjectBehavior
 
         $container->findTaggedServiceIds(self::TAG)
             ->shouldBeCalled()
-            ->willReturn([self::DECORATOR_SERVICE=> [['category' => 'foo', 'type' => 'bar']]]);
+            ->willReturn([self::DECORATOR_SERVICE => [['category' => 'foo', 'type' => 'bar']]]);
 
         $this->process($container);
     }
@@ -200,7 +190,6 @@ final class ComponentDecoratorPassSpec extends ObjectBehavior
 
         $this->process($container);
     }
-
 
     public function it_doesnt_add_factory_tag_if_already_exists(
         ContainerBuilder $container,

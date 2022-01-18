@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Updater;
@@ -21,13 +11,13 @@ use Netzmacht\Contao\Toolkit\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Exception\AccessDenied;
-use function is_array;
 
-/**
- * Class DatabaseRowUpdater.
- *
- * @package Netzmacht\Contao\Toolkit\Data\Updater
- */
+use function array_keys;
+use function defined;
+use function is_array;
+use function sprintf;
+use function time;
+
 final class DatabaseRowUpdater implements Updater
 {
     /**
@@ -59,8 +49,6 @@ final class DatabaseRowUpdater implements Updater
     private $dcaManager;
 
     /**
-     * DatabaseRowUpdater constructor.
-     *
      * @param BackendUser $backendUser Backend user.
      * @param Connection  $connection  Database connection.
      * @param DcaManager  $dcaManager  Data container manager.
@@ -81,18 +69,18 @@ final class DatabaseRowUpdater implements Updater
     /**
      * Toggle the state.
      *
-     * @param string $tableName Data container name.
-     * @param int    $recordId  Data record id.
-     * @param array  $data      Data of the row which should be changed.
-     * @param mixed  $context   Context, usually the data container driver.
+     * @param string              $dataContainerName Data container name.
+     * @param int|string          $recordId          Data record id.
+     * @param array<string,mixed> $data              Data of the row which should be changed.
+     * @param mixed               $context           Context, usually the data container driver.
      *
-     * @return array
+     * @return array<string,mixed>
      */
-    public function update($tableName, $recordId, array $data, $context): array
+    public function update($dataContainerName, $recordId, array $data, $context): array
     {
-        $this->guardUserHasAccess($tableName, $recordId, $data);
+        $this->guardUserHasAccess($dataContainerName, $recordId, $data);
 
-        $definition = $this->dcaManager->getDefinition($tableName);
+        $definition = $this->dcaManager->getDefinition($dataContainerName);
         $versions   = $this->initializeVersions($definition, $recordId);
         $data       = $this->executeSaveCallbacks($definition, $data, $context);
 
@@ -108,34 +96,31 @@ final class DatabaseRowUpdater implements Updater
     /**
      * Check if user has access.
      *
-     * @param string $tableName  Data container name.
-     * @param string $columnName Column name.
-     *
-     * @return bool
+     * @param string $dataContainerName Data container name.
+     * @param string $columnName        Column name.
      */
-    public function hasUserAccess($tableName, $columnName): bool
+    public function hasUserAccess($dataContainerName, $columnName): bool
     {
-        if (TL_MODE !== 'BE') {
+        if (! defined('TL_MODE') || TL_MODE !== 'BE') {
             return false;
         }
 
-        return $this->backendUser->hasAccess($tableName . '::' . $columnName, 'alexf');
+        return $this->backendUser->hasAccess($dataContainerName . '::' . $columnName, 'alexf');
     }
 
     /**
      * Guard that user has access.
      *
-     * @param string $tableName Data container name.
-     * @param int    $recordId  Record id.
-     * @param array  $data      Data row.
+     * @param string              $tableName Data container name.
+     * @param int|string          $recordId  Record id.
+     * @param array<string,mixed> $data      Data row.
      *
-     * @return void
      * @throws AccessDenied When user has no access.
      */
     private function guardUserHasAccess($tableName, $recordId, array $data): void
     {
         foreach (array_keys($data) as $columnName) {
-            if (!$this->hasUserAccess($tableName, $columnName)) {
+            if (! $this->hasUserAccess($tableName, $columnName)) {
                 throw new AccessDenied(
                     sprintf('Not enough permission to toggle record ID "%s::%s"', $tableName, $recordId)
                 );
@@ -147,14 +132,12 @@ final class DatabaseRowUpdater implements Updater
      * Initialize versions if data container support versioning.
      *
      * @param Definition $definition Data container definition.
-     * @param int        $recordId   Record id.
-     *
-     * @return Versions|null
+     * @param int|string $recordId   Record id.
      */
     private function initializeVersions(Definition $definition, $recordId): ?Versions
     {
         if ($definition->get(['config', 'enableVersioning'])) {
-            $versions = new Versions($definition->getName(), $recordId);
+            $versions = new Versions($definition->getName(), (int) $recordId);
             $versions->initialize();
 
             return $versions;
@@ -166,20 +149,22 @@ final class DatabaseRowUpdater implements Updater
     /**
      * Execute save callbacks.
      *
-     * @param Definition $definition Data container definition.
-     * @param array      $data       Data row.
-     * @param mixed      $context    Context, usually the data container driver.
+     * @param Definition          $definition Data container definition.
+     * @param array<string,mixed> $data       Data row.
+     * @param mixed               $context    Context, usually the data container driver.
      *
-     * @return array
+     * @return array<string,mixed>
      */
     private function executeSaveCallbacks(Definition $definition, array $data, $context): array
     {
         foreach ($data as $column => $value) {
             $callbacks = $definition->get(['fields', $column, 'save_callback']);
 
-            if (is_array($callbacks)) {
-                $data[$column] = $this->invoker->invokeAll($callbacks, [$value, $context], 0);
+            if (! is_array($callbacks)) {
+                continue;
             }
+
+            $data[$column] = $this->invoker->invokeAll($callbacks, [$value, $context], 0);
         }
 
         return $data;
@@ -188,11 +173,9 @@ final class DatabaseRowUpdater implements Updater
     /**
      * Save new state in database.
      *
-     * @param Definition $definition Data container definition.
-     * @param int        $recordId   Data record id.
-     * @param array      $data       Change data set.
-     *
-     * @return void
+     * @param Definition          $definition Data container definition.
+     * @param int|string          $recordId   Data record id.
+     * @param array<string,mixed> $data       Change data set.
      */
     private function save(Definition $definition, $recordId, array $data): void
     {
@@ -203,8 +186,9 @@ final class DatabaseRowUpdater implements Updater
 
         foreach ($data as $column => $value) {
             // Filter empty values which should not be saved.
-            if ($value == '') {
-                if ($definition->get(['fields', $column, 'eval', 'alwaysSave'], false)
+            if ($value === '') {
+                if (
+                    $definition->get(['fields', $column, 'eval', 'alwaysSave'], false)
                     && $definition->get(['fields', $column, 'eval', 'doNotSaveEmpty'], false)
                 ) {
                     continue;
@@ -218,7 +202,7 @@ final class DatabaseRowUpdater implements Updater
         // Add tstamp if field exists.
         $columns = $this->connection->getSchemaManager()->listTableColumns($definition->getName());
         if (empty($data['tstamp']) && isset($columns['tstamp'])) {
-            $builder->set('tstamp', time());
+            $builder->set('tstamp', (string) time());
         }
 
         // Store the data.

@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Component;
@@ -20,6 +10,11 @@ use Contao\Model;
  * The ComponentDecorator trait is designed to provide a decorator for content elements and frontend modules.
  *
  * @deprecated Since 3.5.0 and get removed in 4.0.0
+ *
+ * @psalm-suppress DeprecatedClass
+ * @psalm-suppress DeprecatedInterface
+ *
+ * @phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
  */
 trait ComponentDecoratorTrait
 {
@@ -31,7 +26,10 @@ trait ComponentDecoratorTrait
     protected $component;
 
     /**
-     * {@inheritDoc}
+     * @param string $strKey
+     * @param mixed  $varValue
+     *
+     * @return void
      */
     public function __set($strKey, $varValue)
     {
@@ -39,7 +37,9 @@ trait ComponentDecoratorTrait
     }
 
     /**
-     * {@inheritDoc}
+     * @param string $strKey
+     *
+     * @return mixed
      */
     public function __get($strKey)
     {
@@ -47,7 +47,9 @@ trait ComponentDecoratorTrait
     }
 
     /**
-     * {@inheritDoc}
+     * @param string $strKey
+     *
+     * @return bool
      */
     public function __isset($strKey)
     {
@@ -55,7 +57,9 @@ trait ComponentDecoratorTrait
     }
 
     /**
-     * {@inheritDoc}
+     * @return Model|null
+     *
+     * @psalm-suppress ImplementedReturnTypeMismatch
      */
     public function getModel()
     {
@@ -63,7 +67,7 @@ trait ComponentDecoratorTrait
     }
 
     /**
-     * {@inheritDoc}
+     * @return string
      */
     public function generate()
     {
@@ -71,7 +75,7 @@ trait ComponentDecoratorTrait
     }
 
     /**
-     * {@inheritDoc}
+     * @return void
      */
     protected function compile()
     {
@@ -81,7 +85,7 @@ trait ComponentDecoratorTrait
     /**
      * Get the content element factory.
      *
-     * @return ComponentFactory
+     * @psalm-suppress DeprecatedClass
      */
     abstract protected function getFactory(): ComponentFactory;
 }

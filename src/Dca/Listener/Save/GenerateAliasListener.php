@@ -1,32 +1,26 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Save;
 
+use Assert\AssertionFailedException;
 use Contao\Database\Result;
 use Contao\DataContainer;
+use Contao\Model;
 use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator;
 use Netzmacht\Contao\Toolkit\Data\Alias\Factory\AliasGeneratorFactory;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
+
+use function assert;
+use function sprintf;
+
 use const E_USER_DEPRECATED;
 
 /**
  * Class GenerateAliasCallback is designed to create an alias of a column.
- *
- * @package Netzmacht\Contao\Toolkit\Dca\Callback
  *
  * @SuppressWarnings(PHPMD.LongVariable)
  */
@@ -80,14 +74,13 @@ final class GenerateAliasListener
      * @param mixed         $value         The current value.
      * @param DataContainer $dataContainer The data container driver.
      *
-     * @return null|string
-     *
-     * @throws \Assert\AssertionFailedException If invalid data container is given.
+     * @throws AssertionFailedException If invalid data container is given.
      */
-    public function onSaveCallback($value, $dataContainer): ?string
+    public function onSaveCallback($value, DataContainer $dataContainer): ?string
     {
-        Assertion::isInstanceOf($dataContainer, DataContainer::class);
-        Assertion::isInstanceOf($dataContainer->activeRecord, Result::class);
+        Assertion::true(
+            $dataContainer->activeRecord instanceof Result || $dataContainer->activeRecord instanceof Model
+        );
 
         $generator = $this->getGenerator($dataContainer);
 
@@ -97,14 +90,12 @@ final class GenerateAliasListener
     /**
      * Generate the alias value.
      *
+     * @deprecated Deprecated and removed in Version 4.0.0. Use self::handleSaveCallback instead.
+     *
      * @param mixed         $value         The current value.
      * @param DataContainer $dataContainer The data container driver.
      *
-     * @return null|string
-     *
-     * @throws \Assert\AssertionFailedException If invalid data container is given.
-     *
-     * @deprecated Deprecated and removed in Version 4.0.0. Use self::handleSaveCallback instead.
+     * @throws AssertionFailedException If invalid data container is given.
      */
     public function handleSaveCallback($value, $dataContainer): ?string
     {
@@ -126,18 +117,15 @@ final class GenerateAliasListener
      * Get the service id.
      *
      * @param DataContainer $dataContainer Data container.
-     *
-     * @return string
      */
     private function getFactoryServiceId($dataContainer): string
     {
         $definition = $this->dcaManager->getDefinition($dataContainer->table);
-        $serviceId  = $definition->get(
+
+        return $definition->get(
             ['fields', $dataContainer->field, 'toolkit', 'alias_generator', 'factory'],
             $this->defaultFactoryServiceId
         );
-
-        return $serviceId;
     }
 
     /**
@@ -145,8 +133,6 @@ final class GenerateAliasListener
      *
      * @param mixed  $factory   Retrieved alias generator factory service.
      * @param string $serviceId Service id.
-     *
-     * @return void
      */
     private function guardIsAliasGeneratorFactory($factory, string $serviceId): void
     {
@@ -161,8 +147,6 @@ final class GenerateAliasListener
      * Generate an alias generator.
      *
      * @param DataContainer $dataContainer Data container driver.
-     *
-     * @return AliasGenerator
      */
     private function getGenerator($dataContainer): AliasGenerator
     {
@@ -170,9 +154,9 @@ final class GenerateAliasListener
             return $this->generators[$dataContainer->table][$dataContainer->field];
         }
 
-        /** @var AliasGeneratorFactory $factory */
-        $serviceId  = $this->getFactoryServiceId($dataContainer);
-        $factory    = $this->container->get($serviceId);
+        $serviceId = $this->getFactoryServiceId($dataContainer);
+        $factory   = $this->container->get($serviceId);
+        assert($factory instanceof AliasGeneratorFactory);
         $definition = $this->dcaManager->getDefinition($dataContainer->table);
         $fields     = (array) $definition->get(
             ['fields', $dataContainer->field, 'toolkit', 'alias_generator', 'fields'],

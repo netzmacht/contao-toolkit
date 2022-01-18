@@ -1,20 +1,11 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Button;
 
 use Contao\Backend;
+use Contao\CoreBundle\Framework\Adapter;
 use Contao\DataContainer;
 use Contao\Image;
 use Contao\Input;
@@ -22,19 +13,24 @@ use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Data\Updater\Updater;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Exception\AccessDenied;
+use RuntimeException;
+
+use function array_merge;
+use function preg_match;
+use function preg_replace;
+use function sprintf;
+
 use const E_USER_DEPRECATED;
 
 /**
  * StateButtonCallback creates the state toggle button known in Contao.
- *
- * @package Netzmacht\Contao\Toolkit\Dca\Button\Callback
  */
 final class StateButtonCallbackListener
 {
     /**
      * The input.
      *
-     * @var Input
+     * @var Adapter<Input>
      */
     private $input;
 
@@ -55,21 +51,19 @@ final class StateButtonCallbackListener
     /**
      * Contao backend adapter.
      *
-     * @var Backend
+     * @var Adapter<Backend>
      */
     private $backend;
 
     /**
-     * StateButtonCallback constructor.
-     *
-     * @param Backend    $backend    Contao backend adapter.
-     * @param Input      $input      Request Input.
-     * @param Updater    $updater    Data record updater.
-     * @param DcaManager $dcaManager Data container manager.
+     * @param Adapter<Backend> $backend    Contao backend adapter.
+     * @param Adapter<Input>   $input      Request Input.
+     * @param Updater          $updater    Data record updater.
+     * @param DcaManager       $dcaManager Data container manager.
      */
     public function __construct(
-        $backend,
-        $input,
+        Adapter $backend,
+        Adapter $input,
         Updater $updater,
         DcaManager $dcaManager
     ) {
@@ -82,21 +76,19 @@ final class StateButtonCallbackListener
     /**
      * Invoke the callback.
      *
-     * @param array         $row               Current data row.
-     * @param string|null   $href              Button link.
-     * @param string|null   $label             Button label.
-     * @param string|null   $title             Button title.
-     * @param string|null   $icon              Enabled button icon.
-     * @param string|null   $attributes        Html attributes as string.
-     * @param string        $tableName         Table name.
-     * @param array|null    $rootIds           Root ids.
-     * @param array|null    $childRecordIds    Child record ids.
-     * @param bool          $circularReference Circular reference flag.
-     * @param string|null   $previous          Previous button name.
-     * @param string|null   $next              Next button name.
-     * @param DataContainer $dataContainer     Data container driver.
-     *
-     * @return string
+     * @param array<string,mixed>        $row               Current data row.
+     * @param string|null                $href              Button link.
+     * @param string|null                $label             Button label.
+     * @param string|null                $title             Button title.
+     * @param string|null                $icon              Enabled button icon.
+     * @param string|null                $attributes        Html attributes as string.
+     * @param string                     $tableName         Table name.
+     * @param array<int,string|int>|null $rootIds           Root ids.
+     * @param array<int,string|int>|null $childRecordIds    Child record ids.
+     * @param bool                       $circularReference Circular reference flag.
+     * @param string|null                $previous          Previous button name.
+     * @param string|null                $next              Next button name.
+     * @param DataContainer              $dataContainer     Data container driver.
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
@@ -116,7 +108,7 @@ final class StateButtonCallbackListener
         $next,
         $dataContainer
     ): string {
-        $name   = $this->getOperationName($attributes);
+        $name   = $this->getOperationName((string) $attributes);
         $config = $this->getConfig($dataContainer, $name);
 
         if ($this->input->get('tid')) {
@@ -124,26 +116,34 @@ final class StateButtonCallbackListener
                 $this->updater->update(
                     $dataContainer->table,
                     $this->input->get('tid'),
-                    [$config['stateColumn'] => ($this->input->get('state') == 1)],
+                    [$config['stateColumn'] => ($this->input->get('state') === 1)],
                     $dataContainer
                 );
 
                 $this->backend->redirect($this->backend->getReferer());
             } catch (AccessDenied $e) {
+                /**
+                 * @psalm-suppress DeprecatedMethod
+                 * @psalm-suppress UndefinedConstant
+                 */
                 $this->backend->log($e->getMessage(), __METHOD__, TL_ERROR);
                 $this->backend->redirect('contao?act=error');
             }
         }
 
-        if (!$this->updater->hasUserAccess($dataContainer->table, $config['stateColumn'])) {
+        if (! $this->updater->hasUserAccess($dataContainer->table, $config['stateColumn'])) {
             return '';
         }
 
-        $href    .= '&amp;id='.$this->input->get('id').'&amp;tid='.$row['id'].'&amp;state='.$row[''];
-        $disabled = !$row[$config['stateColumn']] || ($config['inverse'] && $row[$config['stateColumn']]);
+        $disabled = ! $row[$config['stateColumn']] || ($config['inverse'] && $row[$config['stateColumn']]);
+        $href     = $href ?? '';
+        $href    .= '&amp;id=';
+        $href    .= (string) $this->input->get('id');
+        $href    .= '&amp;tid=';
+        $href    .= $row['id'] . '&amp;state=' . ($disabled ? '1' : '');
 
         if ($disabled) {
-            $icon = $this->disableIcon($icon, (string) $config['disabledIcon']);
+            $icon = $this->disableIcon((string) $icon, (string) $config['disabledIcon']);
         }
 
         $imageAttributes = sprintf('data-state="%s"', $disabled ? '' : '1');
@@ -151,32 +151,30 @@ final class StateButtonCallbackListener
         return sprintf(
             '<a href="%s" title="%s"%s>%s</a> ',
             $this->backend->addToUrl($href),
-            StringUtil::specialchars($title),
-            $attributes,
-            Image::getHtml($icon, $label, $imageAttributes)
+            StringUtil::specialchars((string) $title),
+            (string) $attributes,
+            Image::getHtml((string) $icon, (string) $label, $imageAttributes)
         );
     }
 
     /**
      * Invoke the callback.
      *
-     * @param array         $row               Current data row.
-     * @param string|null   $href              Button link.
-     * @param string|null   $label             Button label.
-     * @param string|null   $title             Button title.
-     * @param string|null   $icon              Enabled button icon.
-     * @param string|null   $attributes        Html attributes as string.
-     * @param string        $tableName         Table name.
-     * @param array|null    $rootIds           Root ids.
-     * @param array|null    $childRecordIds    Child record ids.
-     * @param bool          $circularReference Circular reference flag.
-     * @param string|null   $previous          Previous button name.
-     * @param string|null   $next              Next button name.
-     * @param DataContainer $dataContainer     Data container driver.
-     *
-     * @return string
-     *
      * @deprecated Deprecated and removed in Version 4.0.0. Use self::onButtonCallback instead.
+     *
+     * @param array<string,mixed>        $row               Current data row.
+     * @param string|null                $href              Button link.
+     * @param string|null                $label             Button label.
+     * @param string|null                $title             Button title.
+     * @param string|null                $icon              Enabled button icon.
+     * @param string|null                $attributes        Html attributes as string.
+     * @param string                     $tableName         Table name.
+     * @param array<int,string|int>|null $rootIds           Root ids.
+     * @param array<int,string|int>|null $childRecordIds    Child record ids.
+     * @param bool                       $circularReference Circular reference flag.
+     * @param string|null                $previous          Previous button name.
+     * @param string|null                $next              Next button name.
+     * @param DataContainer              $dataContainer     Data container driver.
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
@@ -226,10 +224,8 @@ final class StateButtonCallbackListener
     /**
      * Disable the icon.
      *
-     * @param string      $icon    The enabled icon.
-     * @param null|string $default The default icon.
-     *
-     * @return string
+     * @param string $icon    The enabled icon.
+     * @param string $default The default icon.
      */
     private function disableIcon(string $icon, string $default = ''): string
     {
@@ -250,7 +246,7 @@ final class StateButtonCallbackListener
      * @param DataContainer $dataContainer Data container driver.
      * @param string        $operationName Operation name.
      *
-     * @return array
+     * @return array<string,mixed>
      */
     private function getConfig($dataContainer, string $operationName): array
     {
@@ -258,7 +254,7 @@ final class StateButtonCallbackListener
         $config     = [
             'disabledIcon' => null,
             'stateColumn'  => null,
-            'inverse'      => false
+            'inverse'      => false,
         ];
 
         return array_merge(
@@ -272,9 +268,7 @@ final class StateButtonCallbackListener
      *
      * @param string $attributes Attributes section.
      *
-     * @return string
-     *
-     * @throws \RuntimeException When no data-operation is set in the attributes.
+     * @throws RuntimeException When no data-operation is set in the attributes.
      */
     private function getOperationName($attributes): string
     {
@@ -282,6 +276,6 @@ final class StateButtonCallbackListener
             return $matches[1];
         }
 
-        throw new \RuntimeException('No data-operation attribute set to detect operation name.');
+        throw new RuntimeException('No data-operation attribute set to detect operation name.');
     }
 }

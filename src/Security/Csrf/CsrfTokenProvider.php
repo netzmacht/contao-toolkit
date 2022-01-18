@@ -1,22 +1,11 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2019 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Security\Csrf;
 
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
 
 /**
  * Class CsrfTokenProvider is a wrapper of the Csrf token manager to provide access to a default token
@@ -40,8 +29,6 @@ final class CsrfTokenProvider
     private $defaultTokenName;
 
     /**
-     * CsrfTokenProvider constructor.
-     *
      * @param CsrfTokenManagerInterface $tokenManager     The csrf token manager.
      * @param string                    $defaultTokenName The name of the default token.
      */
@@ -55,8 +42,6 @@ final class CsrfTokenProvider
      * Get the token from the token manager.
      *
      * @param string|null $name Optional name of the token. If empty default name is used.
-     *
-     * @return CsrfToken
      */
     public function getToken(?string $name = null): CsrfToken
     {
@@ -67,8 +52,6 @@ final class CsrfTokenProvider
      * Get the token value from a token from the token manager.
      *
      * @param string|null $name Optional name of the token. If empty default name is used.
-     *
-     * @return CsrfToken
      */
     public function getTokenValue(?string $name = null): string
     {

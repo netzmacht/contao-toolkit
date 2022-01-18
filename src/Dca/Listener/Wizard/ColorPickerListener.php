@@ -1,26 +1,13 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 
+use function array_merge;
+
 use const E_USER_DEPRECATED;
 
-/**
- * Class ColorPicker.
- *
- * @package Netzmacht\Contao\Toolkit\Dca\Wizard
- */
 final class ColorPickerListener extends AbstractPickerListener
 {
     /**
@@ -35,8 +22,6 @@ final class ColorPickerListener extends AbstractPickerListener
      *
      * @param string $dataContainerName Data container name.
      * @param string $fieldName         Field name.
-     *
-     * @return string
      */
     public function generate(string $dataContainerName, string $fieldName): string
     {
@@ -79,7 +64,7 @@ final class ColorPickerListener extends AbstractPickerListener
      * @param string $dataContainerName Data container name.
      * @param string $fieldName         Field name.
      *
-     * @return array
+     * @return array<string,mixed>
      */
     public function getConfig(string $dataContainerName, string $fieldName): array
     {

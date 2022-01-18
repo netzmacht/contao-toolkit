@@ -1,27 +1,18 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Options;
 
 use Contao\Database\Result;
 use Contao\Model\Collection;
+
+use function array_merge;
 use function is_callable;
+use function str_repeat;
 
 /**
  * Class OptionsBuilder is designed to transfer data to the requested format for options.
- *
- * @package Netzmacht\Contao\DevTools\Dca
  */
 final class OptionsBuilder
 {
@@ -35,14 +26,14 @@ final class OptionsBuilder
     /**
      * Get Options builder for collection.
      *
-     * @param Collection       $collection  Model collection.
-     * @param string|\callable $labelColumn Label column or callback.
-     * @param string           $valueColumn Value column.
+     * @param Collection      $collection  Model collection.
+     * @param string|callable $labelColumn Label column or callback.
+     * @param string          $valueColumn Value column.
      *
      * @return OptionsBuilder
      */
     public static function fromCollection(
-        Collection $collection = null,
+        ?Collection $collection = null,
         $labelColumn = null,
         string $valueColumn = 'id'
     ): self {
@@ -58,15 +49,15 @@ final class OptionsBuilder
     /**
      * Get Options builder for collection.
      *
-     * @param Result|null      $result      Database result.
-     * @param string|\callable $labelColumn Label column or callback.
-     * @param string           $valueColumn Value column.
+     * @param Result|null     $result      Database result.
+     * @param string|callable $labelColumn Label column or callback.
+     * @param string          $valueColumn Value column.
      *
      * @return OptionsBuilder
      */
-    public static function fromResult(Result $result = null, $labelColumn = null, string $valueColumn = 'id'): self
+    public static function fromResult(?Result $result = null, $labelColumn = null, string $valueColumn = 'id'): self
     {
-        if (!$result) {
+        if (! $result) {
             return static::fromArrayList([], $labelColumn, $valueColumn);
         }
 
@@ -79,9 +70,9 @@ final class OptionsBuilder
      * It expects an array which is a list of associative arrays where the value column is part of the associative
      * array and has to be extracted.
      *
-     * @param array            $data     Raw data list.
-     * @param string|\callable $labelKey Label key or callback.
-     * @param string           $valueKey Value key.
+     * @param list<array<string,mixed>> $data     Raw data list.
+     * @param string|callable           $labelKey Label key or callback.
+     * @param string                    $valueKey Value key.
      *
      * @return OptionsBuilder
      */
@@ -112,7 +103,7 @@ final class OptionsBuilder
      */
     public function groupBy(string $column, $callback = null): self
     {
-        $options = array();
+        $options = [];
 
         foreach ($this->options as $key => $value) {
             $row   = $this->options->row();
@@ -136,8 +127,8 @@ final class OptionsBuilder
      */
     public function asTree(string $parent = 'pid', string $indentBy = '-- '): self
     {
-        $options = array();
-        $values  = array();
+        $options = [];
+        $values  = [];
 
         foreach ($this->options as $key => $value) {
             $pid = $this->options[$key][$parent];
@@ -155,7 +146,7 @@ final class OptionsBuilder
     /**
      * Get the build options.
      *
-     * @return array
+     * @return array<string,string|array<string,string>>
      */
     public function getOptions(): array
     {
@@ -165,9 +156,9 @@ final class OptionsBuilder
     /**
      * Get the group value.
      *
-     * @param mixed          $value    Raw group value.
-     * @param \callable|null $callback Optional callback.
-     * @param array          $row      Current data row.
+     * @param mixed               $value    Raw group value.
+     * @param callable|null       $callback Optional callback.
+     * @param array<string,mixed> $row      Current data row.
      *
      * @return mixed
      */
@@ -183,13 +174,13 @@ final class OptionsBuilder
     /**
      * Build options tree.
      *
-     * @param array  $values   The values.
-     * @param array  $options  The created options.
-     * @param int    $index    The current index.
-     * @param string $indentBy The indent characters.
-     * @param int    $depth    The current depth.
+     * @param array<int,array<int,mixed>> $values   The values.
+     * @param array<int|string, string>   $options  The created options.
+     * @param int                         $index    The current index.
+     * @param string                      $indentBy The indent characters.
+     * @param int                         $depth    The current depth.
      *
-     * @return mixed
+     * @return array<int|string, string>
      */
     private function buildTree(array &$values, array &$options, int $index, string $indentBy, int $depth = 0): array
     {
@@ -199,7 +190,7 @@ final class OptionsBuilder
 
         foreach ($values[$index] as $key => $value) {
             $options[$key] = str_repeat($indentBy, $depth) . ' ' . $value['__label__'];
-            $this->buildTree($values, $options, $key, $indentBy, ($depth + 1));
+            $this->buildTree($values, $options, $key, $indentBy, $depth + 1);
         }
 
         return $options;

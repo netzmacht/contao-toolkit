@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
@@ -20,30 +10,26 @@ use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
-use Symfony\Component\Translation\TranslatorInterface as Translator;
+use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
-/**
- * Class PagePickerCallback.
- *
- * @package Netzmacht\Contao\Toolkit\Dca\Callback
- */
+use function sprintf;
+use function str_replace;
+
 final class PagePickerListener extends AbstractFieldPickerListener
 {
     /**
      * Request input.
      *
-     * @var Adapter|Input
+     * @var Adapter<Input>
      */
     private $input;
 
     /**
-     * PagePickerCallback constructor.
-     *
      * @param TemplateEngine|TemplateRenderer $templateEngine Template Engine.
      * @param Translator                      $translator     Translator.
      * @param DcaManager                      $dcaManager     Data container manager.
-     * @param Input|Adapter                   $input          Request input.
-     * @param string|null                     $template       Template name.
+     * @param Adapter<Input>                  $input          Request input.
+     * @param string                          $template       Template name.
      */
     public function __construct(
         $templateEngine,
@@ -68,13 +54,13 @@ final class PagePickerListener extends AbstractFieldPickerListener
             $tableName,
             $fieldName,
             str_replace(
-                array('{{link_url::', '}}'),
+                ['{{link_url::', '}}'],
                 '',
                 $value
             )
         );
 
-        $cssId   = $fieldName . (($this->input->get('act') === 'editAll') ? '_' . $rowId : '');
+        $cssId   = $fieldName . ($this->input->get('act') === 'editAll' ? '_' . $rowId : '');
         $jsTitle = StringUtil::specialchars(
             str_replace('\'', '\\\'', $this->translator->trans('MOD.page.0', [], 'contao_modules'))
         );
@@ -85,7 +71,7 @@ final class PagePickerListener extends AbstractFieldPickerListener
             'jsTitle' => $jsTitle,
             'field' => $fieldName,
             'icon' => 'pickpage.svg',
-            'id' => $cssId
+            'id' => $cssId,
         ];
 
         return $this->render($this->template, $parameters);

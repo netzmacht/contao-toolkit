@@ -1,38 +1,22 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     Christopher Bölter <christopher@boelter.eu>
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Listener;
 
-/**
- * Class RegisterContaoModelsListener.
- *
- * @package Netzmacht\Contao\Toolkit\DependencyInjection\Listener
- */
+use Contao\Model;
+
 final class RegisterContaoModelsListener
 {
     /**
      * List of repositories.
      *
-     * @var array
+     * @var array<string,class-string<Model>>
      */
     private $repositories;
 
     /**
-     * RegisterContaoModelsListener constructor.
-     *
-     * @param array $repositories List of repositories.
+     * @param array<string,class-string<Model>> $repositories List of repositories.
      */
     public function __construct(array $repositories)
     {
@@ -41,8 +25,6 @@ final class RegisterContaoModelsListener
 
     /**
      * Handle the on initialize system hook.
-     *
-     * @return void
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */

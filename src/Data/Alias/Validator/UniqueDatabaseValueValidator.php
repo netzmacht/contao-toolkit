@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Validator;
@@ -17,10 +7,11 @@ namespace Netzmacht\Contao\Toolkit\Data\Alias\Validator;
 use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Data\Alias\Validator;
 
+use function assert;
+use function is_int;
+
 /**
  * Class UniqueDatabaseValueValidator validates a value as true if it does not exists in the database.
- *
- * @package Netzmacht\Contao\Toolkit\Data\Alias\Validator
  */
 final class UniqueDatabaseValueValidator implements Validator
 {
@@ -55,18 +46,16 @@ final class UniqueDatabaseValueValidator implements Validator
     /**
      * Data fields being used as unique fields.
      *
-     * @var array
+     * @var list<string>
      */
     private $uniqueKeyFields;
 
     /**
-     * UniqueDatabaseValueValidator constructor.
-     *
-     * @param Connection $connection      Database connection.
-     * @param string     $tableName       Table name.
-     * @param string     $columnName      Alias value column name.
-     * @param array      $uniqueKeyFields Other fields which spans the unique key along the alias column.
-     * @param bool       $allowEmptyAlias Allow empty alias.
+     * @param Connection   $connection      Database connection.
+     * @param string       $tableName       Table name.
+     * @param string       $columnName      Alias value column name.
+     * @param list<string> $uniqueKeyFields Other fields which spans the unique key along the alias column.
+     * @param bool         $allowEmptyAlias Allow empty alias.
      */
     public function __construct(
         Connection $connection,
@@ -85,9 +74,9 @@ final class UniqueDatabaseValueValidator implements Validator
     /**
      * {@inheritDoc}
      */
-    public function validate($result, $value, array $exclude = null): bool
+    public function validate($result, $value, ?array $exclude = null): bool
     {
-        if (!$this->allowEmptyAlias && $value == '') {
+        if (! $this->allowEmptyAlias && $value === '') {
             return false;
         }
 
@@ -109,7 +98,8 @@ final class UniqueDatabaseValueValidator implements Validator
         }
 
         $statement = $builder->execute();
+        assert(! is_int($statement));
 
-        return $statement->fetch()['result'] == 0;
+        return (int) $statement->fetchOne() === 0;
     }
 }

@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Template;
@@ -31,8 +21,6 @@ final class ToolkitTemplateFactory implements TemplateFactory
     private $eventDispatcher;
 
     /**
-     * TemplateFactory constructor.
-     *
      * @param EventDispatcher $eventDispatcher Event dispatcher.
      */
     public function __construct(EventDispatcher $eventDispatcher)
@@ -41,7 +29,9 @@ final class ToolkitTemplateFactory implements TemplateFactory
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilityTypeMissing
      */
     public function createFrontendTemplate(
         string $name,
@@ -59,7 +49,9 @@ final class ToolkitTemplateFactory implements TemplateFactory
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilityTypeMissing
      */
     public function createBackendTemplate(
         string $name,
@@ -82,12 +74,12 @@ final class ToolkitTemplateFactory implements TemplateFactory
      * @param string $name        Template name.
      * @param string $contentType Template content type.
      *
-     * @return array
+     * @return array<string,object|callable>
      */
     private function getTemplateHelpers(string $name, string $contentType): array
     {
         $event = new GetTemplateHelpersEvent($name, $contentType);
-        $this->eventDispatcher->dispatch($event::NAME, $event);
+        $this->eventDispatcher->dispatch($event, $event::NAME);
 
         return $event->getHelpers();
     }

@@ -1,46 +1,32 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Data\Alias\Validator;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Driver\Statement;
+use Doctrine\DBAL\ForwardCompatibility\Result;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Netzmacht\Contao\Toolkit\Data\Alias\Validator\UniqueDatabaseValueValidator;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-/**
- * Class UniqueDatabaseValueValidatorSpec
- *
- * @package spec\Netzmacht\Contao\Toolkit\Data\Alias\Validator
- */
 class UniqueDatabaseValueValidatorSpec extends ObjectBehavior
 {
-    const TABLE_NAME = 'table';
+    public const TABLE_NAME = 'table';
 
-    const FIELD_NAME = 'alias';
+    public const FIELD_NAME = 'alias';
 
-    public function let(Connection $connection)
+    public function let(Connection $connection): void
     {
-        $this->beConstructedWith($connection, static::TABLE_NAME, static::FIELD_NAME);
+        $this->beConstructedWith($connection, self::TABLE_NAME, self::FIELD_NAME);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Data\Alias\Validator\UniqueDatabaseValueValidator');
     }
 
-    public function it_is_a_validator()
+    public function it_is_a_validator(): void
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Data\Alias\Validator');
     }
@@ -48,8 +34,8 @@ class UniqueDatabaseValueValidatorSpec extends ObjectBehavior
     public function it_validates_when_value_not_exists(
         Connection $connection,
         QueryBuilder $queryBuilder,
-        Statement $statement
-    ) {
+        Result $statement
+    ): void {
         $result = (object) ['result' => 0];
 
         $connection->createQueryBuilder()->willReturn($queryBuilder);
@@ -62,7 +48,7 @@ class UniqueDatabaseValueValidatorSpec extends ObjectBehavior
             ->willReturn($queryBuilder)->shouldBeCalled();
         $queryBuilder->execute()->willReturn($statement);
 
-        $statement->fetch()->willReturn(['result' => 0]);
+        $statement->fetchOne()->willReturn(0);
 
         $this->validate($result, 'foo')->shouldReturn(true);
     }
@@ -70,8 +56,8 @@ class UniqueDatabaseValueValidatorSpec extends ObjectBehavior
     public function it_invalidates_when_value_exists(
         Connection $connection,
         QueryBuilder $queryBuilder,
-        Statement $statement
-    ) {
+        Result $statement
+    ): void {
         $result = (object) ['result' => 1];
 
         $connection->createQueryBuilder()->willReturn($queryBuilder);
@@ -84,7 +70,7 @@ class UniqueDatabaseValueValidatorSpec extends ObjectBehavior
             ->willReturn($queryBuilder)->shouldBeCalled();
         $queryBuilder->execute()->willReturn($statement);
 
-        $statement->fetch()->willReturn(['result' => 1]);
+        $statement->fetchOne()->willReturn(1);
 
         $this->validate($result, 'foo')->shouldReturn(false);
     }

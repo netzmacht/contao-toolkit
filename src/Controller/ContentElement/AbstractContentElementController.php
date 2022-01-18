@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Controller\ContentElement;
@@ -32,8 +22,6 @@ abstract class AbstractContentElementController extends AbstractFragmentControll
     use IsHiddenTrait;
 
     /**
-     * Constructor.
-     *
      * @param TemplateRenderer    $templateRenderer The template renderer.
      * @param RequestScopeMatcher $scopeMatcher     The scope matcher.
      * @param ResponseTagger      $responseTagger   The response tagger.
@@ -53,12 +41,10 @@ abstract class AbstractContentElementController extends AbstractFragmentControll
     /**
      * Handle the fragment action for the content element.
      *
-     * @param Request      $request The current request.
-     * @param ContentModel $model   The content model.
-     * @param string       $section The section in which the content element is rendered.
-     * @param array|null   $classes Additional css classes.
-     *
-     * @return Response
+     * @param Request           $request The current request.
+     * @param ContentModel      $model   The content model.
+     * @param string            $section The section in which the content element is rendered.
+     * @param list<string>|null $classes Additional css classes.
      */
     public function __invoke(Request $request, ContentModel $model, string $section, ?array $classes = null): Response
     {
@@ -69,9 +55,6 @@ abstract class AbstractContentElementController extends AbstractFragmentControll
         return $this->generate($request, $model, $section, $classes);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getFallbackTemplateName(Model $model): string
     {
         return 'ce_' . $this->getType();

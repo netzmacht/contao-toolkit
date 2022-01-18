@@ -1,25 +1,13 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Template\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Class GetTemplateHelpersEvent is triggered when the helpers for a template are generated.
- *
- * @package Netzmacht\Contao\Toolkit\View\Template\Event
  */
 final class GetTemplateHelpersEvent extends Event
 {
@@ -45,13 +33,11 @@ final class GetTemplateHelpersEvent extends Event
     /**
      * List of helpers.
      *
-     * @var array
+     * @var array<string,object|callable>
      */
-    private $helpers;
+    private $helpers = [];
 
     /**
-     * GetTemplateHelpersEvent constructor.
-     *
      * @param string $templateName Template name.
      * @param string $contentType  Content type.
      */
@@ -63,8 +49,6 @@ final class GetTemplateHelpersEvent extends Event
 
     /**
      * Get templateName.
-     *
-     * @return string
      */
     public function getTemplateName(): string
     {
@@ -73,8 +57,6 @@ final class GetTemplateHelpersEvent extends Event
 
     /**
      * Get contentType.
-     *
-     * @return string
      */
     public function getContentType(): string
     {
@@ -84,8 +66,8 @@ final class GetTemplateHelpersEvent extends Event
     /**
      * Register a helper.
      *
-     * @param string $name   Name of the helper.
-     * @param mixed  $helper Helper object.
+     * @param string          $name   Name of the helper.
+     * @param object|callable $helper Helper object.
      *
      * @return $this
      */
@@ -99,7 +81,7 @@ final class GetTemplateHelpersEvent extends Event
     /**
      * Register a set of helpers.
      *
-     * @param array $helpers Associate array with helper name as key and helper object as value.
+     * @param array<string,callable> $helpers Associate array with helper name as key and helper object as value.
      *
      * @return $this
      */
@@ -115,7 +97,7 @@ final class GetTemplateHelpersEvent extends Event
     /**
      * Get helpers.
      *
-     * @return array
+     * @return array<string,object|callable>
      */
     public function getHelpers(): array
     {

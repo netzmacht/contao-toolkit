@@ -1,58 +1,45 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\HtmlFormatter;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
-/**
- * Class HtmlFormatterSpec
- *
- * @package spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value
- */
+use function htmlentities;
+
 class HtmlFormatterSpec extends ObjectBehavior
 {
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\HtmlFormatter');
     }
 
-    public function it_is_a_value_formatter()
+    public function it_is_a_value_formatter(): void
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
     }
 
-    public function it_accepts_fields_with_allow_html_option()
+    public function it_accepts_fields_with_allow_html_option(): void
     {
         $definition['eval']['allowHtml'] = true;
 
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
-    public function it_accepts_fields_preserve_tags_option()
+    public function it_accepts_fields_preserve_tags_option(): void
     {
         $definition['eval']['preserveTags'] = true;
 
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
-    public function it_does_not_accept_a_field_by_default()
+    public function it_does_not_accept_a_field_by_default(): void
     {
         $this->accepts('test', [])->shouldReturn(false);
     }
 
-    public function it_encodes_html_entities()
+    public function it_encodes_html_entities(): void
     {
         $test = '<b>Test</b> <a href="http://example.org">Example</a>';
 

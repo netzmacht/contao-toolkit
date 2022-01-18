@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Controller\FrontendModule;
@@ -44,8 +34,6 @@ trait ModuleRenderBackendViewTrait
      * Render backend view.
      *
      * @param ModuleModel $module The module model.
-     *
-     * @return Response
      */
     protected function renderModuleBackendView(ModuleModel $module): Response
     {
@@ -71,17 +59,13 @@ trait ModuleRenderBackendViewTrait
      *
      * The template name.
      *
-     * @param string $templateName The template name.
-     * @param array  $data         The data being passed to the template.
-     *
-     * @return Response
+     * @param string              $templateName The template name.
+     * @param array<string,mixed> $data         The data being passed to the template.
      */
     abstract protected function renderResponse(string $templateName, array $data): Response;
 
     /**
      * Get the type of the fragment.
-     *
-     * @return string
      */
     abstract protected function getType(): string;
 }

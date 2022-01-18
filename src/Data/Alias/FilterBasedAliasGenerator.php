@@ -1,28 +1,16 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
-use Contao\Database;
+use Contao\Database\Result;
 use Contao\Model;
 use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException;
 
 /**
  * Alias generator.
- *
- * @package Netzmacht\Contao\Toolkit\Data\Alias
  */
 final class FilterBasedAliasGenerator implements AliasGenerator
 {
@@ -88,8 +76,6 @@ final class FilterBasedAliasGenerator implements AliasGenerator
 
     /**
      * Get the alias field.
-     *
-     * @return string
      */
     public function getAliasField(): string
     {
@@ -98,8 +84,6 @@ final class FilterBasedAliasGenerator implements AliasGenerator
 
     /**
      * The table name.
-     *
-     * @return string
      */
     public function getTableName(): string
     {
@@ -108,8 +92,6 @@ final class FilterBasedAliasGenerator implements AliasGenerator
 
     /**
      * Get separator.
-     *
-     * @return string
      */
     public function getSeparator(): string
     {
@@ -129,11 +111,9 @@ final class FilterBasedAliasGenerator implements AliasGenerator
     /**
      * Consider if value is an valid alias.
      *
-     * @param Database|Model $result Data record.
-     * @param mixed          $value  The alias value.
-     * @param int            $rowId  The row id.
-     *
-     * @return bool
+     * @param Result|Model $result Data record.
+     * @param mixed        $value  The alias value.
+     * @param int          $rowId  The row id.
      */
     private function isValid($result, $value, int $rowId): bool
     {
@@ -143,8 +123,8 @@ final class FilterBasedAliasGenerator implements AliasGenerator
     /**
      * Apply filters.
      *
-     * @param Database|Model $result Data record.
-     * @param mixed          $value  Given value.
+     * @param Result|Model $result Data record.
+     * @param mixed        $value  Given value.
      *
      * @return mixed
      */
@@ -154,13 +134,14 @@ final class FilterBasedAliasGenerator implements AliasGenerator
             $filter->initialize();
 
             do {
-                $value  = $filter->apply($result, $value, $this->separator);
+                $value = $filter->apply($result, $value, $this->separator);
+                /** @psalm-suppress RedundantCastGivenDocblockType */
                 $unique = $this->isValid($result, $value, (int) $result->id);
 
                 if ($filter->breakIfValid() && $unique) {
                     break 2;
                 }
-            } while ($filter->repeatUntilValid() && !$unique);
+            } while ($filter->repeatUntilValid() && ! $unique);
         }
 
         return $value;
@@ -169,15 +150,16 @@ final class FilterBasedAliasGenerator implements AliasGenerator
     /**
      * Guard that a valid alias is given.
      *
-     * @param Database|Model $result Data record.
-     * @param mixed          $value  Given value.
+     * @param Result|Model $result Data record.
+     * @param mixed        $value  Given value.
      *
-     * @return void
      * @throws InvalidAliasException When No unique alias is generated.
      */
     private function guardValidAlias($result, $value): void
     {
-        if (!$value || !$this->isValid($result, $value, (int) $result->id)) {
+        /** @psalm-suppress RedundantCastGivenDocblockType */
+        if (! $value || ! $this->isValid($result, $value, (int) $result->id)) {
+            /** @psalm-suppress RedundantCastGivenDocblockType */
             throw InvalidAliasException::forDatabaseEntry($this->tableName, (int) $result->id, $value);
         }
     }

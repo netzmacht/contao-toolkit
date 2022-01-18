@@ -1,33 +1,26 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-leaflet-maps/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\InsertTag;
 
 use Contao\StringUtil;
-use function is_array;
+use RuntimeException;
 
-/**
- * Class ArgumentParser.
- *
- * @package Netzmacht\Contao\Toolkit\InsertTag
- */
+use function array_key_exists;
+use function explode;
+use function is_array;
+use function is_string;
+use function parse_str;
+use function sprintf;
+use function str_replace;
+
 final class ArgumentParser
 {
     /**
      * List of parsing callbacks.
      *
-     * @var array
+     * @var list<callable>
      */
     private $parsers = [];
 
@@ -45,27 +38,29 @@ final class ArgumentParser
      */
     public static function create(): self
     {
-        return new static();
+        return new self();
     }
 
     /**
      * Register a split callback.
      *
-     * @param string     $separator Separator string.
-     * @param array|null $names     Optional list for named attributes.
-     * @param int|null   $limit     Optional split limit.
+     * @param string            $separator Separator string.
+     * @param list<string>|null $names     Optional list for named attributes.
+     * @param int|null          $limit     Optional split limit.
      *
      * @return ArgumentParser
      *
-     * @throws \RuntimeException When another split callback is registered before.
+     * @throws RuntimeException When another split callback is registered before.
      */
-    public function splitBy(string $separator = '::', array $names = null, int $limit = null): self
+    public function splitBy(string $separator = '::', ?array $names = null, ?int $limit = null): self
     {
         $this->guardNoSplitCallbackRegistered($separator);
 
-        $this->parsers[] = function ($query) use ($separator, $names, $limit) {
+        // phpcs:disable Generic.Files.LineLength.MaxExceeded
+        $this->parsers[] = /** @return array<string|int,mixed> */ function (string $query) use ($separator, $names, $limit) {
             return $this->handleSplitBy($query, $separator, $names, $limit);
         };
+        // phpcs:enable Generic.Files.LineLength.MaxExceeded
 
         return $this;
     }
@@ -73,13 +68,18 @@ final class ArgumentParser
     /**
      * Add a query parser.
      *
-     * @param array|null $argumentIndexes If given only these arguments got parsed.
+     * @param list<string|int>|null $argumentIndexes If given only these arguments got parsed.
      *
      * @return ArgumentParser
      */
-    public function parseQuery(array $argumentIndexes = null): self
+    public function parseQuery(?array $argumentIndexes = null): self
     {
-        $this->parsers[] = function ($arguments) use ($argumentIndexes) {
+        $this->parsers[] = /**
+         * @param mixed $arguments
+         *
+         * @return array<string|int,array<string,mixed>|string>
+         */
+        function ($arguments) use ($argumentIndexes) {
             return $this->handleParseQuery((array) $arguments, $argumentIndexes);
         };
 
@@ -91,7 +91,7 @@ final class ArgumentParser
      *
      * @param string $query Argument query.
      *
-     * @return array
+     * @return array<string|int,mixed>
      */
     public function parse(string $query): array
     {
@@ -111,14 +111,14 @@ final class ArgumentParser
     /**
      * Handle the split by.
      *
-     * @param string     $query     The given query.
-     * @param string     $separator Separator string.
-     * @param array|null $names     Optional list for named attributes.
-     * @param int|null   $limit     Optional split limit.
+     * @param string                        $query     The given query.
+     * @param string                        $separator Separator string.
+     * @param array<string|int,string>|null $names     Optional list for named attributes.
+     * @param int|null                      $limit     Optional split limit.
      *
-     * @return array
+     * @return array<string|int,mixed>
      */
-    private function handleSplitBy(string $query, string $separator, array $names = null, int $limit = null): array
+    private function handleSplitBy(string $query, string $separator, ?array $names = null, ?int $limit = null): array
     {
         if ($limit === null) {
             $values = explode($separator, $query);
@@ -146,12 +146,12 @@ final class ArgumentParser
     /**
      * Handle the query parsing.
      *
-     * @param array      $arguments       Insert tag arguments.
-     * @param array|null $argumentIndexes If given only these arguments got parsed.
+     * @param array<string|int,string> $arguments       Insert tag arguments.
+     * @param list<string|int>|null    $argumentIndexes If given only these arguments got parsed.
      *
-     * @return array
+     * @return array<string|int,array<string,mixed>|string>
      */
-    private function handleParseQuery(array $arguments, array $argumentIndexes = null): array
+    private function handleParseQuery(array $arguments, ?array $argumentIndexes = null): array
     {
         if ($argumentIndexes === null) {
             foreach ($arguments as $index => $argument) {
@@ -162,9 +162,11 @@ final class ArgumentParser
         }
 
         foreach ($argumentIndexes as $index) {
-            if (array_key_exists($index, $arguments)) {
-                $arguments[$index] = $this->parseArgumentQuery($arguments[$index]);
+            if (! array_key_exists($index, $arguments) || ! is_string($arguments[$index])) {
+                continue;
             }
+
+            $arguments[$index] = $this->parseArgumentQuery($arguments[$index]);
         }
 
         return $arguments;
@@ -177,13 +179,13 @@ final class ArgumentParser
      *
      * @param string $argument Argument query.
      *
-     * @return array
+     * @return array<string,mixed>
      */
     private function parseArgumentQuery(string $argument): array
     {
         $parts = explode('?', $argument, 2);
 
-        if (!isset($parts[1])) {
+        if (! isset($parts[1])) {
             return [
                 'value'   => $parts[0],
                 'options' => [],
@@ -205,14 +207,12 @@ final class ArgumentParser
      *
      * @param string $separator Separator character.
      *
-     * @return void
-     *
-     * @throws \RuntimeException When another split callback is registered before.
+     * @throws RuntimeException When another split callback is registered before.
      */
     private function guardNoSplitCallbackRegistered(string $separator): void
     {
         if ($this->splitted) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 sprintf(
                     'Could not register split by "%s" parser. There is a already previous split callback registered',
                     $separator

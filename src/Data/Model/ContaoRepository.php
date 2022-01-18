@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Model;
@@ -17,11 +7,11 @@ namespace Netzmacht\Contao\Toolkit\Data\Model;
 use Contao\Model;
 use Netzmacht\Contao\Toolkit\Assertion\Assert;
 
+use function array_map;
+use function call_user_func_array;
+use function str_replace;
+
 /**
- * Class ContaoRepository.
- *
- * @package Netzmacht\Contao\Toolkit\Data\Model
- *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class ContaoRepository implements Repository
@@ -31,14 +21,12 @@ class ContaoRepository implements Repository
     /**
      * The model class.
      *
-     * @var string
+     * @var class-string<Model>
      */
     private $modelClass;
 
     /**
-     * ContaoRepository constructor.
-     *
-     * @param string $modelClass Model class.
+     * @param class-string<Model> $modelClass Model class.
      */
     public function __construct(string $modelClass)
     {
@@ -49,17 +37,12 @@ class ContaoRepository implements Repository
         $this->modelClass = $modelClass;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getTableName(): string
     {
         return $this->call('getTable');
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** @return class-string<Model> */
     public function getModelClass(): string
     {
         return $this->modelClass;
@@ -130,9 +113,6 @@ class ContaoRepository implements Repository
         return $this->call('countBy', [$column, $values]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function countBySpecification(Specification $specification): int
     {
         $column = [];
@@ -143,9 +123,6 @@ class ContaoRepository implements Repository
         return $this->countBy($column, $values);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function countAll(): int
     {
         return $this->call('countAll');
@@ -170,8 +147,8 @@ class ContaoRepository implements Repository
     /**
      * Make a call on the model.
      *
-     * @param string $method    Method name.
-     * @param array  $arguments Arguments.
+     * @param string      $method    Method name.
+     * @param list<mixed> $arguments Arguments.
      *
      * @return mixed
      */
@@ -183,9 +160,9 @@ class ContaoRepository implements Repository
     /**
      * Replace placeholder for the table prefix.
      *
-     * @param array $column List of columns.
+     * @param list<string> $column List of columns.
      *
-     * @return array
+     * @return list<string>
      */
     protected function addTablePrefix(array $column): array
     {
@@ -199,8 +176,6 @@ class ContaoRepository implements Repository
      * Add table prefix to a column.
      *
      * @param string $column The column.
-     *
-     * @return string
      */
     private function addTablePrefixToColumn(string $column): string
     {
@@ -228,9 +203,9 @@ class ContaoRepository implements Repository
     /**
      * Add table prefix to the order.
      *
-     * @param array $options Query options.
+     * @param array<string,mixed> $options Query options.
      *
-     * @return array
+     * @return array<string,mixed>
      */
     private function addTablePrefixToOrder(array $options): array
     {

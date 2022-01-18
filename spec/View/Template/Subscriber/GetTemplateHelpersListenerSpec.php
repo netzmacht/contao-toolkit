@@ -1,45 +1,29 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\View\Template\Subscriber;
 
 use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
 use Netzmacht\Contao\Toolkit\View\Template\Event\GetTemplateHelpersEvent;
-use Netzmacht\Contao\Toolkit\View\Template\Subscriber\GetTemplateHelpersListener;
 use PhpSpec\ObjectBehavior;
-use PhpSpec\Wrapper\Subject;
-use PhpSpec\Wrapper\Wrapper;
-use Prophecy\Argument;
-use Prophecy\Prophecy\ObjectProphecy;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Class GetTemplateHelpersListenerSpec
- *
- * @package spec\Netzmacht\Contao\Toolkit\View\Template\Subscriber
- */
+use function expect;
+
 class GetTemplateHelpersListenerSpec extends ObjectBehavior
 {
-    public function let(AssetsManager $assetsManager, TranslatorInterface $translator)
+    public function let(AssetsManager $assetsManager, TranslatorInterface $translator): void
     {
         $this->beConstructedWith($assetsManager, $translator);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\View\Template\Subscriber\GetTemplateHelpersListener');
     }
 
-    public function it_registers_default_helpers()
+    public function it_registers_default_helpers(): void
     {
         $event = new GetTemplateHelpersEvent('example');
 

@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
@@ -19,14 +9,14 @@ use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface as CsrfTokenManager;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
-use Symfony\Component\Translation\TranslatorInterface as Translator;
+use Symfony\Contracts\Translation\TranslatorInterface as Translator;
+
+use function array_merge;
+use function sprintf;
+use function str_replace;
+
 use const E_USER_DEPRECATED;
 
-/**
- * Class PopupWizard.
- *
- * @package Netzmacht\Contao\Toolkit\Dca\Wizard
- */
 final class PopupWizardListener extends AbstractWizardListener
 {
     /**
@@ -86,10 +76,8 @@ final class PopupWizardListener extends AbstractWizardListener
     /**
      * Generate the popup wizard.
      *
-     * @param mixed $value  Id value.
-     * @param array $config Wizard config.
-     *
-     * @return string
+     * @param mixed               $value  Id value.
+     * @param array<string,mixed> $config Wizard config.
      */
     public function generate($value, array $config = []): string
     {
@@ -107,10 +95,10 @@ final class PopupWizardListener extends AbstractWizardListener
         if ($config['always'] || $value) {
             $token      = $this->csrfTokenManager->getToken($this->tokenName)->getValue();
             $parameters = [
-                'href'    => sprintf($config['linkPattern'], $config['href'], $value, $token),
-                'label'   => StringUtil::specialchars($config['label']),
-                'title'   => StringUtil::specialchars($config['title']),
-                'jsTitle' => StringUtil::specialchars(str_replace('\'', '\\\'', $config['title'])),
+                'href'    => sprintf($config['linkPattern'], (string) $config['href'], $value, $token),
+                'label'   => StringUtil::specialchars((string) $config['label']),
+                'title'   => StringUtil::specialchars((string) $config['title']),
+                'jsTitle' => StringUtil::specialchars(str_replace('\'', '\\\'', (string) $config['title'])),
                 'icon'    => $config['icon'],
             ];
 

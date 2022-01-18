@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     Christopher Bölter <christopher@boelter.eu>
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler;
@@ -20,21 +9,15 @@ use Netzmacht\Contao\Toolkit\Assertion\Assert;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-/**
- * Class RegisterContaoModelPass.
- *
- * @package Netzmacht\Contao\Toolkit\DependencyInjection\Compiler
- */
+use function assert;
+
 final class RegisterContaoModelPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container): void
     {
         $serviceId = 'netzmacht.contao_toolkit.listeners.register_models';
-        
-        if (!$container->has($serviceId)) {
+
+        if (! $container->has($serviceId)) {
             return;
         }
 
@@ -50,8 +33,8 @@ final class RegisterContaoModelPass implements CompilerPassInterface
                     ->classExists()
                     ->subclassOf(Model::class);
 
-                /** @var Model $model */
                 $model = $tag['model'];
+                assert($model instanceof Model);
 
                 $repositories[$model::getTable()] = $model;
             }

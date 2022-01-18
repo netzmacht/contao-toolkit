@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2021 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-leaflet-maps/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Template;
@@ -42,8 +32,6 @@ final class DelegatingTemplateRenderer implements TemplateRenderer
     private $twig;
 
     /**
-     * DelegatingTemplateRenderer constructor.
-     *
      * @param TemplateFactory  $templateFactory The template factory.
      * @param Environment|null $twig            The twig environment. If twig is not activated it's null.
      */
@@ -68,10 +56,8 @@ final class DelegatingTemplateRenderer implements TemplateRenderer
     /**
      * Render a twig template.
      *
-     * @param string $name       The template name.
-     * @param array  $parameters The parameters.
-     *
-     * @return string
+     * @param string              $name       The template name.
+     * @param array<string,mixed> $parameters The parameters.
      *
      * @throws RuntimeException When twig is not available.
      */
@@ -87,10 +73,8 @@ final class DelegatingTemplateRenderer implements TemplateRenderer
     /**
      * Render a Contao template.
      *
-     * @param string $name       The full template name.
-     * @param array  $parameters The parameters.
-     *
-     * @return string
+     * @param string              $name       The template name.
+     * @param array<string,mixed> $parameters The parameters.
      *
      * @throws InvalidArgumentException When an unsupported template name is given.
      */
@@ -114,13 +98,13 @@ final class DelegatingTemplateRenderer implements TemplateRenderer
      *
      * @param string $name The template reference.
      *
-     * @return array
+     * @return list<string>
      *
      * @throws InvalidArgumentException When an unsupported template name is given.
      */
     private function extractScopeAndTemplateName(string $name): array
     {
-        if (!preg_match('/^(toolkit:)?(be|fe):([^.]+)(\.html5)?$/', $name, $matches)) {
+        if (! preg_match('/^(toolkit:)?(be|fe):([^.]+)(\.html5)?$/', $name, $matches)) {
             throw new InvalidArgumentException(sprintf('Template name "%s" is not supported', $name));
         }
 

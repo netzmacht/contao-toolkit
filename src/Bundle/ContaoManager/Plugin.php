@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Bundle\ContaoManager;
@@ -23,11 +13,6 @@ use Contao\ManagerPlugin\Config\ExtensionPluginInterface;
 use Contao\ManagerPlugin\Dependency\DependentPluginInterface;
 use Netzmacht\Contao\Toolkit\Bundle\NetzmachtContaoToolkitBundle;
 
-/**
- * Class Plugin.
- *
- * @package Netzmacht\Contao\Toolkit\ContaoManager
- */
 final class Plugin implements BundlePluginInterface, ExtensionPluginInterface, DependentPluginInterface
 {
     /**
@@ -38,7 +23,7 @@ final class Plugin implements BundlePluginInterface, ExtensionPluginInterface, D
         return [
             BundleConfig::create(NetzmachtContaoToolkitBundle::class)
                 ->setReplace(['toolkit'])
-                ->setLoadAfter([ContaoCoreBundle::class])
+                ->setLoadAfter([ContaoCoreBundle::class]),
         ];
     }
 
@@ -62,8 +47,8 @@ final class Plugin implements BundlePluginInterface, ExtensionPluginInterface, D
         // DEPRECATED: Enabling of the templating engine will be removed in version 4.0
         $extensionConfigs[] = [
             'templating' => [
-                'engines' => ['toolkit']
-            ]
+                'engines' => ['toolkit'],
+            ],
         ];
 
         return $extensionConfigs;

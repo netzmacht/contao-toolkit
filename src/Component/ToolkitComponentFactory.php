@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Component;
@@ -19,21 +9,28 @@ use Contao\Model;
 use Netzmacht\Contao\Toolkit\Component\Exception\ComponentNotFound;
 
 /**
- * Class ComponentFactory.
- *
  * @deprecated Since 3.5.0 and get removed in 4.0.0
+ *
+ * @psalm-suppress DeprecatedInterface
  */
 final class ToolkitComponentFactory implements ComponentFactory
 {
+    // phpcs:disable SlevomatCodingStandard.Commenting.DocCommentSpacing.IncorrectAnnotationsGroup
     /**
      * List of Component factories.
+     *
+     * @psalm-suppress DeprecatedClass
+     * @psalm-suppress DeprecatedInterface
      *
      * @var ComponentFactory[]
      */
     private $factories;
 
+    // phpcs:enable SlevomatCodingStandard.Commenting.DocCommentSpacing.IncorrectAnnotationsGroup
+    // phpcs:disable SlevomatCodingStandard.Commenting.DocCommentSpacing.IncorrectOrderOfAnnotationsGroup
+
     /**
-     * ComponentFactory constructor.
+     * @psalm-suppress DeprecatedClass
      *
      * @param array|ComponentFactory[] $factories Component factories.
      */
@@ -41,6 +38,8 @@ final class ToolkitComponentFactory implements ComponentFactory
     {
         $this->factories = $factories;
     }
+
+    // phpcs:enable SlevomatCodingStandard.Commenting.DocCommentSpacing.IncorrectOrderOfAnnotationsGroup
 
     /**
      * {@inheritdoc}
@@ -62,8 +61,9 @@ final class ToolkitComponentFactory implements ComponentFactory
      * @param Model|Result $model  Component model.
      * @param string       $column Column in which the model is generated.
      *
-     * @return Component
      * @throws ComponentNotFound When no component factory is registered.
+     *
+     * @psalm-suppress DeprecatedClass
      */
     public function create($model, string $column): Component
     {
@@ -73,6 +73,7 @@ final class ToolkitComponentFactory implements ComponentFactory
             }
         }
 
+        /** @psalm-suppress DeprecatedClass */
         throw ComponentNotFound::forModel($model);
     }
 }

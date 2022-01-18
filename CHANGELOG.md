@@ -4,6 +4,13 @@ Changelog
 [Unreleased]
 ------------
 
+### Changed
+
+ - Allow doctrine/dbal ^3.0 for Contao 4.13 compatibility
+ - Bump symfony requirements
+ - Change coding standard
+ - Use symfony contracts where required for Symfony 5 compatibility
+
 [3.6.2] (2021-10-12)
 --------------------
 

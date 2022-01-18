@@ -1,25 +1,13 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Symfony\Component\Translation\TranslatorInterface as Translator;
+use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
 /**
  * Class YesNoFormatter formats non multiple checkboxes with yes and no.
- *
- * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
 final class YesNoFormatter implements ValueFormatter
 {
@@ -31,8 +19,6 @@ final class YesNoFormatter implements ValueFormatter
     private $translator;
 
     /**
-     * YesNoFormatter constructor.
-     *
      * @param Translator $translator Translator.
      */
     public function __construct(Translator $translator)
@@ -53,7 +39,7 @@ final class YesNoFormatter implements ValueFormatter
             return true;
         }
 
-        return !$fieldDefinition['eval']['multiple'];
+        return ! $fieldDefinition['eval']['multiple'];
     }
 
     /**
@@ -61,6 +47,6 @@ final class YesNoFormatter implements ValueFormatter
      */
     public function format($value, string $fieldName, array $fieldDefinition, $context = null)
     {
-        return $this->translator->trans(($value == '' ? 'MSC.no' : 'MSC.yes'), [], 'contao_default');
+        return $this->translator->trans(($value === '' ? 'MSC.no' : 'MSC.yes'), [], 'contao_default');
     }
 }

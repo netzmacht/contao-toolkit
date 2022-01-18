@@ -1,39 +1,29 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
+use function array_filter;
+use function implode;
+use function is_array;
+
 /**
  * Base class for filters depending on values from other columns.
- *
- * @package Netzmacht\Contao\Toolkit\Data\Alias\Filter
  */
 abstract class AbstractValueFilter extends AbstractFilter
 {
     /**
      * Model columns.
      *
-     * @var array
+     * @var list<string>
      */
     protected $columns;
 
     /**
-     * SlugifyFilter constructor.
-     *
-     * @param array $columns Columns being used for the value.
-     * @param bool  $break   If true break after the filter if value is unique.
-     * @param int   $combine Combine flag.
+     * @param list<string> $columns Columns being used for the value.
+     * @param bool         $break   If true break after the filter if value is unique.
+     * @param int          $combine Combine flag.
      */
     public function __construct(
         array $columns,
@@ -45,9 +35,6 @@ abstract class AbstractValueFilter extends AbstractFilter
         $this->columns = $columns;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function repeatUntilValid(): bool
     {
         return false;

@@ -1,67 +1,53 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Data\Alias;
 
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter;
-use Netzmacht\Contao\Toolkit\Data\Alias\FilterBasedAliasGenerator;
 use Netzmacht\Contao\Toolkit\Data\Alias\Validator;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-/**
- * Class GeneratorSpec
- *
- * @package spec\Netzmacht\Contao\Toolkit\Data\Alias
- */
 class FilterBasedAliasGeneratorSpec extends ObjectBehavior
 {
-    const TABLE_NAME = 'table_name';
+    public const TABLE_NAME = 'table_name';
 
-    const ALIAS_VALUE = 'alias';
+    public const ALIAS_VALUE = 'alias';
 
-    public function it_is_initializable(Filter $filter, Validator $validator)
+    public function it_is_initializable(Filter $filter, Validator $validator): void
     {
-        $this->beConstructedWith([$filter], $validator, static::TABLE_NAME);
+        $this->beConstructedWith([$filter], $validator, self::TABLE_NAME);
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Data\Alias\FilterBasedAliasGenerator');
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator');
     }
 
-    public function it_applies_filter(Filter $filter, Validator $validator)
+    public function it_applies_filter(Filter $filter, Validator $validator): void
     {
-        $this->beConstructedWith([$filter], $validator, static::TABLE_NAME);
+        $this->beConstructedWith([$filter], $validator, self::TABLE_NAME);
 
         $model = (object) [
             'id'    => 5,
             'title' => 'Ali as',
-            'alias' => 'ali-as'
+            'alias' => 'ali-as',
         ];
 
         $filter->initialize()->shouldBeCalled();
         $filter->breakIfValid()->willReturn(true);
-        $filter->apply($model, null, Argument::any())->willReturn(static::ALIAS_VALUE);
-        $validator->validate($model, static::ALIAS_VALUE, [$model->id])->willReturn(true);
+        $filter->apply($model, null, Argument::any())->willReturn(self::ALIAS_VALUE);
+        $validator->validate($model, self::ALIAS_VALUE, [$model->id])->willReturn(true);
 
-        $this->generate($model)->shouldReturn(static::ALIAS_VALUE);
+        $this->generate($model)->shouldReturn(self::ALIAS_VALUE);
     }
 
-    public function it_applies_filters(Filter $filter, Filter $filterB, Validator $validator)
+    public function it_applies_filters(Filter $filter, Filter $filterB, Validator $validator): void
     {
-        $this->beConstructedWith([$filter, $filterB], $validator, static::TABLE_NAME);
+        $this->beConstructedWith([$filter, $filterB], $validator, self::TABLE_NAME);
 
         $model = (object) [
             'id'    => 5,
             'title' => 'Ali as',
-            'alias' => 'ali-as'
+            'alias' => 'ali-as',
         ];
 
         $filter->initialize()->shouldBeCalled();
@@ -71,39 +57,35 @@ class FilterBasedAliasGeneratorSpec extends ObjectBehavior
 
         $filterB->initialize()->shouldBeCalled();
         $filterB->breakIfValid()->willReturn(true);
-        $filterB->apply($model, 'foo', Argument::any())->willReturn(static::ALIAS_VALUE);
+        $filterB->apply($model, 'foo', Argument::any())->willReturn(self::ALIAS_VALUE);
 
         $validator->validate($model, 'foo', [$model->id])->willReturn(false);
-        $validator->validate($model, static::ALIAS_VALUE, [$model->id])->willReturn(true);
+        $validator->validate($model, self::ALIAS_VALUE, [$model->id])->willReturn(true);
 
-        $this->generate($model)->shouldReturn(static::ALIAS_VALUE);
+        $this->generate($model)->shouldReturn(self::ALIAS_VALUE);
     }
 
-    public function it_throws_when_no_alias_is_generated(Validator $validator)
+    public function it_throws_when_no_alias_is_generated(Validator $validator): void
     {
-        $model = (object) [
-            'id' => 5
-        ];
+        $model = (object) ['id' => 5];
 
         $validator->validate(Argument::cetera())->willReturn(true);
 
-        $this->beConstructedWith([], $validator, static::TABLE_NAME);
+        $this->beConstructedWith([], $validator, self::TABLE_NAME);
         $this
             ->shouldThrow('Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException')
             ->during('generate', [$model]);
     }
 
-    public function it_throws_when_invalid_alias_is_generated(Validator $validator)
+    public function it_throws_when_invalid_alias_is_generated(Validator $validator): void
     {
-        $model = (object) [
-            'id' => 5
-        ];
+        $model = (object) ['id' => 5];
 
         $validator->validate(Argument::cetera())->willReturn(false);
 
-        $this->beConstructedWith([], $validator, static::TABLE_NAME);
+        $this->beConstructedWith([], $validator, self::TABLE_NAME);
         $this
             ->shouldThrow('Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException')
-            ->during('generate', [$model, static::ALIAS_VALUE]);
+            ->during('generate', [$model, self::ALIAS_VALUE]);
     }
 }

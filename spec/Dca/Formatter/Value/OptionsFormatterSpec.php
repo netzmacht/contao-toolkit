@@ -1,67 +1,50 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Contao\CoreBundle\Framework\Adapter;
 use Netzmacht\Contao\Toolkit\Callback\Invoker;
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\OptionsFormatter;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 //phpcs:disable Squiz.Classes.ClassFileName.NoMatch
 //phpcs:disable Generic.Files.OneClassPerFile.MultipleFound
 //phpcs:disable Squiz.Classes.ClassFileName.NoMatch
-/**
- * Class OptionsFormatterSpec
- *
- * @package spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value
- */
 class OptionsFormatterSpec extends ObjectBehavior
 {
-    public function let(Adapter $adapter)
+    public function let(Adapter $adapter): void
     {
-        $this->beConstructedWith(new Invoker($adapter));
+        $this->beConstructedWith(new Invoker($adapter->getWrappedObject()));
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\OptionsFormatter');
     }
 
-    public function it_is_a_value_formatter()
+    public function it_is_a_value_formatter(): void
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
     }
 
-    public function it_accepts_fields_with_options()
+    public function it_accepts_fields_with_options(): void
     {
-        $definition['options'] = [
-            'foo' => 'bar'
-        ];
+        $definition['options'] = ['foo' => 'bar'];
 
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
-    public function it_accepts_fields_with_is_associative_flag()
+    public function it_accepts_fields_with_is_associative_flag(): void
     {
         $definition['eval']['isAssociative'] = true;
 
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
-    public function it_accepts_fields_with_options_callback()
+    public function it_accepts_fields_with_options_callback(): void
     {
-        $definition['options_callback'] = function () {
+        $definition['options_callback'] = static function () {
             return [];
         };
         $this->accepts('test', $definition)->shouldReturn(true);
@@ -70,12 +53,12 @@ class OptionsFormatterSpec extends ObjectBehavior
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
-    public function it_does_not_accept_a_field_by_default()
+    public function it_does_not_accept_a_field_by_default(): void
     {
         $this->accepts('test', [])->shouldReturn(false);
     }
 
-    public function it_formats_option_from_associative_array()
+    public function it_formats_option_from_associative_array(): void
     {
         $definition = [
             'options' => ['test' => 'foo'],
@@ -84,22 +67,22 @@ class OptionsFormatterSpec extends ObjectBehavior
         $this->format('test', 'bar', $definition)->shouldReturn('foo');
     }
 
-    public function it_formats_option_of_associative_flagged_field()
+    public function it_formats_option_of_associative_flagged_field(): void
     {
         $definition = [
-            'options' => array(1 => 'foo'),
-            'eval'    => array('isAssociative' => true)
+            'options' => [1 => 'foo'],
+            'eval'    => ['isAssociative' => true],
         ];
 
         $this->format(1, 'test', $definition)->shouldReturn('foo');
     }
 
-    public function it_formats_option_calling_options_callback()
+    public function it_formats_option_calling_options_callback(): void
     {
         $definition = [
-           'options_callback' => function () {
-               return ['foo' => 'Bar'];
-           }
+            'options_callback' => static function () {
+                return ['foo' => 'Bar'];
+            },
         ];
 
         $this->format('foo', 'test', $definition)->shouldReturn('Bar');

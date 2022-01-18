@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Component;
@@ -24,7 +14,14 @@ use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateReference as ToolkitTemplateReference;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Component\Templating\TemplateReferenceInterface as TemplateReference;
+
+use function array_key_exists;
+use function defined;
+use function implode;
+use function is_array;
 use function trigger_error;
+use function trim;
+
 use const E_USER_DEPRECATED;
 use const TL_MODE;
 
@@ -32,13 +29,16 @@ use const TL_MODE;
  * Base element.
  *
  * @deprecated Since 3.5.0 and get removed in 4.0.0
+ *
+ * @psalm-suppress DeprecatedInterface
+ * @psalm-suppress DeprecatedClass
  */
 abstract class AbstractComponent implements Component
 {
     /**
      * Assigned model.
      *
-     * @var Model
+     * @var Model|null
      */
     private $model;
 
@@ -52,7 +52,7 @@ abstract class AbstractComponent implements Component
     /**
      * Components parameter.
      *
-     * @var array
+     * @var array<string,mixed>
      */
     private $data;
 
@@ -78,8 +78,6 @@ abstract class AbstractComponent implements Component
     protected $requestScopeMatcher;
 
     /**
-     * AbstractContentElement constructor.
-     *
      * @param Model|Collection|Result  $model               Object model or result.
      * @param TemplateEngine           $templateEngine      Template engine.
      * @param string                   $column              Column.
@@ -117,13 +115,17 @@ abstract class AbstractComponent implements Component
         $this->requestScopeMatcher = $requestScopeMatcher;
         $this->data                = $this->deserializeData($model->row());
 
-        if ($this->get('customTpl') !== '' && $this->isFrontendRequest()) {
-            $this->setTemplateName((string) $this->get('customTpl'));
+        if ($this->get('customTpl') === '' || ! $this->isFrontendRequest()) {
+            return;
         }
+
+        $this->setTemplateName((string) $this->get('customTpl'));
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-suppress DeprecatedClass
      */
     public function set(string $name, $value): Component
     {
@@ -148,8 +150,6 @@ abstract class AbstractComponent implements Component
      * Check if parameter exists.
      *
      * @param string $name Name of the parameter.
-     *
-     * @return bool
      */
     public function has(string $name): bool
     {
@@ -158,8 +158,6 @@ abstract class AbstractComponent implements Component
 
     /**
      * Get templateName.
-     *
-     * @return string
      */
     protected function getTemplateName(): string
     {
@@ -188,9 +186,6 @@ abstract class AbstractComponent implements Component
         return $this->model;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function generate(): string
     {
         $this->compile();
@@ -206,9 +201,7 @@ abstract class AbstractComponent implements Component
      * Render a template.
      *
      * @param TemplateReference|string $templateName Template name or reference.
-     * @param array                    $parameters   Additional parameters being passed to the template.
-     *
-     * @return string
+     * @param array<string,mixed>      $parameters   Additional parameters being passed to the template.
      */
     protected function render($templateName, array $parameters = []): string
     {
@@ -218,21 +211,21 @@ abstract class AbstractComponent implements Component
     /**
      * Pre template data.
      *
-     * @param array $data Given data.
+     * @param array<string,mixed> $data Given data.
      *
-     * @return array
+     * @return array<string,mixed>
      */
     protected function prepareTemplateData(array $data): array
     {
         $style = [];
         $space = $this->get('space');
 
-        if (!empty($space[0])) {
-            $style[] = 'margin-top:' . $space[0]. 'px;';
+        if (! empty($space[0])) {
+            $style[] = 'margin-top:' . $space[0] . 'px;';
         }
 
-        if (!empty($space[1])) {
-            $style[] = 'margin-bottom:' . $space[1]. 'px;';
+        if (! empty($space[1])) {
+            $style[] = 'margin-bottom:' . $space[1] . 'px;';
         }
 
         $cssID    = $this->get('cssID');
@@ -241,7 +234,7 @@ abstract class AbstractComponent implements Component
         // Do not change this order (see #6191)
         $data['style']    = implode(' ', $style);
         $data['class']    = $cssClass;
-        $data['cssID']    = ($cssID[0] != '') ? ' id="' . $cssID[0] . '"' : '';
+        $data['cssID']    = $cssID[0] !== '' ? ' id="' . $cssID[0] . '"' : '';
         $data['inColumn'] = $this->getColumn();
 
         return $data;
@@ -251,8 +244,6 @@ abstract class AbstractComponent implements Component
      * Post generate the output.
      *
      * @param string $buffer Generated component.
-     *
-     * @return string
      */
     private function postGenerate(string $buffer): string
     {
@@ -261,17 +252,15 @@ abstract class AbstractComponent implements Component
 
     /**
      * Compile the component.
-     *
-     * @return void
      */
-    protected function compile()
+    protected function compile(): void
     {
     }
 
     /**
      * Get the template data.
      *
-     * @return array
+     * @return array<string,mixed>
      */
     protected function getData(): array
     {
@@ -281,17 +270,17 @@ abstract class AbstractComponent implements Component
     /**
      * Deserialize the model data.
      *
-     * @param array $row Model data.
+     * @param array<string,mixed> $row Model data.
      *
-     * @return array
+     * @return array<string,mixed>
      */
     protected function deserializeData(array $row): array
     {
-        if (!empty($row['space'])) {
+        if (! empty($row['space'])) {
             $row['space'] = StringUtil::deserialize($row['space']);
         }
 
-        if (!empty($row['cssID'])) {
+        if (! empty($row['cssID'])) {
             $row['cssID'] = StringUtil::deserialize($row['cssID'], true);
         }
 
@@ -309,20 +298,19 @@ abstract class AbstractComponent implements Component
 
     /**
      * Compile the css class.
-     *
-     * @return string
      */
     protected function compileCssClass(): string
     {
         $cssID    = $this->get('cssID');
         $cssClass = '';
 
-        if (!empty($cssID[1])) {
+        if (! empty($cssID[1])) {
             $cssClass .= $cssID[1];
         }
 
-        if ($this->getModel() && $this->getModel()->classes) {
-            $cssClass .= ' ' . implode(' ', (array) $this->getModel()->classes);
+        $model = $this->getModel();
+        if ($model && $model->classes) {
+            $cssClass .= ' ' . implode(' ', (array) $model->classes);
         }
 
         return trim($cssClass);
@@ -330,8 +318,6 @@ abstract class AbstractComponent implements Component
 
     /**
      * Get the column.
-     *
-     * @return string
      */
     protected function getColumn(): string
     {
@@ -340,8 +326,6 @@ abstract class AbstractComponent implements Component
 
     /**
      * Get the template reference.
-     *
-     * @return TemplateReference
      */
     protected function getTemplateReference(): TemplateReference
     {
@@ -354,8 +338,6 @@ abstract class AbstractComponent implements Component
 
     /**
      * Check if current request is a Contao frontend request.
-     *
-     * @return bool
      */
     protected function isFrontendRequest(): bool
     {
@@ -363,13 +345,11 @@ abstract class AbstractComponent implements Component
             return $this->requestScopeMatcher->isFrontendRequest();
         }
 
-        return TL_MODE === 'FE';
+        return defined('TL_MODE') && TL_MODE === 'FE';
     }
 
     /**
      * Check if current request is a Contao backend request.
-     *
-     * @return bool
      */
     protected function isBackendRequest(): bool
     {
@@ -377,6 +357,6 @@ abstract class AbstractComponent implements Component
             return $this->requestScopeMatcher->isBackendRequest();
         }
 
-        return TL_MODE === 'BE';
+        return defined('TL_MODE') && TL_MODE === 'BE';
     }
 }

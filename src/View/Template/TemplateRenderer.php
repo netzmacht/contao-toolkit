@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     Christopher Bölter <christopher@boelter.eu>
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Template;
@@ -34,10 +23,8 @@ interface TemplateRenderer
     /**
      * Render a template and get the result.
      *
-     * @param string $name       The template name. Supported formats are mentioned above.
-     * @param array  $parameters Parameters passed to the template.
-     *
-     * @return string
+     * @param string              $name       The template name. Supported formats are mentioned above.
+     * @param array<string,mixed> $parameters Parameters passed to the template.
      */
     public function render(string $name, array $parameters = []): string;
 }

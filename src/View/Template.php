@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View;
@@ -18,8 +8,6 @@ use Netzmacht\Contao\Toolkit\View\Template\Exception\HelperNotFound;
 
 /**
  * Interface describes the templates being used in the toolkit.
- *
- * @package Netzmacht\Contao\Toolkit\View
  */
 interface Template
 {
@@ -27,6 +15,8 @@ interface Template
      * Parse the template.
      *
      * @return string
+     *
+     * phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function parse();
 
@@ -55,6 +45,7 @@ interface Template
      * @param string $name Name of the helper.
      *
      * @return mixed
+     *
      * @throws HelperNotFound If helper not exists.
      */
     public function helper(string $name);
@@ -62,16 +53,20 @@ interface Template
     /**
      * Get all the template data.
      *
-     * @return array
+     * @return array<string,mixed>
+     *
+     * phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getData();
 
     /**
      * Set all the template data.
      *
-     * @param array $data Template data.
+     * @param array<string,mixed> $data Template data.
      *
      * @return void
+     *
+     * phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setData($data);
 }

@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Event;
@@ -17,16 +7,13 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Event;
 use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
-/**
- * Class CreateFormatterEvent.
- *
- * @package Netzmacht\Contao\Toolkit\Event
- */
+use function is_array;
+
 final class CreateFormatterEvent extends Event
 {
-    const NAME = 'netzmacht.contao_toolkit.dca.create_formatter';
+    public const NAME = 'netzmacht.contao_toolkit.dca.create_formatter';
 
     /**
      * Data container definition.
@@ -40,7 +27,7 @@ final class CreateFormatterEvent extends Event
      *
      * @var ValueFormatter[]
      */
-    private $formatter = array();
+    private $formatter = [];
 
     /**
      * Pre filters.
@@ -59,24 +46,21 @@ final class CreateFormatterEvent extends Event
     /**
      * Options formatter.
      *
-     * @var ValueFormatter
+     * @var ValueFormatter|null
      */
     private $optionsFormatter;
 
     /**
-     * CreateFormatterEvent constructor.
-     *
      * @param Definition $definition Data container definition.
      */
     public function __construct(Definition $definition)
     {
-        $this->definition = $definition;
+        $this->definition       = $definition;
+        $this->optionsFormatter = null;
     }
 
     /**
      * Get definition.
-     *
-     * @return Definition
      */
     public function getDefinition(): Definition
     {
@@ -197,8 +181,6 @@ final class CreateFormatterEvent extends Event
 
     /**
      * Get options formatter.
-     *
-     * @return ValueFormatter|null
      */
     public function getOptionsFormatter(): ?ValueFormatter
     {

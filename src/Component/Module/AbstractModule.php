@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Component\Module;
@@ -20,12 +10,16 @@ use Contao\Model\Collection;
 use Netzmacht\Contao\Toolkit\Component\AbstractComponent;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Symfony\Component\Templating\EngineInterface as TemplateEngine;
-use Symfony\Component\Translation\TranslatorInterface as Translator;
+use Symfony\Contracts\Translation\TranslatorInterface as Translator;
+
+use function sprintf;
+use function trim;
 
 /**
- * Class AbstractModule.
+ * @deprecated Since 3.5.0 and get removed in 4.0.0
  *
- * @package Netzmacht\Contao\Toolkit\Component\Module
+ * @psalm-suppress DeprecatedClass
+ * @psalm-suppress DeprecatedInterface
  */
 abstract class AbstractModule extends AbstractComponent implements Module
 {
@@ -44,13 +38,13 @@ abstract class AbstractModule extends AbstractComponent implements Module
     protected $translator;
 
     /**
-     * AbstractModule constructor.
-     *
      * @param Model|Collection|Result  $model               Object model or result.
      * @param TemplateEngine           $templateEngine      Template engine.
      * @param Translator               $translator          Translator.
      * @param string                   $column              Column.
      * @param RequestScopeMatcher|null $requestScopeMatcher Request scope matcher.
+     *
+     * @psalm-suppress DeprecatedClass
      */
     public function __construct(
         $model,
@@ -64,12 +58,9 @@ abstract class AbstractModule extends AbstractComponent implements Module
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function generate(): string
     {
-        if (!$this->renderInBackendMode && $this->isBackendRequest()) {
+        if (! $this->renderInBackendMode && $this->isBackendRequest()) {
             return $this->generateBackendView();
         }
 
@@ -78,8 +69,6 @@ abstract class AbstractModule extends AbstractComponent implements Module
 
     /**
      * Generate the backend view.
-     *
-     * @return string
      */
     protected function generateBackendView(): string
     {
@@ -93,7 +82,7 @@ abstract class AbstractModule extends AbstractComponent implements Module
             'title'    => $this->get('headline'),
             'id'       => $this->get('id'),
             'link'     => $this->get('name'),
-            'href'     => $this->generateBackendLink()
+            'href'     => $this->generateBackendLink(),
         ];
 
         return $this->render('toolkit:be:be_wildcard.html5', $parameters);
@@ -101,8 +90,6 @@ abstract class AbstractModule extends AbstractComponent implements Module
 
     /**
      * Generate the backend link.
-     *
-     * @return string
      */
     protected function generateBackendLink(): string
     {
@@ -111,17 +98,12 @@ abstract class AbstractModule extends AbstractComponent implements Module
 
     /**
      * Get translator.
-     *
-     * @return Translator
      */
     protected function getTranslator(): Translator
     {
         return $this->translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function compileCssClass(): string
     {
         return trim('mod_' . $this->get('type') . ' ' . parent::compileCssClass());

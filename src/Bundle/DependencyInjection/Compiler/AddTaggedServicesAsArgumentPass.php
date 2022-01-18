@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler;
@@ -18,11 +8,9 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-/**
- * Class ComponentFactoryCompilePass.
- *
- * @package Netzmacht\Contao\Toolkit\DependencyInjection\CompilerPass
- */
+use function array_keys;
+
+/** @deprecated Will be removed in version 3.0. Symfony has a built in support now */
 final class AddTaggedServicesAsArgumentPass implements CompilerPassInterface
 {
     /**
@@ -47,8 +35,6 @@ final class AddTaggedServicesAsArgumentPass implements CompilerPassInterface
     private $argumentIndex;
 
     /**
-     * ComponentFactoryCompilePass constructor.
-     *
      * @param string $serviceName   Service name which should be adjusted.
      * @param string $tagName       Name of the tag.
      * @param int    $argumentIndex Index of the argument which should get the tagged references.
@@ -60,12 +46,9 @@ final class AddTaggedServicesAsArgumentPass implements CompilerPassInterface
         $this->argumentIndex = $argumentIndex;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->has($this->serviceName)) {
+        if (! $container->has($this->serviceName)) {
             return;
         }
 

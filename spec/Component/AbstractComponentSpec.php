@@ -1,14 +1,6 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Component;
 
@@ -17,40 +9,36 @@ use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\Templating\EngineInterface;
+
+use function define;
+use function defined;
 use function serialize;
 
-if (!defined('TL_MODE')) {
+if (! defined('TL_MODE')) {
     define('TL_MODE', 'FE');
 }
 
-/**
- * Class AbstractComponentSpec
- *
- * @package spec\Netzmacht\Contao\Toolkit\Component
- */
 class AbstractComponentSpec extends ObjectBehavior
 {
-    /** @var \Contao\Model */
+    /** @var Model */
     private $model;
 
-    /** @var array */
+    /** @var array<string,mixed> */
     private $modelData;
 
-    public function let(EngineInterface $templateEngine, RequestScopeMatcher $requestScopeMatcher)
+    public function let(EngineInterface $templateEngine, RequestScopeMatcher $requestScopeMatcher): void
     {
         $this->modelData = [
             'type'      => 'test',
             'headline'  => serialize(['unit' => 'h1', 'value' => 'test']),
             'id'        => 1,
             'cssID'     => serialize(['', '']),
-            'customTpl' => 'custom_tpl'
+            'customTpl' => 'custom_tpl',
         ];
 
-        $this->model = new class($this->modelData) extends Model {
+        $this->model = new class ($this->modelData) extends Model {
             /**
-             * Model constructor.
-             *
-             * @param array $data Model data.
+             * @param array<string,mixed> $data Model data.
              */
             public function __construct(array $data)
             {
@@ -64,46 +52,46 @@ class AbstractComponentSpec extends ObjectBehavior
         $this->beConstructedWith($this->model, $templateEngine, 'main', $requestScopeMatcher);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Component\AbstractComponent');
     }
 
-    public function it_is_a_component()
+    public function it_is_a_component(): void
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Component\Component');
     }
 
-    public function it_provides_data_read_access()
+    public function it_provides_data_read_access(): void
     {
         $this->get('id')->shouldReturn(1);
     }
 
-    public function it_provides_data_write_access()
+    public function it_provides_data_write_access(): void
     {
         $this->set('foo', 'bar')->shouldReturn($this);
         $this->get('foo')->shouldReturn('bar');
     }
 
-    public function it_knows_with_data_exist()
+    public function it_knows_with_data_exist(): void
     {
         $this->has('id')->shouldReturn(true);
         $this->has('invalid')->shouldreturn(false);
     }
 
-    public function it_deserializes_headline()
+    public function it_deserializes_headline(): void
     {
         $this->get('headline')->shouldReturn('test');
         $this->get('hl')->shouldReturn('h1');
     }
 
-    public function it_uses_custom_tpl()
+    public function it_uses_custom_tpl(): void
     {
         // Only works in FE MODE!
         $this->getTemplateName()->shouldReturn('custom_tpl');
     }
 
-    public function it_generates_output(EngineInterface $templateEngine)
+    public function it_generates_output(EngineInterface $templateEngine): void
     {
         $templateEngine->render(Argument::cetera())->willReturn('output');
 

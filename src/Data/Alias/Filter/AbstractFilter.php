@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
@@ -18,8 +8,6 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
 /**
  * Base filter class.
- *
- * @package Netzmacht\Contao\Toolkit\Data\Alias\Filter
  */
 abstract class AbstractFilter implements Filter
 {
@@ -42,8 +30,6 @@ abstract class AbstractFilter implements Filter
     private $combine;
 
     /**
-     * AbstractFilter constructor.
-     *
      * @param bool $break   If true break after the filter if value is unique.
      * @param int  $combine Combine flag.
      */
@@ -53,9 +39,6 @@ abstract class AbstractFilter implements Filter
         $this->combine = $combine;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function breakIfValid(): bool
     {
         return $this->break;
@@ -74,20 +57,18 @@ abstract class AbstractFilter implements Filter
      * @param string $previous  Previous alias value.
      * @param mixed  $current   Current alias value.
      * @param string $separator A separator string.
-     *
-     * @return string
      */
     protected function combine($previous, $current, string $separator): string
     {
-        if (!$previous) {
+        if (! $previous) {
             return $current;
         }
 
         switch ($this->combine) {
-            case static::COMBINE_PREPEND:
+            case self::COMBINE_PREPEND:
                 return $current . $separator . $previous;
 
-            case static::COMBINE_APPEND:
+            case self::COMBINE_APPEND:
                 return $previous . $separator . $current;
 
             default:

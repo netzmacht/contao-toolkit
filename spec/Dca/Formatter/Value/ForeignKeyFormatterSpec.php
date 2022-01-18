@@ -1,67 +1,51 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Statement;
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ForeignKeyFormatter;
+use Doctrine\DBAL\ForwardCompatibility\Result;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-/**
- * Class ForeignKeyFormatterSpec
- *
- * @package spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value
- */
 class ForeignKeyFormatterSpec extends ObjectBehavior
 {
-    public function let(Connection $database)
+    public function let(Connection $database): void
     {
         $this->beConstructedWith($database);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ForeignKeyFormatter');
     }
 
-    public function it_is_a_value_formatter()
+    public function it_is_a_value_formatter(): void
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
     }
 
-    public function it_accepts_foreign_key_fields()
+    public function it_accepts_foreign_key_fields(): void
     {
         $definition['foreignKey'] = 'tl_test.title';
 
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
-    public function it_does_not_accept_non_foreign_key_fields()
+    public function it_does_not_accept_non_foreign_key_fields(): void
     {
         $this->accepts('test', [])->shouldReturn(false);
     }
 
-    public function it_format_by_parsing_foreign_key(Connection $database, Statement $statement)
+    public function it_format_by_parsing_foreign_key(Connection $database, Result $statement): void
     {
         $definition['foreignKey'] = 'tl_test.title';
 
-        $statement->bindValue('id', 5)->shouldBeCalled();
         $statement->rowCount()->willReturn(1)->shouldBeCalledTimes(1);
+        $statement->fetchOne()->willReturn('Title');
 
-        $database->prepare(Argument::any())->willReturn($statement);
-        $statement->execute()->willReturn(true);
-        $statement->fetchColumn(0)->willReturn('Title');
+        $database->executeQuery(Argument::type('string'), ['id' => 5])->willReturn($statement);
 
         $this->format(5, 'test', $definition)->shouldReturn('Title');
     }

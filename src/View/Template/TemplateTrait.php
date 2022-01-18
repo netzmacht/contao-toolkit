@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Template;
@@ -19,15 +9,13 @@ use Netzmacht\Contao\Toolkit\View\Template\Exception\HelperNotFound;
 
 /**
  * Trait extends the default Contao template classes.
- *
- * @package Netzmacht\Contao\Toolkit\View
  */
 trait TemplateTrait
 {
     /**
      * Template helper.
      *
-     * @var callable[]
+     * @var array<string,object|callable>
      */
     protected $helpers = [];
 
@@ -63,12 +51,13 @@ trait TemplateTrait
      *
      * @param string $name Name of the view helper.
      *
-     * @return mixed
+     * @return object|callable
+     *
      * @throws HelperNotFound If helper is not registered.
      */
     public function helper(string $name)
     {
-        if (!isset($this->helpers[$name])) {
+        if (! isset($this->helpers[$name])) {
             throw new HelperNotFound($name);
         }
 
@@ -78,12 +67,13 @@ trait TemplateTrait
     /**
      * Insert a template.
      *
-     * @param string $name The template name.
-     * @param array  $data An optional data array.
+     * @param string                   $name The template name.
+     * @param array<string,mixed>|null $data An optional data array.
      *
-     * @return void
+     * @psalm-suppress MoreSpecificImplementedParamType
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilityTypeMissing
      */
-    public function insert($name, array $data = null)
+    public function insert($name, array $data = null): void
     {
         $template = new static($name, $this->helpers, $this->strContentType);
 

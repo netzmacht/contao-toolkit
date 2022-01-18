@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Factory;
@@ -22,11 +12,6 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SuffixFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\FilterBasedAliasGenerator;
 use Netzmacht\Contao\Toolkit\Data\Alias\Validator\UniqueDatabaseValueValidator;
 
-/**
- * Class DefaultAliasGeneratorFactory.
- *
- * @package Netzmacht\Contao\Toolkit\Data\Alias
- */
 final class ToolkitAliasGeneratorFactory implements AliasGeneratorFactory
 {
     /**
@@ -37,8 +22,6 @@ final class ToolkitAliasGeneratorFactory implements AliasGeneratorFactory
     private $connection;
 
     /**
-     * DefaultAliasGeneratorFactory constructor.
-     *
      * @param Connection $connection Database connection.
      */
     public function __construct(Connection $connection)
@@ -54,7 +37,7 @@ final class ToolkitAliasGeneratorFactory implements AliasGeneratorFactory
         $filters = [
             new ExistingAliasFilter(),
             new SlugifyFilter($fields),
-            new SuffixFilter()
+            new SuffixFilter(),
         ];
 
         $validator = new UniqueDatabaseValueValidator(

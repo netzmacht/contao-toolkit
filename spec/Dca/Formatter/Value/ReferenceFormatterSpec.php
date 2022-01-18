@@ -1,67 +1,52 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ReferenceFormatter;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
-/**
- * Class ReferenceFormatterSpec
- *
- * @package spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value
- */
 class ReferenceFormatterSpec extends ObjectBehavior
 {
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ReferenceFormatter');
     }
 
-    public function it_is_a_value_formatter()
+    public function it_is_a_value_formatter(): void
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
     }
 
-    public function it_accepts_definitions_with_non_empty_reference()
+    public function it_accepts_definitions_with_non_empty_reference(): void
     {
         $definition['reference'] = ['test' => 'foo'];
 
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
-    public function it_does_not_accept_definitions_with_empty_reference()
+    public function it_does_not_accept_definitions_with_empty_reference(): void
     {
         $definition['reference'] = [];
 
         $this->accepts('test', $definition)->shouldReturn(false);
     }
 
-    public function it_does_not_accept_definitions_without_reference()
+    public function it_does_not_accept_definitions_without_reference(): void
     {
         $definition = [];
 
         $this->accepts('test', $definition)->shouldReturn(false);
     }
 
-    public function it_formats_value_by_look_up_reference()
+    public function it_formats_value_by_look_up_reference(): void
     {
         $definition['reference'] = ['bar' => 'foo'];
 
         $this->format('bar', 'test', $definition)->shouldReturn('foo');
     }
 
-    public function it_takes_indexed_null_item_of_array_reference()
+    public function it_takes_indexed_null_item_of_array_reference(): void
     {
         $definition['reference'] = ['bar' => [1 => 'foobar', 0 => 'foo']];
 

@@ -1,30 +1,18 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
-use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\YesNoFormatter;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * Class YesNoFormatterSpec
- *
- * @package spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value
- */
+use function next;
+
 class YesNoFormatterSpec extends ObjectBehavior
 {
-    public function let(TranslatorInterface $translator)
+    public function let(TranslatorInterface $translator): void
     {
         $translator->trans('MSC.yes', [], 'contao_default', Argument::any())->willReturn('ja');
         $translator->trans('MSC.no', [], 'contao_default', Argument::any())->willReturn('nein');
@@ -32,21 +20,19 @@ class YesNoFormatterSpec extends ObjectBehavior
         $this->beConstructedWith($translator);
     }
 
-    public function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\YesNoFormatter');
     }
 
-    public function it_is_a_value_formatter()
+    public function it_is_a_value_formatter(): void
     {
         $this->shouldImplement('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
     }
 
-    public function it_accepts_non_multiple_checkboxes()
+    public function it_accepts_non_multiple_checkboxes(): void
     {
-        $definition = [
-            'inputType' => 'checkbox',
-        ];
+        $definition = ['inputType' => 'checkbox'];
 
         $this->accepts('test', $definition)->shouldReturn(true);
 
@@ -54,17 +40,17 @@ class YesNoFormatterSpec extends ObjectBehavior
         $this->accepts('test', $definition)->shouldReturn(true);
     }
 
-    public function it_does_not_accept_multiple_checkboxes()
+    public function it_does_not_accept_multiple_checkboxes(): void
     {
         $definition = [
             'inputType' => 'checkbox',
-            'eval'      => ['multiple' => true]
+            'eval'      => ['multiple' => true],
         ];
 
         $this->accepts('test', $definition)->shouldReturn(false);
     }
 
-    public function it_does_not_accept_other_input_types()
+    public function it_does_not_accept_other_input_types(): void
     {
         $definition = [];
         $inputTypes = ['text', 'select', 'radio', 'password', 'textarea'];
@@ -76,7 +62,7 @@ class YesNoFormatterSpec extends ObjectBehavior
         } while ($definition['inputType']);
     }
 
-    public function it_translate_checkbox_state(TranslatorInterface $translator)
+    public function it_translate_checkbox_state(TranslatorInterface $translator): void
     {
         $translator->trans('MSC.yes', [], 'contao_default')->shouldBeCalled();
         $this->format('1', 'test', [])->shouldReturn('ja');

@@ -1,27 +1,16 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Options;
 
 use Contao\Model\Collection;
+
 use function call_user_func;
 use function is_callable;
 
 /**
  * Class CollectionOptions maps a model collection to the option format.
- *
- * @package Netzmacht\Contao\DevTools\Dca\Options
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
@@ -37,7 +26,7 @@ final class CollectionOptions implements Options
     /**
      * The label column.
      *
-     * @var string
+     * @var string|callable
      */
     private $labelColumn;
 
@@ -72,17 +61,15 @@ final class CollectionOptions implements Options
     /**
      * Get the label column.
      *
-     * @return string
+     * @return string|callable
      */
-    public function getLabelKey(): string
+    public function getLabelKey()
     {
         return $this->labelColumn;
     }
 
     /**
      * Get the value column.
-     *
-     * @return string
      */
     public function getValueKey(): string
     {
@@ -109,9 +96,6 @@ final class CollectionOptions implements Options
         return $this->collection->row();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function next(): void
     {
         $this->position++;
@@ -126,17 +110,11 @@ final class CollectionOptions implements Options
         return $this->collection->{$this->valueColumn};
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function valid(): bool
     {
         return $this->position < $this->collection->count();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rewind(): void
     {
         $this->position = 0;
@@ -192,7 +170,7 @@ final class CollectionOptions implements Options
      */
     public function getArrayCopy(): array
     {
-        $values = array();
+        $values = [];
 
         foreach ($this as $id => $value) {
             $values[$id] = $value;

@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @author     Christopher Bölter <christopher@boelter.eu>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection;
@@ -20,7 +9,7 @@ use Contao\BackendUser;
 use Contao\Config;
 use Contao\Controller;
 use Contao\CoreBundle\Framework\Adapter;
-use Contao\CoreBundle\Framework\ContaoFrameworkInterface as ContaoFramework;
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Dbafs;
 use Contao\Encryption;
 use Contao\Environment;
@@ -32,11 +21,9 @@ use Contao\Message;
 use Contao\Model;
 use Contao\System;
 
+use function assert;
+
 /**
- * Class ContaoServicesFactory.
- *
- * @package Netzmacht\Contao\Toolkit\DependencyInjection
- *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 final class ContaoServicesFactory
@@ -49,8 +36,6 @@ final class ContaoServicesFactory
     private $framework;
 
     /**
-     * ContaoServicesFactory constructor.
-     *
      * @param ContaoFramework $framework Contao framework.
      */
     public function __construct(ContaoFramework $framework)
@@ -150,8 +135,6 @@ final class ContaoServicesFactory
 
     /**
      * Create backend user instance.
-     *
-     * @return BackendUser
      */
     public function createBackendUserInstance(): BackendUser
     {
@@ -160,8 +143,6 @@ final class ContaoServicesFactory
 
     /**
      * Frontend user.
-     *
-     * @return FrontendUser
      */
     public function createFrontendUserInstance(): FrontendUser
     {
@@ -171,7 +152,7 @@ final class ContaoServicesFactory
     /**
      * Create a model adapter.
      *
-     * @return Adapter|Model\
+     * @return Adapter<Model>
      */
     public function createModelAdapter(): Adapter
     {
@@ -181,7 +162,7 @@ final class ContaoServicesFactory
     /**
      * Create a message adapter.
      *
-     * @return Adapter|Message
+     * @return Adapter<Message>
      */
     public function createMessageAdapter(): Adapter
     {
@@ -191,19 +172,23 @@ final class ContaoServicesFactory
     /**
      * Create a message adapter.
      *
-     * @return Adapter|Dbafs
+     * @return Adapter<Dbafs>
      */
     public function createDbafsAdapter(): Adapter
     {
         return $this->createAdapter(Dbafs::class);
     }
 
+    // phpcs:disable SlevomatCodingStandard.Commenting.DocCommentSpacing.IncorrectOrderOfAnnotationsGroup
+
     /**
      * Create an adapter for a specific class.
      *
-     * @param string $class Class name.
+     * @template T
      *
-     * @return Adapter
+     * @param class-string<T> $class Class name.
+     *
+     * @return Adapter<T>
      */
     private function createAdapter(string $class): Adapter
     {
@@ -215,14 +200,21 @@ final class ContaoServicesFactory
     /**
      * Create an adapter for a specific class.
      *
-     * @param string $class Class name.
+     * @template T
      *
-     * @return object
+     * @param class-string<T> $class Class name.
+     *
+     * @return T
      */
-    private function createInstance(string $class)
+    private function createInstance(string $class): object
     {
         $this->framework->initialize();
 
-        return $this->framework->createInstance($class);
+        $instance = $this->framework->createInstance($class);
+        assert($instance instanceof $class);
+
+        return $instance;
     }
+
+    // phpcs:enable SlevomatCodingStandard.Commenting.DocCommentSpacing.IncorrectOrderOfAnnotationsGroup
 }

@@ -1,19 +1,11 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
+declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Controller\FrontendModule;
 
-use Contao\ModuleModel;
 use Contao\CoreBundle\Routing\ScopeMatcher;
+use Contao\ModuleModel;
 use Netzmacht\Contao\Toolkit\Controller\FrontendModule\AbstractFrontendModuleController;
 use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
@@ -25,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+
 use function serialize;
 
 class AbstractFrontendModuleControllerSpec extends ObjectBehavior

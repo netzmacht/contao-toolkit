@@ -1,15 +1,5 @@
 <?php
 
-/**
- * Contao toolkit.
- *
- * @package    contao-toolkit
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2015-2020 netzmacht David Molineus.
- * @license    LGPL-3.0-or-later https://github.com/netzmacht/contao-toolkit/blob/master/LICENSE
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
@@ -21,8 +11,6 @@ use Netzmacht\Contao\Toolkit\Assertion\Assertion;
  *
  * The difference between the FormatterChain and the FilterFormatter is that the filter formatter will apply all
  * rules and modifies the given value.
- *
- * @package Netzmacht\Contao\Toolkit\Dca\Formatter\Value
  */
 final class FilterFormatter implements ValueFormatter
 {
@@ -31,7 +19,7 @@ final class FilterFormatter implements ValueFormatter
      *
      * @var ValueFormatter[]
      */
-    private $filters = array();
+    private $filters = [];
 
     /**
      * Construct.
@@ -59,9 +47,11 @@ final class FilterFormatter implements ValueFormatter
     public function format($value, string $fieldName, array $fieldDefinition, $context = null)
     {
         foreach ($this->filters as $filter) {
-            if ($filter->accepts($fieldName, $fieldDefinition)) {
-                $value = $filter->format($value, $fieldName, $fieldDefinition, $context);
+            if (! $filter->accepts($fieldName, $fieldDefinition)) {
+                continue;
             }
+
+            $value = $filter->format($value, $fieldName, $fieldDefinition, $context);
         }
 
         return $value;
