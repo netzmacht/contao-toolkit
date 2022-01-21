@@ -59,6 +59,7 @@ final class ToolkitRepositoryManager implements RepositoryManager
             return $this->repositories[$modelClass];
         }
 
+        /** @psalm-suppress RedundantConditionGivenDocblockType */
         if (is_subclass_of($modelClass, Model::class, true)) {
             $this->repositories[$modelClass] = new ContaoRepository($modelClass);
 

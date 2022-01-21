@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Data\Model;
 
 use Contao\Model;
-use Model\Collection;
+use Contao\Model\Collection;
 
 /**
  * Interface Repository describes a very base repository.
  *
  * phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+ *
+ * @psalm-template T of Model
  */
 interface Repository
 {
@@ -21,6 +23,8 @@ interface Repository
 
     /**
      * Get the model class which is handled by the repository.
+     *
+     * @return class-string<T>
      */
     public function getModelClass(): string;
 
@@ -30,6 +34,7 @@ interface Repository
      * @param int $modelId Model id.
      *
      * @return Model|null
+     * @psalm-return T|null
      */
     public function find(int $modelId);
 
@@ -52,6 +57,7 @@ interface Repository
      * @param array<string,mixed> $options Options.
      *
      * @return Model|null
+     * @psalm-return T|null
      */
     public function findOneBy(array $column, array $values, array $options = []);
 
@@ -61,7 +67,8 @@ interface Repository
      * @param Specification       $specification Specification.
      * @param array<string,mixed> $options       Options.
      *
-     * @return Collection|\Model|null
+     * @return Collection|Model|null
+     * @psalm-return Collection|T|null
      */
     public function findBySpecification(Specification $specification, array $options = []);
 
@@ -70,7 +77,8 @@ interface Repository
      *
      * @param array<string,mixed> $options Query options.
      *
-     * @return Collection|\Model|null
+     * @return Collection|Model|null
+     * @psalm-return Collection|T|null
      */
     public function findAll(array $options = []);
 
@@ -97,7 +105,8 @@ interface Repository
     /**
      * Save a model.
      *
-     * @param Model $model Model being saved.
+     * @param       Model $model Model being saved.
+     * @psalm-param T     $model
      *
      * @return void
      */
@@ -106,7 +115,8 @@ interface Repository
     /**
      * Delete a model.
      *
-     * @param Model $model Model being deleted.
+     * @param       Model $model Model being deleted.
+     * @psalm-param T     $model
      *
      * @return void
      */

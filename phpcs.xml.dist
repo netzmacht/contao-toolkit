@@ -60,4 +60,49 @@
     <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
         <exclude-pattern>spec/.*\.php</exclude-pattern>
     </rule>
+
+    <!-- Require specific order of phpDoc annotations with empty newline between specific groups -->
+    <rule ref="SlevomatCodingStandard.Commenting.DocCommentSpacing">
+        <properties>
+            <property name="linesCountBeforeFirstContent" value="0"/>
+            <property name="linesCountAfterLastContent" value="0"/>
+            <property name="linesCountBetweenDescriptionAndAnnotations" value="1"/>
+            <property name="linesCountBetweenAnnotationsGroups" value="1"/>
+            <property name="annotationsGroups" type="array">
+                <element value="
+                    @internal,
+                    @deprecated,
+                "/>
+                <element value="
+                    @template,
+                    @psalm-template,
+                    @template-implements,
+                    @template-extends,
+                    @implements,
+                    @extends
+                "/>
+                <element value="
+                    @link,
+                    @see,
+                    @uses,
+                "/>
+                <element value="
+                    @ORM\,
+                    @ODM\,
+                    @PHPCR\,
+                "/>
+                <element value="
+                    @param,
+                    @psalm-param,
+                    @phpstan-param,
+                "/>
+                <element value="
+                    @return,
+                    @psalm-return,
+                    @phpstan-return,
+                "/>
+                <element value="@throws"/>
+            </property>
+        </properties>
+    </rule>
 </ruleset>

@@ -12,6 +12,9 @@ use function call_user_func_array;
 use function str_replace;
 
 /**
+ * @template T of Model
+ * @implements Repository<T>
+ *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class ContaoRepository implements Repository
@@ -21,12 +24,12 @@ class ContaoRepository implements Repository
     /**
      * The model class.
      *
-     * @var class-string<Model>
+     * @var class-string<T>
      */
     private $modelClass;
 
     /**
-     * @param class-string<Model> $modelClass Model class.
+     * @param class-string<T> $modelClass Model class.
      */
     public function __construct(string $modelClass)
     {
@@ -42,7 +45,7 @@ class ContaoRepository implements Repository
         return $this->call('getTable');
     }
 
-    /** @return class-string<Model> */
+    /** {@inheritDoc} */
     public function getModelClass(): string
     {
         return $this->modelClass;
