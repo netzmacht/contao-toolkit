@@ -8,6 +8,7 @@ use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\FosCacheRespons
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterContaoModelPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RepositoriesPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\TemplateRendererPass;
+use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\TemplatingPass;
 use Netzmacht\Contao\Toolkit\Bundle\NetzmachtContaoToolkitBundle;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -48,6 +49,14 @@ final class NetzmachtContaoToolkitBundleSpec extends ObjectBehavior
     {
         $container->addCompilerPass(Argument::type(TemplateRendererPass::class))->shouldBeCalledOnce();
         $container->addCompilerPass(Argument::not(Argument::type(TemplateRendererPass::class)))->shouldBeCalled();
+
+        $this->build($container);
+    }
+
+    public function it_registers_templating_pass(ContainerBuilder $container): void
+    {
+        $container->addCompilerPass(Argument::type(TemplatingPass::class))->shouldBeCalledOnce();
+        $container->addCompilerPass(Argument::not(Argument::type(TemplatingPass::class)))->shouldBeCalled();
 
         $this->build($container);
     }

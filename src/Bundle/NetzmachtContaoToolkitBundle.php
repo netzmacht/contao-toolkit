@@ -10,6 +10,7 @@ use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\FosCacheRespons
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterContaoModelPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RepositoriesPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\TemplateRendererPass;
+use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\TemplatingPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -78,5 +79,6 @@ final class NetzmachtContaoToolkitBundle extends Bundle
 
         $container->addCompilerPass(new RegisterContaoModelPass());
         $container->addCompilerPass(new TemplateRendererPass());
+        $container->addCompilerPass(new TemplatingPass());
     }
 }
