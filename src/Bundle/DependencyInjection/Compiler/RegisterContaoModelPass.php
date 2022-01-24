@@ -10,6 +10,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 use function assert;
+use function is_subclass_of;
 
 final class RegisterContaoModelPass implements CompilerPassInterface
 {
@@ -34,7 +35,7 @@ final class RegisterContaoModelPass implements CompilerPassInterface
                     ->subclassOf(Model::class);
 
                 $model = $tag['model'];
-                assert($model instanceof Model);
+                assert(is_subclass_of($model, Model::class, true));
 
                 $repositories[$model::getTable()] = $model;
             }

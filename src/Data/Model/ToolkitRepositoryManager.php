@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Model;
 
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Model;
 use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Assertion\Assertion;
@@ -17,7 +18,7 @@ final class ToolkitRepositoryManager implements RepositoryManager
     /**
      * Repositories.
      *
-     * @var Repository[]
+     * @var array<class-string<Model>,Repository>
      */
     private $repositories;
 
@@ -29,10 +30,18 @@ final class ToolkitRepositoryManager implements RepositoryManager
     private $connection;
 
     /**
+     * The contao framework.
+     *
+     * @var ContaoFramework
+     */
+    private $framework;
+
+    /**
      * @param Connection                            $connection   Database connection.
      * @param array<class-string<Model>,Repository> $repositories List of repositories.
+     * @param ContaoFramework                       $framework    Contao framework.
      */
-    public function __construct(Connection $connection, array $repositories)
+    public function __construct(Connection $connection, array $repositories, ContaoFramework $framework)
     {
         Assertion::allImplementsInterface($repositories, Repository::class);
 
@@ -46,6 +55,7 @@ final class ToolkitRepositoryManager implements RepositoryManager
 
         $this->repositories = $repositories;
         $this->connection   = $connection;
+        $this->framework    = $framework;
     }
 
     /**
@@ -61,6 +71,7 @@ final class ToolkitRepositoryManager implements RepositoryManager
 
         /** @psalm-suppress RedundantConditionGivenDocblockType */
         if (is_subclass_of($modelClass, Model::class, true)) {
+            $this->framework->initialize();
             $this->repositories[$modelClass] = new ContaoRepository($modelClass);
 
             return $this->repositories[$modelClass];

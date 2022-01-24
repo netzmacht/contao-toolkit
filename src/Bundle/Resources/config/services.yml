@@ -139,6 +139,7 @@ services:
     arguments:
       - '@database_connection'
       - []
+      - '@contao.framework'
 
   netzmacht.contao_toolkit.routing.scope_matcher:
     class: Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher
