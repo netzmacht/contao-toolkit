@@ -4,6 +4,9 @@ Changelog
 [Unreleased]
 ------------
 
+[3.7.0] (2022-01-24)
+--------------------
+
 ### Changed
 
  - Allow doctrine/dbal ^3.0 for Contao 4.13 compatibility
