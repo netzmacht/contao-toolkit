@@ -76,7 +76,7 @@ final class UniqueDatabaseValueValidator implements Validator
      */
     public function validate($result, $value, ?array $exclude = null): bool
     {
-        if (! $this->allowEmptyAlias && $value === '') {
+        if (! $this->allowEmptyAlias && empty($value)) {
             return false;
         }
 

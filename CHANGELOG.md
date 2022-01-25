@@ -7,6 +7,7 @@ Changelog
 ### Fixed
 
  - Fix visibility logic in hybrid component
+ - Fix unique database value validator
 
 [3.7.2] (2022-01-25)
 --------------------
