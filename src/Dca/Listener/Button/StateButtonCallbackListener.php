@@ -116,7 +116,7 @@ final class StateButtonCallbackListener
                 $this->updater->update(
                     $dataContainer->table,
                     $this->input->get('tid'),
-                    [$config['stateColumn'] => ($this->input->get('state') === 1)],
+                    [$config['stateColumn'] => ((int) $this->input->get('state') === 1)],
                     $dataContainer
                 );
 

@@ -4,6 +4,13 @@ Changelog
 [Unreleased]
 ------------
 
+[3.7.4] (2022-01-25)
+--------------------
+
+### Fixed
+
+ - Fix state button callback for disabling a state
+
 [3.7.3] (2022-01-25)
 --------------------
 
