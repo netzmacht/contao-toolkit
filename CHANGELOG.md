@@ -4,7 +4,11 @@ Changelog
 [Unreleased]
 ------------
 
-[3.7.1] (2022-01-25)
+### Fixed
+
+ - Fix visibility logic in hybrid component
+
+[3.7.2] (2022-01-25)
 --------------------
 
 ### Fixed

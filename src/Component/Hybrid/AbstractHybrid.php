@@ -42,11 +42,11 @@ abstract class AbstractHybrid extends AbstractModule implements Hybrid
      */
     protected function isVisible(): bool
     {
-        if ((! defined('TL_MODE') && TL_MODE !== 'FE') || (! defined('BE_USER_LOGGED_IN') && ! BE_USER_LOGGED_IN)) {
+        if ((! defined('TL_MODE') && TL_MODE !== 'FE') || (defined('BE_USER_LOGGED_IN') && BE_USER_LOGGED_IN)) {
             return true;
         }
 
-        if (! $this->get('invisible')) {
+        if ($this->get('invisible')) {
             return false;
         }
 
@@ -54,7 +54,9 @@ abstract class AbstractHybrid extends AbstractModule implements Hybrid
         $start = $this->get('start');
         $stop  = $this->get('stop');
 
-        return ($start === '' || $start <= $now) && ($stop === '' || $stop >= $now);
+        // phpcs:disable SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedEqualOperator
+        return ($start == '' || $start <= $now) && ($stop == '' || $stop >= $now);
+        // phpcs:enable SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedEqualOperator
     }
 
     protected function compileCssClass(): string
