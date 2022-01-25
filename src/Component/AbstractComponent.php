@@ -252,8 +252,11 @@ abstract class AbstractComponent implements Component
 
     /**
      * Compile the component.
+     *
+     * @return void
      */
-    protected function compile(): void
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+    protected function compile()
     {
     }
 

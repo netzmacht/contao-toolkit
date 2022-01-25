@@ -4,6 +4,13 @@ Changelog
 [Unreleased]
 ------------
 
+[3.7.1] (2022-01-25)
+--------------------
+
+### Fixed
+
+ - Remove backward incompatible type annotation [#29](https://github.com/netzmacht/contao-toolkit/issues/29)
+
 [3.7.0] (2022-01-24)
 --------------------
 
