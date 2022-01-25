@@ -47,6 +47,6 @@ final class YesNoFormatter implements ValueFormatter
      */
     public function format($value, string $fieldName, array $fieldDefinition, $context = null)
     {
-        return $this->translator->trans(($value === '' ? 'MSC.no' : 'MSC.yes'), [], 'contao_default');
+        return $this->translator->trans((empty($value) ? 'MSC.no' : 'MSC.yes'), [], 'contao_default');
     }
 }

@@ -8,6 +8,7 @@ Changelog
 
  - Fix visibility logic in hybrid component
  - Fix unique database value validator
+ - Fix broken YesNoFormatter
 
 [3.7.2] (2022-01-25)
 --------------------
