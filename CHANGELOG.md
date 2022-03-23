@@ -4,6 +4,11 @@ Changelog
 [Unreleased]
 ------------
 
+### Added
+
+ - Asset manager: Add support for asset packages based assets
+
+
 [3.7.4] (2022-01-25)
 --------------------
 

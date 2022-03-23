@@ -29,6 +29,7 @@
     "doctrine/dbal": "^2.11 || ^3.1",
     "patchwork/utf8": "^1.2",
     "psr/log": "^1.1",
+    "symfony/asset": "^4.4 || ^5.1",
     "symfony/config": "^4.4 || ^5.1",
     "symfony/dependency-injection": "^4.4 || ^5.1",
     "symfony/event-dispatcher": "^4.4 || ^5.4",
@@ -45,7 +46,6 @@
     "doctrine/coding-standard": "^9.0.",
     "friends-of-phpspec/phpspec-expect": "^4.0",
     "friendsofsymfony/http-cache": "^2.0",
-    "php-http/guzzle6-adapter": "^1.1",
     "phpcq/runner-bootstrap": "^1.0@dev",
     "phpspec/phpspec": "^6.0 || ^7.0"
   },
