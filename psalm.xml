@@ -23,6 +23,8 @@
         <DeprecatedMethod>
             <errorLevel type="suppress">
                 <referencedMethod name="Contao\Encryption::decrypt"/>
+                <referencedMethod name="Doctrine\DBAL\Query\QueryBuilder::execute"/>
+                <referencedMethod name="Doctrine\DBAL\Connection::getSchemaManager"/>
             </errorLevel>
         </DeprecatedMethod>
         <TooManyArguments>

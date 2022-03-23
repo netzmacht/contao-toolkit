@@ -5,9 +5,17 @@ declare(strict_types=1);
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\ForwardCompatibility\Result;
+use Doctrine\DBAL\ForwardCompatibility\Result as ForwardCompatibilityResult;
+use Doctrine\DBAL\Result;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+
+use function class_alias;
+use function class_exists;
+
+if (! class_exists(Result::class)) {
+    class_alias(ForwardCompatibilityResult::class, Result::class);
+}
 
 class ForeignKeyFormatterSpec extends ObjectBehavior
 {
