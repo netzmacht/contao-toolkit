@@ -8,6 +8,10 @@ Changelog
 
  - Asset manager: Add support for asset packages based assets
 
+### Improved
+
+ - Declare model type in the abstract fragment controllers using psalm's templates feature
+
 
 [3.7.4] (2022-01-25)
 --------------------

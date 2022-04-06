@@ -14,7 +14,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use function sprintf;
 
 /**
- * The RenderBackendViewTrait renders the backend placeholder view for modules
+ * The RenderBackendViewTrait renders the backend placeholder view for content elements
  */
 trait RenderBackendViewTrait
 {

@@ -17,6 +17,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class AbstractModuleController is the base fragment controller for frontend modules
+ *
+ * @extends AbstractFragmentController<ModuleModel>
  */
 abstract class AbstractFrontendModuleController extends AbstractFragmentController
 {
