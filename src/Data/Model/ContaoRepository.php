@@ -76,7 +76,12 @@ class ContaoRepository implements Repository
         $values  = [];
         $options = $this->addTablePrefixToOrder($options);
 
-        $specification->buildQuery($column, $values);
+        if ($specification instanceof QuerySpecification) {
+            $specification->buildQueryWithOptions($column, $values, $options);
+        } else {
+            $specification->buildQuery($column, $values);
+        }
+
         $column = $this->addTablePrefix($column);
 
         return $this->findBy($column, $values, $options);
