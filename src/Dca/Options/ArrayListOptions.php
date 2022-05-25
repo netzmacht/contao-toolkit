@@ -141,12 +141,10 @@ final class ArrayListOptions implements Options
 
     /**
      * {@inheritdoc}
-     *
-     * @psalm-suppress PossiblyNullArrayOffset
      */
     public function offsetSet($offset, $value): void
     {
-        $this->list[$offset] = $value;
+        $this->list[$offset ?? ''] = $value;
     }
 
     /**
