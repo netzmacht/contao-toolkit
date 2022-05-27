@@ -54,6 +54,7 @@ final class ArgumentParser
     {
         $this->guardNoSplitCallbackRegistered($separator);
 
+        $this->splitted = true;
         // phpcs:disable Generic.Files.LineLength.MaxExceeded
         $this->parsers[] = /** @return array<string|int,mixed> */ function (string $query) use ($separator, $names, $limit) {
             return $this->handleSplitBy($query, $separator, $names, $limit);
