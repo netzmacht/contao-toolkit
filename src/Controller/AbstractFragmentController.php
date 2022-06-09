@@ -128,7 +128,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
     private function prepareDefaultTemplateData(Model $model, string $section, ?array $classes = null): array
     {
         $data    = $model->row();
-        $cssID   = StringUtil::deserialize($data['cssID'], true);
+        $cssID   = StringUtil::deserialize($data['cssID'], true) + ['', ''];
         $classes = $classes ?: [];
 
         if ($cssID[1] !== '') {
