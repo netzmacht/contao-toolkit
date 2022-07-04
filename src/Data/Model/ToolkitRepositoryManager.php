@@ -18,7 +18,7 @@ final class ToolkitRepositoryManager implements RepositoryManager
     /**
      * Repositories.
      *
-     * @var array<class-string<Model>,Repository>
+     * @var array<class-string<Model>,Repository<Model>>
      */
     private $repositories;
 
@@ -37,9 +37,9 @@ final class ToolkitRepositoryManager implements RepositoryManager
     private $framework;
 
     /**
-     * @param Connection                            $connection   Database connection.
-     * @param array<class-string<Model>,Repository> $repositories List of repositories.
-     * @param ContaoFramework                       $framework    Contao framework.
+     * @param Connection                                   $connection   Database connection.
+     * @param array<class-string<Model>,Repository<Model>> $repositories List of repositories.
+     * @param ContaoFramework                              $framework    Contao framework.
      */
     public function __construct(Connection $connection, array $repositories, ContaoFramework $framework)
     {
