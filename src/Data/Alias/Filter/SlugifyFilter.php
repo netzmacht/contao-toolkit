@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
 use Contao\StringUtil;
-use Patchwork\Utf8;
+use Symfony\Component\String\UnicodeString;
 
 use function html_entity_decode;
 use function preg_replace;
@@ -82,7 +82,7 @@ final class SlugifyFilter extends AbstractValueFilter
 
         $value = html_entity_decode($value, ENT_QUOTES, $this->charset);
         $value = StringUtil::stripInsertTags($value);
-        $value = Utf8::toAscii($value);
+        $value = (new UnicodeString($value))->ascii()->toString();
         $value = preg_replace($arrSearch, $arrReplace, $value);
 
         if (! $this->preserveUppercase) {
