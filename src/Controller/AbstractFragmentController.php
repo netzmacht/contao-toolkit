@@ -14,6 +14,7 @@ use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use function array_pad;
 use function array_unshift;
 use function implode;
 use function is_array;
@@ -132,7 +133,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
     private function prepareDefaultTemplateData(Model $model, string $section, ?array $classes = null): array
     {
         $data    = $model->row();
-        $cssID   = StringUtil::deserialize($data['cssID'], true);
+        $cssID   = array_pad(StringUtil::deserialize($data['cssID'], true), 1, '');
         $classes = $classes ?: [];
 
         if ($cssID[1] !== '') {
