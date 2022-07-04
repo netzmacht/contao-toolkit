@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AbstractContentElementController is the base fragment controller for content elements
+ *
+ * @extends AbstractFragmentController<ContentModel>
  */
 abstract class AbstractContentElementController extends AbstractFragmentController
 {

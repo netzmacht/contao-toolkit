@@ -14,6 +14,7 @@ use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use function array_pad;
 use function array_unshift;
 use function implode;
 use function is_array;
@@ -26,6 +27,8 @@ use function trim;
 
 /**
  * This class a the base class for the base fragment controller provided by the Toolkit.
+ *
+ * @template TModel of Model
  */
 abstract class AbstractFragmentController implements FragmentOptionsAwareInterface
 {
@@ -94,6 +97,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      * @param Model             $model   The related model providing the configuration.
      * @param string            $section The section in which the fragment is rendered.
      * @param list<string>|null $classes Additional classes.
+     * @psalm-param TModel $model
      */
     protected function generate(Request $request, Model $model, string $section, ?array $classes = null): Response
     {
@@ -122,13 +126,14 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      * @param Model             $model   The related model providing the configuration.
      * @param string            $section The section in which the fragment is rendered.
      * @param list<string>|null $classes Additional classes.
+     * @psalm-param TModel $model
      *
      * @return array<string,mixed>
      */
     private function prepareDefaultTemplateData(Model $model, string $section, ?array $classes = null): array
     {
         $data    = $model->row();
-        $cssID   = StringUtil::deserialize($data['cssID'], true);
+        $cssID   = array_pad(StringUtil::deserialize($data['cssID'], true), 1, '');
         $classes = $classes ?: [];
 
         if ($cssID[1] !== '') {
@@ -159,6 +164,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      * @param array<string,mixed> $data    The parsed template data.
      * @param Request             $request The current request.
      * @param Model               $model   The model containing the configuration.
+     * @psalm-param TModel $model
      *
      * @return array<string,mixed>
      *
@@ -178,6 +184,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      * @param Model             $model   The related model providing the configuration.
      * @param string            $section The section in which the fragment is rendered.
      * @param list<string>|null $classes Additional classes.
+     * @psalm-param TModel $model
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
@@ -195,6 +202,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      * @param array<string,mixed> $data    The parsed data.
      * @param Request             $request The given request.
      * @param Model               $model   The related model providing the configuration.
+     * @psalm-param TModel $model
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
@@ -238,6 +246,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      * Get the template name from the fragment options and or the provided model.
      *
      * @param Model $model The model containing the fragment configuration.
+     * @psalm-param TModel $model
      */
     protected function getTemplateName(Model $model): string
     {
@@ -284,6 +293,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      * Get the fallback template name.
      *
      * @param Model $model The model containing the fragment configuration.
+     * @psalm-param TModel $model
      */
     abstract protected function getFallbackTemplateName(Model $model): string;
 

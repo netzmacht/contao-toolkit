@@ -8,6 +8,14 @@ Changelog
 
  - Asset manager: Add support for asset packages based assets
 
+### Improved
+
+ - Declare model type in the abstract fragment controllers using psalm's templates feature
+
+### Changed
+
+ - Replace patchwork/utf8 to symfony/string ([#31](https://github.com/netzmacht/contao-toolkit/pull/31)) 
+
 
 [3.7.4] (2022-01-25)
 --------------------
