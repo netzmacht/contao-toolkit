@@ -10,10 +10,6 @@ use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
 use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
-use function trigger_error;
-
-use const E_USER_DEPRECATED;
-
 /**
  * AbstractWizard is the base class for a wizard.
  */
@@ -95,35 +91,11 @@ abstract class AbstractWizardListener
      * Invoke by the callback.
      *
      * @param DataContainer $dataContainer Data container driver.
-     */
-    public function onWizardCallback($dataContainer): string
-    {
-        /** @psalm-suppress DeprecatedMethod */
-        return $this->handleWizardCallback($dataContainer);
-    }
-
-    /**
-     * Invoke by the callback.
-     *
-     * @deprecated Deprecated and removed in Version 4.0.0. Use self::onWizardCallback instead.
-     *
-     * @param DataContainer $dataContainer Data container driver.
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function handleWizardCallback($dataContainer): string
+    public function onWizardCallback($dataContainer): string
     {
-        // @codingStandardsIgnoreStart
-        @trigger_error(
-            sprintf(
-                '%1$s::handleWizardCallback is deprecated and will be removed in Version 4.0.0. '
-                . 'Use %1$s::onWizardCallback instead.',
-                static::class
-            ),
-            E_USER_DEPRECATED
-        );
-        // @codingStandardsIgnoreEnd
-
         return '';
     }
 }

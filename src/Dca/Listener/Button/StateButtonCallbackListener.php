@@ -20,8 +20,6 @@ use function preg_match;
 use function preg_replace;
 use function sprintf;
 
-use const E_USER_DEPRECATED;
-
 /**
  * StateButtonCallback creates the state toggle button known in Contao.
  */
@@ -154,70 +152,6 @@ final class StateButtonCallbackListener
             StringUtil::specialchars((string) $title),
             (string) $attributes,
             Image::getHtml((string) $icon, (string) $label, $imageAttributes)
-        );
-    }
-
-    /**
-     * Invoke the callback.
-     *
-     * @deprecated Deprecated and removed in Version 4.0.0. Use self::onButtonCallback instead.
-     *
-     * @param array<string,mixed>        $row               Current data row.
-     * @param string|null                $href              Button link.
-     * @param string|null                $label             Button label.
-     * @param string|null                $title             Button title.
-     * @param string|null                $icon              Enabled button icon.
-     * @param string|null                $attributes        Html attributes as string.
-     * @param string                     $tableName         Table name.
-     * @param array<int,string|int>|null $rootIds           Root ids.
-     * @param array<int,string|int>|null $childRecordIds    Child record ids.
-     * @param bool                       $circularReference Circular reference flag.
-     * @param string|null                $previous          Previous button name.
-     * @param string|null                $next              Next button name.
-     * @param DataContainer              $dataContainer     Data container driver.
-     *
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
-     */
-    public function handleButtonCallback(
-        array $row,
-        $href,
-        $label,
-        $title,
-        $icon,
-        $attributes,
-        string $tableName,
-        $rootIds,
-        $childRecordIds,
-        bool $circularReference,
-        $previous,
-        $next,
-        $dataContainer
-    ): string {
-        // @codingStandardsIgnoreStart
-        @trigger_error(
-            sprintf(
-                '%1$s::handleButtonCallback is deprecated and will be removed in Version 4.0.0. '
-                . 'Use %1$s::onButtonCallback instead.',
-                static::class
-            ),
-            E_USER_DEPRECATED
-        );
-        // @codingStandardsIgnoreEnd
-
-        return $this->onButtonCallback(
-            $row,
-            $href,
-            $label,
-            $title,
-            $icon,
-            $attributes,
-            $tableName,
-            $rootIds,
-            $childRecordIds,
-            $circularReference,
-            $previous,
-            $next,
-            $dataContainer
         );
     }
 

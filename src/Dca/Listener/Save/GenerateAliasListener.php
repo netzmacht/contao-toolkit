@@ -17,8 +17,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use function assert;
 use function sprintf;
 
-use const E_USER_DEPRECATED;
-
 /**
  * Class GenerateAliasCallback is designed to create an alias of a column.
  *
@@ -83,32 +81,6 @@ final class GenerateAliasListener
         );
 
         return $this->getGenerator($dataContainer)->generate($dataContainer->activeRecord, $value);
-    }
-
-    /**
-     * Generate the alias value.
-     *
-     * @deprecated Deprecated and removed in Version 4.0.0. Use self::handleSaveCallback instead.
-     *
-     * @param mixed         $value         The current value.
-     * @param DataContainer $dataContainer The data container driver.
-     *
-     * @throws AssertionFailedException If invalid data container is given.
-     */
-    public function handleSaveCallback($value, $dataContainer): ?string
-    {
-        // @codingStandardsIgnoreStart
-        @trigger_error(
-            sprintf(
-                '%1$s::handleSaveCallback is deprecated and will be removed in Version 4.0.0. '
-                . 'Use %1$s::onSaveCallback instead.',
-                static::class
-            ),
-            E_USER_DEPRECATED
-        );
-        // @codingStandardsIgnoreEnd
-
-        return $this->onSaveCallback($value, $dataContainer);
     }
 
     /**

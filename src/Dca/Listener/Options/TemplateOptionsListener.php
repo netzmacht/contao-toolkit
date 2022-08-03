@@ -11,8 +11,6 @@ use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use function array_diff;
 use function array_merge;
 
-use const E_USER_DEPRECATED;
-
 final class TemplateOptionsListener
 {
     /**
@@ -47,31 +45,6 @@ final class TemplateOptionsListener
         }
 
         return array_diff($templates, $config['exclude']);
-    }
-
-    /**
-     * Handle the options callback.
-     *
-     * @deprecated Deprecated and removed in Version 4.0.0. Use self::onOptionsCallback instead.
-     *
-     * @param DataContainer $dataContainer Data container driver.
-     *
-     * @return list<string>
-     */
-    public function handleOptionsCallback($dataContainer): array
-    {
-        // @codingStandardsIgnoreStart
-        @trigger_error(
-            sprintf(
-                '%1$s::handleOptionsCallback is deprecated and will be removed in Version 4.0.0. '
-                . 'Use %1$s::onOptionsCallback instead.',
-                static::class
-            ),
-            E_USER_DEPRECATED
-        );
-        // @codingStandardsIgnoreEnd
-
-        return $this->onOptionsCallback($dataContainer);
     }
 
     /**

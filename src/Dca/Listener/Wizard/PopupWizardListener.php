@@ -14,8 +14,6 @@ use function array_merge;
 use function sprintf;
 use function str_replace;
 
-use const E_USER_DEPRECATED;
-
 final class PopupWizardListener extends AbstractWizardListener
 {
     /**
@@ -116,24 +114,5 @@ final class PopupWizardListener extends AbstractWizardListener
         $config     = (array) $definition->get(['fields', $dataContainer->field, 'toolkit', 'popup_wizard']);
 
         return $this->generate($dataContainer->value, $config);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function handleWizardCallback($dataContainer): string
-    {
-        // @codingStandardsIgnoreStart
-        @trigger_error(
-            sprintf(
-                '%1$s::handleWizardCallback is deprecated and will be removed in Version 4.0.0. '
-                . 'Use %1$s::onWizardCallback instead.',
-                static::class
-            ),
-            E_USER_DEPRECATED
-        );
-        // @codingStandardsIgnoreEnd
-
-        return $this->onWizardCallback($dataContainer);
     }
 }
