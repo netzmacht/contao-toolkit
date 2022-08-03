@@ -16,9 +16,9 @@ services:
   netzmacht.contao_toolkit.listeners.create_formatter_subscriber:
     class: Netzmacht\Contao\Toolkit\Dca\Formatter\Subscriber\CreateFormatterSubscriber
     arguments:
-      - []
-      - []
-      - []
+      - !tagged_iterator 'netzmacht.contao_toolkit.dca.formatter'
+      - !tagged_iterator 'netzmacht.contao_toolkit.dca.formatter.pre_filter'
+      - !tagged_iterator 'netzmacht.contao_toolkit.dca.formatter.post_filter'
       - '@netzmacht.contao_toolkit.dca.formatter.options'
     tags:
       - { name: 'kernel.event_listener', event: 'netzmacht.contao_toolkit.dca.create_formatter', method: 'handle' }

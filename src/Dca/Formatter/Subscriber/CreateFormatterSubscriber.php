@@ -15,21 +15,21 @@ final class CreateFormatterSubscriber
     /**
      * List of supported value formatter.
      *
-     * @var array|ValueFormatter[]
+     * @var ValueFormatter[]
      */
     private $formatter;
 
     /**
      * Value formatter pre filters.
      *
-     * @var array|ValueFormatter[]
+     * @var ValueFormatter[]
      */
     private $preFilters;
 
     /**
      * Value formatter post filters.
      *
-     * @var array|ValueFormatter[]
+     * @var ValueFormatter[]
      */
     private $postFilters;
 
@@ -41,15 +41,15 @@ final class CreateFormatterSubscriber
     private $optionsFormatter;
 
     /**
-     * @param array|ValueFormatter[] $formatter        Value formatter.
-     * @param array|ValueFormatter[] $preFilters       Pre filters.
-     * @param array|ValueFormatter[] $postFilters      Post filters.
-     * @param ValueFormatter         $optionsFormatter Options formatter.
+     * @param ValueFormatter[] $formatter        Value formatter.
+     * @param ValueFormatter[] $preFilters       Pre filters.
+     * @param ValueFormatter[] $postFilters      Post filters.
+     * @param ValueFormatter   $optionsFormatter Options formatter.
      */
     public function __construct(
-        array $formatter,
-        array $preFilters,
-        array $postFilters,
+        iterable $formatter,
+        iterable $preFilters,
+        iterable $postFilters,
         ValueFormatter $optionsFormatter
     ) {
         $this->formatter        = $formatter;

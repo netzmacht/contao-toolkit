@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Event;
 
-use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
 use Symfony\Contracts\EventDispatcher\Event;
-
-use function is_array;
 
 final class CreateFormatterEvent extends Event
 {
@@ -76,14 +73,14 @@ final class CreateFormatterEvent extends Event
      */
     public function addFormatter($formatter): self
     {
-        if (is_array($formatter)) {
-            foreach ($formatter as $item) {
-                $this->addFormatter($item);
-            }
-        } else {
-            Assertion::isInstanceOf($formatter, ValueFormatter::class);
-
+        if ($formatter instanceof ValueFormatter) {
             $this->formatter[] = $formatter;
+
+            return $this;
+        }
+
+        foreach ($formatter as $item) {
+            $this->addFormatter($item);
         }
 
         return $this;

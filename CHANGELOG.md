@@ -19,6 +19,7 @@ Changelog
  - Remove support of symfony/templating. Use built in template renderer instead.
  - Drop support for encrypted values and do not provide the encryption service.
  - Remove handle* callback methods. Use on* callbacks methods instead
+ - Remove `AddTaggedServicesAsArgumentPass` class
 
 
 [3.7.4] (2022-01-25)
