@@ -11,7 +11,6 @@ use Contao\Controller;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Dbafs;
-use Contao\Encryption;
 use Contao\Environment;
 use Contao\Frontend;
 use Contao\FrontendUser;
@@ -101,16 +100,6 @@ final class ContaoServicesFactory
     public function createEnvironmentAdapter(): Adapter
     {
         return $this->createAdapter(Environment::class);
-    }
-
-    /**
-     * Create an encryption adapter.
-     *
-     * @return Adapter<Encryption>
-     */
-    public function createEncryptionAdapter(): Adapter
-    {
-        return $this->createAdapter(Encryption::class);
     }
 
     /**

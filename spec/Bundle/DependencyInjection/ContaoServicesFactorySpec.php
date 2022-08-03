@@ -11,7 +11,6 @@ use Contao\Controller;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Dbafs;
-use Contao\Encryption;
 use Contao\Environment;
 use Contao\Frontend;
 use Contao\FrontendUser;
@@ -56,12 +55,6 @@ class ContaoServicesFactorySpec extends ObjectBehavior
     {
         $this->expectAdapterWillBeReturned($framework, Controller::class, $adapter);
         $this->createControllerAdapter()->shouldReturn($adapter);
-    }
-
-    public function it_creates_encryption_adapter(ContaoFramework $framework, Adapter $adapter): void
-    {
-        $this->expectAdapterWillBeReturned($framework, Encryption::class, $adapter);
-        $this->createEncryptionAdapter()->shouldReturn($adapter);
     }
 
     public function it_creates_environment_adapter(ContaoFramework $framework, Adapter $adapter): void

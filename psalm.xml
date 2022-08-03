@@ -13,14 +13,8 @@
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
-        <DeprecatedClass>
-            <errorLevel type="suppress">
-                <referencedClass name="Contao\Encryption"/>
-            </errorLevel>
-        </DeprecatedClass>
         <DeprecatedMethod>
             <errorLevel type="suppress">
-                <referencedMethod name="Contao\Encryption::decrypt"/>
                 <referencedMethod name="Doctrine\DBAL\Query\QueryBuilder::execute"/>
                 <referencedMethod name="Doctrine\DBAL\Connection::getSchemaManager"/>
             </errorLevel>
