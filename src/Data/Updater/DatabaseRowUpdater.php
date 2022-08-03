@@ -11,9 +11,9 @@ use Netzmacht\Contao\Toolkit\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Exception\AccessDenied;
+use Symfony\Component\Security\Core\Security;
 
 use function array_keys;
-use function defined;
 use function is_array;
 use function sprintf;
 use function time;
@@ -21,11 +21,9 @@ use function time;
 final class DatabaseRowUpdater implements Updater
 {
     /**
-     * Contao backend user..
-     *
-     * @var BackendUser
+     * The security helper.
      */
-    private $backendUser;
+    private Security $security;
 
     /**
      * The database connection.
@@ -49,21 +47,20 @@ final class DatabaseRowUpdater implements Updater
     private $dcaManager;
 
     /**
-     * @param BackendUser $backendUser Backend user.
-     * @param Connection  $connection  Database connection.
-     * @param DcaManager  $dcaManager  Data container manager.
-     * @param Invoker     $invoker     Callback invoker.
+     * @param Connection $connection Database connection.
+     * @param DcaManager $dcaManager Data container manager.
+     * @param Invoker    $invoker    Callback invoker.
      */
     public function __construct(
-        BackendUser $backendUser,
+        Security $security,
         Connection $connection,
         DcaManager $dcaManager,
         Invoker $invoker
     ) {
-        $this->backendUser = $backendUser;
-        $this->connection  = $connection;
-        $this->invoker     = $invoker;
-        $this->dcaManager  = $dcaManager;
+        $this->security   = $security;
+        $this->connection = $connection;
+        $this->invoker    = $invoker;
+        $this->dcaManager = $dcaManager;
     }
 
     /**
@@ -101,11 +98,13 @@ final class DatabaseRowUpdater implements Updater
      */
     public function hasUserAccess($dataContainerName, $columnName): bool
     {
-        if (! defined('TL_MODE') || TL_MODE !== 'BE') {
+        $user = $this->security->getUser();
+
+        if (! $user instanceof BackendUser) {
             return false;
         }
 
-        return $this->backendUser->hasAccess($dataContainerName . '::' . $columnName, 'alexf');
+        return $user->hasAccess($dataContainerName . '::' . $columnName, 'alexf');
     }
 
     /**

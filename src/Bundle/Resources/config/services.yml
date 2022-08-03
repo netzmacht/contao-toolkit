@@ -80,7 +80,7 @@ services:
   netzmacht.contao_toolkit.data.database_row_updater:
     class: Netzmacht\Contao\Toolkit\Data\Updater\DatabaseRowUpdater
     arguments:
-      - '@netzmacht.contao_toolkit.contao.backend_user'
+      - '@security.helper'
       - '@database_connection'
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@netzmacht.contao_toolkit.callback_invoker'
