@@ -116,11 +116,7 @@ final class StateButtonCallbackListener
 
                 $this->backend->redirect($this->backend->getReferer());
             } catch (AccessDenied $e) {
-                /**
-                 * @psalm-suppress DeprecatedMethod
-                 * @psalm-suppress UndefinedConstant
-                 */
-                $this->backend->log($e->getMessage(), __METHOD__, TL_ERROR);
+                $this->backend->log($e->getMessage(), __METHOD__, 'ERROR');
                 $this->backend->redirect('contao?act=error');
             }
         }
