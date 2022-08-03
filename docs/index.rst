@@ -11,7 +11,6 @@ simultaneously increase the code quality.
    :maxdepth: 2
 
    introduction
-   components/index
    data/index
    dca/index
    view/index

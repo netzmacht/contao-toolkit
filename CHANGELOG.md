@@ -14,7 +14,8 @@ Changelog
 
 ### Changed
 
- - Replace patchwork/utf8 to symfony/string ([#31](https://github.com/netzmacht/contao-toolkit/pull/31)) 
+ - Replace patchwork/utf8 to symfony/string ([#31](https://github.com/netzmacht/contao-toolkit/pull/31))
+ - Remove components, use proper fragment controllers
 
 
 [3.7.4] (2022-01-25)

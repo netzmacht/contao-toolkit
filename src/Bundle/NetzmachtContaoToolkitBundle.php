@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Bundle;
 
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\AddTaggedServicesAsArgumentPass;
-use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\ComponentDecoratorPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\FosCacheResponseTaggerPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterContaoModelPass;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RepositoriesPass;
@@ -23,22 +22,6 @@ final class NetzmachtContaoToolkitBundle extends Bundle
 
         $container->addCompilerPass(new RepositoriesPass());
         $container->addCompilerPass(new FosCacheResponseTaggerPass());
-
-        $container->addCompilerPass(
-            new ComponentDecoratorPass(
-                'netzmacht.contao_toolkit.component.frontend_module',
-                0,
-                'netzmacht.contao_toolkit.component.frontend_module_factory'
-            )
-        );
-
-        $container->addCompilerPass(
-            new ComponentDecoratorPass(
-                'netzmacht.contao_toolkit.component.content_element',
-                1,
-                'netzmacht.contao_toolkit.component.content_element_factory'
-            )
-        );
 
         $container->addCompilerPass(
             new AddTaggedServicesAsArgumentPass(

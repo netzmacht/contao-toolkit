@@ -15,9 +15,7 @@
     <issueHandlers>
         <DeprecatedClass>
             <errorLevel type="suppress">
-                <referencedClass name="Netzmacht\Contao\Toolkit\View\Template\TemplateReference"/>
                 <referencedClass name="Contao\Encryption"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\Component\Component"/>
             </errorLevel>
         </DeprecatedClass>
         <DeprecatedMethod>
