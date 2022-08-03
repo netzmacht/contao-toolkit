@@ -9,7 +9,7 @@ use function is_numeric;
 /**
  * Globals assets manager registers all assets as Contao globals.
  */
-final class GlobalsAssetsManager implements HtmlPageAssetsManager
+final class GlobalsAssetsManager implements AssetsManager
 {
     /**
      * The registered stylesheets.

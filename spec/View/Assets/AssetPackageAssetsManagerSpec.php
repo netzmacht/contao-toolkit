@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace spec\Netzmacht\Contao\Toolkit\View\Assets;
 
 use Netzmacht\Contao\Toolkit\View\Assets\AssetPackageAssetsManager;
-use Netzmacht\Contao\Toolkit\View\Assets\HtmlPageAssetsManager;
+use Netzmacht\Contao\Toolkit\View\Assets\AssetsManager;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\Asset\Packages;
 
 final class AssetPackageAssetsManagerSpec extends ObjectBehavior
 {
-    public function let(HtmlPageAssetsManager $inner, Packages $packages): void
+    public function let(AssetsManager $inner, Packages $packages): void
     {
         $this->beConstructedWith($inner, $packages);
 
@@ -33,10 +33,10 @@ final class AssetPackageAssetsManagerSpec extends ObjectBehavior
 
     public function it_is_an_html_page_assets_manager(): void
     {
-        $this->shouldBeAnInstanceOf(HtmlPageAssetsManager::class);
+        $this->shouldBeAnInstanceOf(AssetsManager::class);
     }
 
-    public function it_locates_stylesheet_paths(HtmlPageAssetsManager $inner, Packages $packages): void
+    public function it_locates_stylesheet_paths(AssetsManager $inner, Packages $packages): void
     {
         $packages->getUrl('asset.css', 'package')
             ->shouldBeCalled()
@@ -48,7 +48,7 @@ final class AssetPackageAssetsManagerSpec extends ObjectBehavior
         $this->addStylesheet('package::asset.css')->shouldReturn($this);
     }
 
-    public function it_locates_stylesheets_paths(HtmlPageAssetsManager $inner, Packages $packages): void
+    public function it_locates_stylesheets_paths(AssetsManager $inner, Packages $packages): void
     {
         $packages->getUrl('asset.css', 'package')
             ->shouldBeCalled()
@@ -68,7 +68,7 @@ final class AssetPackageAssetsManagerSpec extends ObjectBehavior
         $this->addStylesheets(['package::asset.css', 'package::asset2.css', 'style.css'])->shouldReturn($this);
     }
 
-    public function it_locates_javascript_paths(HtmlPageAssetsManager $inner, Packages $packages): void
+    public function it_locates_javascript_paths(AssetsManager $inner, Packages $packages): void
     {
         $packages->getUrl('asset.js', 'package')
             ->shouldBeCalled()
@@ -80,7 +80,7 @@ final class AssetPackageAssetsManagerSpec extends ObjectBehavior
         $this->addJavaScript('package::asset.js')->shouldReturn($this);
     }
 
-    public function it_locates_javascripts_paths(HtmlPageAssetsManager $inner, Packages $packages): void
+    public function it_locates_javascripts_paths(AssetsManager $inner, Packages $packages): void
     {
         $packages->getUrl('asset.js', 'package')
             ->shouldBeCalled()
@@ -100,25 +100,25 @@ final class AssetPackageAssetsManagerSpec extends ObjectBehavior
         $this->addJavaScripts(['package::asset.js', 'package::asset2.js', 'style.js'])->shouldReturn($this);
     }
 
-    public function it_delegates_add_to_head(HtmlPageAssetsManager $inner): void
+    public function it_delegates_add_to_head(AssetsManager $inner): void
     {
         $this->addToHead('foo', 'bar');
         $inner->addToHead('foo', 'bar')->shouldBeCalled();
     }
 
-    public function it_delegates_append_to_head(HtmlPageAssetsManager $inner): void
+    public function it_delegates_append_to_head(AssetsManager $inner): void
     {
         $this->appendToHead('foo');
         $inner->appendToHead('foo')->shouldBeCalled();
     }
 
-    public function it_delegates_add_to_body(HtmlPageAssetsManager $inner): void
+    public function it_delegates_add_to_body(AssetsManager $inner): void
     {
         $this->addToBody('foo', 'bar');
         $inner->addToBody('foo', 'bar')->shouldBeCalled();
     }
 
-    public function it_delegates_append_to_body(HtmlPageAssetsManager $inner): void
+    public function it_delegates_append_to_body(AssetsManager $inner): void
     {
         $this->appendToBody('foo');
         $inner->appendToBody('foo')->shouldBeCalled();

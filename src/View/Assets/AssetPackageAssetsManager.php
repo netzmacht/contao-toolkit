@@ -16,13 +16,13 @@ use function strpos;
  *
  * The package name has to be prefixed separated by double colons: package_name::asset.css
  */
-final class AssetPackageAssetsManager implements HtmlPageAssetsManager
+final class AssetPackageAssetsManager implements AssetsManager
 {
-    private HtmlPageAssetsManager $assetsManager;
+    private AssetsManager $assetsManager;
 
     private Packages $packages;
 
-    public function __construct(HtmlPageAssetsManager $assetsManager, Packages $packages)
+    public function __construct(AssetsManager $assetsManager, Packages $packages)
     {
         $this->assetsManager = $assetsManager;
         $this->packages      = $packages;
@@ -71,7 +71,7 @@ final class AssetPackageAssetsManager implements HtmlPageAssetsManager
     }
 
     /** {@inheritDoc} */
-    public function addToBody(string $name, string $html): HtmlPageAssetsManager
+    public function addToBody(string $name, string $html): AssetsManager
     {
         $this->assetsManager->addToBody($name, $html);
 
@@ -79,7 +79,7 @@ final class AssetPackageAssetsManager implements HtmlPageAssetsManager
     }
 
     /** {@inheritDoc} */
-    public function appendToBody(string $html): HtmlPageAssetsManager
+    public function appendToBody(string $html): AssetsManager
     {
         $this->assetsManager->appendToBody($html);
 
@@ -87,7 +87,7 @@ final class AssetPackageAssetsManager implements HtmlPageAssetsManager
     }
 
     /** {@inheritDoc} */
-    public function addToHead(string $name, string $html): HtmlPageAssetsManager
+    public function addToHead(string $name, string $html): AssetsManager
     {
         $this->assetsManager->addToHead($name, $html);
 
@@ -95,7 +95,7 @@ final class AssetPackageAssetsManager implements HtmlPageAssetsManager
     }
 
     /** {@inheritDoc} */
-    public function appendToHead(string $html): HtmlPageAssetsManager
+    public function appendToHead(string $html): AssetsManager
     {
         $this->assetsManager->appendToHead($html);
 
