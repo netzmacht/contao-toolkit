@@ -23,15 +23,6 @@ services:
     tags:
       - { name: 'kernel.event_listener', event: 'netzmacht.contao_toolkit.dca.create_formatter', method: 'handle' }
 
-  netzmacht.contao_toolkit.listeners.register_component_decorators:
-    class: Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Listener\RegisterComponentDecoratorsListener
-    public: true
-    arguments:
-      - []
-      - []
-    tags:
-      - { name: 'contao.hook', hook: 'initializeSystem', method: 'onInitializeSystem', priority: 100 }
-
   netzmacht.contao_toolkit.listeners.register_models:
     class: Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Listener\RegisterContaoModelsListener
     public: true

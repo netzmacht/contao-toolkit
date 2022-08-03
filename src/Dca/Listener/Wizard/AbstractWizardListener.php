@@ -8,7 +8,6 @@ use Contao\DataContainer;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
-use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
 use function trigger_error;
@@ -37,7 +36,7 @@ abstract class AbstractWizardListener
     /**
      * Template factory.
      *
-     * @var TemplateEngine|TemplateRenderer
+     * @var TemplateRenderer
      */
     private $templateEngine;
 
@@ -49,13 +48,13 @@ abstract class AbstractWizardListener
     protected $dcaManager;
 
     /**
-     * @param TemplateEngine|TemplateRenderer $templateEngine Template Engine.
-     * @param Translator                      $translator     Translator.
-     * @param DcaManager                      $dcaManager     Data container manager.
-     * @param string                          $template       Template name.
+     * @param TemplateRenderer $templateEngine Template Engine.
+     * @param Translator       $translator     Translator.
+     * @param DcaManager       $dcaManager     Data container manager.
+     * @param string           $template       Template name.
      */
     public function __construct(
-        $templateEngine,
+        TemplateRenderer $templateEngine,
         Translator $translator,
         DcaManager $dcaManager,
         string $template = ''

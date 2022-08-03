@@ -8,7 +8,6 @@ use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface as CsrfTokenManager;
-use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
 use function array_merge;
@@ -50,24 +49,24 @@ final class PopupWizardListener extends AbstractWizardListener
     /**
      * Construct.
      *
-     * @param TemplateEngine|TemplateRenderer $templateEngine   Template Engine.
-     * @param Translator                      $translator       Translator.
-     * @param DcaManager                      $dcaManager       Data container manager.
-     * @param CsrfTokenManager                $csrfTokenManager Csrf Token manager.
-     * @param string                          $csrfTokenName    Csrf Token name.
-     * @param string                          $template         Template name.
+     * @param TemplateRenderer $templateRenderer Template renderer.
+     * @param Translator       $translator       Translator.
+     * @param DcaManager       $dcaManager       Data container manager.
+     * @param CsrfTokenManager $csrfTokenManager Csrf Token manager.
+     * @param string           $csrfTokenName    Csrf Token name.
+     * @param string           $template         Template name.
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        $templateEngine,
+        TemplateRenderer $templateRenderer,
         Translator $translator,
         DcaManager $dcaManager,
         CsrfTokenManager $csrfTokenManager,
         string $csrfTokenName,
         string $template = ''
     ) {
-        parent::__construct($templateEngine, $translator, $dcaManager, $template);
+        parent::__construct($templateRenderer, $translator, $dcaManager, $template);
 
         $this->csrfTokenManager = $csrfTokenManager;
         $this->tokenName        = $csrfTokenName;

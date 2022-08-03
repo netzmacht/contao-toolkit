@@ -82,9 +82,7 @@ final class GenerateAliasListener
             $dataContainer->activeRecord instanceof Result || $dataContainer->activeRecord instanceof Model
         );
 
-        $generator = $this->getGenerator($dataContainer);
-
-        return $generator->generate($dataContainer->activeRecord, $value);
+        return $this->getGenerator($dataContainer)->generate($dataContainer->activeRecord, $value);
     }
 
     /**

@@ -9,7 +9,6 @@ use Contao\Input;
 use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
-use Symfony\Component\Templating\EngineInterface as TemplateEngine;
 use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
 use function sprintf;
@@ -23,25 +22,25 @@ final class FilePickerListener extends AbstractFieldPickerListener
     /**
      * Request input.
      *
-     * @var Adapter|Input
+     * @var Adapter<Input>
      */
     private $input;
 
     /**
-     * @param TemplateEngine|TemplateRenderer $templateEngine Template Engine.
-     * @param Translator                      $translator     Translator.
-     * @param DcaManager                      $dcaManager     Data container manager.
-     * @param Input|Adapter                   $input          Request input.
-     * @param string                          $template       Template name.
+     * @param TemplateRenderer $templateRenderer Template renderer.
+     * @param Translator       $translator       Translator.
+     * @param DcaManager       $dcaManager       Data container manager.
+     * @param Adapter<Input>   $input            Request input.
+     * @param string           $template         Template name.
      */
     public function __construct(
-        $templateEngine,
+        TemplateRenderer $templateRenderer,
         Translator $translator,
         DcaManager $dcaManager,
         $input,
-        $template = ''
+        string $template = ''
     ) {
-        parent::__construct($templateEngine, $translator, $dcaManager, $template);
+        parent::__construct($templateRenderer, $translator, $dcaManager, $template);
 
         $this->input = $input;
     }
@@ -69,12 +68,12 @@ final class FilePickerListener extends AbstractFieldPickerListener
         );
 
         $parameters = [
-            'url' => $url,
-            'title' => $this->translator->trans('MSC.filepicker', [], 'contao_default'),
+            'url'     => $url,
+            'title'   => $this->translator->trans('MSC.filepicker', [], 'contao_default'),
             'jsTitle' => $jsTitle,
-            'field' => $fieldName,
-            'icon' => 'pickfile.svg',
-            'id' => $cssId,
+            'field'   => $fieldName,
+            'icon'    => 'pickfile.svg',
+            'id'      => $cssId,
         ];
 
         return $this->render($this->template, $parameters);

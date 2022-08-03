@@ -18,20 +18,6 @@ services:
     arguments:
       - '@netzmacht.contao_toolkit.contao.system_adapter'
 
-  netzmacht.contao_toolkit.component.content_element_factory:
-    class: Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory
-    public: true
-    deprecated: ~
-    arguments:
-      - []
-
-  netzmacht.contao_toolkit.component.frontend_module_factory:
-    class: Netzmacht\Contao\Toolkit\Component\ToolkitComponentFactory
-    public: true
-    deprecated: ~
-    arguments:
-      - []
-
   netzmacht.contao_toolkit.contao_services_factory:
     class: Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\ContaoServicesFactory
     arguments:
@@ -119,16 +105,6 @@ services:
     class: Netzmacht\Contao\Toolkit\View\Template\ToolkitTemplateFactory
     arguments:
       - "@event_dispatcher"
-
-  netzmacht.contao_toolkit.view.template_name_parser:
-    class: Netzmacht\Contao\Toolkit\View\Template\ToolkitTemplateNameParser
-
-  templating.engine.toolkit:
-    class: Netzmacht\Contao\Toolkit\View\Template\ToolkitTemplateEngine
-    deprecated: ~
-    arguments:
-      - '@netzmacht.contao_toolkit.view.template_factory'
-      - '@netzmacht.contao_toolkit.view.template_name_parser'
 
   netzmacht.contao_toolkit.template_renderer:
     class: Netzmacht\Contao\Toolkit\View\Template\DelegatingTemplateRenderer
