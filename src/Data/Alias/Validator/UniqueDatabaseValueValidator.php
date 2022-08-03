@@ -7,10 +7,6 @@ namespace Netzmacht\Contao\Toolkit\Data\Alias\Validator;
 use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Data\Alias\Validator;
 
-use function assert;
-use function is_int;
-use function is_string;
-
 /**
  * Class UniqueDatabaseValueValidator validates a value as true if it does not exists in the database.
  */
@@ -98,9 +94,6 @@ final class UniqueDatabaseValueValidator implements Validator
             $builder->setParameter('excluded', $exclude, Connection::PARAM_INT_ARRAY);
         }
 
-        $statement = $builder->execute();
-        assert(! is_int($statement) && ! is_string($statement));
-
-        return (int) $statement->fetchOne() === 0;
+        return (int) $builder->fetchOne() === 0;
     }
 }

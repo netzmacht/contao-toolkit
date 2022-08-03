@@ -13,12 +13,6 @@
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
-        <DeprecatedMethod>
-            <errorLevel type="suppress">
-                <referencedMethod name="Doctrine\DBAL\Query\QueryBuilder::execute"/>
-                <referencedMethod name="Doctrine\DBAL\Connection::getSchemaManager"/>
-            </errorLevel>
-        </DeprecatedMethod>
         <TooManyArguments>
             <errorLevel type="suppress">
                 <referencedFunction name="Symfony\Contracts\EventDispatcher\EventDispatcherInterface::dispatch"/>

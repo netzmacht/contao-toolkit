@@ -199,12 +199,12 @@ final class DatabaseRowUpdater implements Updater
         }
 
         // Add tstamp if field exists.
-        $columns = $this->connection->getSchemaManager()->listTableColumns($definition->getName());
+        $columns = $this->connection->createSchemaManager()->listTableColumns($definition->getName());
         if (empty($data['tstamp']) && isset($columns['tstamp'])) {
             $builder->set('tstamp', (string) time());
         }
 
         // Store the data.
-        $builder->execute();
+        $builder->executeStatement();
     }
 }
