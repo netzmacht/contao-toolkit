@@ -25,21 +25,21 @@
     "php": "^7.2 || ^8.0",
     "composer-runtime-api": "^2",
     "beberlei/assert": "^2.7 || ^3.0",
-    "contao/core-bundle": "^4.9.10",
-    "doctrine/dbal": "^2.11 || ^3.1",
+    "contao/core-bundle": "^4.13 || ^5.0",
+    "doctrine/dbal": "^3.1",
     "psr/log": "^1.1",
-    "symfony/asset": "^4.4 || ^5.1",
-    "symfony/config": "^4.4 || ^5.1",
-    "symfony/dependency-injection": "^4.4 || ^5.1",
-    "symfony/event-dispatcher": "^4.4 || ^5.4",
-    "symfony/event-dispatcher-contracts": "^1.1.6 || ^2.0.0",
-    "symfony/http-foundation": "^4.4 || ^5.1",
-    "symfony/http-kernel": "^4.4.13 || ^5.1",
-    "symfony/routing": "^4.4 || ^5.1",
-    "symfony/security-csrf": "^4.4 || ^5.0",
+    "symfony/asset": "^5.4 || ^6.0",
+    "symfony/config": "^5.4 || ^6.0",
+    "symfony/dependency-injection": "^5.4 || ^6.0",
+    "symfony/event-dispatcher": "^5.4 || ^6.0",
+    "symfony/event-dispatcher-contracts": "^1.1.6 || ^2.0",
+    "symfony/http-foundation": "^5.4 || ^6.0",
+    "symfony/http-kernel": "^5.4 || ^6.0",
+    "symfony/routing": "^5.4 || ^6.0",
+    "symfony/security-csrf": "^5.4 || ^6.0",
     "symfony/string": "^5.4 || ^6.0",
-    "symfony/templating": "^4.4 || ^5.0",
-    "symfony/translation-contracts": "^1.1.6 || ^2.0.0"
+    "symfony/templating": "^5.4 || ^6.0",
+    "symfony/translation-contracts": "^1.1.6 || ^2.0"
   },
   "require-dev": {
     "contao/manager-plugin": "^2.0",
@@ -73,7 +73,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-develop": "3.9.x-dev",
+      "dev-develop": "4.0.x-dev",
       "dev-master": "3.8.x-dev"
     },
     "contao-manager-plugin": "Netzmacht\\Contao\\Toolkit\\Bundle\\ContaoManager\\Plugin"
