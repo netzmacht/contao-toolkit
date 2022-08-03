@@ -13,7 +13,7 @@ final class RegisterContaoModelsListener
      *
      * @var array<string,class-string<Model>>
      */
-    private $repositories;
+    private array $repositories;
 
     /**
      * @param array<string,class-string<Model>> $repositories List of repositories.

@@ -18,31 +18,23 @@ final class PopupWizardListener extends AbstractWizardListener
 {
     /**
      * Template name.
-     *
-     * @var string
      */
-    protected $template = 'toolkit:be:be_wizard_popup.html5';
+    protected string $template = 'toolkit:be:be_wizard_popup.html5';
 
     /**
      * Link pattern for the url.
-     *
-     * @var string
      */
-    private $linkPattern = 'contao/main.php?%s&amp;id=%s&amp;popup=1&amp;nb=1&amp;rt=%s';
+    private string $linkPattern = 'contao/main.php?%s&amp;id=%s&amp;popup=1&amp;nb=1&amp;rt=%s';
 
     /**
      * Csrf token manager.
-     *
-     * @var CsrfTokenManager
      */
-    private $csrfTokenManager;
+    private CsrfTokenManager $csrfTokenManager;
 
     /**
      * Crsf token name.
-     *
-     * @var string
      */
-    private $tokenName;
+    private string $tokenName;
 
     /**
      * Construct.

@@ -21,7 +21,7 @@ final class PagePickerListener extends AbstractFieldPickerListener
      *
      * @var Adapter<Input>
      */
-    private $input;
+    private Adapter $input;
 
     /**
      * @param TemplateRenderer $templateRenderer Template renderer.
@@ -34,7 +34,7 @@ final class PagePickerListener extends AbstractFieldPickerListener
         TemplateRenderer $templateRenderer,
         Translator $translator,
         DcaManager $dcaManager,
-        $input,
+        Adapter $input,
         string $template = ''
     ) {
         parent::__construct($templateRenderer, $translator, $dcaManager, $template);

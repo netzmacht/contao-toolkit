@@ -13,10 +13,8 @@ final class YesNoFormatter implements ValueFormatter
 {
     /**
      * Translator.
-     *
-     * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
      * @param Translator $translator Translator.

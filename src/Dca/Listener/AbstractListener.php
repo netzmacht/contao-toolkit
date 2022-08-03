@@ -16,17 +16,13 @@ abstract class AbstractListener
 {
     /**
      * Name of the data container.
-     *
-     * @var string
      */
-    protected static $name;
+    protected static string $name;
 
     /**
      * Data container manager.
-     *
-     * @var DcaManager
      */
-    private $dcaManager;
+    private DcaManager $dcaManager;
 
     /**
      * @param DcaManager $dcaManager Data container manager.

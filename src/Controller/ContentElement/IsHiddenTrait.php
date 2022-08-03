@@ -19,10 +19,8 @@ trait IsHiddenTrait
      * The token checker.
      *
      * Has to be set in the implementing class.
-     *
-     * @var TokenChecker
      */
-    protected $tokenChecker;
+    protected TokenChecker $tokenChecker;
 
     /**
      * Check if a content element is hidden.

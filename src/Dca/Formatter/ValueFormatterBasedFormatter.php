@@ -16,24 +16,18 @@ final class ValueFormatterBasedFormatter implements Formatter
 {
     /**
      * Data container definition.
-     *
-     * @var Definition
      */
-    private $definition;
+    private Definition $definition;
 
     /**
      * Value formatter.
-     *
-     * @var ValueFormatter
      */
-    private $valueFormatter;
+    private ValueFormatter $valueFormatter;
 
     /**
      * Options formatter.
-     *
-     * @var ValueFormatter
      */
-    private $optionsFormatter;
+    private ValueFormatter $optionsFormatter;
 
     /**
      * @param Definition     $definition       Data container definition.

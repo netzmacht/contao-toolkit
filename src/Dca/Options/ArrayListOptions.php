@@ -21,7 +21,7 @@ final class ArrayListOptions implements Options
      *
      * @var list<array<string,mixed>>
      */
-    private $list;
+    private array $list;
 
     /**
      * The label key.
@@ -32,24 +32,20 @@ final class ArrayListOptions implements Options
 
     /**
      * The value key.
-     *
-     * @var string
      */
-    private $valueKey = 'id';
+    private string $valueKey = 'id';
 
     /**
      * Current position.
-     *
-     * @var int
      */
-    private $position = 0;
+    private int $position = 0;
 
     /**
      * List of keys.
      *
      * @var list<int>
      */
-    private $keys;
+    private array $keys;
 
     /**
      * Construct.

@@ -8,15 +8,13 @@ final class HiddenValueFormatter implements ValueFormatter
 {
     /**
      * Mask representation of a password.
-     *
-     * @var string
      */
-    private $passwordMask;
+    private string $passwordMask;
 
     /**
      * @param string $passwordMask A mask value for passwords.
      */
-    public function __construct($passwordMask = '')
+    public function __construct(string $passwordMask = '')
     {
         $this->passwordMask = $passwordMask;
     }

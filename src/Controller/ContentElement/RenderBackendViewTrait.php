@@ -20,24 +20,20 @@ trait RenderBackendViewTrait
 {
     /**
      * The router.
-     *
-     * @var RouterInterface
      */
-    protected $router;
+    protected RouterInterface $router;
 
     /**
      * The translator.
-     *
-     * @var TranslatorInterface
      */
-    protected $translator;
+    protected TranslatorInterface $translator;
 
     /**
      * The input adapter.
      *
      * @var Adapter<Input>|null
      */
-    protected $inputAdapter;
+    protected ?Adapter $inputAdapter = null;
 
     /**
      * Render backend view.

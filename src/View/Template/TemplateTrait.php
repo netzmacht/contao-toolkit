@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Template;
 
-use Netzmacht\Contao\Toolkit\View\Template;
 use Netzmacht\Contao\Toolkit\View\Template\Exception\HelperNotFound;
 
 /**
@@ -17,7 +16,7 @@ trait TemplateTrait
      *
      * @var array<string,object|callable>
      */
-    protected $helpers = [];
+    protected array $helpers = [];
 
     /**
      * Get a template value.
@@ -39,7 +38,7 @@ trait TemplateTrait
      *
      * @return $this
      */
-    public function set(string $name, $value): Template
+    public function set(string $name, $value): self
     {
         $this->$name = $value;
 

@@ -19,10 +19,8 @@ final class OptionsFormatter implements ValueFormatter
 {
     /**
      * Callback invoker.
-     *
-     * @var Invoker
      */
-    private $invoker;
+    private Invoker $invoker;
 
     /**
      * @param Invoker $invoker Callback invoker.

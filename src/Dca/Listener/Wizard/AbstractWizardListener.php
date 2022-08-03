@@ -17,31 +17,23 @@ abstract class AbstractWizardListener
 {
     /**
      * Template name.
-     *
-     * @var string
      */
-    protected $template = '';
+    protected string $template = '';
 
     /**
      * Translator.
-     *
-     * @var Translator
      */
-    protected $translator;
+    protected Translator $translator;
 
     /**
      * Template factory.
-     *
-     * @var TemplateRenderer
      */
-    private $templateEngine;
+    private TemplateRenderer $templateEngine;
 
     /**
      * Data container manager.
-     *
-     * @var DcaManager
      */
-    protected $dcaManager;
+    protected DcaManager $dcaManager;
 
     /**
      * @param TemplateRenderer $templateEngine Template Engine.

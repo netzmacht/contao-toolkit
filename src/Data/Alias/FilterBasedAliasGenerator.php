@@ -16,38 +16,30 @@ final class FilterBasedAliasGenerator implements AliasGenerator
 {
     /**
      * Alias validator.
-     *
-     * @var Validator
      */
-    private $validator;
+    private Validator $validator;
 
     /**
      * The alias field.
-     *
-     * @var string
      */
-    private $aliasField;
+    private string $aliasField;
 
     /**
      * The table name.
-     *
-     * @var string
      */
-    private $tableName;
+    private string $tableName;
 
     /**
      * Filters being applied when standardize the value.
      *
-     * @var array|Filter[]
+     * @var Filter[]
      */
-    private $filters;
+    private iterable $filters;
 
     /**
      * Value separator.
-     *
-     * @var string
      */
-    private $separator;
+    private string $separator;
 
     /**
      * Construct.
@@ -59,7 +51,7 @@ final class FilterBasedAliasGenerator implements AliasGenerator
      * @param string    $separator  Value separator.
      */
     public function __construct(
-        $filters,
+        array $filters,
         Validator $validator,
         string $tableName,
         string $aliasField = 'alias',
@@ -167,7 +159,7 @@ final class FilterBasedAliasGenerator implements AliasGenerator
     /**
      * {@inheritDoc}
      */
-    public function generate($result, $value = null)
+    public function generate($result, $value = null): string
     {
         $value = $this->applyFilters($result, $value);
         $this->guardValidAlias($result, $value);

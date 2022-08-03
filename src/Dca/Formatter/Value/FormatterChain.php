@@ -16,7 +16,7 @@ final class FormatterChain implements ValueFormatter
      *
      * @var ValueFormatter[]
      */
-    private $formatter = [];
+    private array $formatter;
 
     /**
      * @param ValueFormatter[]|array $formatter Value formatter.

@@ -19,17 +19,13 @@ final class DelegatingTemplateRenderer implements TemplateRenderer
 {
     /**
      * The Contao template factory.
-     *
-     * @var TemplateFactory
      */
-    private $templateFactory;
+    private TemplateFactory $templateFactory;
 
     /**
      * The twig environment.
-     *
-     * @var Environment|null
      */
-    private $twig;
+    private ?Environment $twig;
 
     /**
      * @param TemplateFactory  $templateFactory The template factory.

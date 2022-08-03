@@ -16,17 +16,13 @@ final class CsrfTokenProvider
 {
     /**
      * The csrf token manager.
-     *
-     * @var CsrfTokenManagerInterface
      */
-    private $tokenManager;
+    private CsrfTokenManagerInterface $tokenManager;
 
     /**
      * The name of the default token.
-     *
-     * @var string
      */
-    private $defaultTokenName;
+    private string $defaultTokenName;
 
     /**
      * @param CsrfTokenManagerInterface $tokenManager     The csrf token manager.

@@ -20,10 +20,8 @@ final class FormatterFactory
 {
     /**
      * Event dispatcher.
-     *
-     * @var EventDispatcher
      */
-    private $eventDispatcher;
+    private EventDispatcher $eventDispatcher;
 
     /**
      * @param EventDispatcher $eventDispatcher Event dispatcher.

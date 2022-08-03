@@ -19,17 +19,13 @@ interface Updater
      *
      * @return mixed
      */
-    public function update($dataContainerName, $recordId, array $data, $context);
+    public function update(string $dataContainerName, $recordId, array $data, $context);
 
     /**
      * Check if user has access to a data container field.
      *
      * @param string $dataContainerName Data container name.
      * @param string $columnName        Column name.
-     *
-     * @return bool
-     *
-     * phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
-    public function hasUserAccess($dataContainerName, $columnName);
+    public function hasUserAccess(string $dataContainerName, string $columnName): bool;
 }

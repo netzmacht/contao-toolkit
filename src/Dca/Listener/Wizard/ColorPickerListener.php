@@ -10,10 +10,8 @@ final class ColorPickerListener extends AbstractPickerListener
 {
     /**
      * Template name.
-     *
-     * @var string
      */
-    protected $template = 'toolkit:be:be_wizard_color_picker.html5';
+    protected string $template = 'toolkit:be:be_wizard_color_picker.html5';
 
     /**
      * Generate the color picker.

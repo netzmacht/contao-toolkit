@@ -32,17 +32,13 @@ final class CollectionOptions implements Options
 
     /**
      * The value column.
-     *
-     * @var string
      */
-    private $valueColumn;
+    private string $valueColumn;
 
     /**
      * Current position.
-     *
-     * @var int
      */
-    private $position = 0;
+    private int $position = 0;
 
     /**
      * Construct.

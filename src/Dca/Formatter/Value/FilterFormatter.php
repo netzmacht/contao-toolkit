@@ -19,7 +19,7 @@ final class FilterFormatter implements ValueFormatter
      *
      * @var ValueFormatter[]
      */
-    private $filters = [];
+    private array $filters;
 
     /**
      * Construct.

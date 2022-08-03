@@ -18,11 +18,9 @@ use function strpos;
  */
 final class AssetPackageAssetsManager implements HtmlPageAssetsManager
 {
-    /** @var HtmlPageAssetsManager */
-    private $assetsManager;
+    private HtmlPageAssetsManager $assetsManager;
 
-    /** @var Packages */
-    private $packages;
+    private Packages $packages;
 
     public function __construct(HtmlPageAssetsManager $assetsManager, Packages $packages)
     {

@@ -14,38 +14,34 @@ final class CreateFormatterEvent extends Event
 
     /**
      * Data container definition.
-     *
-     * @var Definition
      */
-    private $definition;
+    private Definition $definition;
 
     /**
      * Created formatter.
      *
      * @var ValueFormatter[]
      */
-    private $formatter = [];
+    private array $formatter = [];
 
     /**
      * Pre filters.
      *
      * @var ValueFormatter[]
      */
-    private $preFilters = [];
+    private array $preFilters = [];
 
     /**
      * Post filters.
      *
      * @var ValueFormatter[]
      */
-    private $postFilters = [];
+    private array $postFilters = [];
 
     /**
      * Options formatter.
-     *
-     * @var ValueFormatter|null
      */
-    private $optionsFormatter;
+    private ?ValueFormatter $optionsFormatter = null;
 
     /**
      * @param Definition $definition Data container definition.

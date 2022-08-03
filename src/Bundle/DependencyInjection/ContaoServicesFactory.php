@@ -29,10 +29,8 @@ final class ContaoServicesFactory
 {
     /**
      * Contao framework.
-     *
-     * @var ContaoFramework
      */
-    private $framework;
+    private ContaoFramework $framework;
 
     /**
      * @param ContaoFramework $framework Contao framework.

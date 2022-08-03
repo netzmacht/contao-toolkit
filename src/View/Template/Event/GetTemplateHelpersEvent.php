@@ -18,24 +18,20 @@ final class GetTemplateHelpersEvent extends Event
 
     /**
      * Template name.
-     *
-     * @var string
      */
-    private $templateName;
+    private string $templateName;
 
     /**
      * Content type.
-     *
-     * @var string
      */
-    private $contentType;
+    private string $contentType;
 
     /**
      * List of helpers.
      *
      * @var array<string,object|callable>
      */
-    private $helpers = [];
+    private array $helpers = [];
 
     /**
      * @param string $templateName Template name.

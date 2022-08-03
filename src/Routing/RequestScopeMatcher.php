@@ -12,17 +12,13 @@ class RequestScopeMatcher
 {
     /**
      * Contao request scope matcher.
-     *
-     * @var ScopeMatcher
      */
-    private $scopeMatcher;
+    private ScopeMatcher $scopeMatcher;
 
     /**
      * Request stack.
-     *
-     * @var RequestStack
      */
-    private $requestStack;
+    private RequestStack $requestStack;
 
     /**
      * @param ScopeMatcher $scopeMatcher Contao request scope matcher.

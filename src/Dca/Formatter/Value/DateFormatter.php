@@ -16,15 +16,13 @@ final class DateFormatter implements ValueFormatter
 {
     /**
      * Contao config.
-     *
-     * @var Config
      */
-    private $config;
+    private Config $config;
 
     /**
      * @param Config $config Contao config.
      */
-    public function __construct($config)
+    public function __construct(Config $config)
     {
         $this->config = $config;
     }

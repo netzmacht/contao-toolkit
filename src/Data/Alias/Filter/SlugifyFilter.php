@@ -21,17 +21,13 @@ final class SlugifyFilter extends AbstractValueFilter
 {
     /**
      * Preserve uppercase.
-     *
-     * @var bool
      */
-    private $preserveUppercase;
+    private bool $preserveUppercase;
 
     /**
      * Encoding charset.
-     *
-     * @var string
      */
-    private $charset;
+    private string $charset;
 
     /**
      * Construct.
@@ -44,10 +40,10 @@ final class SlugifyFilter extends AbstractValueFilter
      */
     public function __construct(
         array $columns,
-        $break = true,
-        $combine = self::COMBINE_REPLACE,
-        $preserveUppercase = false,
-        $charset = 'utf-8'
+        bool $break = true,
+        int $combine = self::COMBINE_REPLACE,
+        bool $preserveUppercase = false,
+        string $charset = 'utf-8'
     ) {
         parent::__construct($columns, $break, $combine);
 
@@ -58,7 +54,7 @@ final class SlugifyFilter extends AbstractValueFilter
     /**
      * {@inheritdoc}
      */
-    public function apply($model, $value, string $separator): string
+    public function apply($model, ?string $value, string $separator): ?string
     {
         $values = [];
 

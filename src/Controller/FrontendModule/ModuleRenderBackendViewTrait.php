@@ -18,17 +18,13 @@ trait ModuleRenderBackendViewTrait
 {
     /**
      * The router.
-     *
-     * @var RouterInterface
      */
-    protected $router;
+    protected RouterInterface $router;
 
     /**
      * The translator.
-     *
-     * @var TranslatorInterface
      */
-    protected $translator;
+    protected TranslatorInterface $translator;
 
     /**
      * Render backend view.

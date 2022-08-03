@@ -9,8 +9,6 @@ use Contao\Model;
 
 /**
  * Alias generator interface.
- *
- * phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
  */
 interface AliasGenerator
 {
@@ -19,8 +17,6 @@ interface AliasGenerator
      *
      * @param Result|Model $result The database result.
      * @param mixed        $value  The current value.
-     *
-     * @return string|null
      */
-    public function generate($result, $value = null);
+    public function generate($result, $value = null): ?string;
 }

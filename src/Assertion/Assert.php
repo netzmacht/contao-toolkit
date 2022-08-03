@@ -13,15 +13,13 @@ class Assert extends BaseAssert
 {
     /**
      * Lazy assertion exception class.
-     *
-     * @var string
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
     protected static $lazyAssertionExceptionClass = LazyAssertionException::class;
 
     /**
      * Lazy assertion class.
-     *
-     * @var string
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
     protected static $assertionClass = Assertion::class;
 }

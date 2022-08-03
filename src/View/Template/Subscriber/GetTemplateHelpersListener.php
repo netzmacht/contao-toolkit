@@ -15,17 +15,13 @@ final class GetTemplateHelpersListener
 {
     /**
      * Assets manager.
-     *
-     * @var AssetsManager
      */
-    private $assetsManager;
+    private AssetsManager $assetsManager;
 
     /**
      * Translator.
-     *
-     * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
     /**
      * @param AssetsManager $assetsManager Assets manager.

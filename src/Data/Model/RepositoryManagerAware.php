@@ -10,10 +10,6 @@ interface RepositoryManagerAware
      * Register the repository manager.
      *
      * @param RepositoryManager $repositoryManager Repository manager.
-     *
-     * @return void
-     *
-     * phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
-    public function setRepositoryManager(RepositoryManager $repositoryManager);
+    public function setRepositoryManager(RepositoryManager $repositoryManager): void;
 }

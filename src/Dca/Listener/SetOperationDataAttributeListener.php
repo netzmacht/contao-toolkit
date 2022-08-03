@@ -20,17 +20,13 @@ class SetOperationDataAttributeListener
 {
     /**
      * Data container manager.
-     *
-     * @var DcaManager
      */
-    private $dcaManager;
+    private DcaManager $dcaManager;
 
     /**
      * Request scope matcher.
-     *
-     * @var RequestScopeMatcher
      */
-    private $scopeMatcher;
+    private RequestScopeMatcher $scopeMatcher;
 
     /**
      * @param DcaManager          $dcaManager   Data container manager.

@@ -18,28 +18,24 @@ final class Manager implements DcaManager
      *
      * @var Definition[]
      */
-    private $definitions = [];
+    private array $definitions = [];
 
     /**
      * Data definition formatter cache.
      *
      * @var Formatter[]
      */
-    private $formatter = [];
+    private array $formatter = [];
 
     /**
      * The data definition array loader.
-     *
-     * @var DcaLoader
      */
-    private $loader;
+    private DcaLoader $loader;
 
     /**
      * FormatterFactory.
-     *
-     * @var FormatterFactory
      */
-    private $formatterFactory;
+    private FormatterFactory $formatterFactory;
 
     /**
      * @param DcaLoader        $loader           The data definition array loader.

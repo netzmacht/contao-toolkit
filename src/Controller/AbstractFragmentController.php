@@ -34,31 +34,25 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
 {
     /**
      * Template renderer.
-     *
-     * @var TemplateRenderer
      */
-    private $templateRenderer;
+    private TemplateRenderer $templateRenderer;
 
     /**
      * Request scope matcher.
-     *
-     * @var RequestScopeMatcher
      */
-    protected $scopeMatcher;
+    protected RequestScopeMatcher $scopeMatcher;
 
     /**
      * The http request response tagger.
-     *
-     * @var ResponseTagger
      */
-    private $responseTagger;
+    private ResponseTagger $responseTagger;
 
     /**
      * Fragment options.
      *
      * @var array<string,mixed>
      */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * @param TemplateRenderer    $templateRenderer The template renderer.

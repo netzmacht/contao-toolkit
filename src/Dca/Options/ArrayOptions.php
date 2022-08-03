@@ -14,6 +14,14 @@ final class ArrayOptions extends ArrayIterator implements Options
     /**
      * {@inheritdoc}
      */
+    public function getArrayCopy(): array
+    {
+        return parent::getArrayCopy();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getLabelKey()
     {
         return '__label__';

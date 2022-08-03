@@ -27,24 +27,18 @@ final class DatabaseRowUpdater implements Updater
 
     /**
      * The database connection.
-     *
-     * @var Connection
      */
-    private $connection;
+    private Connection $connection;
 
     /**
      * Callback invoker.
-     *
-     * @var Invoker
      */
-    private $invoker;
+    private Invoker $invoker;
 
     /**
      * Data container manager.
-     *
-     * @var DcaManager
      */
-    private $dcaManager;
+    private DcaManager $dcaManager;
 
     /**
      * @param Connection $connection Database connection.
@@ -73,7 +67,7 @@ final class DatabaseRowUpdater implements Updater
      *
      * @return array<string,mixed>
      */
-    public function update($dataContainerName, $recordId, array $data, $context): array
+    public function update(string $dataContainerName, $recordId, array $data, $context): array
     {
         $this->guardUserHasAccess($dataContainerName, $recordId, $data);
 
@@ -96,7 +90,7 @@ final class DatabaseRowUpdater implements Updater
      * @param string $dataContainerName Data container name.
      * @param string $columnName        Column name.
      */
-    public function hasUserAccess($dataContainerName, $columnName): bool
+    public function hasUserAccess(string $dataContainerName, string $columnName): bool
     {
         $user = $this->security->getUser();
 

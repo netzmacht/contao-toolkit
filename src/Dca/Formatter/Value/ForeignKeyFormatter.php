@@ -17,10 +17,8 @@ final class ForeignKeyFormatter implements ValueFormatter
 {
     /**
      * Database connection.
-     *
-     * @var Connection
      */
-    private $connection;
+    private Connection $connection;
 
     /**
      * @param Connection $database Database connection.

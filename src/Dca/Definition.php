@@ -18,14 +18,12 @@ final class Definition
      *
      * @var array<string,mixed>
      */
-    private $dca;
+    private array $dca;
 
     /**
      * Name of the data definition.
-     *
-     * @var string
      */
-    private $name;
+    private string $name;
 
     /**
      * @param string              $name Name of the data definition.

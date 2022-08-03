@@ -16,10 +16,8 @@ final class ToolkitAliasGeneratorFactory implements AliasGeneratorFactory
 {
     /**
      * Database connection.
-     *
-     * @var Connection
      */
-    private $connection;
+    private Connection $connection;
 
     /**
      * @param Connection $connection Database connection.

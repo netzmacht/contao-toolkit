@@ -18,7 +18,7 @@ abstract class AbstractValueFilter extends AbstractFilter
      *
      * @var list<string>
      */
-    protected $columns;
+    protected array $columns;
 
     /**
      * @param list<string> $columns Columns being used for the value.
@@ -41,9 +41,13 @@ abstract class AbstractValueFilter extends AbstractFilter
     }
 
     /**
-     * {@inheritDoc}
+     * Combine the current value with the previous one.
+     *
+     * @param string|null              $previous  Previous alias value.
+     * @param string|list<string>|null $current   Current alias value.
+     * @param string                   $separator A separator string.
      */
-    protected function combine($previous, $current, string $separator): string
+    protected function combine(?string $previous, $current, string $separator): ?string
     {
         if (is_array($current)) {
             $current = implode($separator, array_filter($current));

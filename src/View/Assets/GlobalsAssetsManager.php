@@ -16,35 +16,33 @@ final class GlobalsAssetsManager implements HtmlPageAssetsManager
      *
      * @var array<int|string,string>
      */
-    private $javascripts;
+    private array $javascripts;
 
     /**
      * The registered javascripts.
      *
      * @var array<int|string,string>
      */
-    private $stylesheets;
+    private array $stylesheets;
 
     /**
      * The registered body content.
      *
      * @var array|string[]
      */
-    private $body;
+    private array $body;
 
     /**
      * The registered head content.
      *
      * @var array|string[]
      */
-    private $head;
+    private array $head;
 
     /**
      * Debug mode of the environment.
-     *
-     * @var bool
      */
-    private $debugMode;
+    private bool $debugMode;
 
     /**
      * @param array<int|string,string> $stylesheets The registered stylesheets.

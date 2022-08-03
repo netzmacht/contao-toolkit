@@ -12,10 +12,8 @@ final class FosCacheResponseTagger implements ResponseTagger
 {
     /**
      * Friend of symfony http cache.
-     *
-     * @var FosResponseTagger
      */
-    private $inner;
+    private FosResponseTagger $inner;
 
     /**
      * @param FosResponseTagger $inner Friend of symfony http cache.

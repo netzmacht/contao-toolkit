@@ -9,8 +9,6 @@ use Contao\Model;
 
 /**
  * Filter modifies a value for the alias generator.
- *
- * phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
  */
 interface Filter
 {
@@ -26,19 +24,15 @@ interface Filter
 
     /**
      * Initialize the filter.
-     *
-     * @return void
      */
-    public function initialize();
+    public function initialize(): void;
 
     /**
      * Apply the filter.
      *
      * @param Model|Result $model     Current model.
-     * @param mixed        $value     Current value.
+     * @param string|null  $value     Current value.
      * @param string       $separator Separator character between different alias tokens.
-     *
-     * @return string
      */
-    public function apply($model, $value, string $separator);
+    public function apply($model, ?string $value, string $separator): ?string;
 }

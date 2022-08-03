@@ -13,10 +13,8 @@ final class GlobalsAssetsManagerFactory
 {
     /**
      * Kernel debug mode.
-     *
-     * @var bool
      */
-    private $debug;
+    private bool $debug;
 
     /**
      * @param bool $debug Debug mode.

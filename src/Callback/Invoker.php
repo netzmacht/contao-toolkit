@@ -19,7 +19,7 @@ final class Invoker
      *
      * @var Adapter<System>
      */
-    private $systemAdapter;
+    private Adapter $systemAdapter;
 
     /**
      * @param Adapter<System> $systemAdapter System adapter.

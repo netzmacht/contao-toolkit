@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Data\Model;
 
 use Contao\Model;
+use Contao\Model\Collection;
 use Netzmacht\Contao\Toolkit\Assertion\Assert;
 
 use function array_map;
@@ -26,7 +27,7 @@ class ContaoRepository implements Repository
      *
      * @var class-string<T>
      */
-    private $modelClass;
+    private string $modelClass;
 
     /**
      * @param class-string<T> $modelClass Model class.
@@ -45,16 +46,12 @@ class ContaoRepository implements Repository
         return $this->call('getTable');
     }
 
-    /** {@inheritDoc} */
     public function getModelClass(): string
     {
         return $this->modelClass;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function find(int $modelId)
+    public function find(int $modelId): ?Model
     {
         return $this->call('findByPK', [$modelId]);
     }
@@ -62,7 +59,7 @@ class ContaoRepository implements Repository
     /**
      * {@inheritDoc}
      */
-    public function findBy(array $column, array $values, array $options = [])
+    public function findBy(array $column, array $values, array $options = []): ?Collection
     {
         $column  = $this->addTablePrefix($column);
         $options = $this->addTablePrefixToOrder($options);
@@ -73,7 +70,7 @@ class ContaoRepository implements Repository
     /**
      * {@inheritDoc}
      */
-    public function findOneBy(array $column, array $values, array $options = [])
+    public function findOneBy(array $column, array $values, array $options = []): ?Model
     {
         $column  = $this->addTablePrefix($column);
         $options = $this->addTablePrefixToOrder($options);
@@ -99,7 +96,7 @@ class ContaoRepository implements Repository
     /**
      * {@inheritDoc}
      */
-    public function findAll(array $options = [])
+    public function findAll(array $options = []): ?Collection
     {
         $options = $this->addTablePrefixToOrder($options);
 
@@ -131,18 +128,12 @@ class ContaoRepository implements Repository
         return $this->call('countAll');
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function save(Model $model)
+    public function save(Model $model): void
     {
         $model->save();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function delete(Model $model)
+    public function delete(Model $model): void
     {
         $model->delete();
     }

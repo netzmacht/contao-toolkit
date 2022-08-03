@@ -20,6 +20,7 @@ Changelog
  - Drop support for encrypted values and do not provide the encryption service.
  - Remove handle* callback methods. Use on* callbacks methods instead
  - Remove `AddTaggedServicesAsArgumentPass` class
+ - Use native types where possible
 
 
 [3.7.4] (2022-01-25)

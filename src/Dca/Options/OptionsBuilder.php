@@ -18,10 +18,8 @@ final class OptionsBuilder
 {
     /**
      * The options.
-     *
-     * @var Options
      */
-    private $options;
+    private Options $options;
 
     /**
      * Get Options builder for collection.

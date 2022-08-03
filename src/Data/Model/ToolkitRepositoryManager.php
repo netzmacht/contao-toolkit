@@ -20,21 +20,17 @@ final class ToolkitRepositoryManager implements RepositoryManager
      *
      * @var array<class-string<Model>,Repository<Model>>
      */
-    private $repositories;
+    private array $repositories;
 
     /**
      * Database connection.
-     *
-     * @var Connection
      */
-    private $connection;
+    private Connection $connection;
 
     /**
      * The contao framework.
-     *
-     * @var ContaoFramework
      */
-    private $framework;
+    private ContaoFramework $framework;
 
     /**
      * @param Connection                                   $connection   Database connection.

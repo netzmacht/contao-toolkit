@@ -15,10 +15,8 @@ final class TemplateOptionsListener
 {
     /**
      * Data container manager.
-     *
-     * @var DcaManager
      */
-    private $dcaManager;
+    private DcaManager $dcaManager;
 
     /**
      * @param DcaManager $dcaManager Data container manager.
@@ -29,13 +27,13 @@ final class TemplateOptionsListener
     }
 
     /**
-     * Handle the options callback.
+     * Handle the option callback.
      *
      * @param DataContainer $dataContainer Data container driver.
      *
      * @return list<string>
      */
-    public function onOptionsCallback($dataContainer): array
+    public function onOptionsCallback(DataContainer $dataContainer): array
     {
         $config    = $this->getConfig($dataContainer);
         $templates = Controller::getTemplateGroup($config['prefix']);
@@ -54,7 +52,7 @@ final class TemplateOptionsListener
      *
      * @return array<string,mixed>
      */
-    private function getConfig($dataContainer): array
+    private function getConfig(DataContainer $dataContainer): array
     {
         $definition = $this->dcaManager->getDefinition($dataContainer->table);
 

@@ -15,10 +15,8 @@ final class ToolkitTemplateFactory implements TemplateFactory
 {
     /**
      * Event dispatcher.
-     *
-     * @var EventDispatcher
      */
-    private $eventDispatcher;
+    private EventDispatcher $eventDispatcher;
 
     /**
      * @param EventDispatcher $eventDispatcher Event dispatcher.

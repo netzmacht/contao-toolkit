@@ -30,28 +30,24 @@ final class StateButtonCallbackListener
      *
      * @var Adapter<Input>
      */
-    private $input;
+    private Adapter $input;
 
     /**
      * Data row updater.
-     *
-     * @var Updater
      */
-    private $updater;
+    private Updater $updater;
 
     /**
      * Data container manager.
-     *
-     * @var DcaManager
      */
-    private $dcaManager;
+    private DcaManager $dcaManager;
 
     /**
      * Contao backend adapter.
      *
      * @var Adapter<Backend>
      */
-    private $backend;
+    private Adapter $backend;
 
     /**
      * @param Adapter<Backend> $backend    Contao backend adapter.

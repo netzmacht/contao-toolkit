@@ -26,10 +26,8 @@ final class ArgumentParser
 
     /**
      * Mark if arguments are already splitted.
-     *
-     * @var bool
      */
-    private $splitted = false;
+    private bool $splitted = false;
 
     /**
      * Create the argument parser.
