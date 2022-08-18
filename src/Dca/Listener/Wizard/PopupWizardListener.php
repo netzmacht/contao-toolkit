@@ -7,11 +7,12 @@ namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface as CsrfTokenManager;
 use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
 use function array_merge;
-use function sprintf;
+use function parse_str;
 use function str_replace;
 
 final class PopupWizardListener extends AbstractWizardListener
@@ -19,7 +20,7 @@ final class PopupWizardListener extends AbstractWizardListener
     /**
      * Template name.
      */
-    protected string $template = 'toolkit:be:be_wizard_popup.html5';
+    protected string $template = 'be:be_wizard_popup.html5';
 
     /**
      * Link pattern for the url.
@@ -30,6 +31,8 @@ final class PopupWizardListener extends AbstractWizardListener
      * Csrf token manager.
      */
     private CsrfTokenManager $csrfTokenManager;
+
+    private RouterInterface $router;
 
     /**
      * Crsf token name.
@@ -53,6 +56,7 @@ final class PopupWizardListener extends AbstractWizardListener
         Translator $translator,
         DcaManager $dcaManager,
         CsrfTokenManager $csrfTokenManager,
+        RouterInterface $router,
         string $csrfTokenName,
         string $template = ''
     ) {
@@ -60,6 +64,7 @@ final class PopupWizardListener extends AbstractWizardListener
 
         $this->csrfTokenManager = $csrfTokenManager;
         $this->tokenName        = $csrfTokenName;
+        $this->router           = $router;
     }
 
     /**
@@ -82,9 +87,16 @@ final class PopupWizardListener extends AbstractWizardListener
         );
 
         if ($config['always'] || $value) {
-            $token      = $this->csrfTokenManager->getToken($this->tokenName)->getValue();
+            $token = $this->csrfTokenManager->getToken($this->tokenName)->getValue();
+            parse_str((string) $config['href'], $params);
+
+            $params['rt']    = $token;
+            $params['id']    = $value;
+            $params['nb']    = 1;
+            $params['popup'] = 1;
+
             $parameters = [
-                'href'    => sprintf($config['linkPattern'], (string) $config['href'], $value, $token),
+                'href'    => $this->router->generate('contao_backend', $params),
                 'label'   => StringUtil::specialchars((string) $config['label']),
                 'title'   => StringUtil::specialchars((string) $config['title']),
                 'jsTitle' => StringUtil::specialchars(str_replace('\'', '\\\'', (string) $config['title'])),

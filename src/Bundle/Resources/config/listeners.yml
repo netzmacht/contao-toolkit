@@ -81,6 +81,7 @@ services:
       - '@translator'
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@netzmacht.contao_toolkit.contao.input_adapter'
+      - '@router'
 
   netzmacht.contao_toolkit.dca.listeners.file_picker:
     alias: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\FilePickerListener
@@ -93,6 +94,7 @@ services:
       - '@translator'
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@netzmacht.contao_toolkit.contao.input_adapter'
+      - '@router'
 
   netzmacht.contao_toolkit.dca.listeners.page_picker:
     alias: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PagePickerListener
@@ -105,6 +107,7 @@ services:
       - '@translator'
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@security.csrf.token_manager'
+      - '@router'
       - '%contao.csrf_token_name%'
 
   netzmacht.contao_toolkit.dca.listeners.popup_wizard:

@@ -9,6 +9,7 @@ use Contao\Input;
 use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
 use function sprintf;
@@ -26,6 +27,8 @@ final class FilePickerListener extends AbstractFieldPickerListener
      */
     private Adapter $input;
 
+    private RouterInterface $router;
+
     /**
      * @param TemplateRenderer $templateRenderer Template renderer.
      * @param Translator       $translator       Translator.
@@ -38,11 +41,13 @@ final class FilePickerListener extends AbstractFieldPickerListener
         Translator $translator,
         DcaManager $dcaManager,
         Adapter $input,
+        RouterInterface $router,
         string $template = ''
     ) {
         parent::__construct($templateRenderer, $translator, $dcaManager, $template);
 
-        $this->input = $input;
+        $this->input  = $input;
+        $this->router = $router;
     }
 
     /**
@@ -50,18 +55,16 @@ final class FilePickerListener extends AbstractFieldPickerListener
      */
     public function generate(string $tableName, string $fieldName, int $rowId, $value = null): string
     {
-        /** @psalm-suppress PossiblyInvalidCast */
-        $url = sprintf(
-            'contao/file.php?do=%s&amp;table=%s&amp;field=%s&amp;value=%s',
-            (string) $this->input->get('do'),
-            $tableName,
-            $fieldName,
-            str_replace(
-                ['{{link_url::', '}}'],
-                '',
-                $value
-            )
-        );
+        $url = $this->router->generate('contao_backend_picker', [
+            'context' => 'file',
+            'extras'  => [
+                'fieldType' => 'radio',
+                'filesOnly' => true,
+                'source'    => sprintf('%s.%s', $tableName, $rowId),
+            ],
+            'value'   => $value,
+            'popup'   => 1,
+        ]);
 
         $cssId   = $fieldName . ($this->input->get('act') === 'editAll' ? '_' . $rowId : '');
         $jsTitle = StringUtil::specialchars(

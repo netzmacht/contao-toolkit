@@ -9,6 +9,7 @@ use Contao\Input;
 use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
 use function sprintf;
@@ -23,11 +24,14 @@ final class PagePickerListener extends AbstractFieldPickerListener
      */
     private Adapter $input;
 
+    private RouterInterface $router;
+
     /**
      * @param TemplateRenderer $templateRenderer Template renderer.
      * @param Translator       $translator       Translator.
      * @param DcaManager       $dcaManager       Data container manager.
      * @param Adapter<Input>   $input            Request input.
+     * @param RouterInterface  $router           The router.
      * @param string           $template         Template name.
      */
     public function __construct(
@@ -35,11 +39,13 @@ final class PagePickerListener extends AbstractFieldPickerListener
         Translator $translator,
         DcaManager $dcaManager,
         Adapter $input,
+        RouterInterface $router,
         string $template = ''
     ) {
         parent::__construct($templateRenderer, $translator, $dcaManager, $template);
 
-        $this->input = $input;
+        $this->input  = $input;
+        $this->router = $router;
     }
 
     /**
@@ -47,18 +53,16 @@ final class PagePickerListener extends AbstractFieldPickerListener
      */
     public function generate(string $tableName, string $fieldName, int $rowId, $value = null): string
     {
-        /** @psalm-suppress PossiblyInvalidCast */
-        $url = sprintf(
-            'contao/page.php?do=%s&amp;table=%s&amp;field=%s&amp;value=%s',
-            (string) $this->input->get('do'),
-            $tableName,
-            $fieldName,
-            str_replace(
-                ['{{link_url::', '}}'],
-                '',
-                $value
-            )
-        );
+        $url = $this->router->generate('contao_backend_picker', [
+            'context' => 'link',
+            'extras'  => [
+                'fieldType' => 'radio',
+                'filesOnly' => true,
+                'source'    => sprintf('%s.%s', $tableName, $rowId),
+            ],
+            'value'   => $value,
+            'popup'   => 1,
+        ]);
 
         $cssId   = $fieldName . ($this->input->get('act') === 'editAll' ? '_' . $rowId : '');
         $jsTitle = StringUtil::specialchars(
@@ -66,12 +70,12 @@ final class PagePickerListener extends AbstractFieldPickerListener
         );
 
         $parameters = [
-            'url' => $url,
-            'title' => $this->translator->trans('MSC.pagepicker', [], 'contao_default'),
+            'url'     => $url,
+            'title'   => $this->translator->trans('MSC.pagepicker', [], 'contao_default'),
             'jsTitle' => $jsTitle,
-            'field' => $fieldName,
-            'icon' => 'pickpage.svg',
-            'id' => $cssId,
+            'field'   => $fieldName,
+            'icon'    => 'pickpage.svg',
+            'id'      => $cssId,
         ];
 
         return $this->render($this->template, $parameters);
