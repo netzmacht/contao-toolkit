@@ -166,8 +166,6 @@ final class ContaoServicesFactory
         return $this->createAdapter(Dbafs::class);
     }
 
-    // phpcs:disable SlevomatCodingStandard.Commenting.DocCommentSpacing.IncorrectOrderOfAnnotationsGroup
-
     /**
      * Create an adapter for a specific class.
      *
@@ -202,6 +200,4 @@ final class ContaoServicesFactory
 
         return $instance;
     }
-
-    // phpcs:enable SlevomatCodingStandard.Commenting.DocCommentSpacing.IncorrectOrderOfAnnotationsGroup
 }
