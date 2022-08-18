@@ -47,9 +47,10 @@ final class PagePickerListener extends AbstractFieldPickerListener
      */
     public function generate(string $tableName, string $fieldName, int $rowId, $value = null): string
     {
+        /** @psalm-suppress PossiblyInvalidCast */
         $url = sprintf(
             'contao/page.php?do=%s&amp;table=%s&amp;field=%s&amp;value=%s',
-            $this->input->get('do'),
+            (string) $this->input->get('do'),
             $tableName,
             $fieldName,
             str_replace(

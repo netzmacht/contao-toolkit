@@ -9,7 +9,7 @@
     <projectFiles>
         <directory name="src" />
         <ignoreFiles>
-            <directory name="vendor/contao/core-bundle/src/Resources/contao"/>
+            <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
@@ -26,6 +26,11 @@
                 <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::getAdapter"/>
             </errorLevel>
         </InternalMethod>
+        <UndefinedMagicPropertyFetch>
+            <errorLevel type="suppress">
+                <referencedProperty name="Contao\DataContainer::$activeRecord"/>
+            </errorLevel>
+        </UndefinedMagicPropertyFetch>
     </issueHandlers>
 
     <universalObjectCrates>

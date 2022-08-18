@@ -151,28 +151,28 @@ final class GlobalsAssetsManager implements AssetsManager
         return $this;
     }
 
-    public function addToBody(string $name, string $html): HtmlPageAssetsManager
+    public function addToBody(string $name, string $html): AssetsManager
     {
         $this->body[$name] = $html;
 
         return $this;
     }
 
-    public function appendToBody(string $html): HtmlPageAssetsManager
+    public function appendToBody(string $html): AssetsManager
     {
         $this->body[] = $html;
 
         return $this;
     }
 
-    public function addToHead(string $name, string $html): HtmlPageAssetsManager
+    public function addToHead(string $name, string $html): AssetsManager
     {
         $this->head[$name] = $html;
 
         return $this;
     }
 
-    public function appendToHead(string $html): HtmlPageAssetsManager
+    public function appendToHead(string $html): AssetsManager
     {
         $this->head[] = $html;
 

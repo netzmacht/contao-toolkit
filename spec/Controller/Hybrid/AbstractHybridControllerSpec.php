@@ -8,6 +8,7 @@ use Contao\ContentModel;
 use Contao\CoreBundle\Routing\ScopeMatcher;
 use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\ModuleModel;
+use Contao\System;
 use Netzmacht\Contao\Toolkit\Controller\Hybrid\AbstractHybridController;
 use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
@@ -15,6 +16,8 @@ use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use ReflectionClass;
+use ReflectionProperty;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
@@ -32,8 +35,14 @@ class AbstractHybridControllerSpec extends ObjectBehavior
         RouterInterface $router,
         RequestStack $requestStack,
         TranslatorInterface $translator,
-        TokenChecker $tokenChecker
+        TokenChecker $tokenChecker,
+        Container $container
     ): void {
+        System::setContainer($container->getWrappedObject());
+
+        $container->getParameter('kernel.cache_dir')->willReturn(__DIR__ . '/../../fixtures');
+        $container->getParameter('kernel.debug')->willReturn(false);
+
         $this->beAnInstanceOf(ConcreteHybridController::class);
         $this->beConstructedWith(
             $templateRenderer,
@@ -43,6 +52,13 @@ class AbstractHybridControllerSpec extends ObjectBehavior
             $translator,
             $tokenChecker
         );
+    }
+
+    public function letGo(): void
+    {
+        $property = new ReflectionProperty(System::class, 'objContainer');
+        $property->setAccessible(true);
+        $property->setValue(null);
     }
 
     public function it_is_initializable(): void

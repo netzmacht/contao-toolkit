@@ -59,6 +59,7 @@ final class Manager implements DcaManager
     {
         if ($noCache) {
             $this->loader->loadLanguageFile($name, null, $noCache);
+            /** @psalm-suppress TooManyArguments - Contao 5 removed 2nd argument */
             $this->loader->loadDataContainer($name, $noCache);
 
             $this->assertValidDca($name);

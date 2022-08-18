@@ -109,7 +109,7 @@ final class StateButtonCallbackListener
             try {
                 $this->updater->update(
                     $dataContainer->table,
-                    $this->input->get('tid'),
+                    (int) $this->input->get('tid'),
                     [$config['stateColumn'] => ((int) $this->input->get('state') === 1)],
                     $dataContainer
                 );
@@ -128,9 +128,11 @@ final class StateButtonCallbackListener
         $disabled = ! $row[$config['stateColumn']] || ($config['inverse'] && $row[$config['stateColumn']]);
         $href     = $href ?? '';
         $href    .= '&amp;id=';
-        $href    .= (string) $this->input->get('id');
-        $href    .= '&amp;tid=';
-        $href    .= $row['id'] . '&amp;state=' . ($disabled ? '1' : '');
+
+        /** @psalm-suppress PossiblyInvalidCast */
+        $href .= (string) $this->input->get('id');
+        $href .= '&amp;tid=';
+        $href .= $row['id'] . '&amp;state=' . ($disabled ? '1' : '');
 
         if ($disabled) {
             $icon = $this->disableIcon((string) $icon, (string) $config['disabledIcon']);
