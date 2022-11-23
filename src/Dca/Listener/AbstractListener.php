@@ -16,8 +16,11 @@ abstract class AbstractListener
 {
     /**
      * Name of the data container.
+     *
+     * @var string
      */
-    protected static string $name;
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected static $name;
 
     /**
      * Data container manager.
