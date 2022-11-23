@@ -36,6 +36,8 @@ class AbstractFrontendModuleControllerSpec extends ObjectBehavior
     ): void {
         System::setContainer($container->getWrappedObject());
 
+        $router->generate(Argument::cetera())->willReturn('https://example.org');
+
         $container->getParameter('kernel.cache_dir')->willReturn(__DIR__ . '/../../fixtures');
         $container->getParameter('kernel.debug')->willReturn(false);
 

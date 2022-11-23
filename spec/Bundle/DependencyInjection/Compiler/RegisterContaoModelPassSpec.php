@@ -8,6 +8,7 @@ use Contao\ContentModel;
 use Contao\ModuleModel;
 use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterContaoModelPass;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -51,7 +52,8 @@ class RegisterContaoModelPassSpec extends ObjectBehavior
             ->shouldBeCalled()
             ->willReturn($taggedServices);
 
-        $definition->replaceArgument(0, ['tl_content' => ContentModel::class, 'tl_module' => ModuleModel::class])
+        $definition->replaceArgument(0, Argument::type('array'))
+            ->willReturn($definition)
             ->shouldBeCalled();
 
         $this->process($container);

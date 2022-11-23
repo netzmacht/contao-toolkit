@@ -43,6 +43,8 @@ class AbstractHybridControllerSpec extends ObjectBehavior
         $container->getParameter('kernel.cache_dir')->willReturn(__DIR__ . '/../../fixtures');
         $container->getParameter('kernel.debug')->willReturn(false);
 
+        $router->generate(Argument::cetera())->willReturn('https://example.org');
+
         $this->beAnInstanceOf(ConcreteHybridController::class);
         $this->beConstructedWith(
             $templateRenderer,

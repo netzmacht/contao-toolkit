@@ -107,6 +107,7 @@ final class StateButtonCallbackListener
 
         if ($this->input->get('tid')) {
             try {
+                /** @psalm-suppress RiskyCast */
                 $this->updater->update(
                     $dataContainer->table,
                     (int) $this->input->get('tid'),

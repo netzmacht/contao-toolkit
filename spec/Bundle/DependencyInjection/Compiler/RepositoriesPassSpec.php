@@ -52,7 +52,7 @@ class RepositoriesPassSpec extends ObjectBehavior
             ->shouldBeCalled()
             ->willReturn($taggedServices);
 
-        $definition->setArgument(1, Argument::size(2))->shouldBeCalled();
+        $definition->setArgument(1, Argument::type('array'))->willReturn($definition)->shouldBeCalled();
 
         $this->process($container);
     }
