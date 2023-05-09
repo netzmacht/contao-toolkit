@@ -18,9 +18,7 @@ final class ToolkitTemplateFactory implements TemplateFactory
      */
     private EventDispatcher $eventDispatcher;
 
-    /**
-     * @param EventDispatcher $eventDispatcher Event dispatcher.
-     */
+    /** @param EventDispatcher $eventDispatcher Event dispatcher. */
     public function __construct(EventDispatcher $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
@@ -34,7 +32,7 @@ final class ToolkitTemplateFactory implements TemplateFactory
     public function createFrontendTemplate(
         string $name,
         array $data = null,
-        string $contentType = 'text/html'
+        string $contentType = 'text/html',
     ): Template {
         $helpers  = $this->getTemplateHelpers($name, $contentType);
         $template = new FrontendTemplate($name, $helpers, $contentType);
@@ -54,7 +52,7 @@ final class ToolkitTemplateFactory implements TemplateFactory
     public function createBackendTemplate(
         string $name,
         array $data = null,
-        string $contentType = 'text/html'
+        string $contentType = 'text/html',
     ): Template {
         $helpers  = $this->getTemplateHelpers($name, $contentType);
         $template = new BackendTemplate($name, $helpers, $contentType);

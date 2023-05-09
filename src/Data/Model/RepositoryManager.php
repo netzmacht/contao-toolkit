@@ -12,11 +12,11 @@ interface RepositoryManager
     /**
      * Get a repository.Use
      *
+     * @template T of Model
+     *
      * @param class-string<T> $modelClass Model class.
      *
      * @return Repository<T>
-     *
-     * @template T of Model
      */
     public function getRepository(string $modelClass): Repository;
 

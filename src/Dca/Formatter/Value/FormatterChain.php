@@ -18,9 +18,7 @@ final class FormatterChain implements ValueFormatter
      */
     private array $formatter;
 
-    /**
-     * @param ValueFormatter[]|array $formatter Value formatter.
-     */
+    /** @param ValueFormatter[]|array $formatter Value formatter. */
     public function __construct(array $formatter)
     {
         Assertion::allImplementsInterface($formatter, ValueFormatter::class);
@@ -45,7 +43,7 @@ final class FormatterChain implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null)
     {
         foreach ($this->formatter as $formatter) {
             if ($formatter->accepts($fieldName, $fieldDefinition)) {

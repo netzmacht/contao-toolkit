@@ -24,8 +24,6 @@ final class PagePickerListener extends AbstractFieldPickerListener
      */
     private Adapter $input;
 
-    private RouterInterface $router;
-
     /**
      * @param TemplateRenderer $templateRenderer Template renderer.
      * @param Translator       $translator       Translator.
@@ -39,13 +37,12 @@ final class PagePickerListener extends AbstractFieldPickerListener
         Translator $translator,
         DcaManager $dcaManager,
         Adapter $input,
-        RouterInterface $router,
-        string $template = ''
+        private RouterInterface $router,
+        string $template = '',
     ) {
         parent::__construct($templateRenderer, $translator, $dcaManager, $template);
 
-        $this->input  = $input;
-        $this->router = $router;
+        $this->input = $input;
     }
 
     /**
@@ -66,7 +63,7 @@ final class PagePickerListener extends AbstractFieldPickerListener
 
         $cssId   = $fieldName . ($this->input->get('act') === 'editAll' ? '_' . $rowId : '');
         $jsTitle = StringUtil::specialchars(
-            str_replace('\'', '\\\'', $this->translator->trans('MOD.page.0', [], 'contao_modules'))
+            str_replace('\'', '\\\'', $this->translator->trans('MOD.page.0', [], 'contao_modules')),
         );
 
         $parameters = [

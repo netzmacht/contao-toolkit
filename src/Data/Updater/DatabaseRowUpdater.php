@@ -21,40 +21,16 @@ use function time;
 final class DatabaseRowUpdater implements Updater
 {
     /**
-     * The security helper.
-     */
-    private Security $security;
-
-    /**
-     * The database connection.
-     */
-    private Connection $connection;
-
-    /**
-     * Callback invoker.
-     */
-    private Invoker $invoker;
-
-    /**
-     * Data container manager.
-     */
-    private DcaManager $dcaManager;
-
-    /**
      * @param Connection $connection Database connection.
      * @param DcaManager $dcaManager Data container manager.
      * @param Invoker    $invoker    Callback invoker.
      */
     public function __construct(
-        Security $security,
-        Connection $connection,
-        DcaManager $dcaManager,
-        Invoker $invoker
+        private readonly Security $security,
+        private readonly Connection $connection,
+        private readonly DcaManager $dcaManager,
+        private readonly Invoker $invoker,
     ) {
-        $this->security   = $security;
-        $this->connection = $connection;
-        $this->invoker    = $invoker;
-        $this->dcaManager = $dcaManager;
     }
 
     /**
@@ -67,7 +43,7 @@ final class DatabaseRowUpdater implements Updater
      *
      * @return array<string,mixed>
      */
-    public function update(string $dataContainerName, $recordId, array $data, $context): array
+    public function update(string $dataContainerName, int|string $recordId, array $data, mixed $context): array
     {
         $this->guardUserHasAccess($dataContainerName, $recordId, $data);
 
@@ -110,12 +86,12 @@ final class DatabaseRowUpdater implements Updater
      *
      * @throws AccessDenied When user has no access.
      */
-    private function guardUserHasAccess($tableName, $recordId, array $data): void
+    private function guardUserHasAccess(string $tableName, int|string $recordId, array $data): void
     {
         foreach (array_keys($data) as $columnName) {
             if (! $this->hasUserAccess($tableName, $columnName)) {
                 throw new AccessDenied(
-                    sprintf('Not enough permission to toggle record ID "%s::%s"', $tableName, $recordId)
+                    sprintf('Not enough permission to toggle record ID "%s::%s"', $tableName, $recordId),
                 );
             }
         }
@@ -127,7 +103,7 @@ final class DatabaseRowUpdater implements Updater
      * @param Definition $definition Data container definition.
      * @param int|string $recordId   Record id.
      */
-    private function initializeVersions(Definition $definition, $recordId): ?Versions
+    private function initializeVersions(Definition $definition, int|string $recordId): Versions|null
     {
         if ($definition->get(['config', 'enableVersioning'])) {
             $versions = new Versions($definition->getName(), (int) $recordId);

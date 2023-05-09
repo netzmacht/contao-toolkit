@@ -19,9 +19,7 @@ final class DateFormatter implements ValueFormatter
      */
     private Config $config;
 
-    /**
-     * @param Config $config Contao config.
-     */
+    /** @param Config $config Contao config. */
     public function __construct(Config $config)
     {
         $this->config = $config;
@@ -46,7 +44,7 @@ final class DateFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null)
     {
         if (empty($fieldDefinition['eval']['rgxp'])) {
             $format = 'datim';

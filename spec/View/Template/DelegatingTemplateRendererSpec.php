@@ -31,7 +31,7 @@ final class DelegatingTemplateRendererSpec extends ObjectBehavior
 
     public function it_renders_contao_backend_template(
         TemplateFactory $templateFactory,
-        Template $template
+        Template $template,
     ): void {
         $templateFactory->createBackendTemplate('foo', [])->shouldBeCalled()->willReturn($template);
         $template->parse()->willReturn('foo_html');
@@ -40,7 +40,7 @@ final class DelegatingTemplateRendererSpec extends ObjectBehavior
 
     public function it_renders_toolkit_backend_template(
         TemplateFactory $templateFactory,
-        Template $template
+        Template $template,
     ): void {
         $templateFactory->createBackendTemplate('foo', [])->shouldBeCalled()->willReturn($template);
         $template->parse()->willReturn('foo_html');
@@ -49,7 +49,7 @@ final class DelegatingTemplateRendererSpec extends ObjectBehavior
 
     public function it_renders_contao_frontend_template(
         TemplateFactory $templateFactory,
-        Template $template
+        Template $template,
     ): void {
         $templateFactory->createFrontendTemplate('foo', [])->shouldBeCalled()->willReturn($template);
         $template->parse()->willReturn('foo_html');
@@ -58,7 +58,7 @@ final class DelegatingTemplateRendererSpec extends ObjectBehavior
 
     public function it_renders_toolkit_frontend_template(
         TemplateFactory $templateFactory,
-        Template $template
+        Template $template,
     ): void {
         $templateFactory->createFrontendTemplate('foo', [])->shouldBeCalled()->willReturn($template);
         $template->parse()->willReturn('foo_html');

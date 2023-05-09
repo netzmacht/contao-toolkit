@@ -18,5 +18,5 @@ interface AliasGenerator
      * @param Result|Model $result The database result.
      * @param mixed        $value  The current value.
      */
-    public function generate($result, $value = null): ?string;
+    public function generate($result, $value = null): string|null;
 }

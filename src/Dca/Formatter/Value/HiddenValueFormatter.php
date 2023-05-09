@@ -11,9 +11,7 @@ final class HiddenValueFormatter implements ValueFormatter
      */
     private string $passwordMask;
 
-    /**
-     * @param string $passwordMask A mask value for passwords.
-     */
+    /** @param string $passwordMask A mask value for passwords. */
     public function __construct(string $passwordMask = '')
     {
         $this->passwordMask = $passwordMask;
@@ -38,7 +36,7 @@ final class HiddenValueFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null)
     {
         if ($this->passwordMask) {
             if (! empty($fieldDefinition['inputType']) && $fieldDefinition['inputType'] === 'password') {

@@ -15,33 +15,6 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException;
 final class FilterBasedAliasGenerator implements AliasGenerator
 {
     /**
-     * Alias validator.
-     */
-    private Validator $validator;
-
-    /**
-     * The alias field.
-     */
-    private string $aliasField;
-
-    /**
-     * The table name.
-     */
-    private string $tableName;
-
-    /**
-     * Filters being applied when standardize the value.
-     *
-     * @var Filter[]
-     */
-    private iterable $filters;
-
-    /**
-     * Value separator.
-     */
-    private string $separator;
-
-    /**
      * Construct.
      *
      * @param Filter[]  $filters    Filters.
@@ -51,19 +24,13 @@ final class FilterBasedAliasGenerator implements AliasGenerator
      * @param string    $separator  Value separator.
      */
     public function __construct(
-        array $filters,
-        Validator $validator,
-        string $tableName,
-        string $aliasField = 'alias',
-        string $separator = '-'
+        private readonly array $filters,
+        private readonly Validator $validator,
+        private readonly string $tableName,
+        private readonly string $aliasField = 'alias',
+        private readonly string $separator = '-',
     ) {
         Assertion::allIsInstanceOf($filters, Filter::class);
-
-        $this->validator  = $validator;
-        $this->aliasField = $aliasField;
-        $this->tableName  = $tableName;
-        $this->separator  = $separator;
-        $this->filters    = $filters;
     }
 
     /**
@@ -103,11 +70,11 @@ final class FilterBasedAliasGenerator implements AliasGenerator
     /**
      * Consider if value is an valid alias.
      *
-     * @param Result|Model $result Data record.
+     * @param Model|Result $result Data record.
      * @param mixed        $value  The alias value.
      * @param int          $rowId  The row id.
      */
-    private function isValid($result, $value, int $rowId): bool
+    private function isValid(Result|Model $result, mixed $value, int $rowId): bool
     {
         return $this->validator->validate($result, $value, [$rowId]);
     }
@@ -115,12 +82,10 @@ final class FilterBasedAliasGenerator implements AliasGenerator
     /**
      * Apply filters.
      *
-     * @param Result|Model $result Data record.
+     * @param Model|Result $result Data record.
      * @param mixed        $value  Given value.
-     *
-     * @return mixed
      */
-    private function applyFilters($result, $value)
+    private function applyFilters(Result|Model $result, mixed $value): mixed
     {
         foreach ($this->filters as $filter) {
             $filter->initialize();

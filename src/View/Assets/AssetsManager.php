@@ -20,7 +20,7 @@ interface AssetsManager
      *
      * @return $this
      */
-    public function addJavascript(string $path, $static = self::STATIC_PRODUCTION, ?string $name = null): self;
+    public function addJavascript(string $path, $static = self::STATIC_PRODUCTION, string|null $name = null): self;
 
     /**
      * Add javascript files to Contao assets.
@@ -31,7 +31,7 @@ interface AssetsManager
      *
      * @return $this
      */
-    public function addJavascripts(array $paths, $static = self::STATIC_PRODUCTION, ?string $name = null): self;
+    public function addJavascripts(array $paths, $static = self::STATIC_PRODUCTION, string|null $name = null): self;
 
     /**
      * Add a javascript file to Contao assets.
@@ -47,7 +47,7 @@ interface AssetsManager
         string $path,
         string $media = '',
         $static = self::STATIC_PRODUCTION,
-        ?string $name = null
+        string|null $name = null,
     ): self;
 
     /**
@@ -64,7 +64,7 @@ interface AssetsManager
         array $paths,
         string $media = '',
         $static = self::STATIC_PRODUCTION,
-        ?string $name = null
+        string|null $name = null,
     ): self;
 
     /**

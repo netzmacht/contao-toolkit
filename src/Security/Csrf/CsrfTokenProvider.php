@@ -39,7 +39,7 @@ final class CsrfTokenProvider
      *
      * @param string|null $name Optional name of the token. If empty default name is used.
      */
-    public function getToken(?string $name = null): CsrfToken
+    public function getToken(string|null $name = null): CsrfToken
     {
         return $this->tokenManager->getToken($name ?: $this->defaultTokenName);
     }
@@ -49,7 +49,7 @@ final class CsrfTokenProvider
      *
      * @param string|null $name Optional name of the token. If empty default name is used.
      */
-    public function getTokenValue(?string $name = null): string
+    public function getTokenValue(string|null $name = null): string
     {
         return $this->getToken($name)->getValue();
     }

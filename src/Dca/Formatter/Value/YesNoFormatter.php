@@ -16,9 +16,7 @@ final class YesNoFormatter implements ValueFormatter
      */
     private Translator $translator;
 
-    /**
-     * @param Translator $translator Translator.
-     */
+    /** @param Translator $translator Translator. */
     public function __construct(Translator $translator)
     {
         $this->translator = $translator;
@@ -43,7 +41,7 @@ final class YesNoFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null)
     {
         return $this->translator->trans((empty($value) ? 'MSC.no' : 'MSC.yes'), [], 'contao_default');
     }

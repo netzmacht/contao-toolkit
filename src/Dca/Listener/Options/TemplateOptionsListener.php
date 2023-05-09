@@ -18,9 +18,7 @@ final class TemplateOptionsListener
      */
     private DcaManager $dcaManager;
 
-    /**
-     * @param DcaManager $dcaManager Data container manager.
-     */
+    /** @param DcaManager $dcaManager Data container manager. */
     public function __construct(DcaManager $dcaManager)
     {
         $this->dcaManager = $dcaManager;
@@ -61,7 +59,7 @@ final class TemplateOptionsListener
                 'prefix' => '',
                 'exclude' => null,
             ],
-            (array) $definition->get(['fields', $dataContainer->field, 'toolkit', 'template_options'])
+            (array) $definition->get(['fields', $dataContainer->field, 'toolkit', 'template_options']),
         );
     }
 }

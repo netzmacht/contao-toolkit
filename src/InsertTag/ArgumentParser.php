@@ -22,7 +22,7 @@ final class ArgumentParser
      *
      * @var list<callable>
      */
-    private $parsers = [];
+    private array $parsers = [];
 
     /**
      * Mark if arguments are already splitted.
@@ -50,7 +50,7 @@ final class ArgumentParser
      *
      * @throws RuntimeException When another split callback is registered before.
      */
-    public function splitBy(string $separator = '::', ?array $names = null, ?int $limit = null): self
+    public function splitBy(string $separator = '::', array|null $names = null, int|null $limit = null): self
     {
         $this->guardNoSplitCallbackRegistered($separator);
 
@@ -70,7 +70,7 @@ final class ArgumentParser
      *
      * @return ArgumentParser
      */
-    public function parseQuery(?array $argumentIndexes = null): self
+    public function parseQuery(array|null $argumentIndexes = null): self
     {
         $this->parsers[] = /**
          * @param mixed $arguments
@@ -116,8 +116,12 @@ final class ArgumentParser
      *
      * @return array<string|int,mixed>
      */
-    private function handleSplitBy(string $query, string $separator, ?array $names = null, ?int $limit = null): array
-    {
+    private function handleSplitBy(
+        string $query,
+        string $separator,
+        array|null $names = null,
+        int|null $limit = null,
+    ): array {
         if ($limit === null) {
             $values = explode($separator, $query);
         } else {
@@ -149,7 +153,7 @@ final class ArgumentParser
      *
      * @return array<string|int,array<string,mixed>|string>
      */
-    private function handleParseQuery(array $arguments, ?array $argumentIndexes = null): array
+    private function handleParseQuery(array $arguments, array|null $argumentIndexes = null): array
     {
         if ($argumentIndexes === null) {
             foreach ($arguments as $index => $argument) {
@@ -213,8 +217,8 @@ final class ArgumentParser
             throw new RuntimeException(
                 sprintf(
                     'Could not register split by "%s" parser. There is a already previous split callback registered',
-                    $separator
-                )
+                    $separator,
+                ),
             );
         }
     }

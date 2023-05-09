@@ -37,7 +37,7 @@ class RequestScopeMatcher
      *
      * @param Request|null $request Request which should be checked.
      */
-    public function isFrontendRequest(?Request $request = null): bool
+    public function isFrontendRequest(Request|null $request = null): bool
     {
         $request = $request ?: $this->getCurrentRequest();
         if ($request) {
@@ -54,7 +54,7 @@ class RequestScopeMatcher
      *
      * @param Request|null $request Request which should be checked.
      */
-    public function isBackendRequest(?Request $request = null): bool
+    public function isBackendRequest(Request|null $request = null): bool
     {
         $request = $request ?: $this->getCurrentRequest();
         if ($request) {
@@ -71,7 +71,7 @@ class RequestScopeMatcher
      *
      * @param Request|null $request Request which should be checked.
      */
-    public function isContaoRequest(?Request $request = null): bool
+    public function isContaoRequest(Request|null $request = null): bool
     {
         $request = $request ?: $this->getCurrentRequest();
         if ($request) {
@@ -88,7 +88,7 @@ class RequestScopeMatcher
      *
      * @param Request|null $request Request which should be checked.
      */
-    public function isInstallRequest(?Request $request = null): bool
+    public function isInstallRequest(Request|null $request = null): bool
     {
         $request = $request ?: $this->getCurrentRequest();
 
@@ -102,7 +102,7 @@ class RequestScopeMatcher
     /**
      * Get the current request.
      */
-    private function getCurrentRequest(): ?Request
+    private function getCurrentRequest(): Request|null
     {
         return $this->requestStack->getCurrentRequest();
     }

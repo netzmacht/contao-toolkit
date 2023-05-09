@@ -21,10 +21,8 @@ interface Options extends ArrayAccess, Iterator
 
     /**
      * Get the label column.
-     *
-     * @return string|callable
      */
-    public function getLabelKey();
+    public function getLabelKey(): callable|string;
 
     /**
      * Get the value column.

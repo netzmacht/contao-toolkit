@@ -51,7 +51,7 @@ final class UniqueDatabaseValueValidator implements Validator
         string $tableName,
         string $columnName,
         array $uniqueKeyFields = [],
-        bool $allowEmptyAlias = false
+        bool $allowEmptyAlias = false,
     ) {
         $this->connection      = $connection;
         $this->tableName       = $tableName;
@@ -63,7 +63,7 @@ final class UniqueDatabaseValueValidator implements Validator
     /**
      * {@inheritDoc}
      */
-    public function validate($result, $value, ?array $exclude = null): bool
+    public function validate($result, $value, array|null $exclude = null): bool
     {
         if (! $this->allowEmptyAlias && empty($value)) {
             return false;

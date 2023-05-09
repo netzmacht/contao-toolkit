@@ -16,9 +16,7 @@ final class GlobalsAssetsManagerFactory
      */
     private bool $debug;
 
-    /**
-     * @param bool $debug Debug mode.
-     */
+    /** @param bool $debug Debug mode. */
     public function __construct(bool $debug)
     {
         $this->debug = $debug;
@@ -44,7 +42,7 @@ final class GlobalsAssetsManagerFactory
             $GLOBALS['TL_JAVASCRIPT'],
             $GLOBALS['TL_HEAD'],
             $GLOBALS['TL_BODY'],
-            $this->debug
+            $this->debug,
         );
     }
 }

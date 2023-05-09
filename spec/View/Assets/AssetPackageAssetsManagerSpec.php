@@ -61,7 +61,7 @@ final class AssetPackageAssetsManagerSpec extends ObjectBehavior
         $inner
             ->addStylesheets(
                 ['/bundles/package/asset.css', '/bundles/package/asset2.css', 'style.css'],
-                Argument::cetera()
+                Argument::cetera(),
             )
             ->shouldBeCalled();
 
@@ -93,7 +93,7 @@ final class AssetPackageAssetsManagerSpec extends ObjectBehavior
         $inner
             ->addJavascripts(
                 ['/bundles/package/asset.js', '/bundles/package/asset2.js', 'style.js'],
-                Argument::cetera()
+                Argument::cetera(),
             )
             ->shouldBeCalled();
 

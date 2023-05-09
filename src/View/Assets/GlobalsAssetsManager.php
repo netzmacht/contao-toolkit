@@ -56,7 +56,7 @@ final class GlobalsAssetsManager implements AssetsManager
         array &$javascripts,
         array &$head,
         array &$body,
-        $debugMode = false
+        bool $debugMode = false,
     ) {
         $this->stylesheets = &$stylesheets;
         $this->javascripts = &$javascripts;
@@ -68,8 +68,11 @@ final class GlobalsAssetsManager implements AssetsManager
     /**
      * {@inheritDoc}
      */
-    public function addJavascript(string $path, $static = self::STATIC_PRODUCTION, ?string $name = null): AssetsManager
-    {
+    public function addJavascript(
+        string $path,
+        $static = self::STATIC_PRODUCTION,
+        string|null $name = null,
+    ): AssetsManager {
         if ($this->isStatic($static)) {
             $path .= '|static';
         }
@@ -86,8 +89,11 @@ final class GlobalsAssetsManager implements AssetsManager
     /**
      * {@inheritDoc}
      */
-    public function addJavascripts(array $paths, $static = self::STATIC_PRODUCTION, ?string $name = null): AssetsManager
-    {
+    public function addJavascripts(
+        array $paths,
+        $static = self::STATIC_PRODUCTION,
+        string|null $name = null,
+    ): AssetsManager {
         foreach ($paths as $identifier => $path) {
             if ($name) {
                 $name .= '_' . $identifier;
@@ -108,7 +114,7 @@ final class GlobalsAssetsManager implements AssetsManager
         string $path,
         string $media = '',
         $static = self::STATIC_PRODUCTION,
-        ?string $name = null
+        string|null $name = null,
     ): AssetsManager {
         $static = $this->isStatic($static);
 
@@ -136,7 +142,7 @@ final class GlobalsAssetsManager implements AssetsManager
         array $paths,
         string $media = '',
         $static = self::STATIC_PRODUCTION,
-        ?string $name = null
+        string|null $name = null,
     ): AssetsManager {
         foreach ($paths as $identifier => $path) {
             if ($name) {
@@ -219,9 +225,7 @@ final class GlobalsAssetsManager implements AssetsManager
         return $this->head;
     }
 
-    /**
-     * @param string|bool $flag
-     */
+    /** @param string|bool $flag */
     private function isStatic($flag): bool
     {
         if ($flag === self::STATIC_PRODUCTION) {

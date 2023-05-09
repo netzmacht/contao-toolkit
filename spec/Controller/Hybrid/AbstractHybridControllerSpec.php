@@ -36,7 +36,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
         RequestStack $requestStack,
         TranslatorInterface $translator,
         TokenChecker $tokenChecker,
-        Container $container
+        Container $container,
     ): void {
         System::setContainer($container->getWrappedObject());
 
@@ -52,7 +52,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
             $responseTagger,
             $router,
             $translator,
-            $tokenChecker
+            $tokenChecker,
         );
     }
 
@@ -71,7 +71,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
     public function it_parses_module_css_id(
         Request $request,
         ScopeMatcher $scopeMatcher,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model           = (new ReflectionClass(ModuleModel::class))->newInstanceWithoutConstructor();
         $model->cssID    = serialize(['foo', 'bar']);
@@ -84,8 +84,8 @@ class AbstractHybridControllerSpec extends ObjectBehavior
                 'fe:mod_concrete_hybrid',
                 Argument::allOf(
                     Argument::withEntry('cssID', ' id="foo"'),
-                    Argument::withEntry('class', 'mod_concrete_hybrid bar')
-                )
+                    Argument::withEntry('class', 'mod_concrete_hybrid bar'),
+                ),
             )
             ->shouldBeCalled()
             ->willReturn('HTML');
@@ -96,7 +96,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
     public function it_parses_module_headline(
         Request $request,
         ScopeMatcher $scopeMatcher,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model           = (new ReflectionClass(ModuleModel::class))->newInstanceWithoutConstructor();
         $model->cssID    = serialize(['foo', 'bar']);
@@ -109,8 +109,8 @@ class AbstractHybridControllerSpec extends ObjectBehavior
                 'fe:mod_concrete_hybrid',
                 Argument::allOf(
                     Argument::withEntry('headline', 'Headline'),
-                    Argument::withEntry('hl', 'h1')
-                )
+                    Argument::withEntry('hl', 'h1'),
+                ),
             )
             ->shouldBeCalled()
             ->willReturn('HTML');
@@ -121,7 +121,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
     public function it_passes_module_template_data(
         Request $request,
         ScopeMatcher $scopeMatcher,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model           = (new ReflectionClass(ModuleModel::class))->newInstanceWithoutConstructor();
         $model->cssID    = serialize(['foo', 'bar']);
@@ -137,8 +137,8 @@ class AbstractHybridControllerSpec extends ObjectBehavior
                 Argument::allOf(
                     Argument::withEntry('inColumn', 'main'),
                     Argument::withEntry('foo', 'bar'),
-                    Argument::withEntry('baz', true)
-                )
+                    Argument::withEntry('baz', true),
+                ),
             )
             ->shouldBeCalled()
             ->willReturn('HTML');
@@ -149,7 +149,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
     public function it_uses_module_fragment_option_custom_template(
         Request $request,
         ScopeMatcher $scopeMatcher,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model           = (new ReflectionClass(ModuleModel::class))->newInstanceWithoutConstructor();
         $model->cssID    = serialize(['foo', 'bar']);
@@ -170,7 +170,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
     public function it_prefers_module_custom_template_before_fragment_options(
         Request $request,
         ScopeMatcher $scopeMatcher,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model            = (new ReflectionClass(ModuleModel::class))->newInstanceWithoutConstructor();
         $model->cssID     = serialize(['foo', 'bar']);
@@ -193,7 +193,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
         Request $request,
         ScopeMatcher $scopeMatcher,
         TemplateRenderer $templateRenderer,
-        ResponseTagger $responseTagger
+        ResponseTagger $responseTagger,
     ): void {
         $model            = (new ReflectionClass(ModuleModel::class))->newInstanceWithoutConstructor();
         $model->id        = 1;
@@ -218,7 +218,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
     public function it_parses_module_backend_view(
         Request $request,
         ScopeMatcher $scopeMatcher,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model           = (new ReflectionClass(ModuleModel::class))->newInstanceWithoutConstructor();
         $model->cssID    = serialize(['foo', 'bar']);
@@ -229,7 +229,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
         $templateRenderer
             ->render(
                 'be:be_wildcard',
-                Argument::type('array')
+                Argument::type('array'),
             )
             ->shouldBeCalled()
             ->willReturn('HTML');
@@ -241,7 +241,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
         Request $request,
         ScopeMatcher $scopeMatcher,
         TokenChecker $tokenChecker,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = true;
@@ -257,7 +257,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
         Request $request,
         ScopeMatcher $scopeMatcher,
         TokenChecker $tokenChecker,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = false;
@@ -274,7 +274,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
         Request $request,
         ScopeMatcher $scopeMatcher,
         TokenChecker $tokenChecker,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = false;
@@ -291,7 +291,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
         Request $request,
         ScopeMatcher $scopeMatcher,
         TokenChecker $tokenChecker,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = false;
@@ -306,8 +306,8 @@ class AbstractHybridControllerSpec extends ObjectBehavior
                 'fe:ce_concrete_hybrid',
                 Argument::allOf(
                     Argument::withEntry('cssID', ' id="foo"'),
-                    Argument::withEntry('class', 'ce_concrete_hybrid bar')
-                )
+                    Argument::withEntry('class', 'ce_concrete_hybrid bar'),
+                ),
             )
             ->shouldBeCalled()
             ->willReturn('HTML');
@@ -319,7 +319,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
         Request $request,
         ScopeMatcher $scopeMatcher,
         TokenChecker $tokenChecker,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = false;
@@ -334,8 +334,8 @@ class AbstractHybridControllerSpec extends ObjectBehavior
                 'fe:ce_concrete_hybrid',
                 Argument::allOf(
                     Argument::withEntry('headline', 'Headline'),
-                    Argument::withEntry('hl', 'h1')
-                )
+                    Argument::withEntry('hl', 'h1'),
+                ),
             )
             ->shouldBeCalled()
             ->willReturn('HTML');
@@ -347,7 +347,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
         Request $request,
         ScopeMatcher $scopeMatcher,
         TokenChecker $tokenChecker,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = false;
@@ -365,8 +365,8 @@ class AbstractHybridControllerSpec extends ObjectBehavior
                 Argument::allOf(
                     Argument::withEntry('inColumn', 'main'),
                     Argument::withEntry('foo', 'bar'),
-                    Argument::withEntry('baz', true)
-                )
+                    Argument::withEntry('baz', true),
+                ),
             )
             ->shouldBeCalled()
             ->willReturn('HTML');
@@ -378,7 +378,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
         Request $request,
         ScopeMatcher $scopeMatcher,
         TokenChecker $tokenChecker,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = false;
@@ -402,7 +402,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
         Request $request,
         ScopeMatcher $scopeMatcher,
         TokenChecker $tokenChecker,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = false;
@@ -428,7 +428,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
         ScopeMatcher $scopeMatcher,
         TokenChecker $tokenChecker,
         TemplateRenderer $templateRenderer,
-        ResponseTagger $responseTagger
+        ResponseTagger $responseTagger,
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->id        = 1;

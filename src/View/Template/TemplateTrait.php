@@ -22,10 +22,8 @@ trait TemplateTrait
      * Get a template value.
      *
      * @param string $name The name.
-     *
-     * @return mixed
      */
-    public function get(string $name)
+    public function get(string $name): mixed
     {
         return $this->$name;
     }
@@ -50,11 +48,9 @@ trait TemplateTrait
      *
      * @param string $name Name of the view helper.
      *
-     * @return object|callable
-     *
      * @throws HelperNotFound If helper is not registered.
      */
-    public function helper(string $name)
+    public function helper(string $name): object|callable
     {
         if (! isset($this->helpers[$name])) {
             throw new HelperNotFound($name);

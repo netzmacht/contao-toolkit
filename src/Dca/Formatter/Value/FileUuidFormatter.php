@@ -27,7 +27,7 @@ final class FileUuidFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null)
     {
         if (is_array($value)) {
             $value = array_values(
@@ -36,9 +36,9 @@ final class FileUuidFormatter implements ValueFormatter
                         static function ($value) {
                             return $value ? StringUtil::binToUuid($value) : '';
                         },
-                        $value
-                    )
-                )
+                        $value,
+                    ),
+                ),
             );
         } else {
             $value = $value ? StringUtil::binToUuid($value) : '';

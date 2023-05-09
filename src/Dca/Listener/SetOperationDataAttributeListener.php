@@ -51,7 +51,7 @@ class SetOperationDataAttributeListener
 
         try {
             $definition = $this->dcaManager->getDefinition($dataContainerName);
-        } catch (AssertionFailed $e) {
+        } catch (AssertionFailed) {
             // No valid dca config found. Just ignore the data container.
             return;
         }

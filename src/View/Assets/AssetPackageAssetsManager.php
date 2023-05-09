@@ -18,27 +18,27 @@ use function strpos;
  */
 final class AssetPackageAssetsManager implements AssetsManager
 {
-    private AssetsManager $assetsManager;
-
-    private Packages $packages;
-
-    public function __construct(AssetsManager $assetsManager, Packages $packages)
+    public function __construct(private AssetsManager $assetsManager, private Packages $packages)
     {
-        $this->assetsManager = $assetsManager;
-        $this->packages      = $packages;
     }
 
     /** {@inheritDoc} */
-    public function addJavascript(string $path, $static = self::STATIC_PRODUCTION, ?string $name = null): AssetsManager
-    {
+    public function addJavascript(
+        string $path,
+        $static = self::STATIC_PRODUCTION,
+        string|null $name = null,
+    ): AssetsManager {
         $this->assetsManager->addJavascript($this->locatePath($path), $static, $name);
 
         return $this;
     }
 
     /** {@inheritDoc} */
-    public function addJavascripts(array $paths, $static = self::STATIC_PRODUCTION, ?string $name = null): AssetsManager
-    {
+    public function addJavascripts(
+        array $paths,
+        $static = self::STATIC_PRODUCTION,
+        string|null $name = null,
+    ): AssetsManager {
         $paths = array_map([$this, 'locatePath'], $paths);
         $this->assetsManager->addJavascripts($paths, $static, $name);
 
@@ -50,7 +50,7 @@ final class AssetPackageAssetsManager implements AssetsManager
         string $path,
         string $media = '',
         $static = self::STATIC_PRODUCTION,
-        ?string $name = null
+        string|null $name = null,
     ): AssetsManager {
         $this->assetsManager->addStylesheet($this->locatePath($path), $media, $static, $name);
 
@@ -62,7 +62,7 @@ final class AssetPackageAssetsManager implements AssetsManager
         array $paths,
         string $media = '',
         $static = self::STATIC_PRODUCTION,
-        ?string $name = null
+        string|null $name = null,
     ): AssetsManager {
         $paths = array_map([$this, 'locatePath'], $paths);
         $this->assetsManager->addStylesheets($paths, $media, $static, $name);

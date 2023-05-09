@@ -67,7 +67,7 @@ class RawValueFilterSpec extends ObjectBehavior
 
         $this->beConstructedWith([self::COLUMN, 'id']);
         $this->apply($model, '', self::SEPARATOR)->shouldReturn(
-            self::ALIAS_VALUE . self::SEPARATOR . 5
+            self::ALIAS_VALUE . self::SEPARATOR . 5,
         );
     }
 
@@ -80,7 +80,7 @@ class RawValueFilterSpec extends ObjectBehavior
 
         $this->beConstructedWith([self::COLUMN, 'id']);
         $this->apply($model, '', '_')->shouldReturn(
-            self::ALIAS_VALUE . '_' . 5
+            self::ALIAS_VALUE . '_' . 5,
         );
     }
 
@@ -93,7 +93,7 @@ class RawValueFilterSpec extends ObjectBehavior
 
         $this->beConstructedWith([self::COLUMN, 'id']);
         $this->apply($model, 'test', '_')->shouldReturn(
-            self::ALIAS_VALUE . '_' . 5
+            self::ALIAS_VALUE . '_' . 5,
         );
     }
 
@@ -103,7 +103,7 @@ class RawValueFilterSpec extends ObjectBehavior
 
         $this->beConstructedWith(['id'], true, AbstractValueFilter::COMBINE_APPEND);
         $this->apply($model, self::ALIAS_VALUE, self::SEPARATOR)->shouldReturn(
-            self::ALIAS_VALUE . self::SEPARATOR . 5
+            self::ALIAS_VALUE . self::SEPARATOR . 5,
         );
     }
 
@@ -113,7 +113,7 @@ class RawValueFilterSpec extends ObjectBehavior
 
         $this->beConstructedWith(['id'], true, AbstractValueFilter::COMBINE_PREPEND);
         $this->apply($model, self::ALIAS_VALUE, self::SEPARATOR)->shouldReturn(
-            5 . self::SEPARATOR . self::ALIAS_VALUE
+            5 . self::SEPARATOR . self::ALIAS_VALUE,
         );
     }
 }

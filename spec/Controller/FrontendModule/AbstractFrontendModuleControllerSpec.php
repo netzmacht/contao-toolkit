@@ -32,7 +32,7 @@ class AbstractFrontendModuleControllerSpec extends ObjectBehavior
         RouterInterface $router,
         RequestStack $requestStack,
         TranslatorInterface $translator,
-        Container $container
+        Container $container,
     ): void {
         System::setContainer($container->getWrappedObject());
 
@@ -47,7 +47,7 @@ class AbstractFrontendModuleControllerSpec extends ObjectBehavior
             new RequestScopeMatcher($scopeMatcher->getWrappedObject(), $requestStack->getWrappedObject()),
             $responseTagger,
             $router,
-            $translator
+            $translator,
         );
     }
 
@@ -66,7 +66,7 @@ class AbstractFrontendModuleControllerSpec extends ObjectBehavior
     public function it_parses_css_id(
         Request $request,
         ScopeMatcher $scopeMatcher,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model           = (new ReflectionClass(ModuleModel::class))->newInstanceWithoutConstructor();
         $model->cssID    = serialize(['foo', 'bar']);
@@ -79,8 +79,8 @@ class AbstractFrontendModuleControllerSpec extends ObjectBehavior
                 'fe:mod_concrete_frontend_module',
                 Argument::allOf(
                     Argument::withEntry('cssID', ' id="foo"'),
-                    Argument::withEntry('class', 'mod_concrete_frontend_module bar')
-                )
+                    Argument::withEntry('class', 'mod_concrete_frontend_module bar'),
+                ),
             )
             ->shouldBeCalled()
             ->willReturn('HTML');
@@ -91,7 +91,7 @@ class AbstractFrontendModuleControllerSpec extends ObjectBehavior
     public function it_parses_headline(
         Request $request,
         ScopeMatcher $scopeMatcher,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model           = (new ReflectionClass(ModuleModel::class))->newInstanceWithoutConstructor();
         $model->cssID    = serialize(['foo', 'bar']);
@@ -104,8 +104,8 @@ class AbstractFrontendModuleControllerSpec extends ObjectBehavior
                 'fe:mod_concrete_frontend_module',
                 Argument::allOf(
                     Argument::withEntry('headline', 'Headline'),
-                    Argument::withEntry('hl', 'h1')
-                )
+                    Argument::withEntry('hl', 'h1'),
+                ),
             )
             ->shouldBeCalled()
             ->willReturn('HTML');
@@ -116,7 +116,7 @@ class AbstractFrontendModuleControllerSpec extends ObjectBehavior
     public function it_passes_template_data(
         Request $request,
         ScopeMatcher $scopeMatcher,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model           = (new ReflectionClass(ModuleModel::class))->newInstanceWithoutConstructor();
         $model->cssID    = serialize(['foo', 'bar']);
@@ -132,8 +132,8 @@ class AbstractFrontendModuleControllerSpec extends ObjectBehavior
                 Argument::allOf(
                     Argument::withEntry('inColumn', 'main'),
                     Argument::withEntry('foo', 'bar'),
-                    Argument::withEntry('baz', true)
-                )
+                    Argument::withEntry('baz', true),
+                ),
             )
             ->shouldBeCalled()
             ->willReturn('HTML');
@@ -144,7 +144,7 @@ class AbstractFrontendModuleControllerSpec extends ObjectBehavior
     public function it_uses_fragment_option_custom_template(
         Request $request,
         ScopeMatcher $scopeMatcher,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model           = (new ReflectionClass(ModuleModel::class))->newInstanceWithoutConstructor();
         $model->cssID    = serialize(['foo', 'bar']);
@@ -165,7 +165,7 @@ class AbstractFrontendModuleControllerSpec extends ObjectBehavior
     public function it_prefers_custom_template_before_fragment_options(
         Request $request,
         ScopeMatcher $scopeMatcher,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model            = (new ReflectionClass(ModuleModel::class))->newInstanceWithoutConstructor();
         $model->cssID     = serialize(['foo', 'bar']);
@@ -188,7 +188,7 @@ class AbstractFrontendModuleControllerSpec extends ObjectBehavior
         Request $request,
         ScopeMatcher $scopeMatcher,
         TemplateRenderer $templateRenderer,
-        ResponseTagger $responseTagger
+        ResponseTagger $responseTagger,
     ): void {
         $model            = (new ReflectionClass(ModuleModel::class))->newInstanceWithoutConstructor();
         $model->id        = 1;
@@ -213,7 +213,7 @@ class AbstractFrontendModuleControllerSpec extends ObjectBehavior
     public function it_parses_backend_view(
         Request $request,
         ScopeMatcher $scopeMatcher,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model           = (new ReflectionClass(ModuleModel::class))->newInstanceWithoutConstructor();
         $model->cssID    = serialize(['foo', 'bar']);
@@ -224,7 +224,7 @@ class AbstractFrontendModuleControllerSpec extends ObjectBehavior
         $templateRenderer
             ->render(
                 'be:be_wildcard',
-                Argument::type('array')
+                Argument::type('array'),
             )
             ->shouldBeCalled()
             ->willReturn('HTML');

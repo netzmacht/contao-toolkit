@@ -6,9 +6,7 @@ namespace Netzmacht\Contao\Toolkit\Assertion;
 
 use Assert\Assert as BaseAssert;
 
-/**
- * @SuppressWarnings(PHPMD.LongVariable)
- */
+/** @SuppressWarnings(PHPMD.LongVariable) */
 class Assert extends BaseAssert
 {
     /**

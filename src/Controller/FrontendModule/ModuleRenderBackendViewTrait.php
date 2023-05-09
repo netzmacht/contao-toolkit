@@ -36,7 +36,7 @@ trait ModuleRenderBackendViewTrait
         $name = $this->translator->trans(sprintf('FMD.%s.0', $this->getType()), [], 'contao_modules');
         $href = $this->router->generate(
             'contao_backend',
-            ['do' => 'themes', 'table' => 'tl_module', 'act' => 'edit', 'id' => $module->id]
+            ['do' => 'themes', 'table' => 'tl_module', 'act' => 'edit', 'id' => $module->id],
         );
 
         return $this->renderResponse(
@@ -46,7 +46,7 @@ trait ModuleRenderBackendViewTrait
                 'id'       => $module->id,
                 'link'     => $module->name,
                 'href'     => $href,
-            ]
+            ],
         );
     }
 

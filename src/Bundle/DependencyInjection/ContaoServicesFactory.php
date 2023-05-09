@@ -22,22 +22,12 @@ use Contao\System;
 
 use function assert;
 
-/**
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
- */
+/** @SuppressWarnings(PHPMD.TooManyPublicMethods) */
 final class ContaoServicesFactory
 {
-    /**
-     * Contao framework.
-     */
-    private ContaoFramework $framework;
-
-    /**
-     * @param ContaoFramework $framework Contao framework.
-     */
-    public function __construct(ContaoFramework $framework)
+    /** @param ContaoFramework $framework Contao framework. */
+    public function __construct(private readonly ContaoFramework $framework)
     {
-        $this->framework = $framework;
     }
 
     /**

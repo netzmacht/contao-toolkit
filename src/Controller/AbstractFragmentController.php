@@ -62,7 +62,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
     public function __construct(
         TemplateRenderer $templateRenderer,
         RequestScopeMatcher $scopeMatcher,
-        ResponseTagger $responseTagger
+        ResponseTagger $responseTagger,
     ) {
         $this->templateRenderer = $templateRenderer;
         $this->scopeMatcher     = $scopeMatcher;
@@ -93,7 +93,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      * @param list<string>|null $classes Additional classes.
      * @psalm-param TModel $model
      */
-    protected function generate(Request $request, Model $model, string $section, ?array $classes = null): Response
+    protected function generate(Request $request, Model $model, string $section, array|null $classes = null): Response
     {
         $response = $this->preGenerate($request, $model, $section, $classes);
         if ($response !== null) {
@@ -124,7 +124,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      *
      * @return array<string,mixed>
      */
-    private function prepareDefaultTemplateData(Model $model, string $section, ?array $classes = null): array
+    private function prepareDefaultTemplateData(Model $model, string $section, array|null $classes = null): array
     {
         $data    = $model->row();
         $cssID   = array_pad(StringUtil::deserialize($data['cssID'], true), 2, '');
@@ -182,8 +182,12 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function preGenerate(Request $request, Model $model, string $section, ?array $classes = null): ?Response
-    {
+    protected function preGenerate(
+        Request $request,
+        Model $model,
+        string $section,
+        array|null $classes = null,
+    ): Response|null {
         return null;
     }
 
@@ -200,7 +204,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function postGenerate(string $buffer, array $data, Request $request, Model $model): ?Response
+    protected function postGenerate(string $buffer, array $data, Request $request, Model $model): Response|null
     {
         return null;
     }

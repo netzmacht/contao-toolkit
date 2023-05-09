@@ -32,8 +32,6 @@ final class PopupWizardListener extends AbstractWizardListener
      */
     private CsrfTokenManager $csrfTokenManager;
 
-    private RouterInterface $router;
-
     /**
      * Crsf token name.
      */
@@ -56,15 +54,14 @@ final class PopupWizardListener extends AbstractWizardListener
         Translator $translator,
         DcaManager $dcaManager,
         CsrfTokenManager $csrfTokenManager,
-        RouterInterface $router,
+        private RouterInterface $router,
         string $csrfTokenName,
-        string $template = ''
+        string $template = '',
     ) {
         parent::__construct($templateRenderer, $translator, $dcaManager, $template);
 
         $this->csrfTokenManager = $csrfTokenManager;
         $this->tokenName        = $csrfTokenName;
-        $this->router           = $router;
     }
 
     /**
@@ -83,7 +80,7 @@ final class PopupWizardListener extends AbstractWizardListener
                 'icon'        => null,
                 'always'      => false,
             ],
-            $config
+            $config,
         );
 
         if ($config['always'] || $value) {

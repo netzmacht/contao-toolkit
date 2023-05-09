@@ -44,7 +44,7 @@ final class FilterFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null)
     {
         foreach ($this->filters as $filter) {
             if (! $filter->accepts($fieldName, $fieldDefinition)) {

@@ -27,9 +27,7 @@ abstract class AbstractListener
      */
     private DcaManager $dcaManager;
 
-    /**
-     * @param DcaManager $dcaManager Data container manager.
-     */
+    /** @param DcaManager $dcaManager Data container manager. */
     public function __construct(DcaManager $dcaManager)
     {
         $this->dcaManager = $dcaManager;

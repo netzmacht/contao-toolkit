@@ -31,9 +31,6 @@ phpcq:
     psalm:
       version: ^1.0
       signed: false
-      requirements:
-        psalm:
-          version: ^4.18
     phpspec:
       version: ^1.0
       signed: false

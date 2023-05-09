@@ -25,7 +25,7 @@ class RequestScopeMatcherSpec extends ObjectBehavior
     public function it_detects_frontend_request_from_argument(
         ScopeMatcher $scopeMatcher,
         Request $request,
-        Request $request2
+        Request $request2,
     ): void {
         $scopeMatcher
             ->isFrontendRequest($request)
@@ -44,7 +44,7 @@ class RequestScopeMatcherSpec extends ObjectBehavior
     public function it_detects_frontend_request_from_the_request_stack(
         ScopeMatcher $scopeMatcher,
         RequestStack $requestStack,
-        Request $request
+        Request $request,
     ): void {
         $requestStack->getCurrentRequest()->willReturn($request);
 
@@ -59,7 +59,7 @@ class RequestScopeMatcherSpec extends ObjectBehavior
     public function it_detects_backend_request_from_argument(
         ScopeMatcher $scopeMatcher,
         Request $request,
-        Request $request2
+        Request $request2,
     ): void {
         $scopeMatcher
             ->isBackendRequest($request)
@@ -78,7 +78,7 @@ class RequestScopeMatcherSpec extends ObjectBehavior
     public function it_detects_backend_request_from_the_request_stack(
         ScopeMatcher $scopeMatcher,
         RequestStack $requestStack,
-        Request $request
+        Request $request,
     ): void {
         $requestStack->getCurrentRequest()->willReturn($request);
 
@@ -93,7 +93,7 @@ class RequestScopeMatcherSpec extends ObjectBehavior
     public function it_detects_contao_request_from_argument(
         ScopeMatcher $scopeMatcher,
         Request $request,
-        Request $request2
+        Request $request2,
     ): void {
         $scopeMatcher
             ->isContaoRequest($request)
@@ -112,7 +112,7 @@ class RequestScopeMatcherSpec extends ObjectBehavior
     public function it_detects_contao_request_from_the_request_stack(
         ScopeMatcher $scopeMatcher,
         RequestStack $requestStack,
-        Request $request
+        Request $request,
     ): void {
         $requestStack->getCurrentRequest()->willReturn($request);
 

@@ -25,13 +25,13 @@ final class DelegatingTemplateRenderer implements TemplateRenderer
     /**
      * The twig environment.
      */
-    private ?Environment $twig;
+    private Environment|null $twig;
 
     /**
      * @param TemplateFactory  $templateFactory The template factory.
      * @param Environment|null $twig            The twig environment. If twig is not activated it's null.
      */
-    public function __construct(TemplateFactory $templateFactory, ?Environment $twig = null)
+    public function __construct(TemplateFactory $templateFactory, Environment|null $twig = null)
     {
         $this->templateFactory = $templateFactory;
         $this->twig            = $twig;

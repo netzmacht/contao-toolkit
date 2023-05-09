@@ -16,7 +16,7 @@ abstract class AbstractInsertTagParser
      *
      * @return string|false
      */
-    public function replace(string $raw, bool $cache = true)
+    public function replace(string $raw, bool $cache = true): bool|string
     {
         $parts = explode('::', $raw, 2);
         $tag   = $parts[0];
@@ -56,5 +56,5 @@ abstract class AbstractInsertTagParser
      *
      * @return string|false
      */
-    abstract protected function parseTag(array $arguments, string $tag, string $raw);
+    abstract protected function parseTag(array $arguments, string $tag, string $raw): bool|string;
 }

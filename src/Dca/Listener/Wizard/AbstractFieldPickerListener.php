@@ -18,7 +18,7 @@ abstract class AbstractFieldPickerListener extends AbstractPickerListener
         string $tableName,
         string $fieldName,
         int $rowId,
-        $value
+        $value,
     ): string;
 
     /**
@@ -30,7 +30,7 @@ abstract class AbstractFieldPickerListener extends AbstractPickerListener
             $dataContainer->table,
             $dataContainer->field,
             (int) $dataContainer->id,
-            (string) $dataContainer->value
+            (string) $dataContainer->value,
         );
     }
 }

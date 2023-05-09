@@ -68,10 +68,10 @@ final class GenerateAliasListener
      *
      * @throws AssertionFailedException If invalid data container is given.
      */
-    public function onSaveCallback($value, DataContainer $dataContainer): ?string
+    public function onSaveCallback($value, DataContainer $dataContainer): string|null
     {
         Assertion::true(
-            $dataContainer->activeRecord instanceof Result || $dataContainer->activeRecord instanceof Model
+            $dataContainer->activeRecord instanceof Result || $dataContainer->activeRecord instanceof Model,
         );
 
         return $this->getGenerator($dataContainer)->generate($dataContainer->activeRecord, $value);
@@ -88,7 +88,7 @@ final class GenerateAliasListener
 
         return $definition->get(
             ['fields', $dataContainer->field, 'toolkit', 'alias_generator', 'factory'],
-            $this->defaultFactoryServiceId
+            $this->defaultFactoryServiceId,
         );
     }
 
@@ -103,7 +103,7 @@ final class GenerateAliasListener
         Assertion::isInstanceOf(
             $factory,
             AliasGeneratorFactory::class,
-            sprintf('Service %s is not an alias generator factory.', $serviceId)
+            sprintf('Service %s is not an alias generator factory.', $serviceId),
         );
     }
 
@@ -124,7 +124,7 @@ final class GenerateAliasListener
         $definition = $this->dcaManager->getDefinition($dataContainer->table);
         $fields     = (array) $definition->get(
             ['fields', $dataContainer->field, 'toolkit', 'alias_generator', 'fields'],
-            ['id']
+            ['id'],
         );
 
         $this->guardIsAliasGeneratorFactory($factory, $serviceId);

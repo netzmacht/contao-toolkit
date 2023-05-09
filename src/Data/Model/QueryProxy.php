@@ -14,10 +14,8 @@ trait QueryProxy
      *
      * @param string      $name      Method name.
      * @param list<mixed> $arguments Arguments.
-     *
-     * @return mixed
      */
-    public function __call(string $name, array $arguments)
+    public function __call(string $name, array $arguments): mixed
     {
         return $this->call($name, $arguments);
     }

@@ -32,7 +32,7 @@ final class RepositoriesPass implements CompilerPassInterface
             foreach ($tags as $attributes) {
                 if (! isset($attributes['model'])) {
                     throw new RuntimeException(
-                        sprintf('Service "%s" is tagged as repository but has no model attribute', $serviceId)
+                        sprintf('Service "%s" is tagged as repository but has no model attribute', $serviceId),
                     );
                 }
 

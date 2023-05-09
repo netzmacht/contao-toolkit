@@ -41,11 +41,9 @@ final class CreateFormatterEvent extends Event
     /**
      * Options formatter.
      */
-    private ?ValueFormatter $optionsFormatter = null;
+    private ValueFormatter|null $optionsFormatter;
 
-    /**
-     * @param Definition $definition Data container definition.
-     */
+    /** @param Definition $definition Data container definition. */
     public function __construct(Definition $definition)
     {
         $this->definition       = $definition;
@@ -63,18 +61,12 @@ final class CreateFormatterEvent extends Event
     /**
      * Add a formatter.
      *
-     * @param ValueFormatter|ValueFormatter[] $formatter Formatter.
+     * @param ValueFormatter[] $formatter Formatter.
      *
      * @return $this
      */
-    public function addFormatter($formatter): self
+    public function addFormatter(ValueFormatter ...$formatter): self
     {
-        if ($formatter instanceof ValueFormatter) {
-            $this->formatter[] = $formatter;
-
-            return $this;
-        }
-
         foreach ($formatter as $item) {
             $this->addFormatter($item);
         }
@@ -85,7 +77,7 @@ final class CreateFormatterEvent extends Event
     /**
      * Get formatter.
      *
-     * @return array|ValueFormatter[]
+     * @return ValueFormatter[]
      */
     public function getFormatter(): array
     {
@@ -175,7 +167,7 @@ final class CreateFormatterEvent extends Event
     /**
      * Get options formatter.
      */
-    public function getOptionsFormatter(): ?ValueFormatter
+    public function getOptionsFormatter(): ValueFormatter|null
     {
         return $this->optionsFormatter;
     }

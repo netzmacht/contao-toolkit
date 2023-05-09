@@ -23,10 +23,8 @@ interface ValueFormatter
      * @param mixed               $value           Given value.
      * @param string              $fieldName       Field name.
      * @param array<string,mixed> $fieldDefinition Field definition.
-     * @param mixed               $context         Context of the call. Usually the data container driver but not
+     * @param mixed|null          $context         Context of the call. Usually the data container driver but not
      *                                             limited to.
-     *
-     * @return mixed
      */
-    public function format($value, string $fieldName, array $fieldDefinition, $context = null);
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed;
 }

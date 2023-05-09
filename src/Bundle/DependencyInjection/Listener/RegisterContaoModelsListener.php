@@ -8,19 +8,9 @@ use Contao\Model;
 
 final class RegisterContaoModelsListener
 {
-    /**
-     * List of repositories.
-     *
-     * @var array<string,class-string<Model>>
-     */
-    private array $repositories;
-
-    /**
-     * @param array<string,class-string<Model>> $repositories List of repositories.
-     */
-    public function __construct(array $repositories)
+    /** @param array<string,class-string<Model>> $repositories List of repositories. */
+    public function __construct(private readonly array $repositories)
     {
-        $this->repositories = $repositories;
     }
 
     /**

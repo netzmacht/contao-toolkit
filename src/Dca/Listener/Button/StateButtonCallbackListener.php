@@ -59,7 +59,7 @@ final class StateButtonCallbackListener
         Adapter $backend,
         Adapter $input,
         Updater $updater,
-        DcaManager $dcaManager
+        DcaManager $dcaManager,
     ) {
         $this->input      = $input;
         $this->updater    = $updater;
@@ -100,7 +100,7 @@ final class StateButtonCallbackListener
         bool $circularReference,
         $previous,
         $next,
-        $dataContainer
+        $dataContainer,
     ): string {
         $name   = $this->getOperationName((string) $attributes);
         $config = $this->getConfig($dataContainer, $name);
@@ -112,7 +112,7 @@ final class StateButtonCallbackListener
                     $dataContainer->table,
                     (int) $this->input->get('tid'),
                     [$config['stateColumn'] => ((int) $this->input->get('state') === 1)],
-                    $dataContainer
+                    $dataContainer,
                 );
 
                 $this->backend->redirect($this->backend->getReferer());
@@ -146,7 +146,7 @@ final class StateButtonCallbackListener
             $this->backend->addToUrl($href),
             StringUtil::specialchars((string) $title),
             (string) $attributes,
-            Image::getHtml((string) $icon, (string) $label, $imageAttributes)
+            Image::getHtml((string) $icon, (string) $label, $imageAttributes),
         );
     }
 
@@ -188,7 +188,7 @@ final class StateButtonCallbackListener
 
         return array_merge(
             $config,
-            (array) $definition->get(['list', 'operations', $operationName, 'toolkit', 'state_button'])
+            (array) $definition->get(['list', 'operations', $operationName, 'toolkit', 'state_button']),
         );
     }
 

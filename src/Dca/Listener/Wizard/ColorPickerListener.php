@@ -55,7 +55,7 @@ final class ColorPickerListener extends AbstractPickerListener
 
         return array_merge(
             $config,
-            (array) $definition->get(['fields', $fieldName, 'toolkit', 'color_picker'])
+            (array) $definition->get(['fields', $fieldName, 'toolkit', 'color_picker']),
         );
     }
 }

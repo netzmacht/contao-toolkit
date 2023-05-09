@@ -42,7 +42,7 @@ final class Definition
      *
      * @return list<string>
      */
-    private function path($path): array
+    private function path(array|string $path): array
     {
         if (! is_array($path)) {
             $path = explode('/', $path);
@@ -54,13 +54,11 @@ final class Definition
     /**
      * Get from the dca.
      *
-     * @param list<string|int>|string $path              The path.
-     * @param mixed                   $default           The default value.
+     * @param string|list<string|int> $path              The path.
+     * @param mixed|null              $default           The default value.
      * @param bool                    $createIfNotExists Create definition if not exists.
-     *
-     * @return mixed
      */
-    public function &get($path, $default = null, $createIfNotExists = false)
+    public function &get(array|string $path, mixed $default = null, bool $createIfNotExists = false): mixed
     {
         $dca =& $this->dca;
 
@@ -82,9 +80,9 @@ final class Definition
     /**
      * Check if the definition has a configuration.
      *
-     * @param list<string|int>|string $path The path as string or array.
+     * @param string|list<string|int> $path The path as string or array.
      */
-    public function has($path): bool
+    public function has(array|string $path): bool
     {
         $dca =& $this->dca;
 
@@ -102,10 +100,10 @@ final class Definition
     /**
      * Set a configuration in the data definition array.
      *
-     * @param list<string|int>|string $path  The path as string or array.
+     * @param string|list<string|int> $path  The path as string or array.
      * @param mixed                   $value The value.
      */
-    public function set($path, $value): bool
+    public function set(array|string $path, mixed $value): bool
     {
         $path    = is_array($path) ? $path : explode('/', $path);
         $current =& $this->dca;
@@ -134,11 +132,11 @@ final class Definition
     /**
      * Modify given configuration value.
      *
-     * @param list<string|int>|string $path    The path as string or array.
+     * @param string|list<string|int> $path    The path as string or array.
      * @param callable                $handler A handler getting the current value passed and has to return the modified
      *                                         value.
      */
-    public function modify($path, callable $handler): void
+    public function modify(array|string $path, callable $handler): void
     {
         $this->set($path, $handler($this->get($path)));
     }

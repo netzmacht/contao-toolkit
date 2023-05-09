@@ -33,7 +33,7 @@ abstract class AbstractContentElementController extends AbstractFragmentControll
         TemplateRenderer $templateRenderer,
         RequestScopeMatcher $scopeMatcher,
         ResponseTagger $responseTagger,
-        TokenChecker $tokenChecker
+        TokenChecker $tokenChecker,
     ) {
         parent::__construct($templateRenderer, $scopeMatcher, $responseTagger);
 
@@ -48,8 +48,12 @@ abstract class AbstractContentElementController extends AbstractFragmentControll
      * @param string            $section The section in which the content element is rendered.
      * @param list<string>|null $classes Additional css classes.
      */
-    public function __invoke(Request $request, ContentModel $model, string $section, ?array $classes = null): Response
-    {
+    public function __invoke(
+        Request $request,
+        ContentModel $model,
+        string $section,
+        array|null $classes = null,
+    ): Response {
         if ($this->isHidden($model, $request)) {
             return new Response();
         }

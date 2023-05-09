@@ -25,7 +25,7 @@ class RepositoriesPassSpec extends ObjectBehavior
 
     public function it_registeres_tagged_services_to_the_repository_manager(
         ContainerBuilder $container,
-        Definition $definition
+        Definition $definition,
     ): void {
         $taggedServices = [
             'foo' => [

@@ -20,9 +20,7 @@ final class ForeignKeyFormatter implements ValueFormatter
      */
     private Connection $connection;
 
-    /**
-     * @param Connection $database Database connection.
-     */
+    /** @param Connection $database Database connection. */
     public function __construct(Connection $database)
     {
         $this->connection = $database;
@@ -39,7 +37,7 @@ final class ForeignKeyFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null)
     {
         $foreignKey = explode('.', $fieldDefinition['foreignKey'], 2);
 

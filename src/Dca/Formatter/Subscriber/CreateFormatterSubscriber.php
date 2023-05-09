@@ -39,16 +39,16 @@ final class CreateFormatterSubscriber
     private ValueFormatter $optionsFormatter;
 
     /**
-     * @param ValueFormatter[] $formatter        Value formatter.
-     * @param ValueFormatter[] $preFilters       Pre filters.
-     * @param ValueFormatter[] $postFilters      Post filters.
-     * @param ValueFormatter   $optionsFormatter Options formatter.
+     * @param list<ValueFormatter> $formatter        Value formatter.
+     * @param list<ValueFormatter> $preFilters       Pre filters.
+     * @param list<ValueFormatter> $postFilters      Post filters.
+     * @param ValueFormatter       $optionsFormatter Options formatter.
      */
     public function __construct(
         iterable $formatter,
         iterable $preFilters,
         iterable $postFilters,
-        ValueFormatter $optionsFormatter
+        ValueFormatter $optionsFormatter,
     ) {
         $this->formatter        = $formatter;
         $this->preFilters       = $preFilters;
@@ -63,7 +63,7 @@ final class CreateFormatterSubscriber
      */
     public function handle(CreateFormatterEvent $event): void
     {
-        $event->addFormatter($this->formatter);
+        $event->addFormatter(...$this->formatter);
         $event->addPreFilters($this->preFilters);
         $event->addPostFilters($this->postFilters);
 

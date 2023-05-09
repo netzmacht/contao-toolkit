@@ -13,19 +13,9 @@ use Contao\Model;
  */
 final class ModelArrayAccess implements ArrayAccess
 {
-    /**
-     * Data model.
-     *
-     * @var Model|Result
-     */
-    private $model;
-
-    /**
-     * @param Result|Model $model Data model as database result of model.
-     */
-    public function __construct($model)
+    /** @param Model|Result $model Data model as database result of model. */
+    public function __construct(private readonly Result|Model $model)
     {
-        $this->model = $model;
     }
 
     /**
@@ -39,7 +29,7 @@ final class ModelArrayAccess implements ArrayAccess
     /**
      * {@inheritDoc}
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->model->$offset;
     }

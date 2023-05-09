@@ -45,7 +45,7 @@ abstract class AbstractWizardListener
         TemplateRenderer $templateEngine,
         Translator $translator,
         DcaManager $dcaManager,
-        string $template = ''
+        string $template = '',
     ) {
         $this->translator     = $translator;
         $this->templateEngine = $templateEngine;

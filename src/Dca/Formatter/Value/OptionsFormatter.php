@@ -22,9 +22,7 @@ final class OptionsFormatter implements ValueFormatter
      */
     private Invoker $invoker;
 
-    /**
-     * @param Invoker $invoker Callback invoker.
-     */
+    /** @param Invoker $invoker Callback invoker. */
     public function __construct(Invoker $invoker)
     {
         $this->invoker = $invoker;
@@ -45,7 +43,7 @@ final class OptionsFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null)
     {
         if (
             ! empty($fieldDefinition['eval']['isAssociative'])

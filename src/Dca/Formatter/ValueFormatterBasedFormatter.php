@@ -15,45 +15,27 @@ use function is_array;
 final class ValueFormatterBasedFormatter implements Formatter
 {
     /**
-     * Data container definition.
-     */
-    private Definition $definition;
-
-    /**
-     * Value formatter.
-     */
-    private ValueFormatter $valueFormatter;
-
-    /**
-     * Options formatter.
-     */
-    private ValueFormatter $optionsFormatter;
-
-    /**
      * @param Definition     $definition       Data container definition.
      * @param ValueFormatter $valueFormatter   Value formatter.
      * @param ValueFormatter $optionsFormatter Options formatter.
      */
     public function __construct(
-        Definition $definition,
-        ValueFormatter $valueFormatter,
-        ValueFormatter $optionsFormatter
+        private readonly Definition $definition,
+        private readonly ValueFormatter $valueFormatter,
+        private readonly ValueFormatter $optionsFormatter,
     ) {
-        $this->definition       = $definition;
-        $this->valueFormatter   = $valueFormatter;
-        $this->optionsFormatter = $optionsFormatter;
     }
 
     /**
      * Format a field value.
      *
-     * @param string $field   Field name.
-     * @param mixed  $value   Field value.
-     * @param mixed  $context Context object, usually the data container driver.
+     * @param string     $field   Field name.
+     * @param mixed      $value   Field value.
+     * @param mixed|null $context Context object, usually the data container driver.
      *
-     * @return array<int|string, string>|string|null
+     * @return array<int|string, string>|string|int|float|null
      */
-    public function formatValue(string $field, $value, $context = null)
+    public function formatValue(string $field, mixed $value, mixed $context = null): array|string|int|float|null
     {
         $fieldDefinition = $this->definition->get(['fields', $field]);
 

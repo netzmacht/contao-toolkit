@@ -31,7 +31,7 @@ class AbstractContentElementControllerSpec extends ObjectBehavior
         ResponseTagger $responseTagger,
         TokenChecker $tokenChecker,
         RequestStack $requestStack,
-        Container $container
+        Container $container,
     ): void {
         System::setContainer($container->getWrappedObject());
 
@@ -43,7 +43,7 @@ class AbstractContentElementControllerSpec extends ObjectBehavior
             $templateRenderer,
             new RequestScopeMatcher($scopeMatcher->getWrappedObject(), $requestStack->getWrappedObject()),
             $responseTagger,
-            $tokenChecker
+            $tokenChecker,
         );
     }
 
@@ -63,7 +63,7 @@ class AbstractContentElementControllerSpec extends ObjectBehavior
         Request $request,
         ScopeMatcher $scopeMatcher,
         TokenChecker $tokenChecker,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = true;
@@ -79,7 +79,7 @@ class AbstractContentElementControllerSpec extends ObjectBehavior
         Request $request,
         ScopeMatcher $scopeMatcher,
         TokenChecker $tokenChecker,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = false;
@@ -96,7 +96,7 @@ class AbstractContentElementControllerSpec extends ObjectBehavior
         Request $request,
         ScopeMatcher $scopeMatcher,
         TokenChecker $tokenChecker,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = false;
@@ -113,7 +113,7 @@ class AbstractContentElementControllerSpec extends ObjectBehavior
         Request $request,
         ScopeMatcher $scopeMatcher,
         TokenChecker $tokenChecker,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = false;
@@ -128,8 +128,8 @@ class AbstractContentElementControllerSpec extends ObjectBehavior
                 'fe:ce_concrete_content_element',
                 Argument::allOf(
                     Argument::withEntry('cssID', ' id="foo"'),
-                    Argument::withEntry('class', 'ce_concrete_content_element bar')
-                )
+                    Argument::withEntry('class', 'ce_concrete_content_element bar'),
+                ),
             )
             ->shouldBeCalled()
             ->willReturn('HTML');
@@ -141,7 +141,7 @@ class AbstractContentElementControllerSpec extends ObjectBehavior
         Request $request,
         ScopeMatcher $scopeMatcher,
         TokenChecker $tokenChecker,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = false;
@@ -156,8 +156,8 @@ class AbstractContentElementControllerSpec extends ObjectBehavior
                 'fe:ce_concrete_content_element',
                 Argument::allOf(
                     Argument::withEntry('headline', 'Headline'),
-                    Argument::withEntry('hl', 'h1')
-                )
+                    Argument::withEntry('hl', 'h1'),
+                ),
             )
             ->shouldBeCalled()
             ->willReturn('HTML');
@@ -169,7 +169,7 @@ class AbstractContentElementControllerSpec extends ObjectBehavior
         Request $request,
         ScopeMatcher $scopeMatcher,
         TokenChecker $tokenChecker,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = false;
@@ -187,8 +187,8 @@ class AbstractContentElementControllerSpec extends ObjectBehavior
                 Argument::allOf(
                     Argument::withEntry('inColumn', 'main'),
                     Argument::withEntry('foo', 'bar'),
-                    Argument::withEntry('baz', true)
-                )
+                    Argument::withEntry('baz', true),
+                ),
             )
             ->shouldBeCalled()
             ->willReturn('HTML');
@@ -200,7 +200,7 @@ class AbstractContentElementControllerSpec extends ObjectBehavior
         Request $request,
         ScopeMatcher $scopeMatcher,
         TokenChecker $tokenChecker,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = false;
@@ -224,7 +224,7 @@ class AbstractContentElementControllerSpec extends ObjectBehavior
         Request $request,
         ScopeMatcher $scopeMatcher,
         TokenChecker $tokenChecker,
-        TemplateRenderer $templateRenderer
+        TemplateRenderer $templateRenderer,
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->invisible = false;
@@ -250,7 +250,7 @@ class AbstractContentElementControllerSpec extends ObjectBehavior
         ScopeMatcher $scopeMatcher,
         TokenChecker $tokenChecker,
         TemplateRenderer $templateRenderer,
-        ResponseTagger $responseTagger
+        ResponseTagger $responseTagger,
     ): void {
         $model            = (new ReflectionClass(ContentModel::class))->newInstanceWithoutConstructor();
         $model->id        = 1;

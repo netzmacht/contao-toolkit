@@ -95,7 +95,7 @@ class ContaoServicesFactorySpec extends ObjectBehavior
 
     public function it_creates_backend_user_instance(
         ContaoFramework $framework,
-        BackendUser $backendUser
+        BackendUser $backendUser,
     ): void {
         $this->expectInstanceWillBeCreated($framework, BackendUser::class, $backendUser);
         $this->createBackendUserInstance()->shouldReturn($backendUser);
@@ -103,7 +103,7 @@ class ContaoServicesFactorySpec extends ObjectBehavior
 
     public function it_creates_frontend_user_instance(
         ContaoFramework $framework,
-        FrontendUser $frontendUser
+        FrontendUser $frontendUser,
     ): void {
         $this->expectInstanceWillBeCreated($framework, FrontendUser::class, $frontendUser);
         $this->createFrontendUserInstance()->shouldReturn($frontendUser);
@@ -112,7 +112,7 @@ class ContaoServicesFactorySpec extends ObjectBehavior
     public function expectAdapterWillBeReturned(
         ContaoFramework $framework,
         string $class,
-        Adapter $adapter
+        Adapter $adapter,
     ): void {
         $framework->initialize()->shouldBeCalled();
         $framework->getAdapter($class)->willReturn($adapter)->shouldBeCalled();

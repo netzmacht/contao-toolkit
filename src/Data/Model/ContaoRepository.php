@@ -22,23 +22,12 @@ class ContaoRepository implements Repository
 {
     use QueryProxy;
 
-    /**
-     * The model class.
-     *
-     * @var class-string<T>
-     */
-    private string $modelClass;
-
-    /**
-     * @param class-string<T> $modelClass Model class.
-     */
-    public function __construct(string $modelClass)
+    /** @param class-string<T> $modelClass Model class. */
+    public function __construct(private readonly string $modelClass)
     {
         Assert::that($modelClass)
             ->classExists()
             ->subclassOf(Model::class);
-
-        $this->modelClass = $modelClass;
     }
 
     public function getTableName(): string
@@ -51,7 +40,7 @@ class ContaoRepository implements Repository
         return $this->modelClass;
     }
 
-    public function find(int $modelId): ?Model
+    public function find(int $modelId): Model|null
     {
         return $this->call('findByPK', [$modelId]);
     }
@@ -59,7 +48,7 @@ class ContaoRepository implements Repository
     /**
      * {@inheritDoc}
      */
-    public function findBy(array $column, array $values, array $options = []): ?Collection
+    public function findBy(array $column, array $values, array $options = []): Collection|null
     {
         $column  = $this->addTablePrefix($column);
         $options = $this->addTablePrefixToOrder($options);
@@ -70,7 +59,7 @@ class ContaoRepository implements Repository
     /**
      * {@inheritDoc}
      */
-    public function findOneBy(array $column, array $values, array $options = []): ?Model
+    public function findOneBy(array $column, array $values, array $options = []): Model|null
     {
         $column  = $this->addTablePrefix($column);
         $options = $this->addTablePrefixToOrder($options);
@@ -81,7 +70,7 @@ class ContaoRepository implements Repository
     /**
      * {@inheritDoc}
      */
-    public function findBySpecification(Specification $specification, array $options = [])
+    public function findBySpecification(Specification $specification, array $options = []): Collection|Model|null
     {
         $column  = [];
         $values  = [];
@@ -96,7 +85,7 @@ class ContaoRepository implements Repository
     /**
      * {@inheritDoc}
      */
-    public function findAll(array $options = []): ?Collection
+    public function findAll(array $options = []): Collection|null
     {
         $options = $this->addTablePrefixToOrder($options);
 
@@ -143,10 +132,8 @@ class ContaoRepository implements Repository
      *
      * @param string      $method    Method name.
      * @param list<mixed> $arguments Arguments.
-     *
-     * @return mixed
      */
-    protected function call(string $method, array $arguments = [])
+    protected function call(string $method, array $arguments = []): mixed
     {
         return call_user_func_array([$this->modelClass, $method], $arguments);
     }
@@ -162,7 +149,7 @@ class ContaoRepository implements Repository
     {
         return array_map(
             [$this, 'addTablePrefixToColumn'],
-            $column
+            $column,
         );
     }
 
@@ -184,7 +171,7 @@ class ContaoRepository implements Repository
                 '<' . $tableName . '.',
                 '=' . $tableName . '.',
             ],
-            $column
+            $column,
         );
 
         if ($column[0] === '.') {

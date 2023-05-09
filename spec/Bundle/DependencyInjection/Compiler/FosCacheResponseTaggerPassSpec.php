@@ -27,7 +27,7 @@ final class FosCacheResponseTaggerPassSpec extends ObjectBehavior
     }
 
     public function it_doesnt_register_response_tagger_if_fos_response_tagger_not_available(
-        ContainerBuilder $container
+        ContainerBuilder $container,
     ): void {
         $container->has(self::FOS_TAGGER_SERVICE_ID)
             ->shouldBeCalled()
@@ -40,7 +40,7 @@ final class FosCacheResponseTaggerPassSpec extends ObjectBehavior
     }
 
     public function it_registers_response_tagger_if_fos_response_tagger_is_available(
-        ContainerBuilder $container
+        ContainerBuilder $container,
     ): void {
         $container->has(self::FOS_TAGGER_SERVICE_ID)
             ->shouldBeCalled()

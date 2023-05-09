@@ -19,13 +19,13 @@ final class InvalidAliasException extends RuntimeException
      *
      * @return static
      */
-    public static function forDatabaseEntry(string $tableName, int $rowId, $aliasValue): self
+    public static function forDatabaseEntry(string $tableName, int $rowId, mixed $aliasValue): self
     {
         $message = sprintf(
             'Could not create unique alias for "%s::%s". Alias value "%s"',
             $tableName,
             $rowId,
-            $aliasValue
+            $aliasValue,
         );
 
         return new static($message);

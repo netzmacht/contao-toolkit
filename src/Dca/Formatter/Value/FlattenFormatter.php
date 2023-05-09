@@ -27,7 +27,7 @@ final class FlattenFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         return $this->flatten($value);
     }
@@ -44,7 +44,7 @@ final class FlattenFormatter implements ValueFormatter
      *
      * @return array<int|string,string>|string
      */
-    private function flatten($value, bool $brackets = false)
+    private function flatten($value, bool $brackets = false): array|string
     {
         if (is_array($value)) {
             /** @psalm-var array<int,string> $value */
@@ -52,7 +52,7 @@ final class FlattenFormatter implements ValueFormatter
                 function ($value) {
                     return $this->flatten($value, true);
                 },
-                $value
+                $value,
             );
 
             $value = implode(', ', $value);

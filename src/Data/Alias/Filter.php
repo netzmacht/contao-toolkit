@@ -34,5 +34,5 @@ interface Filter
      * @param string|null  $value     Current value.
      * @param string       $separator Separator character between different alias tokens.
      */
-    public function apply($model, ?string $value, string $separator): ?string;
+    public function apply($model, string|null $value, string $separator): string|null;
 }
