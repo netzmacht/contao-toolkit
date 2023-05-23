@@ -22,7 +22,7 @@ final class DeserializeFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null)
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         return StringUtil::deserialize($value);
     }

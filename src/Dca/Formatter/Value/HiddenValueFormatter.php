@@ -36,7 +36,7 @@ final class HiddenValueFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null)
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         if ($this->passwordMask) {
             if (! empty($fieldDefinition['inputType']) && $fieldDefinition['inputType'] === 'password') {

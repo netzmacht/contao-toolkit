@@ -43,7 +43,7 @@ final class OptionsFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null)
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         if (
             ! empty($fieldDefinition['eval']['isAssociative'])

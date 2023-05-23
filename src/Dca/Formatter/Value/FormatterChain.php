@@ -43,7 +43,7 @@ final class FormatterChain implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null)
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         foreach ($this->formatter as $formatter) {
             if ($formatter->accepts($fieldName, $fieldDefinition)) {

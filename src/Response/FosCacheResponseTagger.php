@@ -31,6 +31,7 @@ final class FosCacheResponseTagger implements ResponseTagger
         try {
             $this->inner->addTags($tags);
         } catch (FosInvalidTagException $e) {
+            /** @psalm-suppress RedundantCast */
             throw new InvalidHttpResponseTagException($e->getMessage(), (int) $e->getCode(), $e);
         }
     }

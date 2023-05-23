@@ -62,6 +62,7 @@ final class OptionsBuilder
             return self::fromArrayList([], $labelColumn, $valueColumn);
         }
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         return self::fromArrayList($result->fetchAllAssoc(), $labelColumn, $valueColumn);
     }
 

@@ -22,7 +22,7 @@ final class ReferenceFormatter implements ValueFormatter
     /**
      * {@inheritDoc}
      */
-    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null)
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         if (isset($fieldDefinition['reference'][$value])) {
             if (is_array($fieldDefinition['reference'][$value])) {

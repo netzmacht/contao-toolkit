@@ -94,7 +94,7 @@ final class DelegatingTemplateRenderer implements TemplateRenderer
      *
      * @param string $name The template reference.
      *
-     * @return list<string>
+     * @return array{string,string}
      *
      * @throws InvalidArgumentException When an unsupported template name is given.
      */

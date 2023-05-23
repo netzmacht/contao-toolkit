@@ -42,7 +42,7 @@ final class ArgumentParser
     /**
      * Register a split callback.
      *
-     * @param string            $separator Separator string.
+     * @param non-empty-string  $separator Separator string.
      * @param list<string>|null $names     Optional list for named attributes.
      * @param int|null          $limit     Optional split limit.
      *
@@ -110,7 +110,7 @@ final class ArgumentParser
      * Handle the split by.
      *
      * @param string                        $query     The given query.
-     * @param string                        $separator Separator string.
+     * @param non-empty-string              $separator Separator string.
      * @param array<string|int,string>|null $names     Optional list for named attributes.
      * @param int|null                      $limit     Optional split limit.
      *

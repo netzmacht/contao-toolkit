@@ -21,7 +21,7 @@ abstract class AbstractInsertTagParser
         $parts = explode('::', $raw, 2);
         $tag   = $parts[0];
 
-        if (! $this->supports($tag, $cache)) {
+        if (! isset($parts[1]) || ! $this->supports($tag, $cache)) {
             return false;
         }
 

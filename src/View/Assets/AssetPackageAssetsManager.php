@@ -113,6 +113,7 @@ final class AssetPackageAssetsManager implements AssetsManager
             return $path;
         }
 
+        /** @psalm-suppress PossiblyUndefinedArrayOffset */
         return $this->packages->getUrl($parts[1], $parts[0]);
     }
 }
