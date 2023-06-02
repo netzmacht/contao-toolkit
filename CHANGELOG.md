@@ -4,6 +4,16 @@ Changelog
 [Unreleased]
 ------------
 
+[3.8.3] (2023-06-02)
+--------------------
+
+### Fixed
+ 
+ - Do not use customTpl in the backend of the fragment controller
+
+[3.8.0]
+-------
+
 ### Added
 
  - Asset manager: Add support for asset packages based assets

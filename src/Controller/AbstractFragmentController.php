@@ -250,7 +250,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      */
     protected function getTemplateName(Model $model): string
     {
-        if ($model->customTpl) {
+        if ($model->customTpl && ! $this->scopeMatcher->isBackendRequest()) {
             return $model->customTpl;
         }
 
