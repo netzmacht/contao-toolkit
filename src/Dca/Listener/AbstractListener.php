@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener;
 
-use Netzmacht\Contao\Toolkit\Assertion\Assert;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
@@ -28,18 +27,6 @@ abstract class AbstractListener
     public function __construct(DcaManager $dcaManager)
     {
         $this->dcaManager = $dcaManager;
-
-        Assert::that(static::$name)
-            ->notEmpty('Name property must not be empty')
-            ->string('Name property must be a string.');
-    }
-
-    /**
-     * Get data container name.
-     */
-    public static function getName(): string
-    {
-        return static::$name;
     }
 
     /**
