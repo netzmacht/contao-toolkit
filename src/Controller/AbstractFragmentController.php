@@ -21,7 +21,8 @@ use function implode;
 use function is_array;
 use function ltrim;
 use function sprintf;
-use function strpos;
+use function str_ends_with;
+use function str_starts_with;
 use function strrchr;
 use function substr;
 use function trim;
@@ -219,10 +220,10 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
     protected function render(string $templateName, array $data): string
     {
         if (
-            substr($templateName, -5) !== '.twig'
-            && strpos($templateName, 'toolkit:') !== 0
-            && strpos($templateName, 'fe:') !== 0
-            && strpos($templateName, 'be:') !== 0
+            ! str_ends_with($templateName, '.twig')
+            && ! str_starts_with($templateName, 'toolkit:')
+            && ! str_starts_with($templateName, 'fe:')
+            && ! str_starts_with($templateName, 'be:')
         ) {
             $templateName = 'fe:' . $templateName;
         }
