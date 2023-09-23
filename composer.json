@@ -26,7 +26,7 @@
     "beberlei/assert": "^2.7 || ^3.0",
     "contao/core-bundle": "^4.9.10",
     "doctrine/dbal": "^2.11 || ^3.1",
-    "psr/log": "^1.1",
+    "psr/log": "^1.1 || ^2.0 || ^3.0",
     "symfony/asset": "^4.4 || ^5.1",
     "symfony/config": "^4.4 || ^5.1",
     "symfony/dependency-injection": "^4.4 || ^5.1",
@@ -67,7 +67,8 @@
       "contao-components/installer": true,
       "composer/package-versions-deprecated": true,
       "contao/manager-plugin": true,
-      "dealerdirect/phpcodesniffer-composer-installer": true
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "php-http/discovery": true
     }
   },
   "extra": {
