@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace spec\Netzmacht\Contao\Toolkit\Bundle\ContaoManager;
+namespace spec\Netzmacht\Contao\Toolkit\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Contao\ManagerPlugin\Dependency\DependentPluginInterface;
-use Netzmacht\Contao\Toolkit\Bundle\ContaoManager\Plugin;
+use Netzmacht\Contao\Toolkit\ContaoManager\Plugin;
 use PhpSpec\ObjectBehavior;
 
 class PluginSpec extends ObjectBehavior

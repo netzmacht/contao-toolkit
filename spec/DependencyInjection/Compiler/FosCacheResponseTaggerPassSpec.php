@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace spec\Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler;
+namespace spec\Netzmacht\Contao\Toolkit\DependencyInjection\Compiler;
 
-use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\FosCacheResponseTaggerPass;
+use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\FosCacheResponseTaggerPass;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

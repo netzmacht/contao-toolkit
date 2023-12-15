@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection;
+namespace Netzmacht\Contao\Toolkit\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

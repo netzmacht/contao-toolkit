@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler;
+namespace Netzmacht\Contao\Toolkit\DependencyInjection\Compiler;
 
 use Contao\Model;
 use Netzmacht\Contao\Toolkit\Assertion\Assert;

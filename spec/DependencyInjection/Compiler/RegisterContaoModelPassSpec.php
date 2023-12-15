@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace spec\Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler;
+namespace spec\Netzmacht\Contao\Toolkit\DependencyInjection\Compiler;
 
 use Contao\ContentModel;
 use Contao\ModuleModel;
-use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler\RegisterContaoModelPass;
+use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\RegisterContaoModelPass;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;

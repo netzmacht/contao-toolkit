@@ -24,7 +24,7 @@ services:
       - { name: 'kernel.event_listener', event: 'netzmacht.contao_toolkit.dca.create_formatter', method: 'handle' }
 
   netzmacht.contao_toolkit.listeners.register_models:
-    class: Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Listener\RegisterContaoModelsListener
+    class: Netzmacht\Contao\Toolkit\DependencyInjection\Listener\RegisterContaoModelsListener
     public: true
     arguments:
       - []

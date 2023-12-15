@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace spec\Netzmacht\Contao\Toolkit\Bundle\DependencyInjection;
+namespace spec\Netzmacht\Contao\Toolkit\DependencyInjection;
 
 use Contao\Backend;
 use Contao\BackendUser;
@@ -18,7 +18,7 @@ use Contao\Image;
 use Contao\Input;
 use Contao\Message;
 use Contao\System;
-use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\ContaoServicesFactory;
+use Netzmacht\Contao\Toolkit\DependencyInjection\ContaoServicesFactory;
 use PhpSpec\ObjectBehavior;
 
 class ContaoServicesFactorySpec extends ObjectBehavior

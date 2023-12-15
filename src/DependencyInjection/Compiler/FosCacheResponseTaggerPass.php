@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Compiler;
+namespace Netzmacht\Contao\Toolkit\DependencyInjection\Compiler;
 
 use Netzmacht\Contao\Toolkit\Response\FosCacheResponseTagger;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface as CompilerPass;

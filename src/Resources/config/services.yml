@@ -19,7 +19,7 @@ services:
       - '@netzmacht.contao_toolkit.contao.system_adapter'
 
   netzmacht.contao_toolkit.contao_services_factory:
-    class: Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\ContaoServicesFactory
+    class: Netzmacht\Contao\Toolkit\DependencyInjection\ContaoServicesFactory
     arguments:
       - '@contao.framework'
 

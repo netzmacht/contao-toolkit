@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace spec\Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Listener;
+namespace spec\Netzmacht\Contao\Toolkit\DependencyInjection\Listener;
 
-use Netzmacht\Contao\Toolkit\Bundle\DependencyInjection\Listener\RegisterContaoModelsListener;
+use Netzmacht\Contao\Toolkit\DependencyInjection\Listener\RegisterContaoModelsListener;
 use PhpSpec\ObjectBehavior;
 
 use function expect;
