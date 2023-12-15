@@ -28,9 +28,7 @@ final class OptionsFormatter implements ValueFormatter
         $this->invoker = $invoker;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         if (! empty($fieldDefinition['eval']['isAssociative']) || ! empty($fieldDefinition['options'])) {
@@ -40,9 +38,7 @@ final class OptionsFormatter implements ValueFormatter
         return ! empty($fieldDefinition['options_callback']);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         if (
@@ -72,7 +68,7 @@ final class OptionsFormatter implements ValueFormatter
      *
      * @param mixed $value Given value.
      */
-    private function isAssociativeArray($value): bool
+    private function isAssociativeArray(mixed $value): bool
     {
         return is_array($value) && array_keys($value) !== range(0, count($value) - 1);
     }

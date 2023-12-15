@@ -19,9 +19,7 @@ final class ToolkitAliasGeneratorFactory implements AliasGeneratorFactory
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function create(string $dataContainerName, string $aliasField, array $fields): AliasGenerator
     {
         $filters = [

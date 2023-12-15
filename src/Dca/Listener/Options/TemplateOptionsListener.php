@@ -9,7 +9,9 @@ use Contao\DataContainer;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 
 use function array_diff;
+use function array_map;
 use function array_merge;
+use function array_values;
 
 final class TemplateOptionsListener
 {
@@ -30,6 +32,9 @@ final class TemplateOptionsListener
      * @param DataContainer $dataContainer Data container driver.
      *
      * @return list<string>
+     *
+     * @psalm-suppress MoreSpecificReturnType
+     * @psalm-suppress LessSpecificReturnStatement
      */
     public function onOptionsCallback(DataContainer $dataContainer): array
     {
@@ -40,7 +45,7 @@ final class TemplateOptionsListener
             return $templates;
         }
 
-        return array_diff($templates, $config['exclude']);
+        return array_values(array_map('\strval', array_diff($templates, $config['exclude'])));
     }
 
     /**

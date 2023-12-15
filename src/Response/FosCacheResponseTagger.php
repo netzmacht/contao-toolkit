@@ -22,7 +22,7 @@ final class FosCacheResponseTagger implements ResponseTagger
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws InvalidHttpResponseTagException If apply tags failed.
      */

@@ -1,8 +1,0 @@
-
-exclude:
-  - spec
-
-mapping:
-  'Christopher Bölter <christopher@boelter.eu>':
-    - 'cboelter <christopher@boelter.eu>'
-    - 'c.boelter <christopher@boelter.eu>'

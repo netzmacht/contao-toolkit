@@ -55,9 +55,12 @@ final class ToolkitRepositoryManager implements RepositoryManager
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws InvalidArgumentException When no repository was registered and not a model class is given.
+     *
+     * @psalm-suppress InvalidReturnType
+     * @psalm-suppress InvalidReturnStatement
      */
     public function getRepository(string $modelClass): Repository
     {
@@ -75,7 +78,7 @@ final class ToolkitRepositoryManager implements RepositoryManager
 
         throw new InvalidArgumentException(
             sprintf(
-                'Neighter a repository was registered nor the class "%s" is a model class.',
+                'Neither a repository was registered nor the class "%s" is a model class.',
                 $modelClass,
             ),
         );

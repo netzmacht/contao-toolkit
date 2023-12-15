@@ -14,7 +14,7 @@ use function sprintf;
 final class RepositoriesPass implements CompilerPassInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws RuntimeException When table attribute is not given for a tagged repository.
      */

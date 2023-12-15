@@ -9,6 +9,9 @@ use Iterator;
 
 /**
  * Interface Options describes the options.
+ *
+ * @extends ArrayAccess<array-key,mixed>
+ * @extends Iterator<array-key,mixed>
  */
 interface Options extends ArrayAccess, Iterator
 {

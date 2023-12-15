@@ -36,7 +36,7 @@ class RegisterContaoModelPassSpec extends ObjectBehavior
             ],
         ];
 
-        $definition->getArgument(0)->shouldBeCalled();
+        $definition->getArgument(0)->willReturn([])->shouldBeCalled();
 
         $container
             ->has('netzmacht.contao_toolkit.listeners.register_models')

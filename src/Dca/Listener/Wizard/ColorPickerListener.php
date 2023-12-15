@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 
+use Contao\DataContainer;
+
 use function array_merge;
 
 final class ColorPickerListener extends AbstractPickerListener
@@ -27,10 +29,8 @@ final class ColorPickerListener extends AbstractPickerListener
         return $this->render($this->template, $config);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function onWizardCallback($dataContainer): string
+    /** {@inheritDoc} */
+    public function onWizardCallback(DataContainer $dataContainer): string
     {
         return $this->generate($dataContainer->table, $dataContainer->field);
     }

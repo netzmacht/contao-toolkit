@@ -60,10 +60,8 @@ final class UniqueDatabaseValueValidator implements Validator
         $this->uniqueKeyFields = $uniqueKeyFields;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function validate($result, $value, array|null $exclude = null): bool
+    /** {@inheritDoc} */
+    public function validate(object $result, mixed $value, array|null $exclude = null): bool
     {
         if (! $this->allowEmptyAlias && empty($value)) {
             return false;

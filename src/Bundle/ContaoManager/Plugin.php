@@ -13,9 +13,7 @@ use Netzmacht\Contao\Toolkit\Bundle\NetzmachtContaoToolkitBundle;
 
 final class Plugin implements BundlePluginInterface, DependentPluginInterface
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function getBundles(ParserInterface $parser): array
     {
         return [
@@ -25,9 +23,7 @@ final class Plugin implements BundlePluginInterface, DependentPluginInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function getPackageDependencies(): array
     {
         return ['contao/core-bundle'];

@@ -31,6 +31,16 @@
                 <referencedProperty name="Contao\DataContainer::$activeRecord"/>
             </errorLevel>
         </UndefinedMagicPropertyFetch>
+        <DeprecatedClass>
+            <errorLevel type="suppress">
+                <referencedClass name="Symfony\Component\Security\Core\Security"/>
+            </errorLevel>
+        </DeprecatedClass>
+        <DeprecatedConstant>
+            <errorLevel type="suppress">
+                <file name="src/Data/Alias/Validator/UniqueDatabaseValueValidator.php"/>
+            </errorLevel>
+        </DeprecatedConstant>
     </issueHandlers>
 
     <universalObjectCrates>

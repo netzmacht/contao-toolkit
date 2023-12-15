@@ -35,7 +35,7 @@ final class RegisterContaoModelPass implements CompilerPassInterface
                     ->subclassOf(Model::class);
 
                 $model = $tag['model'];
-                assert(is_subclass_of($model, Model::class, true));
+                assert(is_subclass_of($model, Model::class));
 
                 $repositories[$model::getTable()] = $model;
             }

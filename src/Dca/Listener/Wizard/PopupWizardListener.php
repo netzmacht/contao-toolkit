@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 
+use Contao\DataContainer;
 use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
@@ -70,7 +71,7 @@ final class PopupWizardListener extends AbstractWizardListener
      * @param mixed               $value  Id value.
      * @param array<string,mixed> $config Wizard config.
      */
-    public function generate($value, array $config = []): string
+    public function generate(mixed $value, array $config = []): string
     {
         $config = array_merge(
             [
@@ -106,10 +107,8 @@ final class PopupWizardListener extends AbstractWizardListener
         return '';
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function onWizardCallback($dataContainer): string
+    /** {@inheritDoc} */
+    public function onWizardCallback(DataContainer $dataContainer): string
     {
         $definition = $this->getDefinition($dataContainer);
         $config     = (array) $definition->get(['fields', $dataContainer->field, 'toolkit', 'popup_wizard']);

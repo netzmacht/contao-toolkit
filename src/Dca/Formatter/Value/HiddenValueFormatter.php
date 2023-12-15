@@ -17,9 +17,7 @@ final class HiddenValueFormatter implements ValueFormatter
         $this->passwordMask = $passwordMask;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         if (! empty($fieldDefinition['inputType']) && $fieldDefinition['inputType'] === 'password') {
@@ -33,9 +31,7 @@ final class HiddenValueFormatter implements ValueFormatter
         return ! empty($fieldDefinition['eval']['hideInput']);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         if ($this->passwordMask) {

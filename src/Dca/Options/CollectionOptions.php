@@ -68,9 +68,7 @@ final class CollectionOptions implements Options
         return $this->collection->{$this->labelColumn};
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function row(): array
     {
         return $this->collection->row();
@@ -98,9 +96,7 @@ final class CollectionOptions implements Options
         $this->collection->reset();
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function offsetExists($offset): bool
     {
         foreach ($this->collection as $row) {
@@ -112,9 +108,7 @@ final class CollectionOptions implements Options
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function offsetGet($offset): mixed
     {
         foreach ($this->collection as $row) {
@@ -126,25 +120,19 @@ final class CollectionOptions implements Options
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function offsetSet($offset, $value): void
     {
         // unsupported
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function offsetUnset($offset): void
     {
         // unsupported
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function getArrayCopy(): array
     {
         $values = [];

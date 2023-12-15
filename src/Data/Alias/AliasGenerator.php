@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
-use Contao\Database\Result;
-use Contao\Model;
-
 /**
  * Alias generator interface.
  */
@@ -15,8 +12,8 @@ interface AliasGenerator
     /**
      * Generate the alias.
      *
-     * @param Result|Model $result The database result.
-     * @param mixed        $value  The current value.
+     * @param object     $result The database result, usually a Contao\Database\Result or Contao\Model object.
+     * @param mixed|null $value  The current value.
      */
-    public function generate($result, $value = null): string|null;
+    public function generate(object $result, mixed $value = null): string|null;
 }

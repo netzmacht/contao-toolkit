@@ -89,18 +89,18 @@ final class StateButtonCallbackListener
      */
     public function onButtonCallback(
         array $row,
-        $href,
-        $label,
-        $title,
-        $icon,
-        $attributes,
+        string|null $href,
+        string|null $label,
+        string|null $title,
+        string|null $icon,
+        string|null $attributes,
         string $tableName,
-        $rootIds,
-        $childRecordIds,
+        array|null $rootIds,
+        array|null $childRecordIds,
         bool $circularReference,
-        $previous,
-        $next,
-        $dataContainer,
+        string|null $previous,
+        string|null $next,
+        DataContainer $dataContainer,
     ): string {
         $name   = $this->getOperationName((string) $attributes);
         $config = $this->getConfig($dataContainer, $name);
@@ -127,7 +127,7 @@ final class StateButtonCallbackListener
         }
 
         $disabled = ! $row[$config['stateColumn']] || ($config['inverse'] && $row[$config['stateColumn']]);
-        $href     = $href ?? '';
+        $href   ??= '';
         $href    .= '&amp;id=';
 
         /** @psalm-suppress PossiblyInvalidCast */
@@ -177,7 +177,7 @@ final class StateButtonCallbackListener
      *
      * @return array<string,mixed>
      */
-    private function getConfig($dataContainer, string $operationName): array
+    private function getConfig(DataContainer $dataContainer, string $operationName): array
     {
         $definition = $this->dcaManager->getDefinition($dataContainer->table);
         $config     = [
@@ -199,7 +199,7 @@ final class StateButtonCallbackListener
      *
      * @throws RuntimeException When no data-operation is set in the attributes.
      */
-    private function getOperationName($attributes): string
+    private function getOperationName(string $attributes): string
     {
         if (preg_match('/data-operation="([^"]*)"/', $attributes, $matches)) {
             return $matches[1];

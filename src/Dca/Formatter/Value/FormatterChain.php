@@ -26,9 +26,7 @@ final class FormatterChain implements ValueFormatter
         $this->formatter = $formatter;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         foreach ($this->formatter as $formatter) {
@@ -40,9 +38,7 @@ final class FormatterChain implements ValueFormatter
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         foreach ($this->formatter as $formatter) {

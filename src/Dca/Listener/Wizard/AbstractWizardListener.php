@@ -64,7 +64,7 @@ abstract class AbstractWizardListener
      * @param string|null         $name       Custom template name. If null main wizard template is used.
      * @param array<string,mixed> $parameters Parameters.
      */
-    protected function render($name = null, array $parameters = []): string
+    protected function render(string|null $name = null, array $parameters = []): string
     {
         return $this->templateEngine->render($name ?: $this->template, $parameters);
     }
@@ -74,7 +74,7 @@ abstract class AbstractWizardListener
      *
      * @param DataContainer $dataContainer Data container driver.
      */
-    protected function getDefinition($dataContainer): Definition
+    protected function getDefinition(DataContainer $dataContainer): Definition
     {
         return $this->dcaManager->getDefinition($dataContainer->table);
     }
@@ -86,7 +86,7 @@ abstract class AbstractWizardListener
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function onWizardCallback($dataContainer): string
+    public function onWizardCallback(DataContainer $dataContainer): string
     {
         return '';
     }

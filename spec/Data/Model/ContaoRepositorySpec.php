@@ -14,16 +14,14 @@ use function get_class;
 
 final class ContaoRepositorySpec extends ObjectBehavior
 {
-    /** @var Model */
-    private $modelInstance;
+    private Model $modelInstance;
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
+    /** @SuppressWarnings(PHPMD.UnusedFormalParameter) */
     public function let(): void
     {
         $this->modelInstance = new class extends Model{
             /** @var string */
+            // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
             protected static $strTable = 'tl_spec';
 
             public function __construct()

@@ -38,7 +38,7 @@ abstract class AbstractValueFilter extends AbstractFilter
      * @param string|list<string>|null $current   Current alias value.
      * @param string                   $separator A separator string.
      */
-    protected function combine(string|null $previous, $current, string $separator): string|null
+    protected function combine(string|null $previous, string|array|null $current, string $separator): string|null
     {
         if (is_array($current)) {
             $current = implode($separator, array_filter($current));

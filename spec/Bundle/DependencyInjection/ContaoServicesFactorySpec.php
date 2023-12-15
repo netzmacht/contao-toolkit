@@ -118,8 +118,7 @@ class ContaoServicesFactorySpec extends ObjectBehavior
         $framework->getAdapter($class)->willReturn($adapter)->shouldBeCalled();
     }
 
-    /** @param object $instance */
-    public function expectInstanceWillBeCreated(ContaoFramework $framework, string $class, $instance): void
+    public function expectInstanceWillBeCreated(ContaoFramework $framework, string $class, object $instance): void
     {
         $framework->initialize()->shouldBeCalled();
         $framework->createInstance($class)->willReturn($instance)->shouldBeCalled();

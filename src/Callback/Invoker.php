@@ -41,7 +41,7 @@ final class Invoker
      *
      * @param callable[]  $callbacks        List of callbacks.
      * @param list<mixed> $arguments        Callback arguments.
-     * @param bool|int    $returnValueIndex If the callback return value should be reused as an argument, give the
+     * @param false|int   $returnValueIndex If the callback return value should be reused as an argument, give the
      *                                      index.
      *
      * @throws InvalidArgumentException On one callback is not callable.

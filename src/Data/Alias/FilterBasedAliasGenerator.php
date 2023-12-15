@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
-use Contao\Database\Result;
-use Contao\Model;
 use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException;
 
@@ -60,7 +58,7 @@ final class FilterBasedAliasGenerator implements AliasGenerator
     /**
      * Get all filters.
      *
-     * @return array|Filter[]
+     * @return Filter[]
      */
     public function getFilters(): array
     {
@@ -70,11 +68,11 @@ final class FilterBasedAliasGenerator implements AliasGenerator
     /**
      * Consider if value is an valid alias.
      *
-     * @param Model|Result $result Data record.
-     * @param mixed        $value  The alias value.
-     * @param int          $rowId  The row id.
+     * @param object $result Data record.
+     * @param mixed  $value  The alias value.
+     * @param int    $rowId  The row id.
      */
-    private function isValid(Result|Model $result, mixed $value, int $rowId): bool
+    private function isValid(object $result, mixed $value, int $rowId): bool
     {
         return $this->validator->validate($result, $value, [$rowId]);
     }
@@ -82,10 +80,10 @@ final class FilterBasedAliasGenerator implements AliasGenerator
     /**
      * Apply filters.
      *
-     * @param Model|Result $result Data record.
-     * @param mixed        $value  Given value.
+     * @param object $result Data record.
+     * @param mixed  $value  Given value.
      */
-    private function applyFilters(Result|Model $result, mixed $value): mixed
+    private function applyFilters(object $result, mixed $value): mixed
     {
         foreach ($this->filters as $filter) {
             $filter->initialize();
@@ -107,12 +105,12 @@ final class FilterBasedAliasGenerator implements AliasGenerator
     /**
      * Guard that a valid alias is given.
      *
-     * @param Result|Model $result Data record.
-     * @param mixed        $value  Given value.
+     * @param object $result Data record.
+     * @param mixed  $value  Given value.
      *
      * @throws InvalidAliasException When No unique alias is generated.
      */
-    private function guardValidAlias($result, $value): void
+    private function guardValidAlias(object $result, mixed $value): void
     {
         /** @psalm-suppress RedundantCastGivenDocblockType */
         if (! $value || ! $this->isValid($result, $value, (int) $result->id)) {
@@ -121,10 +119,8 @@ final class FilterBasedAliasGenerator implements AliasGenerator
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function generate($result, $value = null): string
+    /** {@inheritDoc} */
+    public function generate(object $result, mixed $value = null): string
     {
         $value = $this->applyFilters($result, $value);
         $this->guardValidAlias($result, $value);

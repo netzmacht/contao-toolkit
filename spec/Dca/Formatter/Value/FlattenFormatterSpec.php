@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FlattenFormatter;
+use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
 use PhpSpec\ObjectBehavior;
 
 class FlattenFormatterSpec extends ObjectBehavior
 {
     public function it_is_initializable(): void
     {
-        $this->shouldHaveType('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\FlattenFormatter');
+        $this->shouldHaveType(FlattenFormatter::class);
     }
 
     public function it_is_a_value_formatter(): void
     {
-        $this->shouldImplement('Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter');
+        $this->shouldImplement(ValueFormatter::class);
     }
 
     public function it_accepts_multiple_fields(): void

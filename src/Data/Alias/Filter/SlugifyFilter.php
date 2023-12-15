@@ -38,10 +38,8 @@ final class SlugifyFilter extends AbstractValueFilter
         parent::__construct($columns, $break, $combine);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function apply($model, string|null $value, string $separator): string|null
+    /** {@inheritDoc} */
+    public function apply(object $model, string|null $value, string $separator): string|null
     {
         $values = [];
 

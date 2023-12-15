@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
-use Contao\Database\Result;
-use Contao\Model;
-
 /**
  * Filter modifies a value for the alias generator.
  */
@@ -30,9 +27,9 @@ interface Filter
     /**
      * Apply the filter.
      *
-     * @param Model|Result $model     Current model.
-     * @param string|null  $value     Current value.
-     * @param string       $separator Separator character between different alias tokens.
+     * @param object      $model     The database result, usually a Contao\Database\Result or Contao\Model object.
+     * @param string|null $value     Current value.
+     * @param string      $separator Separator character between different alias tokens.
      */
-    public function apply($model, string|null $value, string $separator): string|null;
+    public function apply(object $model, string|null $value, string $separator): string|null;
 }

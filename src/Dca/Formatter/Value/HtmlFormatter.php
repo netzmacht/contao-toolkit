@@ -8,9 +8,7 @@ use Contao\StringUtil;
 
 final class HtmlFormatter implements ValueFormatter
 {
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         if (! empty($fieldDefinition['eval']['allowHtml'])) {
@@ -20,9 +18,7 @@ final class HtmlFormatter implements ValueFormatter
         return ! empty($fieldDefinition['eval']['preserveTags']);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         return StringUtil::specialchars($value);

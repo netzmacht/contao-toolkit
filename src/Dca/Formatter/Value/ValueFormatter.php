@@ -10,7 +10,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 interface ValueFormatter
 {
     /**
-     * Check if the the formatter supports the field by the passed field name.
+     * Check if the formatter supports the field by the passed field name.
      *
      * @param string              $fieldName       Field name.
      * @param array<string,mixed> $fieldDefinition Field definition.

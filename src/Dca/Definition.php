@@ -10,6 +10,8 @@ use function is_array;
 
 /**
  * Definition provides easy access to the data container definition array.
+ *
+ * @psalm-suppress UnsupportedPropertyReferenceUsage
  */
 final class Definition
 {
@@ -38,9 +40,9 @@ final class Definition
     /**
      * Get the path as array.
      *
-     * @param mixed $path The path as "/" seared string or array.
+     * @param list<string|int>|string $path The path as "/" seared string or array.
      *
-     * @return list<string>
+     * @return list<string|int>
      */
     private function path(array|string $path): array
     {
@@ -105,8 +107,10 @@ final class Definition
      */
     public function set(array|string $path, mixed $value): bool
     {
-        $path    = is_array($path) ? $path : explode('/', $path);
+        $path = is_array($path) ? $path : explode('/', $path);
+        /** @psalm-suppress UnsupportedPropertyReferenceUsage */
         $current =& $this->dca;
+        $tmp     = null;
 
         foreach ($path as $key) {
             if (! is_array($current)) {

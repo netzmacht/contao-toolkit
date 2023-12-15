@@ -45,10 +45,8 @@ final class PagePickerListener extends AbstractFieldPickerListener
         $this->input = $input;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function generate(string $tableName, string $fieldName, int $rowId, $value = null): string
+    /** {@inheritDoc} */
+    public function generate(string $tableName, string $fieldName, int $rowId, mixed $value = null): string
     {
         $url = $this->router->generate('contao_backend_picker', [
             'context' => 'link',

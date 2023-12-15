@@ -16,17 +16,13 @@ use function is_array;
  */
 final class FileUuidFormatter implements ValueFormatter
 {
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         return ! empty($fieldDefinition['inputType']) && $fieldDefinition['inputType'] === 'fileTree';
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         if (is_array($value)) {

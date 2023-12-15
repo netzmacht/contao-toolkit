@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\View\Template\Event;
 
+use Netzmacht\Contao\Toolkit\View\Template\Event\GetTemplateHelpersEvent;
 use PhpSpec\ObjectBehavior;
+use stdClass;
 
 class GetTemplateHelpersEventSpec extends ObjectBehavior
 {
@@ -19,7 +21,7 @@ class GetTemplateHelpersEventSpec extends ObjectBehavior
 
     public function it_is_initializable(): void
     {
-        $this->shouldHaveType('Netzmacht\Contao\Toolkit\View\Template\Event\GetTemplateHelpersEvent');
+        $this->shouldHaveType(GetTemplateHelpersEvent::class);
     }
 
     public function it_knows_template_name(): void
@@ -34,15 +36,19 @@ class GetTemplateHelpersEventSpec extends ObjectBehavior
 
     public function it_adds_helper(): void
     {
-        $this->addHelper('foo', 'bar')->shouldReturn($this);
-        $this->getHelpers()->shouldReturn(['foo' => 'bar']);
+        $bar = new stdClass();
+        $this->addHelper('foo', $bar)->shouldReturn($this);
+        $this->getHelpers()->shouldReturn(['foo' => $bar]);
     }
 
     public function it_adds_helpers(): void
     {
+        $foo = new stdClass();
+        $bar = new stdClass();
+
         $helpers = [
-            'foo' => 'fooHelper',
-            'bar' => 'barHelper',
+            'foo' => $foo,
+            'bar' => $bar,
         ];
 
         $this->addHelpers($helpers)->shouldReturn($this);
@@ -51,9 +57,12 @@ class GetTemplateHelpersEventSpec extends ObjectBehavior
 
     public function it_only_store_latest_named_helper(): void
     {
-        $this->addHelper('foo', 'fooHelper');
-        $this->getHelpers()->shouldReturn(['foo' => 'fooHelper']);
-        $this->addHelper('foo', 'fooHelper2');
-        $this->getHelpers()->shouldReturn(['foo' => 'fooHelper2']);
+        $foo  = new stdClass();
+        $foo2 = new stdClass();
+
+        $this->addHelper('foo', $foo);
+        $this->getHelpers()->shouldReturn(['foo' => $foo]);
+        $this->addHelper('foo', $foo2);
+        $this->getHelpers()->shouldReturn(['foo' => $foo2]);
     }
 }

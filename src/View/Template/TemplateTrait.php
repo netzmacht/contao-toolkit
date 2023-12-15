@@ -36,6 +36,7 @@ trait TemplateTrait
      *
      * @return $this
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
     public function set(string $name, $value): self
     {
         $this->$name = $value;
@@ -68,6 +69,7 @@ trait TemplateTrait
      * @psalm-suppress MoreSpecificImplementedParamType
      * @phpcs:disable SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilityTypeMissing
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
     public function insert($name, array $data = null): void
     {
         $template = new static($name, $this->helpers, $this->strContentType);

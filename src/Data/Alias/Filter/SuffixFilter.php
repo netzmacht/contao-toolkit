@@ -39,10 +39,8 @@ final class SuffixFilter extends AbstractFilter
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function apply($model, string|null $value, string $separator): string|null
+    /** {@inheritDoc} */
+    public function apply(object $model, string|null $value, string $separator): string|null
     {
         if ($this->value === null) {
             $this->value = $value;

@@ -16,7 +16,7 @@ final class HelperNotFound extends RuntimeException
      * @param int            $code       Error code.
      * @param Throwable|null $previous   Previous exception.
      */
-    public function __construct($helperName, $code = 0, Throwable|null $previous = null)
+    public function __construct(string $helperName, int $code = 0, Throwable|null $previous = null)
     {
         $message = sprintf('No helper with name "%s" found.', $helperName);
 

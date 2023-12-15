@@ -14,6 +14,7 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Factory\AliasGeneratorFactory;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
+use function array_values;
 use function assert;
 use function sprintf;
 
@@ -68,7 +69,7 @@ final class GenerateAliasListener
      *
      * @throws AssertionFailedException If invalid data container is given.
      */
-    public function onSaveCallback($value, DataContainer $dataContainer): string|null
+    public function onSaveCallback(mixed $value, DataContainer $dataContainer): string|null
     {
         Assertion::true(
             $dataContainer->activeRecord instanceof Result || $dataContainer->activeRecord instanceof Model,
@@ -82,11 +83,9 @@ final class GenerateAliasListener
      *
      * @param DataContainer $dataContainer Data container.
      */
-    private function getFactoryServiceId($dataContainer): string
+    private function getFactoryServiceId(DataContainer $dataContainer): string
     {
-        $definition = $this->dcaManager->getDefinition($dataContainer->table);
-
-        return $definition->get(
+        return $this->dcaManager->getDefinition($dataContainer->table)->get(
             ['fields', $dataContainer->field, 'toolkit', 'alias_generator', 'factory'],
             $this->defaultFactoryServiceId,
         );
@@ -98,7 +97,7 @@ final class GenerateAliasListener
      * @param mixed  $factory   Retrieved alias generator factory service.
      * @param string $serviceId Service id.
      */
-    private function guardIsAliasGeneratorFactory($factory, string $serviceId): void
+    private function guardIsAliasGeneratorFactory(mixed $factory, string $serviceId): void
     {
         Assertion::isInstanceOf(
             $factory,
@@ -112,7 +111,7 @@ final class GenerateAliasListener
      *
      * @param DataContainer $dataContainer Data container driver.
      */
-    private function getGenerator($dataContainer): AliasGenerator
+    private function getGenerator(DataContainer $dataContainer): AliasGenerator
     {
         if (isset($this->generators[$dataContainer->table][$dataContainer->field])) {
             return $this->generators[$dataContainer->table][$dataContainer->field];
@@ -127,8 +126,10 @@ final class GenerateAliasListener
             ['id'],
         );
 
+        Assertion::allString($fields);
+
         $this->guardIsAliasGeneratorFactory($factory, $serviceId);
 
-        return $factory->create($dataContainer->table, $dataContainer->field, $fields);
+        return $factory->create($dataContainer->table, $dataContainer->field, array_values($fields));
     }
 }

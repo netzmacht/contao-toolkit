@@ -124,7 +124,7 @@ final class DatabaseRowUpdater implements Updater
      *
      * @return array<string,mixed>
      */
-    private function executeSaveCallbacks(Definition $definition, array $data, $context): array
+    private function executeSaveCallbacks(Definition $definition, array $data, mixed $context): array
     {
         foreach ($data as $column => $value) {
             $callbacks = $definition->get(['fields', $column, 'save_callback']);
@@ -146,7 +146,7 @@ final class DatabaseRowUpdater implements Updater
      * @param int|string          $recordId   Data record id.
      * @param array<string,mixed> $data       Change data set.
      */
-    private function save(Definition $definition, $recordId, array $data): void
+    private function save(Definition $definition, int|string $recordId, array $data): void
     {
         $builder = $this->connection->createQueryBuilder()
             ->update($definition->getName())

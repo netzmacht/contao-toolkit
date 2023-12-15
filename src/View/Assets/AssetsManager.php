@@ -15,30 +15,38 @@ interface AssetsManager
      * Add a javascript file to Contao assets.
      *
      * @param string      $path   The assets path.
-     * @param string|bool $static Register it as static entry.
+     * @param bool|string $static Register it as static entry.
      * @param string|null $name   Optional assets name.
      *
      * @return $this
      */
-    public function addJavascript(string $path, $static = self::STATIC_PRODUCTION, string|null $name = null): self;
+    public function addJavascript(
+        string $path,
+        bool|string $static = self::STATIC_PRODUCTION,
+        string|null $name = null,
+    ): self;
 
     /**
      * Add javascript files to Contao assets.
      *
      * @param array<int|string,string> $paths  The assets paths.
-     * @param string|bool              $static Register it as static entry.
+     * @param bool|string              $static Register it as static entry.
      * @param string|null              $name   Optional assets name.
      *
      * @return $this
      */
-    public function addJavascripts(array $paths, $static = self::STATIC_PRODUCTION, string|null $name = null): self;
+    public function addJavascripts(
+        array $paths,
+        bool|string $static = self::STATIC_PRODUCTION,
+        string|null $name = null,
+    ): self;
 
     /**
      * Add a javascript file to Contao assets.
      *
      * @param string      $path   The assets path.
      * @param string      $media  The media query.
-     * @param string|bool $static Register it as static entry.
+     * @param bool|string $static Register it as static entry.
      * @param string|null $name   Optional assets name.
      *
      * @return $this
@@ -46,7 +54,7 @@ interface AssetsManager
     public function addStylesheet(
         string $path,
         string $media = '',
-        $static = self::STATIC_PRODUCTION,
+        bool|string $static = self::STATIC_PRODUCTION,
         string|null $name = null,
     ): self;
 
@@ -55,7 +63,7 @@ interface AssetsManager
      *
      * @param array<int|string,string> $paths  The assets paths.
      * @param string                   $media  The media type.
-     * @param string|bool              $static Register it as static entry.
+     * @param bool|string              $static Register it as static entry.
      * @param string|null              $name   Optional assets name.
      *
      * @return $this
@@ -63,7 +71,7 @@ interface AssetsManager
     public function addStylesheets(
         array $paths,
         string $media = '',
-        $static = self::STATIC_PRODUCTION,
+        bool|string $static = self::STATIC_PRODUCTION,
         string|null $name = null,
     ): self;
 

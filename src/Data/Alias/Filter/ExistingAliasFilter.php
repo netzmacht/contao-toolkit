@@ -25,10 +25,8 @@ final class ExistingAliasFilter implements Filter
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function apply($model, string|null $value, string $separator): string|null
+    /** {@inheritDoc} */
+    public function apply(object $model, string|null $value, string $separator): string|null
     {
         return $value;
     }

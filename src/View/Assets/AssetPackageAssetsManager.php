@@ -25,7 +25,7 @@ final class AssetPackageAssetsManager implements AssetsManager
     /** {@inheritDoc} */
     public function addJavascript(
         string $path,
-        $static = self::STATIC_PRODUCTION,
+        bool|string $static = self::STATIC_PRODUCTION,
         string|null $name = null,
     ): AssetsManager {
         $this->assetsManager->addJavascript($this->locatePath($path), $static, $name);
@@ -36,7 +36,7 @@ final class AssetPackageAssetsManager implements AssetsManager
     /** {@inheritDoc} */
     public function addJavascripts(
         array $paths,
-        $static = self::STATIC_PRODUCTION,
+        bool|string $static = self::STATIC_PRODUCTION,
         string|null $name = null,
     ): AssetsManager {
         $paths = array_map([$this, 'locatePath'], $paths);
@@ -49,7 +49,7 @@ final class AssetPackageAssetsManager implements AssetsManager
     public function addStylesheet(
         string $path,
         string $media = '',
-        $static = self::STATIC_PRODUCTION,
+        bool|string $static = self::STATIC_PRODUCTION,
         string|null $name = null,
     ): AssetsManager {
         $this->assetsManager->addStylesheet($this->locatePath($path), $media, $static, $name);
@@ -61,7 +61,7 @@ final class AssetPackageAssetsManager implements AssetsManager
     public function addStylesheets(
         array $paths,
         string $media = '',
-        $static = self::STATIC_PRODUCTION,
+        bool|string $static = self::STATIC_PRODUCTION,
         string|null $name = null,
     ): AssetsManager {
         $paths = array_map([$this, 'locatePath'], $paths);

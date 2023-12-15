@@ -10,7 +10,6 @@ use PhpSpec\ObjectBehavior;
 use ReflectionClass;
 
 use function constant;
-use function get_called_class;
 use function strtoupper;
 use function time;
 
@@ -97,7 +96,7 @@ class DateFormatterSpec extends ObjectBehavior
 
     private function formatsByConfigFormat(string $format): void
     {
-        $const    = get_called_class() . '::' . strtoupper($format) . '_FORMAT';
+        $const    = static::class . '::' . strtoupper($format) . '_FORMAT';
         $tstamp   = time();
         $expected = Date::parse(constant($const), $tstamp);
 

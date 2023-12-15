@@ -65,12 +65,10 @@ final class GlobalsAssetsManager implements AssetsManager
         $this->debugMode   = $debugMode;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function addJavascript(
         string $path,
-        $static = self::STATIC_PRODUCTION,
+        bool|string $static = self::STATIC_PRODUCTION,
         string|null $name = null,
     ): AssetsManager {
         if ($this->isStatic($static)) {
@@ -86,12 +84,10 @@ final class GlobalsAssetsManager implements AssetsManager
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function addJavascripts(
         array $paths,
-        $static = self::STATIC_PRODUCTION,
+        bool|string $static = self::STATIC_PRODUCTION,
         string|null $name = null,
     ): AssetsManager {
         foreach ($paths as $identifier => $path) {
@@ -107,13 +103,11 @@ final class GlobalsAssetsManager implements AssetsManager
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function addStylesheet(
         string $path,
         string $media = '',
-        $static = self::STATIC_PRODUCTION,
+        bool|string $static = self::STATIC_PRODUCTION,
         string|null $name = null,
     ): AssetsManager {
         $static = $this->isStatic($static);
@@ -135,13 +129,11 @@ final class GlobalsAssetsManager implements AssetsManager
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function addStylesheets(
         array $paths,
         string $media = '',
-        $static = self::STATIC_PRODUCTION,
+        bool|string $static = self::STATIC_PRODUCTION,
         string|null $name = null,
     ): AssetsManager {
         foreach ($paths as $identifier => $path) {
@@ -225,8 +217,7 @@ final class GlobalsAssetsManager implements AssetsManager
         return $this->head;
     }
 
-    /** @param string|bool $flag */
-    private function isStatic($flag): bool
+    private function isStatic(bool|string $flag): bool
     {
         if ($flag === self::STATIC_PRODUCTION) {
             return ! $this->debugMode;

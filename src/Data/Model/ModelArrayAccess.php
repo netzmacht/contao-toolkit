@@ -10,6 +10,8 @@ use Contao\Model;
 
 /**
  * ModelArrayAccess decorates a Contao data model to provide array access.
+ *
+ * @implements ArrayAccess<string,mixed>
  */
 final class ModelArrayAccess implements ArrayAccess
 {
@@ -18,33 +20,25 @@ final class ModelArrayAccess implements ArrayAccess
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function offsetExists($offset): bool
     {
         return isset($this->model->$offset);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function offsetGet($offset): mixed
     {
         return $this->model->$offset;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function offsetSet($offset, $value): void
     {
         $this->model->$offset = $value;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function offsetUnset($offset): void
     {
         $this->model->$offset = null;

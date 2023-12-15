@@ -76,11 +76,11 @@ final class ValueFormatterBasedFormatter implements Formatter
      *
      * @param string                                            $field   Field name.
      * @param array<int|string,string|array<int|string,string>> $values  Field values.
-     * @param mixed                                             $context Data container object.
+     * @param mixed|null                                        $context Data container object.
      *
      * @return array<int|string,string|array<int|string,string>>
      */
-    public function formatOptions(string $field, array $values, $context = null): array
+    public function formatOptions(string $field, array $values, mixed $context = null): array
     {
         $definition = $this->definition->get(['fields', $field]);
 

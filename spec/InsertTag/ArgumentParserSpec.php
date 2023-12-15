@@ -64,7 +64,7 @@ final class ArgumentParserSpec extends ObjectBehavior
                         ],
                     ],
                     '?foo=bar',
-                ]
+                ],
             );
     }
 
@@ -86,7 +86,7 @@ final class ArgumentParserSpec extends ObjectBehavior
                         ],
                     ],
                     'test'      => '?foo=bar',
-                ]
+                ],
             );
     }
 }

@@ -37,9 +37,7 @@ final class DelegatingTemplateRenderer implements TemplateRenderer
         $this->twig            = $twig;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function render(string $name, array $parameters = []): string
     {
         if (substr($name, -5) === '.twig') {

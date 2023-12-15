@@ -36,7 +36,7 @@ class RepositoriesPassSpec extends ObjectBehavior
             ],
         ];
 
-        $definition->getArgument(1)->shouldBeCalled();
+        $definition->getArgument(1)->willReturn([])->shouldBeCalled();
 
         $container
             ->hasDefinition('netzmacht.contao_toolkit.repository_manager')

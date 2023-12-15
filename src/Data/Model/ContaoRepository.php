@@ -45,9 +45,7 @@ class ContaoRepository implements Repository
         return $this->call('findByPK', [$modelId]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function findBy(array $column, array $values, array $options = []): Collection|null
     {
         $column  = $this->addTablePrefix($column);
@@ -56,9 +54,7 @@ class ContaoRepository implements Repository
         return $this->call('findBy', [$column, $values, $options]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function findOneBy(array $column, array $values, array $options = []): Model|null
     {
         $column  = $this->addTablePrefix($column);
@@ -67,9 +63,7 @@ class ContaoRepository implements Repository
         return $this->call('findOneBy', [$column, $values, $options]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function findBySpecification(Specification $specification, array $options = []): Collection|Model|null
     {
         $column  = [];
@@ -87,9 +81,7 @@ class ContaoRepository implements Repository
         return $this->findBy($column, $values, $options);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function findAll(array $options = []): Collection|null
     {
         $options = $this->addTablePrefixToOrder($options);
@@ -97,9 +89,7 @@ class ContaoRepository implements Repository
         return $this->call('findAll', [$options]);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function countBy(array $column, array $values): int
     {
         $column = $this->addTablePrefix($column);

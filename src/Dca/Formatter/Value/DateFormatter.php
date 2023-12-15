@@ -25,9 +25,7 @@ final class DateFormatter implements ValueFormatter
         $this->config = $config;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         if ($fieldName === 'tstamp') {
@@ -41,9 +39,7 @@ final class DateFormatter implements ValueFormatter
         return in_array($fieldDefinition['eval']['rgxp'], ['date', 'datim', 'time']);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         if (empty($fieldDefinition['eval']['rgxp'])) {

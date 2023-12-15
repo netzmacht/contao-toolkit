@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use function array_pad;
 use function array_unshift;
+use function array_values;
 use function implode;
 use function is_array;
 use function ltrim;
@@ -302,6 +303,6 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      */
     protected function tagResponse(string ...$tags): void
     {
-        $this->responseTagger->addTags($tags);
+        $this->responseTagger->addTags(array_values($tags));
     }
 }

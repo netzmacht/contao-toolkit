@@ -1,4 +1,3 @@
-.check-author.yml export-ignore
 .composer-require-checker.json export-ignore
 .gitattributes export-ignore
 .github export-ignore

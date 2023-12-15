@@ -9,14 +9,14 @@ use Netzmacht\Contao\Toolkit\View\Template\Exception\HelperNotFound;
 /**
  * Interface describes the templates being used in the toolkit.
  */
+// phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+// phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
 interface Template
 {
     /**
      * Parse the template.
      *
      * @return string
-     *
-     * phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function parse();
 
@@ -54,8 +54,6 @@ interface Template
      * Get all the template data.
      *
      * @return array<string,mixed>
-     *
-     * phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getData();
 
@@ -65,8 +63,6 @@ interface Template
      * @param array<string,mixed> $data Template data.
      *
      * @return void
-     *
-     * phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setData($data);
 }

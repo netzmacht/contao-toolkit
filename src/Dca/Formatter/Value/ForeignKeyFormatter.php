@@ -26,17 +26,13 @@ final class ForeignKeyFormatter implements ValueFormatter
         $this->connection = $database;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         return isset($fieldDefinition['foreignKey']);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         $foreignKey = explode('.', $fieldDefinition['foreignKey'], 2);
