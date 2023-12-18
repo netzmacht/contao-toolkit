@@ -10,7 +10,7 @@ use Twig\Environment;
 
 use function preg_match;
 use function sprintf;
-use function substr;
+use function str_ends_with;
 
 /**
  * Class DelegatingTemplateRenderer support Twig and Contao templates and delegates the rendering to the engines.
@@ -40,7 +40,7 @@ final class DelegatingTemplateRenderer implements TemplateRenderer
     /** {@inheritDoc} */
     public function render(string $name, array $parameters = []): string
     {
-        if (substr($name, -5) === '.twig') {
+        if (str_ends_with($name, '.twig')) {
             return $this->renderTwigTemplate($name, $parameters);
         }
 
@@ -75,16 +75,12 @@ final class DelegatingTemplateRenderer implements TemplateRenderer
     private function renderContaoTemplate(string $name, array $parameters): string
     {
         [$scope, $templateName] = $this->extractScopeAndTemplateName($name);
-        switch ($scope) {
-            case 'fe':
-                return $this->templateFactory->createFrontendTemplate($templateName, $parameters)->parse();
 
-            case 'be':
-                return $this->templateFactory->createBackendTemplate($templateName, $parameters)->parse();
-
-            default:
-                throw new InvalidArgumentException(sprintf('Template scope "%s" is not supported', $scope));
-        }
+        return match ($scope) {
+            'fe' => $this->templateFactory->createFrontendTemplate($templateName, $parameters)->parse(),
+            'be' => $this->templateFactory->createBackendTemplate($templateName, $parameters)->parse(),
+            default => throw new InvalidArgumentException(sprintf('Template scope "%s" is not supported', $scope)),
+        };
     }
 
     /**
