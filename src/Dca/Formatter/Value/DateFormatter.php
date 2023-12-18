@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Contao\Config;
+use Contao\CoreBundle\Framework\Adapter;
 use Contao\Date;
 
 use function in_array;
@@ -14,15 +15,9 @@ use function in_array;
  */
 final class DateFormatter implements ValueFormatter
 {
-    /**
-     * Contao config.
-     */
-    private Config $config;
-
-    /** @param Config $config Contao config. */
-    public function __construct(Config $config)
+    /** @param Adapter<Config> $config Contao config. */
+    public function __construct(private readonly Adapter $config)
     {
-        $this->config = $config;
     }
 
     /** {@inheritDoc} */
