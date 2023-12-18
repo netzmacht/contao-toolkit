@@ -21,7 +21,7 @@ Changelog
  - Remove handle* callback methods. Use on* callbacks methods instead
  - Remove `AddTaggedServicesAsArgumentPass` class
  - Use native types where possible
- - Deprecate `HtmlPageAssetsManager`. Signatur is part of `AssetsManager` now
+ - `HtmlPageAssetsManager` got removed. Signature is part of `AssetsManager` now.
 
 
 [3.7.4] (2022-01-25)
