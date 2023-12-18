@@ -36,7 +36,7 @@ abstract class AbstractListener
      */
     protected function getDefinition(string $name = ''): Definition
     {
-        return $this->dcaManager->getDefinition($name ?: static::getName());
+        return $this->dcaManager->getDefinition($name ?: static::$name);
     }
 
     /**
@@ -46,6 +46,6 @@ abstract class AbstractListener
      */
     protected function getFormatter(string $name = ''): Formatter
     {
-        return $this->dcaManager->getFormatter($name ?: static::getName());
+        return $this->dcaManager->getFormatter($name ?: static::$name);
     }
 }
