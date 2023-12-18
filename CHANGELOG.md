@@ -22,6 +22,7 @@ Changelog
  - Remove `AddTaggedServicesAsArgumentPass` class
  - Use native types where possible
  - `HtmlPageAssetsManager` got removed. Signature is part of `AssetsManager` now.
+ - Remove `AssetPackageAssetsManager`. Feature got integrated into `GlobalsAssetsManager`.
 
 
 [3.7.4] (2022-01-25)

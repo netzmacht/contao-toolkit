@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Assets;
 
+use Symfony\Component\Asset\Packages;
+
+use function explode;
 use function is_numeric;
 
 /**
@@ -52,6 +55,7 @@ final class GlobalsAssetsManager implements AssetsManager
      * @param bool                     $debugMode   Debug mode of the environment.
      */
     public function __construct(
+        private readonly Packages $packages,
         array &$stylesheets,
         array &$javascripts,
         array &$head,
@@ -224,5 +228,20 @@ final class GlobalsAssetsManager implements AssetsManager
         }
 
         return (bool) $flag;
+    }
+
+    private function locatePath(string $path): string
+    {
+        if (! str_contains($path, '::')) {
+            return $path;
+        }
+
+        $parts = explode('::', $path, 2);
+        if (count($parts) === 1) {
+            return $path;
+        }
+
+        /** @psalm-suppress PossiblyUndefinedArrayOffset */
+        return $this->packages->getUrl($parts[1], $parts[0]);
     }
 }

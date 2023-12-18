@@ -2,13 +2,6 @@ services:
   _defaults:
     public: false
 
-  netzmacht.contao_toolkit.assets_manager.packages:
-    class: Netzmacht\Contao\Toolkit\View\Assets\AssetPackageAssetsManager
-    decorates: netzmacht.contao_toolkit.assets_manager
-    arguments:
-      - '@netzmacht.contao_toolkit.assets_manager.packages.inner'
-      - '@assets.packages'
-
   netzmacht.contao_toolkit.assets_manager:
     class: Netzmacht\Contao\Toolkit\View\Assets\GlobalsAssetsManager
     factory: ['@netzmacht.contao_toolkit.globals_assets_manager_factory', 'create']
@@ -111,6 +104,7 @@ services:
   netzmacht.contao_toolkit.globals_assets_manager_factory:
     class: Netzmacht\Contao\Toolkit\View\Assets\GlobalsAssetsManagerFactory
     arguments:
+      - '@assets.packages'
       - '%kernel.debug%'
 
   netzmacht.contao_toolkit.repository_manager:

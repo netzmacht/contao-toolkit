@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Assets;
 
+use Symfony\Component\Asset\Packages;
+
 use function is_array;
 
 /**
@@ -11,15 +13,9 @@ use function is_array;
  */
 final class GlobalsAssetsManagerFactory
 {
-    /**
-     * Kernel debug mode.
-     */
-    private bool $debug;
-
     /** @param bool $debug Debug mode. */
-    public function __construct(bool $debug)
+    public function __construct(private readonly Packages $packages, private readonly bool $debug)
     {
-        $this->debug = $debug;
     }
 
     /**
@@ -38,6 +34,7 @@ final class GlobalsAssetsManagerFactory
         }
 
         return new GlobalsAssetsManager(
+            $this->packages,
             $GLOBALS['TL_CSS'],
             $GLOBALS['TL_JAVASCRIPT'],
             $GLOBALS['TL_HEAD'],
