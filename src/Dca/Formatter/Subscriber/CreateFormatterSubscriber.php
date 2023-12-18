@@ -17,21 +17,21 @@ final class CreateFormatterSubscriber
      *
      * @var ValueFormatter[]
      */
-    private array $formatter;
+    private iterable $formatter;
 
     /**
      * Value formatter pre filters.
      *
      * @var ValueFormatter[]
      */
-    private array $preFilters;
+    private iterable $preFilters;
 
     /**
      * Value formatter post filters.
      *
      * @var ValueFormatter[]
      */
-    private array $postFilters;
+    private iterable $postFilters;
 
     /**
      * Value formatter.
