@@ -157,7 +157,7 @@ class ContaoRepository implements Repository
     {
         $tableName = $this->getTableName();
         $column    = str_replace(
-            ['..', ' .', ',.', '>.', '<.', '=.'],
+            ['..', ' .', ',.', '>.', '<.', '=.', '(.'],
             [
                 $tableName . '.',
                 ' ' . $tableName . '.',
@@ -165,6 +165,7 @@ class ContaoRepository implements Repository
                 '>' . $tableName . '.',
                 '<' . $tableName . '.',
                 '=' . $tableName . '.',
+                '(' . $tableName . '.',
             ],
             $column,
         );
