@@ -68,7 +68,7 @@ final class CreateFormatterEvent extends Event
     public function addFormatter(ValueFormatter ...$formatter): self
     {
         foreach ($formatter as $item) {
-            $this->addFormatter($item);
+            $this->formatter[] = $item;
         }
 
         return $this;
@@ -101,11 +101,11 @@ final class CreateFormatterEvent extends Event
     /**
      * Add pre filters.
      *
-     * @param array|ValueFormatter[] $preFilters Pre filters.
+     * @param iterable<ValueFormatter> $preFilters Pre filters.
      *
      * @return $this
      */
-    public function addPreFilters(array $preFilters): self
+    public function addPreFilters(iterable $preFilters): self
     {
         foreach ($preFilters as $filter) {
             $this->addPreFilter($filter);
@@ -131,11 +131,11 @@ final class CreateFormatterEvent extends Event
     /**
      * Add post filters.
      *
-     * @param array|ValueFormatter[] $postFilters Post filters.
+     * @param iterable<ValueFormatter> $postFilters Post filters.
      *
      * @return $this
      */
-    public function addPostFilters(array $postFilters): self
+    public function addPostFilters(iterable $postFilters): self
     {
         foreach ($postFilters as $filter) {
             $this->addPostFilter($filter);
@@ -147,7 +147,7 @@ final class CreateFormatterEvent extends Event
     /**
      * Get pre filters.
      *
-     * @return array|ValueFormatter[]
+     * @return ValueFormatter[]
      */
     public function getPreFilters(): array
     {
@@ -157,7 +157,7 @@ final class CreateFormatterEvent extends Event
     /**
      * Get post filters.
      *
-     * @return array|ValueFormatter[]
+     * @return ValueFormatter[]
      */
     public function getPostFilters(): array
     {
