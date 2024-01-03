@@ -13,21 +13,15 @@ use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
  */
 abstract class AbstractListener
 {
-    /**
-     * Name of the data container.
-     */
-    protected static string $name;
-
-    /**
-     * Data container manager.
-     */
-    private DcaManager $dcaManager;
-
     /** @param DcaManager $dcaManager Data container manager. */
-    public function __construct(DcaManager $dcaManager)
+    public function __construct(private readonly DcaManager $dcaManager)
     {
-        $this->dcaManager = $dcaManager;
     }
+
+    /**
+     * Get data container name.
+     */
+    abstract public static function getName(): string;
 
     /**
      * Get a definition.
@@ -36,7 +30,7 @@ abstract class AbstractListener
      */
     protected function getDefinition(string $name = ''): Definition
     {
-        return $this->dcaManager->getDefinition($name ?: static::$name);
+        return $this->dcaManager->getDefinition($name ?: static::getName());
     }
 
     /**
@@ -46,6 +40,6 @@ abstract class AbstractListener
      */
     protected function getFormatter(string $name = ''): Formatter
     {
-        return $this->dcaManager->getFormatter($name ?: static::$name);
+        return $this->dcaManager->getFormatter($name ?: static::getName());
     }
 }
