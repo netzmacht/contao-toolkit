@@ -68,12 +68,8 @@
       "contao/manager-plugin": true,
       "dealerdirect/phpcodesniffer-composer-installer": true,
       "php-http/discovery": true
-<<<<<<< HEAD
-    }
-=======
     },
     "sort-packages": true
->>>>>>> 4.0.0
   },
   "extra": {
     "branch-alias": {
