@@ -28,9 +28,6 @@ The toolkit provides a template renderer service which wraps the rendering of th
 Since toolkit supports template helpers creating a template would require to pass all registered helpers to a template.
 Using the template renderer makes it easy. You don't have to worry about any helpers.
 
-.. hint:: Right now the Symfony templating engine is wrapped. Due of the deprecation of the templating support in
-   Symfony 5 you should not rely on it. It get's removed
-
 .. _template-helpers:
 
 Helpers
@@ -45,14 +42,14 @@ Default helpers
 
 Toolkit provides with `assets` and `translator` two helpers by default which are registered to every template. The
 assets helper is an instance of `Netzmacht\\Contao\\Toolkit\\View\\Assets\\AssetsManager`. The translator helper is an
-instance of `ContaoCommunityAlliance\\Translator\\TranslatorInterface`.
+instance of `Symfony\\Contracts\\Translation\\TranslatorInterface`.
 
 .. code-block:: php
 
     <?php
 
     // Inside of your template
-    $this->helper('translator')->translate('foo', 'bar');
+    $this->helper('translator')->trans('MSC.foo', [], 'contao_default');
 
     $this->helper('assets')->addJavascript('foo/bar.js');
 

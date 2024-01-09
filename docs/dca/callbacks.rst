@@ -18,12 +18,10 @@ containing the Data container manager.
     // ExampleCallbacks.php
     class ExampleCallbacks extends Netzmacht\Contao\Toolkit\Dca\Listener\AbstractListener
     {
-        /**
-         * Name of the data container.
-         *
-         * @var string
-         */
-        protected static $name = 'tl_example';
+        public static function getName(): string
+        {
+            return 'tl_example';
+        }
 
         public function onSubmit()
         {

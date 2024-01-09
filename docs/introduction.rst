@@ -40,7 +40,6 @@ If you want to see how Toolkit is used in real contao extensions you can have a 
 
  * `contao-leaflet-maps`_
  * `contao-form-validation`_
- * `contao-timelinejs`_
 
 
 .. _haste libary: https://github.com/codefog/contao-haste
@@ -49,4 +48,3 @@ If you want to see how Toolkit is used in real contao extensions you can have a 
 .. _translator: https://github.com/contao-community-alliance/translator
 .. _contao-leaflet-maps: https://github.com/netzmacht/contao-leaflet-maps
 .. _contao-form-validation: https://github.com/netzmacht/contao-form-validation
-.. _contao-timelinejs:  https://github.com/netzmacht/contao-timelinejs
