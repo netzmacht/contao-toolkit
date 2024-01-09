@@ -35,8 +35,8 @@ abstract class AbstractListener
     {
         $this->dcaManager = $dcaManager;
 
-        Assert::that(static::$name)
-            ->notEmpty('Name property must not be empty')
+        Assert::that(static::getName())
+            ->notEmpty('Name must be provided by getName() by overriding $name property or getName()')
             ->string('Name property must be a string.');
     }
 
