@@ -8,7 +8,6 @@ use Contao\Config;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\Date;
 use PhpSpec\ObjectBehavior;
-use ReflectionClass;
 
 use function constant;
 use function strtoupper;
