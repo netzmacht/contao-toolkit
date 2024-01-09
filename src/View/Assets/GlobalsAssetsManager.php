@@ -6,8 +6,10 @@ namespace Netzmacht\Contao\Toolkit\View\Assets;
 
 use Symfony\Component\Asset\Packages;
 
+use function count;
 use function explode;
 use function is_numeric;
+use function str_contains;
 
 /**
  * Globals assets manager registers all assets as Contao globals.
@@ -75,6 +77,8 @@ final class GlobalsAssetsManager implements AssetsManager
         bool|string $static = self::STATIC_PRODUCTION,
         string|null $name = null,
     ): AssetsManager {
+        $path = $this->locatePath($path);
+
         if ($this->isStatic($static)) {
             $path .= '|static';
         }
@@ -114,6 +118,7 @@ final class GlobalsAssetsManager implements AssetsManager
         bool|string $static = self::STATIC_PRODUCTION,
         string|null $name = null,
     ): AssetsManager {
+        $path   = $this->locatePath($path);
         $static = $this->isStatic($static);
 
         if ($media || $static) {
