@@ -24,8 +24,6 @@ class DateFormatterSpec extends ObjectBehavior
 
     public function let(): void
     {
-        $reflector = new ReflectionClass(Config::class);
-
         $GLOBALS['TL_CONFIG']['dateFormat']  = self::DATE_FORMAT;
         $GLOBALS['TL_CONFIG']['datimFormat'] = self::DATIM_FORMAT;
         $GLOBALS['TL_CONFIG']['timeFormat']  = self::TIME_FORMAT;
