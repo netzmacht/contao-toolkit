@@ -22,6 +22,12 @@ Changelog
  - `HtmlPageAssetsManager` got removed. Signature is part of `AssetsManager` now.
  - Remove `AssetPackageAssetsManager`. Feature got integrated into `GlobalsAssetsManager`.
 
+[3.9.0] (2024-01-09)
+--------------------
+
+### Changed
+
+ - Check AbstractListener::getName() and not static property for better compatibility between v3 and v4
 
 [3.8.3] (2023-06-02)
 --------------------
