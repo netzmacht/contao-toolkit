@@ -12,21 +12,17 @@ final class FosCacheResponseTagger implements ResponseTagger
 {
     /**
      * Friend of symfony http cache.
-     *
-     * @var FosResponseTagger
      */
-    private $inner;
+    private FosResponseTagger $inner;
 
-    /**
-     * @param FosResponseTagger $inner Friend of symfony http cache.
-     */
+    /** @param FosResponseTagger $inner Friend of symfony http cache. */
     public function __construct(FosResponseTagger $inner)
     {
         $this->inner = $inner;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws InvalidHttpResponseTagException If apply tags failed.
      */
@@ -35,6 +31,7 @@ final class FosCacheResponseTagger implements ResponseTagger
         try {
             $this->inner->addTags($tags);
         } catch (FosInvalidTagException $e) {
+            /** @psalm-suppress RedundantCast */
             throw new InvalidHttpResponseTagException($e->getMessage(), (int) $e->getCode(), $e);
         }
     }

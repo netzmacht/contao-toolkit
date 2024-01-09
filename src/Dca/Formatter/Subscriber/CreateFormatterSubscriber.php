@@ -15,42 +15,40 @@ final class CreateFormatterSubscriber
     /**
      * List of supported value formatter.
      *
-     * @var array|ValueFormatter[]
+     * @var ValueFormatter[]
      */
-    private $formatter;
+    private iterable $formatter;
 
     /**
      * Value formatter pre filters.
      *
-     * @var array|ValueFormatter[]
+     * @var ValueFormatter[]
      */
-    private $preFilters;
+    private iterable $preFilters;
 
     /**
      * Value formatter post filters.
      *
-     * @var array|ValueFormatter[]
+     * @var ValueFormatter[]
      */
-    private $postFilters;
+    private iterable $postFilters;
 
     /**
      * Value formatter.
-     *
-     * @var ValueFormatter
      */
-    private $optionsFormatter;
+    private ValueFormatter $optionsFormatter;
 
     /**
-     * @param array|ValueFormatter[] $formatter        Value formatter.
-     * @param array|ValueFormatter[] $preFilters       Pre filters.
-     * @param array|ValueFormatter[] $postFilters      Post filters.
-     * @param ValueFormatter         $optionsFormatter Options formatter.
+     * @param list<ValueFormatter> $formatter        Value formatter.
+     * @param list<ValueFormatter> $preFilters       Pre filters.
+     * @param list<ValueFormatter> $postFilters      Post filters.
+     * @param ValueFormatter       $optionsFormatter Options formatter.
      */
     public function __construct(
-        array $formatter,
-        array $preFilters,
-        array $postFilters,
-        ValueFormatter $optionsFormatter
+        iterable $formatter,
+        iterable $preFilters,
+        iterable $postFilters,
+        ValueFormatter $optionsFormatter,
     ) {
         $this->formatter        = $formatter;
         $this->preFilters       = $preFilters;
@@ -65,7 +63,7 @@ final class CreateFormatterSubscriber
      */
     public function handle(CreateFormatterEvent $event): void
     {
-        $event->addFormatter($this->formatter);
+        $event->addFormatter(...$this->formatter);
         $event->addPreFilters($this->preFilters);
         $event->addPostFilters($this->postFilters);
 

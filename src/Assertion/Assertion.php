@@ -10,8 +10,7 @@ class Assertion extends BaseAssertion
 {
     /**
      * Exception class.
-     *
-     * @var string
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
     protected static $exceptionClass = AssertionFailed::class;
 }

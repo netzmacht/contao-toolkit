@@ -15,45 +15,47 @@ interface AssetsManager
      * Add a javascript file to Contao assets.
      *
      * @param string      $path   The assets path.
-     * @param string|bool $static Register it as static entry.
+     * @param bool|string $static Register it as static entry.
      * @param string|null $name   Optional assets name.
      *
      * @return $this
-     *
-     * phpcs:disable SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilityTypeMissing
      */
-    public function addJavascript(string $path, $static = self::STATIC_PRODUCTION, string $name = null): self;
+    public function addJavascript(
+        string $path,
+        bool|string $static = self::STATIC_PRODUCTION,
+        string|null $name = null,
+    ): self;
 
     /**
      * Add javascript files to Contao assets.
      *
      * @param array<int|string,string> $paths  The assets paths.
-     * @param string|bool              $static Register it as static entry.
+     * @param bool|string              $static Register it as static entry.
      * @param string|null              $name   Optional assets name.
      *
      * @return $this
-     *
-     * phpcs:disable SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilityTypeMissing
      */
-    public function addJavascripts(array $paths, $static = self::STATIC_PRODUCTION, string $name = null): self;
+    public function addJavascripts(
+        array $paths,
+        bool|string $static = self::STATIC_PRODUCTION,
+        string|null $name = null,
+    ): self;
 
     /**
      * Add a javascript file to Contao assets.
      *
      * @param string      $path   The assets path.
      * @param string      $media  The media query.
-     * @param string|bool $static Register it as static entry.
+     * @param bool|string $static Register it as static entry.
      * @param string|null $name   Optional assets name.
      *
      * @return $this
-     *
-     * phpcs:disable SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilityTypeMissing
      */
     public function addStylesheet(
         string $path,
         string $media = '',
-        $static = self::STATIC_PRODUCTION,
-        string $name = null
+        bool|string $static = self::STATIC_PRODUCTION,
+        string|null $name = null,
     ): self;
 
     /**
@@ -61,17 +63,55 @@ interface AssetsManager
      *
      * @param array<int|string,string> $paths  The assets paths.
      * @param string                   $media  The media type.
-     * @param string|bool              $static Register it as static entry.
+     * @param bool|string              $static Register it as static entry.
      * @param string|null              $name   Optional assets name.
      *
      * @return $this
-     *
-     * phpcs:disable SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilityTypeMissing
      */
     public function addStylesheets(
         array $paths,
         string $media = '',
-        $static = self::STATIC_PRODUCTION,
-        string $name = null
+        bool|string $static = self::STATIC_PRODUCTION,
+        string|null $name = null,
     ): self;
+
+    /**
+     * Add a named block to the body.
+     *
+     * If the block already exists, it gets overridden
+     *
+     * @param string $name The name of the block.
+     * @param string $html The content of the block.
+     *
+     * @return $this
+     */
+    public function addToBody(string $name, string $html): self;
+
+    /**
+     * Append a block to the body.
+     *
+     * @param string $html The content of the block.
+     */
+    public function appendToBody(string $html): self;
+
+    /**
+     * Add a named block to the head.
+     *
+     * If the block already exists, it gets overridden
+     *
+     * @param string $name The name of the block.
+     * @param string $html The content of the block.
+     *
+     * @return $this
+     */
+    public function addToHead(string $name, string $html): self;
+
+    /**
+     * Append a block to the head.
+     *
+     * @param string $html The content of the block.
+     *
+     * @return $this
+     */
+    public function appendToHead(string $html): self;
 }

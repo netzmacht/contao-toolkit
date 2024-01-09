@@ -4,29 +4,15 @@
     hideExternalErrors="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
-    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    xsi:schemaLocation="https://getpsalm.org/schema/config https://getpsalm.org/schema/config"
 >
     <projectFiles>
         <directory name="src" />
         <ignoreFiles>
-            <directory name="vendor/contao/core-bundle/src/Resources/contao"/>
+            <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
-        <DeprecatedClass>
-            <errorLevel type="suppress">
-                <referencedClass name="Netzmacht\Contao\Toolkit\View\Template\TemplateReference"/>
-                <referencedClass name="Contao\Encryption"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\Component\Component"/>
-            </errorLevel>
-        </DeprecatedClass>
-        <DeprecatedMethod>
-            <errorLevel type="suppress">
-                <referencedMethod name="Contao\Encryption::decrypt"/>
-                <referencedMethod name="Doctrine\DBAL\Query\QueryBuilder::execute"/>
-                <referencedMethod name="Doctrine\DBAL\Connection::getSchemaManager"/>
-            </errorLevel>
-        </DeprecatedMethod>
         <TooManyArguments>
             <errorLevel type="suppress">
                 <referencedFunction name="Symfony\Contracts\EventDispatcher\EventDispatcherInterface::dispatch"/>
@@ -40,6 +26,21 @@
                 <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::getAdapter"/>
             </errorLevel>
         </InternalMethod>
+        <UndefinedMagicPropertyFetch>
+            <errorLevel type="suppress">
+                <referencedProperty name="Contao\DataContainer::$activeRecord"/>
+            </errorLevel>
+        </UndefinedMagicPropertyFetch>
+        <DeprecatedClass>
+            <errorLevel type="suppress">
+                <referencedClass name="Symfony\Component\Security\Core\Security"/>
+            </errorLevel>
+        </DeprecatedClass>
+        <DeprecatedConstant>
+            <errorLevel type="suppress">
+                <file name="src/Data/Alias/Validator/UniqueDatabaseValueValidator.php"/>
+            </errorLevel>
+        </DeprecatedConstant>
     </issueHandlers>
 
     <universalObjectCrates>

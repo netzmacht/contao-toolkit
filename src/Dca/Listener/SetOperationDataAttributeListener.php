@@ -11,26 +11,22 @@ use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use function trim;
 
 /**
- * This listener defines an data-operation attribute for each operation which has a toolkit config section.
+ * This listener defines a data-operation attribute for each operation which has a toolkit config section.
  *
  * The button callback doesn't have an identifier to the button which the button is rendering. To overcome this
- * limitation an data attribute is set.
+ * limitation a data attribute is set.
  */
 class SetOperationDataAttributeListener
 {
     /**
      * Data container manager.
-     *
-     * @var DcaManager
      */
-    private $dcaManager;
+    private DcaManager $dcaManager;
 
     /**
      * Request scope matcher.
-     *
-     * @var RequestScopeMatcher
      */
-    private $scopeMatcher;
+    private RequestScopeMatcher $scopeMatcher;
 
     /**
      * @param DcaManager          $dcaManager   Data container manager.
@@ -55,7 +51,7 @@ class SetOperationDataAttributeListener
 
         try {
             $definition = $this->dcaManager->getDefinition($dataContainerName);
-        } catch (AssertionFailed $e) {
+        } catch (AssertionFailed) {
             // No valid dca config found. Just ignore the data container.
             return;
         }

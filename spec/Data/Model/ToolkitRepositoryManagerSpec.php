@@ -35,7 +35,7 @@ class ToolkitRepositoryManagerSpec extends ObjectBehavior
     public function it_gets_registered_repository(
         Connection $connection,
         Repository $repository,
-        ContaoFramework $framework
+        ContaoFramework $framework,
     ): void {
         $this->beConstructedWith($connection, ['example' => $repository], $framework);
         $this->getRepository('example')->shouldReturn($repository);
@@ -56,7 +56,7 @@ class ToolkitRepositoryManagerSpec extends ObjectBehavior
 
     public function it_throws_exception_if_no_repository_is_passed(
         Connection $connection,
-        ContaoFramework $framework
+        ContaoFramework $framework,
     ): void {
         $this->beConstructedWith($connection, ['foo' => new stdClass()], $framework);
         $this->shouldThrow(AssertionFailed::class)->duringInstantiation();

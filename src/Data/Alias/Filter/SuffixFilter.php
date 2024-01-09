@@ -11,34 +11,21 @@ final class SuffixFilter extends AbstractFilter
 {
     /**
      * The internal index counter.
-     *
-     * @var int
      */
-    private $index = 0;
-
-    /**
-     * Start value.
-     *
-     * @var int
-     */
-    private $start;
+    private int $index = 0;
 
     /**
      * Temporary value.
-     *
-     * @var string|null
      */
-    private $value;
+    private string|null $value = null;
 
     /**
      * @param bool $break If true break after the filter if value is unique.
      * @param int  $start Start value.
      */
-    public function __construct(bool $break = true, int $start = 2)
+    public function __construct(bool $break = true, private readonly int $start = 2)
     {
         parent::__construct($break, self::COMBINE_APPEND);
-
-        $this->start = $start;
     }
 
     public function initialize(): void
@@ -52,15 +39,13 @@ final class SuffixFilter extends AbstractFilter
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function apply($model, $value, string $separator): string
+    /** {@inheritDoc} */
+    public function apply(object $model, string|null $value, string $separator): string|null
     {
         if ($this->value === null) {
             $this->value = $value;
         }
 
-        return $this->combine($this->value, $this->index++, $separator);
+        return $this->combine($this->value, (string) $this->index++, $separator);
     }
 }

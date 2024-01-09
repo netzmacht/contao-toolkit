@@ -14,19 +14,9 @@ use function is_array;
 
 final class Invoker
 {
-    /**
-     * System adapter.
-     *
-     * @var Adapter<System>
-     */
-    private $systemAdapter;
-
-    /**
-     * @param Adapter<System> $systemAdapter System adapter.
-     */
-    public function __construct(Adapter $systemAdapter)
+    /** @param Adapter<System> $systemAdapter System adapter. */
+    public function __construct(private readonly Adapter $systemAdapter)
     {
-        $this->systemAdapter = $systemAdapter;
     }
 
     /**
@@ -35,11 +25,9 @@ final class Invoker
      * @param callable    $callback  Callback as Contao array notation or as PHP callable.
      * @param list<mixed> $arguments List of arguments being passed to the callback.
      *
-     * @return mixed
-     *
      * @throws InvalidArgumentException On callback is not callable.
      */
-    public function invoke($callback, array $arguments = [])
+    public function invoke(callable $callback, array $arguments = []): mixed
     {
         if (is_array($callback)) {
             $callback[0] = $this->systemAdapter->importStatic($callback[0]);
@@ -53,14 +41,12 @@ final class Invoker
      *
      * @param callable[]  $callbacks        List of callbacks.
      * @param list<mixed> $arguments        Callback arguments.
-     * @param int|false   $returnValueIndex If the callback return value should be reused as an argument, give the
+     * @param false|int   $returnValueIndex If the callback return value should be reused as an argument, give the
      *                                      index.
-     *
-     * @return mixed
      *
      * @throws InvalidArgumentException On one callback is not callable.
      */
-    public function invokeAll(array $callbacks, array $arguments = [], $returnValueIndex = false)
+    public function invokeAll(array $callbacks, array $arguments = [], bool|int $returnValueIndex = false): mixed
     {
         $value = null;
 

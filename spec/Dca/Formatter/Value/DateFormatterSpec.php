@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Contao\Config;
+use Contao\CoreBundle\Framework\Adapter;
 use Contao\Date;
 use PhpSpec\ObjectBehavior;
-use ReflectionClass;
 
 use function constant;
-use function get_called_class;
 use function strtoupper;
 use function time;
 
@@ -24,14 +23,11 @@ class DateFormatterSpec extends ObjectBehavior
 
     public function let(): void
     {
-        $reflector = new ReflectionClass(Config::class);
-        $config    = $reflector->newInstanceWithoutConstructor();
-
         $GLOBALS['TL_CONFIG']['dateFormat']  = self::DATE_FORMAT;
         $GLOBALS['TL_CONFIG']['datimFormat'] = self::DATIM_FORMAT;
         $GLOBALS['TL_CONFIG']['timeFormat']  = self::TIME_FORMAT;
 
-        $this->beConstructedWith($config);
+        $this->beConstructedWith(new Adapter(Config::class));
     }
 
     public function it_is_initializable(): void
@@ -97,7 +93,7 @@ class DateFormatterSpec extends ObjectBehavior
 
     private function formatsByConfigFormat(string $format): void
     {
-        $const    = get_called_class() . '::' . strtoupper($format) . '_FORMAT';
+        $const    = static::class . '::' . strtoupper($format) . '_FORMAT';
         $tstamp   = time();
         $expected = Date::parse(constant($const), $tstamp);
 

@@ -52,7 +52,7 @@ abstract class AbstractHybridController extends AbstractFragmentController
         RouterInterface $router,
         TranslatorInterface $translator,
         TokenChecker $tokenChecker,
-        ?Adapter $inputAdapter = null
+        Adapter|null $inputAdapter = null,
     ) {
         parent::__construct($templateRenderer, $scopeMatcher, $responseTagger);
 
@@ -74,7 +74,7 @@ abstract class AbstractHybridController extends AbstractFragmentController
         Request $request,
         ContentModel $model,
         string $section,
-        ?array $classes = null
+        array|null $classes = null,
     ): Response {
         if ($this->isHidden($model, $request)) {
             return new Response();
@@ -99,7 +99,7 @@ abstract class AbstractHybridController extends AbstractFragmentController
         Request $request,
         ModuleModel $model,
         string $section,
-        ?array $classes = null
+        array|null $classes = null,
     ): Response {
         if ($this->isBackendRequest($request)) {
             return $this->renderModuleBackendView($model);

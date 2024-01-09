@@ -42,7 +42,7 @@ class UniqueDatabaseValueValidatorSpec extends ObjectBehavior
     public function it_validates_when_value_not_exists(
         Connection $connection,
         QueryBuilder $queryBuilder,
-        Result $statement
+        Result $statement,
     ): void {
         $result = (object) ['result' => 0];
 
@@ -64,7 +64,7 @@ class UniqueDatabaseValueValidatorSpec extends ObjectBehavior
     public function it_invalidates_when_value_exists(
         Connection $connection,
         QueryBuilder $queryBuilder,
-        Result $statement
+        Result $statement,
     ): void {
         $result = (object) ['result' => 1];
 

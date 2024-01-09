@@ -8,13 +8,19 @@ use ArrayIterator;
 
 /**
  * Class ArrayOptions decorates an already existing options array with the Options interface.
+ *
+ * @extends ArrayIterator<array-key,mixed>
  */
 final class ArrayOptions extends ArrayIterator implements Options
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getLabelKey()
+    /** {@inheritDoc} */
+    public function getArrayCopy(): array
+    {
+        return parent::getArrayCopy();
+    }
+
+    /** {@inheritDoc} */
+    public function getLabelKey(): callable|string
     {
         return '__label__';
     }
@@ -24,9 +30,7 @@ final class ArrayOptions extends ArrayIterator implements Options
         return '__key__';
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function row(): array
     {
         return [

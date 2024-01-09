@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Event;
 
-use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
 use Symfony\Contracts\EventDispatcher\Event;
-
-use function is_array;
 
 final class CreateFormatterEvent extends Event
 {
@@ -17,42 +14,36 @@ final class CreateFormatterEvent extends Event
 
     /**
      * Data container definition.
-     *
-     * @var Definition
      */
-    private $definition;
+    private Definition $definition;
 
     /**
      * Created formatter.
      *
      * @var ValueFormatter[]
      */
-    private $formatter = [];
+    private array $formatter = [];
 
     /**
      * Pre filters.
      *
      * @var ValueFormatter[]
      */
-    private $preFilters = [];
+    private array $preFilters = [];
 
     /**
      * Post filters.
      *
      * @var ValueFormatter[]
      */
-    private $postFilters = [];
+    private array $postFilters = [];
 
     /**
      * Options formatter.
-     *
-     * @var ValueFormatter|null
      */
-    private $optionsFormatter;
+    private ValueFormatter|null $optionsFormatter;
 
-    /**
-     * @param Definition $definition Data container definition.
-     */
+    /** @param Definition $definition Data container definition. */
     public function __construct(Definition $definition)
     {
         $this->definition       = $definition;
@@ -70,20 +61,14 @@ final class CreateFormatterEvent extends Event
     /**
      * Add a formatter.
      *
-     * @param ValueFormatter|ValueFormatter[] $formatter Formatter.
+     * @param ValueFormatter[] $formatter Formatter.
      *
      * @return $this
      */
-    public function addFormatter($formatter): self
+    public function addFormatter(ValueFormatter ...$formatter): self
     {
-        if (is_array($formatter)) {
-            foreach ($formatter as $item) {
-                $this->addFormatter($item);
-            }
-        } else {
-            Assertion::isInstanceOf($formatter, ValueFormatter::class);
-
-            $this->formatter[] = $formatter;
+        foreach ($formatter as $item) {
+            $this->formatter[] = $item;
         }
 
         return $this;
@@ -92,7 +77,7 @@ final class CreateFormatterEvent extends Event
     /**
      * Get formatter.
      *
-     * @return array|ValueFormatter[]
+     * @return ValueFormatter[]
      */
     public function getFormatter(): array
     {
@@ -116,11 +101,11 @@ final class CreateFormatterEvent extends Event
     /**
      * Add pre filters.
      *
-     * @param array|ValueFormatter[] $preFilters Pre filters.
+     * @param iterable<ValueFormatter> $preFilters Pre filters.
      *
      * @return $this
      */
-    public function addPreFilters(array $preFilters): self
+    public function addPreFilters(iterable $preFilters): self
     {
         foreach ($preFilters as $filter) {
             $this->addPreFilter($filter);
@@ -146,11 +131,11 @@ final class CreateFormatterEvent extends Event
     /**
      * Add post filters.
      *
-     * @param array|ValueFormatter[] $postFilters Post filters.
+     * @param iterable<ValueFormatter> $postFilters Post filters.
      *
      * @return $this
      */
-    public function addPostFilters(array $postFilters): self
+    public function addPostFilters(iterable $postFilters): self
     {
         foreach ($postFilters as $filter) {
             $this->addPostFilter($filter);
@@ -162,7 +147,7 @@ final class CreateFormatterEvent extends Event
     /**
      * Get pre filters.
      *
-     * @return array|ValueFormatter[]
+     * @return ValueFormatter[]
      */
     public function getPreFilters(): array
     {
@@ -172,7 +157,7 @@ final class CreateFormatterEvent extends Event
     /**
      * Get post filters.
      *
-     * @return array|ValueFormatter[]
+     * @return ValueFormatter[]
      */
     public function getPostFilters(): array
     {
@@ -182,7 +167,7 @@ final class CreateFormatterEvent extends Event
     /**
      * Get options formatter.
      */
-    public function getOptionsFormatter(): ?ValueFormatter
+    public function getOptionsFormatter(): ValueFormatter|null
     {
         return $this->optionsFormatter;
     }

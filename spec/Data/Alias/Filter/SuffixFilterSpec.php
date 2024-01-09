@@ -44,7 +44,7 @@ class SuffixFilterSpec extends ObjectBehavior
 
         $this->initialize();
         $this->apply($model, self::ALIAS_VALUE, self::SEPARATOR)->shouldReturn(
-            self::ALIAS_VALUE . self::SEPARATOR . 2
+            self::ALIAS_VALUE . self::SEPARATOR . 2,
         );
     }
 
@@ -54,7 +54,7 @@ class SuffixFilterSpec extends ObjectBehavior
 
         $this->initialize();
         $this->apply($model, self::ALIAS_VALUE, '_')->shouldReturn(
-            self::ALIAS_VALUE . '_' . 2
+            self::ALIAS_VALUE . '_' . 2,
         );
     }
 
@@ -64,13 +64,13 @@ class SuffixFilterSpec extends ObjectBehavior
 
         $this->initialize();
         $this->apply($model, self::ALIAS_VALUE, self::SEPARATOR)->shouldReturn(
-            self::ALIAS_VALUE . self::SEPARATOR . 2
+            self::ALIAS_VALUE . self::SEPARATOR . 2,
         );
         $this->apply($model, self::ALIAS_VALUE, self::SEPARATOR)->shouldReturn(
-            self::ALIAS_VALUE . self::SEPARATOR . 3
+            self::ALIAS_VALUE . self::SEPARATOR . 3,
         );
         $this->apply($model, self::ALIAS_VALUE, self::SEPARATOR)->shouldReturn(
-            self::ALIAS_VALUE . self::SEPARATOR . 4
+            self::ALIAS_VALUE . self::SEPARATOR . 4,
         );
     }
 
@@ -81,7 +81,7 @@ class SuffixFilterSpec extends ObjectBehavior
         $this->beConstructedWith(true, 5);
         $this->initialize();
         $this->apply($model, self::ALIAS_VALUE, '_')->shouldReturn(
-            self::ALIAS_VALUE . '_' . 5
+            self::ALIAS_VALUE . '_' . 5,
         );
     }
 }

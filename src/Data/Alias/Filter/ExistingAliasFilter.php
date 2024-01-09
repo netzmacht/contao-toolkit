@@ -11,10 +11,7 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Filter;
  */
 final class ExistingAliasFilter implements Filter
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function initialize()
+    public function initialize(): void
     {
     }
 
@@ -28,10 +25,8 @@ final class ExistingAliasFilter implements Filter
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function apply($model, $value, string $separator)
+    /** {@inheritDoc} */
+    public function apply(object $model, string|null $value, string $separator): string|null
     {
         return $value;
     }

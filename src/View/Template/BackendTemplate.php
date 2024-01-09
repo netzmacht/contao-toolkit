@@ -21,7 +21,7 @@ final class BackendTemplate extends ContaoBackendTemplate implements Template
      * @param array<string,object|callable> $helpers     View helpers.
      * @param string                        $contentType The content type.
      */
-    public function __construct($name, $helpers = [], $contentType = 'text/html')
+    public function __construct(string $name, array $helpers = [], string $contentType = 'text/html')
     {
         parent::__construct($name, $contentType);
 

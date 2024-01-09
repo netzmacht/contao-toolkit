@@ -18,50 +18,52 @@ final class OptionsBuilder
 {
     /**
      * The options.
-     *
-     * @var Options
      */
-    private $options;
+    private Options $options;
 
     /**
      * Get Options builder for collection.
      *
-     * @param Collection      $collection  Model collection.
-     * @param string|callable $labelColumn Label column or callback.
-     * @param string          $valueColumn Value column.
+     * @param Collection           $collection  Model collection.
+     * @param callable|string|null $labelColumn Label column or callback.
+     * @param string               $valueColumn Value column.
      *
      * @return OptionsBuilder
      */
     public static function fromCollection(
-        ?Collection $collection = null,
-        $labelColumn = null,
-        string $valueColumn = 'id'
+        Collection|null $collection = null,
+        callable|string|null $labelColumn = null,
+        string $valueColumn = 'id',
     ): self {
         if ($collection === null) {
-            return new static(new ArrayListOptions([], $labelColumn, $valueColumn));
+            return new self(new ArrayListOptions([], $labelColumn, $valueColumn));
         }
 
         $options = new CollectionOptions($collection, $labelColumn, $valueColumn);
 
-        return new static($options);
+        return new self($options);
     }
 
     /**
      * Get Options builder for collection.
      *
-     * @param Result|null     $result      Database result.
-     * @param string|callable $labelColumn Label column or callback.
-     * @param string          $valueColumn Value column.
+     * @param Result|null          $result      Database result.
+     * @param callable|string|null $labelColumn Label column or callback.
+     * @param string               $valueColumn Value column.
      *
      * @return OptionsBuilder
      */
-    public static function fromResult(?Result $result = null, $labelColumn = null, string $valueColumn = 'id'): self
-    {
+    public static function fromResult(
+        Result|null $result = null,
+        callable|string|null $labelColumn = null,
+        string $valueColumn = 'id',
+    ): self {
         if (! $result) {
-            return static::fromArrayList([], $labelColumn, $valueColumn);
+            return self::fromArrayList([], $labelColumn, $valueColumn);
         }
 
-        return static::fromArrayList($result->fetchAllAssoc(), $labelColumn, $valueColumn);
+        /** @psalm-suppress ArgumentTypeCoercion */
+        return self::fromArrayList($result->fetchAllAssoc(), $labelColumn, $valueColumn);
     }
 
     /**
@@ -71,16 +73,19 @@ final class OptionsBuilder
      * array and has to be extracted.
      *
      * @param list<array<string,mixed>> $data     Raw data list.
-     * @param string|callable           $labelKey Label key or callback.
+     * @param callable|string|null      $labelKey Label key or callback.
      * @param string                    $valueKey Value key.
      *
      * @return OptionsBuilder
      */
-    public static function fromArrayList(array $data, $labelKey = null, string $valueKey = 'id'): self
-    {
+    public static function fromArrayList(
+        array $data,
+        callable|string|null $labelKey = null,
+        string $valueKey = 'id',
+    ): self {
         $options = new ArrayListOptions($data, $labelKey, $valueKey);
 
-        return new static($options);
+        return new self($options);
     }
 
     /**
@@ -96,12 +101,12 @@ final class OptionsBuilder
     /**
      * Group options by a specific column.
      *
-     * @param string $column   Column name.
-     * @param null   $callback Optional callback.
+     * @param string        $column   Column name.
+     * @param callable|null $callback Optional callback.
      *
      * @return $this
      */
-    public function groupBy(string $column, $callback = null): self
+    public function groupBy(string $column, callable|null $callback = null): self
     {
         $options = [];
 
@@ -159,10 +164,8 @@ final class OptionsBuilder
      * @param mixed               $value    Raw group value.
      * @param callable|null       $callback Optional callback.
      * @param array<string,mixed> $row      Current data row.
-     *
-     * @return mixed
      */
-    private function groupValue($value, $callback, array $row)
+    private function groupValue(mixed $value, callable|null $callback, array $row): mixed
     {
         if (is_callable($callback)) {
             return $callback($value, $row);

@@ -16,18 +16,14 @@ use function is_string;
  */
 final class FlattenFormatter implements ValueFormatter
 {
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         return ! empty($fieldDefinition['eval']['multiple']);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
+    /** {@inheritDoc} */
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         return $this->flatten($value);
     }
@@ -41,18 +37,16 @@ final class FlattenFormatter implements ValueFormatter
      *
      * @param mixed $value    Current value.
      * @param bool  $brackets If true the value get brackets.
-     *
-     * @return array<int|string,string>|string
      */
-    private function flatten($value, bool $brackets = false)
+    private function flatten(mixed $value, bool $brackets = false): mixed
     {
         if (is_array($value)) {
             /** @psalm-var array<int,string> $value */
             $value = array_map(
-                function ($value) {
+                function (mixed $value): mixed {
                     return $this->flatten($value, true);
                 },
-                $value
+                $value,
             );
 
             $value = implode(', ', $value);

@@ -7,13 +7,12 @@ namespace Netzmacht\Contao\Toolkit\Data\Model;
 use Contao\Model;
 use Doctrine\DBAL\Connection;
 
-/**
- * @template T of Model
- */
 interface RepositoryManager
 {
     /**
-     * Get a repository.
+     * Get a repository.Use
+     *
+     * @template T of Model
      *
      * @param class-string<T> $modelClass Model class.
      *

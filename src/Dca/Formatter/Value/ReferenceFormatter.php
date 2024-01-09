@@ -11,18 +11,14 @@ use function is_array;
  */
 final class ReferenceFormatter implements ValueFormatter
 {
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         return ! empty($fieldDefinition['reference']);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
+    /** {@inheritDoc} */
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         if (isset($fieldDefinition['reference'][$value])) {
             if (is_array($fieldDefinition['reference'][$value])) {

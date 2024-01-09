@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Template;
 
-use Netzmacht\Contao\Toolkit\View\Template;
 use Netzmacht\Contao\Toolkit\View\Template\Exception\HelperNotFound;
 
 /**
@@ -17,16 +16,14 @@ trait TemplateTrait
      *
      * @var array<string,object|callable>
      */
-    protected $helpers = [];
+    protected array $helpers = [];
 
     /**
      * Get a template value.
      *
      * @param string $name The name.
-     *
-     * @return mixed
      */
-    public function get(string $name)
+    public function get(string $name): mixed
     {
         return $this->$name;
     }
@@ -39,7 +36,8 @@ trait TemplateTrait
      *
      * @return $this
      */
-    public function set(string $name, $value): Template
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+    public function set(string $name, $value): self
     {
         $this->$name = $value;
 
@@ -51,11 +49,9 @@ trait TemplateTrait
      *
      * @param string $name Name of the view helper.
      *
-     * @return object|callable
-     *
      * @throws HelperNotFound If helper is not registered.
      */
-    public function helper(string $name)
+    public function helper(string $name): object|callable
     {
         if (! isset($this->helpers[$name])) {
             throw new HelperNotFound($name);
@@ -73,6 +69,7 @@ trait TemplateTrait
      * @psalm-suppress MoreSpecificImplementedParamType
      * @phpcs:disable SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilityTypeMissing
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
     public function insert($name, array $data = null): void
     {
         $template = new static($name, $this->helpers, $this->strContentType);

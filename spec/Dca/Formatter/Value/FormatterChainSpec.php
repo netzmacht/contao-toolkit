@@ -60,7 +60,7 @@ class FormatterChainSpec extends ObjectBehavior
 
     public function it_returns_initial_value_when_no_formatter_matches(
         ValueFormatter $formatterA,
-        ValueFormatter $formatterB
+        ValueFormatter $formatterB,
     ): void {
         $formatterA->accepts(Argument::cetera())->willReturn(false);
         $formatterB->accepts(Argument::cetera())->willReturn(false);

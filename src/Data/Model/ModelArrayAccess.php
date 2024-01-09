@@ -10,51 +10,35 @@ use Contao\Model;
 
 /**
  * ModelArrayAccess decorates a Contao data model to provide array access.
+ *
+ * @implements ArrayAccess<string,mixed>
  */
 final class ModelArrayAccess implements ArrayAccess
 {
-    /**
-     * Data model.
-     *
-     * @var Model|Result
-     */
-    private $model;
-
-    /**
-     * @param Result|Model $model Data model as database result of model.
-     */
-    public function __construct($model)
+    /** @param Model|Result $model Data model as database result of model. */
+    public function __construct(private readonly Result|Model $model)
     {
-        $this->model = $model;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function offsetExists($offset): bool
     {
         return isset($this->model->$offset);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function offsetGet($offset)
+    /** {@inheritDoc} */
+    public function offsetGet($offset): mixed
     {
         return $this->model->$offset;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function offsetSet($offset, $value): void
     {
         $this->model->$offset = $value;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function offsetUnset($offset): void
     {
         $this->model->$offset = null;

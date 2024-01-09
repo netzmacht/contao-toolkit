@@ -9,7 +9,7 @@ use Contao\Input;
 use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
-use Symfony\Component\Templating\EngineInterface as TemplateEngine;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
 use function sprintf;
@@ -22,56 +22,55 @@ final class PagePickerListener extends AbstractFieldPickerListener
      *
      * @var Adapter<Input>
      */
-    private $input;
+    private Adapter $input;
 
     /**
-     * @param TemplateEngine|TemplateRenderer $templateEngine Template Engine.
-     * @param Translator                      $translator     Translator.
-     * @param DcaManager                      $dcaManager     Data container manager.
-     * @param Adapter<Input>                  $input          Request input.
-     * @param string                          $template       Template name.
+     * @param TemplateRenderer $templateRenderer Template renderer.
+     * @param Translator       $translator       Translator.
+     * @param DcaManager       $dcaManager       Data container manager.
+     * @param Adapter<Input>   $input            Request input.
+     * @param RouterInterface  $router           The router.
+     * @param string           $template         Template name.
      */
     public function __construct(
-        $templateEngine,
+        TemplateRenderer $templateRenderer,
         Translator $translator,
         DcaManager $dcaManager,
-        $input,
-        string $template = ''
+        Adapter $input,
+        private RouterInterface $router,
+        string $template = '',
     ) {
-        parent::__construct($templateEngine, $translator, $dcaManager, $template);
+        parent::__construct($templateRenderer, $translator, $dcaManager, $template);
 
         $this->input = $input;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function generate(string $tableName, string $fieldName, int $rowId, $value = null): string
+    /** {@inheritDoc} */
+    public function generate(string $tableName, string $fieldName, int $rowId, mixed $value = null): string
     {
-        $url = sprintf(
-            'contao/page.php?do=%s&amp;table=%s&amp;field=%s&amp;value=%s',
-            $this->input->get('do'),
-            $tableName,
-            $fieldName,
-            str_replace(
-                ['{{link_url::', '}}'],
-                '',
-                $value
-            )
-        );
+        $url = $this->router->generate('contao_backend_picker', [
+            'context' => 'link',
+            'extras'  => [
+                'fieldType' => 'radio',
+                'filesOnly' => true,
+                'source'    => sprintf('%s.%s', $tableName, $rowId),
+            ],
+            'value'   => $value,
+            'popup'   => 1,
+        ]);
 
         $cssId   = $fieldName . ($this->input->get('act') === 'editAll' ? '_' . $rowId : '');
         $jsTitle = StringUtil::specialchars(
-            str_replace('\'', '\\\'', $this->translator->trans('MOD.page.0', [], 'contao_modules'))
+            str_replace('\'', '\\\'', $this->translator->trans('MOD.page.0', [], 'contao_modules')),
         );
 
         $parameters = [
-            'url' => $url,
-            'title' => $this->translator->trans('MSC.pagepicker', [], 'contao_default'),
+            'url'     => $url,
+            'title'   => $this->translator->trans('MSC.pagepicker', [], 'contao_default'),
             'jsTitle' => $jsTitle,
-            'field' => $fieldName,
-            'icon' => 'pickpage.svg',
-            'id' => $cssId,
+            'field'   => $fieldName,
+            'icon'    => 'pickpage.svg',
+            'id'      => $cssId,
         ];
 
         return $this->render($this->template, $parameters);

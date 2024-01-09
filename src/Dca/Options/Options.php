@@ -10,7 +10,8 @@ use Iterator;
 /**
  * Interface Options describes the options.
  *
- * phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+ * @extends ArrayAccess<array-key,mixed>
+ * @extends Iterator<array-key,mixed>
  */
 interface Options extends ArrayAccess, Iterator
 {
@@ -19,14 +20,12 @@ interface Options extends ArrayAccess, Iterator
      *
      * @return array<string,array<string,mixed>|string>
      */
-    public function getArrayCopy();
+    public function getArrayCopy(): array;
 
     /**
      * Get the label column.
-     *
-     * @return string|callable
      */
-    public function getLabelKey();
+    public function getLabelKey(): callable|string;
 
     /**
      * Get the value column.

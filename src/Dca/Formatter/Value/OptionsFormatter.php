@@ -19,22 +19,16 @@ final class OptionsFormatter implements ValueFormatter
 {
     /**
      * Callback invoker.
-     *
-     * @var Invoker
      */
-    private $invoker;
+    private Invoker $invoker;
 
-    /**
-     * @param Invoker $invoker Callback invoker.
-     */
+    /** @param Invoker $invoker Callback invoker. */
     public function __construct(Invoker $invoker)
     {
         $this->invoker = $invoker;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         if (! empty($fieldDefinition['eval']['isAssociative']) || ! empty($fieldDefinition['options'])) {
@@ -44,10 +38,8 @@ final class OptionsFormatter implements ValueFormatter
         return ! empty($fieldDefinition['options_callback']);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
+    /** {@inheritDoc} */
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         if (
             ! empty($fieldDefinition['eval']['isAssociative'])
@@ -76,7 +68,7 @@ final class OptionsFormatter implements ValueFormatter
      *
      * @param mixed $value Given value.
      */
-    private function isAssociativeArray($value): bool
+    private function isAssociativeArray(mixed $value): bool
     {
         return is_array($value) && array_keys($value) !== range(0, count($value) - 1);
     }

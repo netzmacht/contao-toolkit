@@ -15,22 +15,14 @@ interface Specification
      * Consider if the specification is satisfied by the given model.
      *
      * @param Model $model Given model.
-     *
-     * @return bool
-     *
-     * phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
-    public function isSatisfiedBy(Model $model);
+    public function isSatisfiedBy(Model $model): bool;
 
     /**
-     * Transform the specification into an model query.
+     * Transform the specification into a model query.
      *
      * @param list<string> $columns Columns array.
      * @param list<mixed>  $values  Values array.
-     *
-     * @return void
-     *
-     * phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
-    public function buildQuery(array &$columns, array &$values);
+    public function buildQuery(array &$columns, array &$values): void;
 }

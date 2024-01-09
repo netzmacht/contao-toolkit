@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Contao\Config;
+use Contao\CoreBundle\Framework\Adapter;
 use Contao\Date;
 
 use function in_array;
@@ -14,24 +15,12 @@ use function in_array;
  */
 final class DateFormatter implements ValueFormatter
 {
-    /**
-     * Contao config.
-     *
-     * @var Config
-     */
-    private $config;
-
-    /**
-     * @param Config $config Contao config.
-     */
-    public function __construct($config)
+    /** @param Adapter<Config> $config Contao config. */
+    public function __construct(private readonly Adapter $config)
     {
-        $this->config = $config;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         if ($fieldName === 'tstamp') {
@@ -45,10 +34,8 @@ final class DateFormatter implements ValueFormatter
         return in_array($fieldDefinition['eval']['rgxp'], ['date', 'datim', 'time']);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
+    /** {@inheritDoc} */
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         if (empty($fieldDefinition['eval']['rgxp'])) {
             $format = 'datim';

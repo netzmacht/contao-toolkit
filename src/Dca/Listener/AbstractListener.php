@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener;
 
-use Netzmacht\Contao\Toolkit\Assertion\Assert;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
@@ -14,39 +13,15 @@ use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
  */
 abstract class AbstractListener
 {
-    /**
-     * Name of the data container.
-     *
-     * @var string
-     */
-    protected static $name;
-
-    /**
-     * Data container manager.
-     *
-     * @var DcaManager
-     */
-    private $dcaManager;
-
-    /**
-     * @param DcaManager $dcaManager Data container manager.
-     */
-    public function __construct(DcaManager $dcaManager)
+    /** @param DcaManager $dcaManager Data container manager. */
+    public function __construct(private readonly DcaManager $dcaManager)
     {
-        $this->dcaManager = $dcaManager;
-
-        Assert::that(static::getName())
-            ->notEmpty('Name must be provided by getName() by overriding $name property or getName()')
-            ->string('Name property must be a string.');
     }
 
     /**
      * Get data container name.
      */
-    public static function getName(): string
-    {
-        return static::$name;
-    }
+    abstract public static function getName(): string;
 
     /**
      * Get a definition.

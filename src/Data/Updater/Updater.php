@@ -13,23 +13,17 @@ interface Updater
      * Toggle the state.
      *
      * @param string              $dataContainerName Data container name.
-     * @param string|int          $recordId          Data record id.
+     * @param int|string          $recordId          Data record id.
      * @param array<string,mixed> $data              Data of the row which should be changed.
      * @param mixed               $context           Context, usually the data container driver.
-     *
-     * @return mixed
      */
-    public function update($dataContainerName, $recordId, array $data, $context);
+    public function update(string $dataContainerName, int|string $recordId, array $data, mixed $context): mixed;
 
     /**
      * Check if user has access to a data container field.
      *
      * @param string $dataContainerName Data container name.
      * @param string $columnName        Column name.
-     *
-     * @return bool
-     *
-     * phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
-    public function hasUserAccess($dataContainerName, $columnName);
+    public function hasUserAccess(string $dataContainerName, string $columnName): bool;
 }

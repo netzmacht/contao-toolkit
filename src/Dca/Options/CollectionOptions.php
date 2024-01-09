@@ -17,13 +17,6 @@ use function is_callable;
 final class CollectionOptions implements Options
 {
     /**
-     * The database result.
-     *
-     * @var mixed
-     */
-    private $collection;
-
-    /**
      * The label column.
      *
      * @var string|callable
@@ -31,39 +24,29 @@ final class CollectionOptions implements Options
     private $labelColumn;
 
     /**
-     * The value column.
-     *
-     * @var string
-     */
-    private $valueColumn;
-
-    /**
      * Current position.
-     *
-     * @var int
      */
-    private $position = 0;
+    private int $position = 0;
 
     /**
      * Construct.
      *
-     * @param Collection      $collection  Model collection.
-     * @param string|callable $labelColumn Name of label column.
-     * @param string          $valueColumn Name of value column.
+     * @param Collection           $collection  Model collection.
+     * @param callable|string|null $labelColumn Name of label column.
+     * @param string               $valueColumn Name of value column.
      */
-    public function __construct(Collection $collection, $labelColumn = null, string $valueColumn = 'id')
-    {
-        $this->collection  = $collection;
-        $this->valueColumn = $valueColumn;
+    public function __construct(
+        private readonly Collection $collection,
+        callable|string|null $labelColumn = null,
+        private readonly string $valueColumn = 'id',
+    ) {
         $this->labelColumn = $labelColumn ?: $valueColumn;
     }
 
     /**
      * Get the label column.
-     *
-     * @return string|callable
      */
-    public function getLabelKey()
+    public function getLabelKey(): string|callable
     {
         return $this->labelColumn;
     }
@@ -76,10 +59,7 @@ final class CollectionOptions implements Options
         return $this->valueColumn;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function current()
+    public function current(): mixed
     {
         if (is_callable($this->labelColumn)) {
             return call_user_func($this->labelColumn, $this->row());
@@ -88,9 +68,7 @@ final class CollectionOptions implements Options
         return $this->collection->{$this->labelColumn};
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function row(): array
     {
         return $this->collection->row();
@@ -102,10 +80,7 @@ final class CollectionOptions implements Options
         $this->collection->next();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function key()
+    public function key(): mixed
     {
         return $this->collection->{$this->valueColumn};
     }
@@ -121,9 +96,7 @@ final class CollectionOptions implements Options
         $this->collection->reset();
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function offsetExists($offset): bool
     {
         foreach ($this->collection as $row) {
@@ -135,10 +108,8 @@ final class CollectionOptions implements Options
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function offsetGet($offset)
+    /** {@inheritDoc} */
+    public function offsetGet($offset): mixed
     {
         foreach ($this->collection as $row) {
             if ($row->{$this->valueColumn} === $offset) {
@@ -149,25 +120,19 @@ final class CollectionOptions implements Options
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function offsetSet($offset, $value): void
     {
         // unsupported
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function offsetUnset($offset): void
     {
         // unsupported
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function getArrayCopy(): array
     {
         $values = [];

@@ -16,11 +16,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 use function array_pad;
 use function array_unshift;
+use function array_values;
 use function implode;
 use function is_array;
 use function ltrim;
 use function sprintf;
-use function strpos;
+use function str_ends_with;
+use function str_starts_with;
 use function strrchr;
 use function substr;
 use function trim;
@@ -34,31 +36,25 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
 {
     /**
      * Template renderer.
-     *
-     * @var TemplateRenderer
      */
-    private $templateRenderer;
+    private TemplateRenderer $templateRenderer;
 
     /**
      * Request scope matcher.
-     *
-     * @var RequestScopeMatcher
      */
-    protected $scopeMatcher;
+    protected RequestScopeMatcher $scopeMatcher;
 
     /**
      * The http request response tagger.
-     *
-     * @var ResponseTagger
      */
-    private $responseTagger;
+    private ResponseTagger $responseTagger;
 
     /**
      * Fragment options.
      *
      * @var array<string,mixed>
      */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * @param TemplateRenderer    $templateRenderer The template renderer.
@@ -68,7 +64,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
     public function __construct(
         TemplateRenderer $templateRenderer,
         RequestScopeMatcher $scopeMatcher,
-        ResponseTagger $responseTagger
+        ResponseTagger $responseTagger,
     ) {
         $this->templateRenderer = $templateRenderer;
         $this->scopeMatcher     = $scopeMatcher;
@@ -99,7 +95,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      * @param list<string>|null $classes Additional classes.
      * @psalm-param TModel $model
      */
-    protected function generate(Request $request, Model $model, string $section, ?array $classes = null): Response
+    protected function generate(Request $request, Model $model, string $section, array|null $classes = null): Response
     {
         $response = $this->preGenerate($request, $model, $section, $classes);
         if ($response !== null) {
@@ -130,7 +126,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      *
      * @return array<string,mixed>
      */
-    private function prepareDefaultTemplateData(Model $model, string $section, ?array $classes = null): array
+    private function prepareDefaultTemplateData(Model $model, string $section, array|null $classes = null): array
     {
         $data    = $model->row();
         $cssID   = array_pad(StringUtil::deserialize($data['cssID'], true), 2, '');
@@ -188,8 +184,12 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function preGenerate(Request $request, Model $model, string $section, ?array $classes = null): ?Response
-    {
+    protected function preGenerate(
+        Request $request,
+        Model $model,
+        string $section,
+        array|null $classes = null,
+    ): Response|null {
         return null;
     }
 
@@ -206,7 +206,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function postGenerate(string $buffer, array $data, Request $request, Model $model): ?Response
+    protected function postGenerate(string $buffer, array $data, Request $request, Model $model): Response|null
     {
         return null;
     }
@@ -220,10 +220,10 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
     protected function render(string $templateName, array $data): string
     {
         if (
-            substr($templateName, -5) !== '.twig'
-            && strpos($templateName, 'toolkit:') !== 0
-            && strpos($templateName, 'fe:') !== 0
-            && strpos($templateName, 'be:') !== 0
+            ! str_ends_with($templateName, '.twig')
+            && ! str_starts_with($templateName, 'toolkit:')
+            && ! str_starts_with($templateName, 'fe:')
+            && ! str_starts_with($templateName, 'be:')
         ) {
             $templateName = 'fe:' . $templateName;
         }
@@ -304,6 +304,6 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      */
     protected function tagResponse(string ...$tags): void
     {
-        $this->responseTagger->addTags($tags);
+        $this->responseTagger->addTags(array_values($tags));
     }
 }

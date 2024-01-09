@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 
-use function array_merge;
+use Contao\DataContainer;
 
-use const E_USER_DEPRECATED;
+use function array_merge;
 
 final class ColorPickerListener extends AbstractPickerListener
 {
     /**
      * Template name.
-     *
-     * @var string
      */
-    protected $template = 'toolkit:be:be_wizard_color_picker.html5';
+    protected string $template = 'toolkit:be:be_wizard_color_picker.html5';
 
     /**
      * Generate the color picker.
@@ -31,31 +29,10 @@ final class ColorPickerListener extends AbstractPickerListener
         return $this->render($this->template, $config);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function onWizardCallback($dataContainer): string
+    /** {@inheritDoc} */
+    public function onWizardCallback(DataContainer $dataContainer): string
     {
         return $this->generate($dataContainer->table, $dataContainer->field);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function handleWizardCallback($dataContainer): string
-    {
-        // @codingStandardsIgnoreStart
-        @trigger_error(
-            sprintf(
-                '%1$s::handleWizardCallback is deprecated and will be removed in Version 4.0.0. '
-                . 'Use %1$s::onWizardCallback instead.',
-                static::class
-            ),
-            E_USER_DEPRECATED
-        );
-        // @codingStandardsIgnoreEnd
-
-        return $this->onWizardCallback($dataContainer);
     }
 
     /**
@@ -78,7 +55,7 @@ final class ColorPickerListener extends AbstractPickerListener
 
         return array_merge(
             $config,
-            (array) $definition->get(['fields', $fieldName, 'toolkit', 'color_picker'])
+            (array) $definition->get(['fields', $fieldName, 'toolkit', 'color_picker']),
         );
     }
 }

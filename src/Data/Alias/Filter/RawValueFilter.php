@@ -9,10 +9,8 @@ namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
  */
 final class RawValueFilter extends AbstractValueFilter
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function apply($model, $value, string $separator): string
+    /** {@inheritDoc} */
+    public function apply(object $model, string|null $value, string $separator): string|null
     {
         $values = [];
 

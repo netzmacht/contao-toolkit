@@ -13,22 +13,16 @@ final class YesNoFormatter implements ValueFormatter
 {
     /**
      * Translator.
-     *
-     * @var Translator
      */
-    private $translator;
+    private Translator $translator;
 
-    /**
-     * @param Translator $translator Translator.
-     */
+    /** @param Translator $translator Translator. */
     public function __construct(Translator $translator)
     {
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         if (empty($fieldDefinition['inputType']) || $fieldDefinition['inputType'] !== 'checkbox') {
@@ -42,10 +36,8 @@ final class YesNoFormatter implements ValueFormatter
         return ! $fieldDefinition['eval']['multiple'];
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
+    /** {@inheritDoc} */
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         return $this->translator->trans((empty($value) ? 'MSC.no' : 'MSC.yes'), [], 'contao_default');
     }

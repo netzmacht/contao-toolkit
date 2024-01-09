@@ -9,35 +9,34 @@ use Contao\DataContainer;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 
 use function array_diff;
+use function array_map;
 use function array_merge;
-
-use const E_USER_DEPRECATED;
+use function array_values;
 
 final class TemplateOptionsListener
 {
     /**
      * Data container manager.
-     *
-     * @var DcaManager
      */
-    private $dcaManager;
+    private DcaManager $dcaManager;
 
-    /**
-     * @param DcaManager $dcaManager Data container manager.
-     */
+    /** @param DcaManager $dcaManager Data container manager. */
     public function __construct(DcaManager $dcaManager)
     {
         $this->dcaManager = $dcaManager;
     }
 
     /**
-     * Handle the options callback.
+     * Handle the option callback.
      *
      * @param DataContainer $dataContainer Data container driver.
      *
      * @return list<string>
+     *
+     * @psalm-suppress MoreSpecificReturnType
+     * @psalm-suppress LessSpecificReturnStatement
      */
-    public function onOptionsCallback($dataContainer): array
+    public function onOptionsCallback(DataContainer $dataContainer): array
     {
         $config    = $this->getConfig($dataContainer);
         $templates = Controller::getTemplateGroup($config['prefix']);
@@ -46,32 +45,7 @@ final class TemplateOptionsListener
             return $templates;
         }
 
-        return array_diff($templates, $config['exclude']);
-    }
-
-    /**
-     * Handle the options callback.
-     *
-     * @deprecated Deprecated and removed in Version 4.0.0. Use self::onOptionsCallback instead.
-     *
-     * @param DataContainer $dataContainer Data container driver.
-     *
-     * @return list<string>
-     */
-    public function handleOptionsCallback($dataContainer): array
-    {
-        // @codingStandardsIgnoreStart
-        @trigger_error(
-            sprintf(
-                '%1$s::handleOptionsCallback is deprecated and will be removed in Version 4.0.0. '
-                . 'Use %1$s::onOptionsCallback instead.',
-                static::class
-            ),
-            E_USER_DEPRECATED
-        );
-        // @codingStandardsIgnoreEnd
-
-        return $this->onOptionsCallback($dataContainer);
+        return array_values(array_map('\strval', array_diff($templates, $config['exclude'])));
     }
 
     /**
@@ -81,7 +55,7 @@ final class TemplateOptionsListener
      *
      * @return array<string,mixed>
      */
-    private function getConfig($dataContainer): array
+    private function getConfig(DataContainer $dataContainer): array
     {
         $definition = $this->dcaManager->getDefinition($dataContainer->table);
 
@@ -90,7 +64,7 @@ final class TemplateOptionsListener
                 'prefix' => '',
                 'exclude' => null,
             ],
-            (array) $definition->get(['fields', $dataContainer->field, 'toolkit', 'template_options'])
+            (array) $definition->get(['fields', $dataContainer->field, 'toolkit', 'template_options']),
         );
     }
 }

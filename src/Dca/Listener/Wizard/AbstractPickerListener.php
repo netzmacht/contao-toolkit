@@ -11,8 +11,6 @@ abstract class AbstractPickerListener extends AbstractWizardListener
 {
     /**
      * Template name.
-     *
-     * @var string
      */
-    protected $template = 'toolkit:be:be_wizard_picker.html5';
+    protected string $template = 'toolkit:be:be_wizard_picker.html5';
 }

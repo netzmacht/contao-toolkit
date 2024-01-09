@@ -19,7 +19,7 @@ final class FilterFormatter implements ValueFormatter
      *
      * @var ValueFormatter[]
      */
-    private $filters = [];
+    private array $filters;
 
     /**
      * Construct.
@@ -33,18 +33,14 @@ final class FilterFormatter implements ValueFormatter
         $this->filters = $filters;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function format($value, string $fieldName, array $fieldDefinition, $context = null)
+    /** {@inheritDoc} */
+    public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         foreach ($this->filters as $filter) {
             if (! $filter->accepts($fieldName, $fieldDefinition)) {

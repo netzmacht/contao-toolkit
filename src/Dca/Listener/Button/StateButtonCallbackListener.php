@@ -20,8 +20,6 @@ use function preg_match;
 use function preg_replace;
 use function sprintf;
 
-use const E_USER_DEPRECATED;
-
 /**
  * StateButtonCallback creates the state toggle button known in Contao.
  */
@@ -32,28 +30,24 @@ final class StateButtonCallbackListener
      *
      * @var Adapter<Input>
      */
-    private $input;
+    private Adapter $input;
 
     /**
      * Data row updater.
-     *
-     * @var Updater
      */
-    private $updater;
+    private Updater $updater;
 
     /**
      * Data container manager.
-     *
-     * @var DcaManager
      */
-    private $dcaManager;
+    private DcaManager $dcaManager;
 
     /**
      * Contao backend adapter.
      *
      * @var Adapter<Backend>
      */
-    private $backend;
+    private Adapter $backend;
 
     /**
      * @param Adapter<Backend> $backend    Contao backend adapter.
@@ -65,7 +59,7 @@ final class StateButtonCallbackListener
         Adapter $backend,
         Adapter $input,
         Updater $updater,
-        DcaManager $dcaManager
+        DcaManager $dcaManager,
     ) {
         $this->input      = $input;
         $this->updater    = $updater;
@@ -95,38 +89,35 @@ final class StateButtonCallbackListener
      */
     public function onButtonCallback(
         array $row,
-        $href,
-        $label,
-        $title,
-        $icon,
-        $attributes,
+        string|null $href,
+        string|null $label,
+        string|null $title,
+        string|null $icon,
+        string|null $attributes,
         string $tableName,
-        $rootIds,
-        $childRecordIds,
+        array|null $rootIds,
+        array|null $childRecordIds,
         bool $circularReference,
-        $previous,
-        $next,
-        $dataContainer
+        string|null $previous,
+        string|null $next,
+        DataContainer $dataContainer,
     ): string {
         $name   = $this->getOperationName((string) $attributes);
         $config = $this->getConfig($dataContainer, $name);
 
         if ($this->input->get('tid')) {
             try {
+                /** @psalm-suppress RiskyCast */
                 $this->updater->update(
                     $dataContainer->table,
-                    $this->input->get('tid'),
+                    (int) $this->input->get('tid'),
                     [$config['stateColumn'] => ((int) $this->input->get('state') === 1)],
-                    $dataContainer
+                    $dataContainer,
                 );
 
                 $this->backend->redirect($this->backend->getReferer());
             } catch (AccessDenied $e) {
-                /**
-                 * @psalm-suppress DeprecatedMethod
-                 * @psalm-suppress UndefinedConstant
-                 */
-                $this->backend->log($e->getMessage(), __METHOD__, TL_ERROR);
+                $this->backend->log($e->getMessage(), __METHOD__, 'ERROR');
                 $this->backend->redirect('contao?act=error');
             }
         }
@@ -136,11 +127,13 @@ final class StateButtonCallbackListener
         }
 
         $disabled = ! $row[$config['stateColumn']] || ($config['inverse'] && $row[$config['stateColumn']]);
-        $href     = $href ?? '';
+        $href   ??= '';
         $href    .= '&amp;id=';
-        $href    .= (string) $this->input->get('id');
-        $href    .= '&amp;tid=';
-        $href    .= $row['id'] . '&amp;state=' . ($disabled ? '1' : '');
+
+        /** @psalm-suppress PossiblyInvalidCast */
+        $href .= (string) $this->input->get('id');
+        $href .= '&amp;tid=';
+        $href .= $row['id'] . '&amp;state=' . ($disabled ? '1' : '');
 
         if ($disabled) {
             $icon = $this->disableIcon((string) $icon, (string) $config['disabledIcon']);
@@ -153,71 +146,7 @@ final class StateButtonCallbackListener
             $this->backend->addToUrl($href),
             StringUtil::specialchars((string) $title),
             (string) $attributes,
-            Image::getHtml((string) $icon, (string) $label, $imageAttributes)
-        );
-    }
-
-    /**
-     * Invoke the callback.
-     *
-     * @deprecated Deprecated and removed in Version 4.0.0. Use self::onButtonCallback instead.
-     *
-     * @param array<string,mixed>        $row               Current data row.
-     * @param string|null                $href              Button link.
-     * @param string|null                $label             Button label.
-     * @param string|null                $title             Button title.
-     * @param string|null                $icon              Enabled button icon.
-     * @param string|null                $attributes        Html attributes as string.
-     * @param string                     $tableName         Table name.
-     * @param array<int,string|int>|null $rootIds           Root ids.
-     * @param array<int,string|int>|null $childRecordIds    Child record ids.
-     * @param bool                       $circularReference Circular reference flag.
-     * @param string|null                $previous          Previous button name.
-     * @param string|null                $next              Next button name.
-     * @param DataContainer              $dataContainer     Data container driver.
-     *
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
-     */
-    public function handleButtonCallback(
-        array $row,
-        $href,
-        $label,
-        $title,
-        $icon,
-        $attributes,
-        string $tableName,
-        $rootIds,
-        $childRecordIds,
-        bool $circularReference,
-        $previous,
-        $next,
-        $dataContainer
-    ): string {
-        // @codingStandardsIgnoreStart
-        @trigger_error(
-            sprintf(
-                '%1$s::handleButtonCallback is deprecated and will be removed in Version 4.0.0. '
-                . 'Use %1$s::onButtonCallback instead.',
-                static::class
-            ),
-            E_USER_DEPRECATED
-        );
-        // @codingStandardsIgnoreEnd
-
-        return $this->onButtonCallback(
-            $row,
-            $href,
-            $label,
-            $title,
-            $icon,
-            $attributes,
-            $tableName,
-            $rootIds,
-            $childRecordIds,
-            $circularReference,
-            $previous,
-            $next,
-            $dataContainer
+            Image::getHtml((string) $icon, (string) $label, $imageAttributes),
         );
     }
 
@@ -248,7 +177,7 @@ final class StateButtonCallbackListener
      *
      * @return array<string,mixed>
      */
-    private function getConfig($dataContainer, string $operationName): array
+    private function getConfig(DataContainer $dataContainer, string $operationName): array
     {
         $definition = $this->dcaManager->getDefinition($dataContainer->table);
         $config     = [
@@ -259,7 +188,7 @@ final class StateButtonCallbackListener
 
         return array_merge(
             $config,
-            (array) $definition->get(['list', 'operations', $operationName, 'toolkit', 'state_button'])
+            (array) $definition->get(['list', 'operations', $operationName, 'toolkit', 'state_button']),
         );
     }
 
@@ -270,7 +199,7 @@ final class StateButtonCallbackListener
      *
      * @throws RuntimeException When no data-operation is set in the attributes.
      */
-    private function getOperationName($attributes): string
+    private function getOperationName(string $attributes): string
     {
         if (preg_match('/data-operation="([^"]*)"/', $attributes, $matches)) {
             return $matches[1];

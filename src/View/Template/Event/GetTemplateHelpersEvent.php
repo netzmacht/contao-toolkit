@@ -18,24 +18,20 @@ final class GetTemplateHelpersEvent extends Event
 
     /**
      * Template name.
-     *
-     * @var string
      */
-    private $templateName;
+    private string $templateName;
 
     /**
      * Content type.
-     *
-     * @var string
      */
-    private $contentType;
+    private string $contentType;
 
     /**
      * List of helpers.
      *
      * @var array<string,object|callable>
      */
-    private $helpers = [];
+    private array $helpers = [];
 
     /**
      * @param string $templateName Template name.
@@ -67,11 +63,11 @@ final class GetTemplateHelpersEvent extends Event
      * Register a helper.
      *
      * @param string          $name   Name of the helper.
-     * @param object|callable $helper Helper object.
+     * @param callable|object $helper Helper object.
      *
      * @return $this
      */
-    public function addHelper(string $name, $helper): self
+    public function addHelper(string $name, callable|object $helper): self
     {
         $this->helpers[$name] = $helper;
 
@@ -81,7 +77,7 @@ final class GetTemplateHelpersEvent extends Event
     /**
      * Register a set of helpers.
      *
-     * @param array<string,callable> $helpers Associate array with helper name as key and helper object as value.
+     * @param array<string,callable|object> $helpers Associate array with helper name as key and helper object as value.
      *
      * @return $this
      */

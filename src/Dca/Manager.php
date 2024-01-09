@@ -18,28 +18,24 @@ final class Manager implements DcaManager
      *
      * @var Definition[]
      */
-    private $definitions = [];
+    private array $definitions = [];
 
     /**
      * Data definition formatter cache.
      *
      * @var Formatter[]
      */
-    private $formatter = [];
+    private array $formatter = [];
 
     /**
      * The data definition array loader.
-     *
-     * @var DcaLoader
      */
-    private $loader;
+    private DcaLoader $loader;
 
     /**
      * FormatterFactory.
-     *
-     * @var FormatterFactory
      */
-    private $formatterFactory;
+    private FormatterFactory $formatterFactory;
 
     /**
      * @param DcaLoader        $loader           The data definition array loader.
@@ -63,6 +59,7 @@ final class Manager implements DcaManager
     {
         if ($noCache) {
             $this->loader->loadLanguageFile($name, null, $noCache);
+            /** @psalm-suppress TooManyArguments - Contao 5 removed 2nd argument */
             $this->loader->loadDataContainer($name, $noCache);
 
             $this->assertValidDca($name);

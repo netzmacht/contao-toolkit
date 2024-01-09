@@ -8,10 +8,8 @@ trait RepositoryManagerAwareTrait
 {
     /**
      * Repository manager.
-     *
-     * @var RepositoryManager
      */
-    protected $repositoryManager;
+    protected RepositoryManager $repositoryManager;
 
     /**
      * Register the repository manager.

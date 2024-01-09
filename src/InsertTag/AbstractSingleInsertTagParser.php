@@ -8,17 +8,13 @@ abstract class AbstractSingleInsertTagParser extends AbstractInsertTagParser
 {
     /**
      * Tag name.
-     *
-     * @var string
      */
-    protected $tagName;
+    protected string $tagName;
 
     /**
      * If true caching is supported.
-     *
-     * @var bool
      */
-    protected $supportsCaching = true;
+    protected bool $supportsCaching = true;
 
     protected function supports(string $tag, bool $cache): bool
     {

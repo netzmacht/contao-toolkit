@@ -4,47 +4,50 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Assets;
 
+use Symfony\Component\Asset\Packages;
+
+use function count;
+use function explode;
 use function is_numeric;
+use function str_contains;
 
 /**
  * Globals assets manager registers all assets as Contao globals.
  */
-final class GlobalsAssetsManager implements HtmlPageAssetsManager
+final class GlobalsAssetsManager implements AssetsManager
 {
     /**
      * The registered stylesheets.
      *
      * @var array<int|string,string>
      */
-    private $javascripts;
+    private array $javascripts;
 
     /**
      * The registered javascripts.
      *
      * @var array<int|string,string>
      */
-    private $stylesheets;
+    private array $stylesheets;
 
     /**
      * The registered body content.
      *
      * @var array|string[]
      */
-    private $body;
+    private array $body;
 
     /**
      * The registered head content.
      *
      * @var array|string[]
      */
-    private $head;
+    private array $head;
 
     /**
      * Debug mode of the environment.
-     *
-     * @var bool
      */
-    private $debugMode;
+    private bool $debugMode;
 
     /**
      * @param array<int|string,string> $stylesheets The registered stylesheets.
@@ -54,11 +57,12 @@ final class GlobalsAssetsManager implements HtmlPageAssetsManager
      * @param bool                     $debugMode   Debug mode of the environment.
      */
     public function __construct(
+        private readonly Packages $packages,
         array &$stylesheets,
         array &$javascripts,
         array &$head,
         array &$body,
-        $debugMode = false
+        bool $debugMode = false,
     ) {
         $this->stylesheets = &$stylesheets;
         $this->javascripts = &$javascripts;
@@ -67,11 +71,14 @@ final class GlobalsAssetsManager implements HtmlPageAssetsManager
         $this->debugMode   = $debugMode;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function addJavascript(string $path, $static = self::STATIC_PRODUCTION, ?string $name = null): AssetsManager
-    {
+    /** {@inheritDoc} */
+    public function addJavascript(
+        string $path,
+        bool|string $static = self::STATIC_PRODUCTION,
+        string|null $name = null,
+    ): AssetsManager {
+        $path = $this->locatePath($path);
+
         if ($this->isStatic($static)) {
             $path .= '|static';
         }
@@ -85,11 +92,12 @@ final class GlobalsAssetsManager implements HtmlPageAssetsManager
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function addJavascripts(array $paths, $static = self::STATIC_PRODUCTION, ?string $name = null): AssetsManager
-    {
+    /** {@inheritDoc} */
+    public function addJavascripts(
+        array $paths,
+        bool|string $static = self::STATIC_PRODUCTION,
+        string|null $name = null,
+    ): AssetsManager {
         foreach ($paths as $identifier => $path) {
             if ($name) {
                 $name .= '_' . $identifier;
@@ -103,15 +111,14 @@ final class GlobalsAssetsManager implements HtmlPageAssetsManager
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function addStylesheet(
         string $path,
         string $media = '',
-        $static = self::STATIC_PRODUCTION,
-        ?string $name = null
+        bool|string $static = self::STATIC_PRODUCTION,
+        string|null $name = null,
     ): AssetsManager {
+        $path   = $this->locatePath($path);
         $static = $this->isStatic($static);
 
         if ($media || $static) {
@@ -131,14 +138,12 @@ final class GlobalsAssetsManager implements HtmlPageAssetsManager
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function addStylesheets(
         array $paths,
         string $media = '',
-        $static = self::STATIC_PRODUCTION,
-        ?string $name = null
+        bool|string $static = self::STATIC_PRODUCTION,
+        string|null $name = null,
     ): AssetsManager {
         foreach ($paths as $identifier => $path) {
             if ($name) {
@@ -153,28 +158,28 @@ final class GlobalsAssetsManager implements HtmlPageAssetsManager
         return $this;
     }
 
-    public function addToBody(string $name, string $html): HtmlPageAssetsManager
+    public function addToBody(string $name, string $html): AssetsManager
     {
         $this->body[$name] = $html;
 
         return $this;
     }
 
-    public function appendToBody(string $html): HtmlPageAssetsManager
+    public function appendToBody(string $html): AssetsManager
     {
         $this->body[] = $html;
 
         return $this;
     }
 
-    public function addToHead(string $name, string $html): HtmlPageAssetsManager
+    public function addToHead(string $name, string $html): AssetsManager
     {
         $this->head[$name] = $html;
 
         return $this;
     }
 
-    public function appendToHead(string $html): HtmlPageAssetsManager
+    public function appendToHead(string $html): AssetsManager
     {
         $this->head[] = $html;
 
@@ -221,15 +226,27 @@ final class GlobalsAssetsManager implements HtmlPageAssetsManager
         return $this->head;
     }
 
-    /**
-     * @param string|bool $flag
-     */
-    private function isStatic($flag): bool
+    private function isStatic(bool|string $flag): bool
     {
         if ($flag === self::STATIC_PRODUCTION) {
             return ! $this->debugMode;
         }
 
         return (bool) $flag;
+    }
+
+    private function locatePath(string $path): string
+    {
+        if (! str_contains($path, '::')) {
+            return $path;
+        }
+
+        $parts = explode('::', $path, 2);
+        if (count($parts) === 1) {
+            return $path;
+        }
+
+        /** @psalm-suppress PossiblyUndefinedArrayOffset */
+        return $this->packages->getUrl($parts[1], $parts[0]);
     }
 }

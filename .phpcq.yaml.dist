@@ -13,9 +13,6 @@ phpcq:
     phpmd:
       version: ^1.0
       signed: false
-      requirements:
-        phpmd:
-          signed: false
     phpcpd:
       version: ^1.1
       signed: false
@@ -31,9 +28,6 @@ phpcq:
     psalm:
       version: ^1.0
       signed: false
-      requirements:
-        psalm:
-          version: ^4.18
     phpspec:
       version: ^1.0
       signed: false
@@ -52,7 +46,7 @@ phpcq:
     # Composer normalize
     - C00543248C87FB13
     # phpmd
-    - 0F9684B8B16B7AB0
+    - 9093F8B32E4815AA
 
 tasks:
   fix:
@@ -120,7 +114,13 @@ tasks:
       <<: *phpcs-config
       fix: true
 
+  composer-normalize:
+    config: &composer-normalize-config
+      ignore_output:
+       - '#> pre-command-run: Contao\\ManagerPlugin\\Composer\\ArtifactsPlugin->preCommandRun#'
+
   composer-normalize-fix:
     plugin: composer-normalize
     config:
+      <<: *composer-normalize-config
       dry_run: false

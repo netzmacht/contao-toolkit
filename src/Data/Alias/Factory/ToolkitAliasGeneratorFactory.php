@@ -14,24 +14,12 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Validator\UniqueDatabaseValueValidator;
 
 final class ToolkitAliasGeneratorFactory implements AliasGeneratorFactory
 {
-    /**
-     * Database connection.
-     *
-     * @var Connection
-     */
-    private $connection;
-
-    /**
-     * @param Connection $connection Database connection.
-     */
-    public function __construct(Connection $connection)
+    /** @param Connection $connection Database connection. */
+    public function __construct(private readonly Connection $connection)
     {
-        $this->connection = $connection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function create(string $dataContainerName, string $aliasField, array $fields): AliasGenerator
     {
         $filters = [
@@ -43,7 +31,7 @@ final class ToolkitAliasGeneratorFactory implements AliasGeneratorFactory
         $validator = new UniqueDatabaseValueValidator(
             $this->connection,
             $dataContainerName,
-            $aliasField
+            $aliasField,
         );
 
         return new FilterBasedAliasGenerator($filters, $validator, $dataContainerName, $aliasField);

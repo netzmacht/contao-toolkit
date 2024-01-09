@@ -10,7 +10,7 @@ use Contao\CoreBundle\Framework\ContaoFramework;
 /**
  * Class Loader loads the data container.
  *
- * Internal used loader class. Do not used it by your own.
+ * Internal used loader class. Do not use it by your own.
  *
  * @psalm-suppress PropertyNotSetInConstructor
  */

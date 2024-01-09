@@ -20,20 +20,6 @@ use const ENT_QUOTES;
 final class SlugifyFilter extends AbstractValueFilter
 {
     /**
-     * Preserve uppercase.
-     *
-     * @var bool
-     */
-    private $preserveUppercase;
-
-    /**
-     * Encoding charset.
-     *
-     * @var string
-     */
-    private $charset;
-
-    /**
      * Construct.
      *
      * @param list<string> $columns           Columns being used for the value.
@@ -44,21 +30,16 @@ final class SlugifyFilter extends AbstractValueFilter
      */
     public function __construct(
         array $columns,
-        $break = true,
-        $combine = self::COMBINE_REPLACE,
-        $preserveUppercase = false,
-        $charset = 'utf-8'
+        bool $break = true,
+        int $combine = self::COMBINE_REPLACE,
+        private readonly bool $preserveUppercase = false,
+        private readonly string $charset = 'utf-8',
     ) {
         parent::__construct($columns, $break, $combine);
-
-        $this->preserveUppercase = (bool) $preserveUppercase;
-        $this->charset           = $charset;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function apply($model, $value, string $separator): string
+    /** {@inheritDoc} */
+    public function apply(object $model, string|null $value, string $separator): string|null
     {
         $values = [];
 

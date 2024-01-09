@@ -38,7 +38,7 @@ final class FosCacheResponseTaggerSpec extends ObjectBehavior
     }
 
     public function it_throws_invalid_response_tag_exception_if_fos_response_tagger_failed(
-        FosResponseTagger $responseTagger
+        FosResponseTagger $responseTagger,
     ): void {
         $tags = ['foo', 'bar'];
 

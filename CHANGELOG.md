@@ -4,6 +4,27 @@ Changelog
 [Unreleased]
 ------------
 
+[4.0.0] (2024-01-09)
+--------------------
+
+### Breaking
+
+ - Move Bundle class from `\Netzmacht\Contao\Toolkit\Bundle\NetzmachtContaoToolkitBundle` to 
+   `\Netzmacht\Contao\Toolkit\NetzmachtContaoToolkitBundle`
+ - `\Netzmacht\Contao\Toolkit\Dca\Listener\AbstractListener::getName()` is abstract now and has to be implemented
+   in favor of defining a static `$name` property
+
+### Changed
+
+ - Remove components. Use proper fragment controllers
+ - Remove support of symfony/templating. Use built in template renderer instead.
+ - Drop support for encrypted values and do not provide the encryption service.
+ - Remove handle* callback methods. Use on* callbacks methods instead
+ - Remove `AddTaggedServicesAsArgumentPass` class
+ - Use native types where possible
+ - `HtmlPageAssetsManager` got removed. Signature is part of `AssetsManager` now.
+ - Remove `AssetPackageAssetsManager`. Feature got integrated into `GlobalsAssetsManager`.
+
 [3.9.0] (2024-01-09)
 --------------------
 
@@ -31,7 +52,7 @@ Changelog
 
 ### Changed
 
- - Replace patchwork/utf8 to symfony/string ([#31](https://github.com/netzmacht/contao-toolkit/pull/31)) 
+ - Replace patchwork/utf8 to symfony/string ([#31](https://github.com/netzmacht/contao-toolkit/pull/31))
 
 
 [3.7.4] (2022-01-25)

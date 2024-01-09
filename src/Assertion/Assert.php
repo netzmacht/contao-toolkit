@@ -6,22 +6,18 @@ namespace Netzmacht\Contao\Toolkit\Assertion;
 
 use Assert\Assert as BaseAssert;
 
-/**
- * @SuppressWarnings(PHPMD.LongVariable)
- */
+/** @SuppressWarnings(PHPMD.LongVariable) */
 class Assert extends BaseAssert
 {
     /**
      * Lazy assertion exception class.
-     *
-     * @var string
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
     protected static $lazyAssertionExceptionClass = LazyAssertionException::class;
 
     /**
      * Lazy assertion class.
-     *
-     * @var string
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
     protected static $assertionClass = Assertion::class;
 }

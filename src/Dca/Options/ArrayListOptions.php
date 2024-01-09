@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Options;
 
+use Netzmacht\Contao\Toolkit\Exception\InvalidArgumentException;
+
 use function array_keys;
 use function call_user_func;
 use function count;
@@ -17,13 +19,6 @@ use function is_callable;
 final class ArrayListOptions implements Options
 {
     /**
-     * The array list.
-     *
-     * @var list<array<string,mixed>>
-     */
-    private $list;
-
-    /**
      * The label key.
      *
      * @var string|callable
@@ -31,45 +26,33 @@ final class ArrayListOptions implements Options
     private $labelKey;
 
     /**
-     * The value key.
-     *
-     * @var string
-     */
-    private $valueKey = 'id';
-
-    /**
      * Current position.
-     *
-     * @var int
      */
-    private $position = 0;
+    private int $position = 0;
 
     /**
      * List of keys.
      *
      * @var list<int>
      */
-    private $keys;
+    private array $keys;
 
     /**
-     * Construct.
-     *
      * @param list<array<string,mixed>> $list     Array list.
-     * @param string|callable           $labelKey Name of label key.
+     * @param callable|string|null      $labelKey Name of label key.
      * @param string                    $valueKey Name of value key.
      */
-    public function __construct(array $list, $labelKey = null, string $valueKey = 'id')
-    {
-        $this->list     = $list;
+    public function __construct(
+        private array $list,
+        callable|string|null $labelKey = null,
+        private readonly string $valueKey = 'id',
+    ) {
         $this->keys     = array_keys($list);
-        $this->labelKey = $labelKey ?: $valueKey;
-        $this->valueKey = $valueKey;
+        $this->labelKey = $labelKey ?? $valueKey;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getLabelKey()
+    /** {@inheritDoc} */
+    public function getLabelKey(): callable|string
     {
         return $this->labelKey;
     }
@@ -82,10 +65,8 @@ final class ArrayListOptions implements Options
         return $this->valueKey;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function current()
+    /** {@inheritDoc} */
+    public function current(): mixed
     {
         $current = $this->list[$this->keys[$this->position]];
 
@@ -96,9 +77,7 @@ final class ArrayListOptions implements Options
         return $current[$this->labelKey];
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function row(): array
     {
         return $this->list[$this->keys[$this->position]];
@@ -109,10 +88,8 @@ final class ArrayListOptions implements Options
         $this->position++;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function key()
+    /** {@inheritDoc} */
+    public function key(): mixed
     {
         return $this->list[$this->keys[$this->position]][$this->valueKey];
     }
@@ -127,43 +104,42 @@ final class ArrayListOptions implements Options
         $this->position = 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function offsetExists($offset): bool
     {
         return isset($this->list[$offset]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function offsetGet($offset)
+    /** {@inheritDoc} */
+    public function offsetGet($offset): array
     {
         return $this->list[$offset];
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @psalm-suppress PossiblyNullArrayOffset
-     */
+    /** {@inheritDoc} */
     public function offsetSet($offset, $value): void
     {
-        $this->list[$offset] = $value;
+        if (! isset($this->list[$offset]) || $offset !== count($this->list)) {
+            throw new InvalidArgumentException(
+                'Offset ' . (string) $offset . ' has to be part of the list or a new entry',
+            );
+        }
+
+        /**
+         * The check above validates that offset is a valid array key
+         *
+         * @psalm-suppress PropertyTypeCoercion
+         */
+        $this->list[$offset ?? ''] = $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function offsetUnset($offset): void
     {
         unset($this->list[$offset]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function getArrayCopy(): array
     {
         $values = [];

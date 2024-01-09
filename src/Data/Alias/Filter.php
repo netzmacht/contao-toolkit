@@ -4,13 +4,8 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
-use Contao\Database\Result;
-use Contao\Model;
-
 /**
  * Filter modifies a value for the alias generator.
- *
- * phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
  */
 interface Filter
 {
@@ -26,19 +21,15 @@ interface Filter
 
     /**
      * Initialize the filter.
-     *
-     * @return void
      */
-    public function initialize();
+    public function initialize(): void;
 
     /**
      * Apply the filter.
      *
-     * @param Model|Result $model     Current model.
-     * @param mixed        $value     Current value.
-     * @param string       $separator Separator character between different alias tokens.
-     *
-     * @return string
+     * @param object      $model     The database result, usually a Contao\Database\Result or Contao\Model object.
+     * @param string|null $value     Current value.
+     * @param string      $separator Separator character between different alias tokens.
      */
-    public function apply($model, $value, string $separator);
+    public function apply(object $model, string|null $value, string $separator): string|null;
 }

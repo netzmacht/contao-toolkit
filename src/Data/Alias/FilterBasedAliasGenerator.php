@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
-use Contao\Database\Result;
-use Contao\Model;
 use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException;
 
@@ -14,41 +12,6 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException;
  */
 final class FilterBasedAliasGenerator implements AliasGenerator
 {
-    /**
-     * Alias validator.
-     *
-     * @var Validator
-     */
-    private $validator;
-
-    /**
-     * The alias field.
-     *
-     * @var string
-     */
-    private $aliasField;
-
-    /**
-     * The table name.
-     *
-     * @var string
-     */
-    private $tableName;
-
-    /**
-     * Filters being applied when standardize the value.
-     *
-     * @var array|Filter[]
-     */
-    private $filters;
-
-    /**
-     * Value separator.
-     *
-     * @var string
-     */
-    private $separator;
-
     /**
      * Construct.
      *
@@ -59,19 +22,13 @@ final class FilterBasedAliasGenerator implements AliasGenerator
      * @param string    $separator  Value separator.
      */
     public function __construct(
-        $filters,
-        Validator $validator,
-        string $tableName,
-        string $aliasField = 'alias',
-        string $separator = '-'
+        private readonly array $filters,
+        private readonly Validator $validator,
+        private readonly string $tableName,
+        private readonly string $aliasField = 'alias',
+        private readonly string $separator = '-',
     ) {
         Assertion::allIsInstanceOf($filters, Filter::class);
-
-        $this->validator  = $validator;
-        $this->aliasField = $aliasField;
-        $this->tableName  = $tableName;
-        $this->separator  = $separator;
-        $this->filters    = $filters;
     }
 
     /**
@@ -101,7 +58,7 @@ final class FilterBasedAliasGenerator implements AliasGenerator
     /**
      * Get all filters.
      *
-     * @return array|Filter[]
+     * @return Filter[]
      */
     public function getFilters(): array
     {
@@ -111,11 +68,11 @@ final class FilterBasedAliasGenerator implements AliasGenerator
     /**
      * Consider if value is an valid alias.
      *
-     * @param Result|Model $result Data record.
-     * @param mixed        $value  The alias value.
-     * @param int          $rowId  The row id.
+     * @param object $result Data record.
+     * @param mixed  $value  The alias value.
+     * @param int    $rowId  The row id.
      */
-    private function isValid($result, $value, int $rowId): bool
+    private function isValid(object $result, mixed $value, int $rowId): bool
     {
         return $this->validator->validate($result, $value, [$rowId]);
     }
@@ -123,12 +80,10 @@ final class FilterBasedAliasGenerator implements AliasGenerator
     /**
      * Apply filters.
      *
-     * @param Result|Model $result Data record.
-     * @param mixed        $value  Given value.
-     *
-     * @return mixed
+     * @param object $result Data record.
+     * @param mixed  $value  Given value.
      */
-    private function applyFilters($result, $value)
+    private function applyFilters(object $result, mixed $value): mixed
     {
         foreach ($this->filters as $filter) {
             $filter->initialize();
@@ -150,12 +105,12 @@ final class FilterBasedAliasGenerator implements AliasGenerator
     /**
      * Guard that a valid alias is given.
      *
-     * @param Result|Model $result Data record.
-     * @param mixed        $value  Given value.
+     * @param object $result Data record.
+     * @param mixed  $value  Given value.
      *
      * @throws InvalidAliasException When No unique alias is generated.
      */
-    private function guardValidAlias($result, $value): void
+    private function guardValidAlias(object $result, mixed $value): void
     {
         /** @psalm-suppress RedundantCastGivenDocblockType */
         if (! $value || ! $this->isValid($result, $value, (int) $result->id)) {
@@ -164,10 +119,8 @@ final class FilterBasedAliasGenerator implements AliasGenerator
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function generate($result, $value = null)
+    /** {@inheritDoc} */
+    public function generate(object $result, mixed $value = null): string
     {
         $value = $this->applyFilters($result, $value);
         $this->guardValidAlias($result, $value);

@@ -20,14 +20,10 @@ final class FormatterFactory
 {
     /**
      * Event dispatcher.
-     *
-     * @var EventDispatcher
      */
-    private $eventDispatcher;
+    private EventDispatcher $eventDispatcher;
 
-    /**
-     * @param EventDispatcher $eventDispatcher Event dispatcher.
-     */
+    /** @param EventDispatcher $eventDispatcher Event dispatcher. */
     public function __construct(EventDispatcher $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
@@ -65,8 +61,8 @@ final class FormatterFactory
             throw new RuntimeException(
                 sprintf(
                     'Unable to create formatter for data container "%s". No options formatter exists.',
-                    $definition->getName()
-                )
+                    $definition->getName(),
+                ),
             );
         }
 

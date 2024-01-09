@@ -9,9 +9,7 @@ namespace Netzmacht\Contao\Toolkit\Response;
  */
 final class NoOpResponseTagger implements ResponseTagger
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     public function addTags(array $tags): void
     {
         // Do nothing. It's the NoOpResponseTagger

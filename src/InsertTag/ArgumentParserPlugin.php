@@ -15,14 +15,10 @@ trait ArgumentParserPlugin
 {
     /**
      * Argument parser.
-     *
-     * @var ArgumentParser
      */
-    private $argumentParser;
+    private ArgumentParser $argumentParser;
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritDoc} */
     protected function parseArguments(string $query): array
     {
         if ($this->argumentParser === null) {

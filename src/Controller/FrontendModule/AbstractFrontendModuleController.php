@@ -36,7 +36,7 @@ abstract class AbstractFrontendModuleController extends AbstractFragmentControll
         RequestScopeMatcher $scopeMatcher,
         ResponseTagger $responseTagger,
         RouterInterface $router,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
     ) {
         parent::__construct($templateRenderer, $scopeMatcher, $responseTagger);
 
@@ -52,8 +52,12 @@ abstract class AbstractFrontendModuleController extends AbstractFragmentControll
      * @param string            $section The section in which the module is rendered.
      * @param list<string>|null $classes Additional css classes.
      */
-    public function __invoke(Request $request, ModuleModel $model, string $section, ?array $classes = null): Response
-    {
+    public function __invoke(
+        Request $request,
+        ModuleModel $model,
+        string $section,
+        array|null $classes = null,
+    ): Response {
         if ($this->isBackendRequest($request)) {
             return $this->renderModuleBackendView($model);
         }

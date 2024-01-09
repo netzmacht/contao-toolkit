@@ -25,7 +25,7 @@ For instance, then creating an ajax response the assets could get easily collect
 
 
 Toolkit also automates the handling of `static` assets. For debug reasons combining all static assets could be a pain.
-To avoid combining all assets when debugging a pain, the assets manager uses the :code:`AssetsManager::STATIC_PRODUCTION`
+To avoid combining all assets when debugging, the assets manager uses the :code:`AssetsManager::STATIC_PRODUCTION`
 flag by default. This means that only in production mode the assets get the `static` flag.
 
 .. hint:: The production mode is set by the dependency container using the symfony debug environment setting.

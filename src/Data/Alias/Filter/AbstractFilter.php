@@ -16,27 +16,11 @@ abstract class AbstractFilter implements Filter
     public const COMBINE_APPEND  = 2;
 
     /**
-     * If true break after the filter if value is unique.
-     *
-     * @var bool
-     */
-    private $break;
-
-    /**
-     * Combine flag.
-     *
-     * @var int
-     */
-    private $combine;
-
-    /**
      * @param bool $break   If true break after the filter if value is unique.
      * @param int  $combine Combine flag.
      */
-    public function __construct(bool $break, int $combine = self::COMBINE_REPLACE)
+    public function __construct(private readonly bool $break, private readonly int $combine = self::COMBINE_REPLACE)
     {
-        $this->break   = $break;
-        $this->combine = $combine;
     }
 
     public function breakIfValid(): bool
@@ -44,23 +28,20 @@ abstract class AbstractFilter implements Filter
         return $this->break;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function initialize()
+    public function initialize(): void
     {
     }
 
     /**
      * Combine the current value with the previous one.
      *
-     * @param string $previous  Previous alias value.
-     * @param mixed  $current   Current alias value.
-     * @param string $separator A separator string.
+     * @param string|null $previous  Previous alias value.
+     * @param string|null $current   Current alias value.
+     * @param string      $separator A separator string.
      */
-    protected function combine($previous, $current, string $separator): string
+    protected function combine(string|null $previous, string|null $current, string $separator): string|null
     {
-        if (! $previous) {
+        if (! $previous || ! $current) {
             return $current;
         }
 

@@ -12,13 +12,13 @@ interface Formatter
     /**
      * Format a field value.
      *
-     * @param string $field   Field name.
-     * @param mixed  $value   Field value.
-     * @param mixed  $context Context object, usually the data container driver.
+     * @param string     $field   Field name.
+     * @param mixed      $value   Field value.
+     * @param mixed|null $context Context object, usually the data container driver.
      *
-     * @return array<string|int,string>|string|null
+     * @return array<string|int,string>|string|float|int|null
      */
-    public function formatValue(string $field, $value, $context = null);
+    public function formatValue(string $field, mixed $value, mixed $context = null): mixed;
 
     /**
      * Format the field label.
@@ -43,5 +43,5 @@ interface Formatter
      *
      * @return array<int|string,array<int|string,string>|string>
      */
-    public function formatOptions(string $field, array $values, $context = null): array;
+    public function formatOptions(string $field, array $values, mixed $context = null): array;
 }

@@ -20,24 +20,20 @@ trait RenderBackendViewTrait
 {
     /**
      * The router.
-     *
-     * @var RouterInterface
      */
-    protected $router;
+    protected RouterInterface $router;
 
     /**
      * The translator.
-     *
-     * @var TranslatorInterface
      */
-    protected $translator;
+    protected TranslatorInterface $translator;
 
     /**
      * The input adapter.
      *
      * @var Adapter<Input>|null
      */
-    protected $inputAdapter;
+    protected Adapter|null $inputAdapter = null;
 
     /**
      * Render backend view.
@@ -50,7 +46,7 @@ trait RenderBackendViewTrait
         $name   = $this->translator->trans(sprintf('CTE.%s.0', $this->getType()), [], 'contao_tl_content');
         $href   = $this->router->generate(
             'contao_backend',
-            ['do' => $module, 'table' => 'tl_content', 'act' => 'edit', 'id' => $model->id]
+            ['do' => $module, 'table' => 'tl_content', 'act' => 'edit', 'id' => $model->id],
         );
 
         return $this->renderResponse(
@@ -60,7 +56,7 @@ trait RenderBackendViewTrait
                 'id'       => $model->id,
                 'link'     => $name,
                 'href'     => $href,
-            ]
+            ],
         );
     }
 
