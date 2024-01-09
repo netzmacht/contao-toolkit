@@ -73,8 +73,8 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-develop": "4.0.x-dev",
-      "dev-master": "3.9.x-dev"
+      "dev-master": "4.0.x-dev",
+      "dev-develop": "4.1.x-dev"
     },
     "contao-manager-plugin": "Netzmacht\\Contao\\Toolkit\\ContaoManager\\Plugin"
   }

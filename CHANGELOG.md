@@ -4,6 +4,9 @@ Changelog
 [Unreleased]
 ------------
 
+[4.0.0] (2024-01-09)
+--------------------
+
 ### Breaking
 
  - Move Bundle class from `\Netzmacht\Contao\Toolkit\Bundle\NetzmachtContaoToolkitBundle` to 

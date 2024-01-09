@@ -14,10 +14,10 @@ This library provides a set of tools for developing in Contao CMS. The main goal
 Install
 -------
 
-You can install this library using Composer. It requires at least PHP 7.0 and Contao 4.4.7.
+You can install this library using Composer. It requires at least PHP 8.1 and Contao 4.13 or 5.2.
 
 ```
-$ php composer.phar require netzmacht/contao-toolkit:~3.0
+$ php composer.phar require netzmacht/contao-toolkit:^4.0
 ```
 
 Changelog
