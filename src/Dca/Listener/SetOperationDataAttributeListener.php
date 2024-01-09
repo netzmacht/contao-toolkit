@@ -11,10 +11,10 @@ use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use function trim;
 
 /**
- * This listener defines an data-operation attribute for each operation which has a toolkit config section.
+ * This listener defines a data-operation attribute for each operation which has a toolkit config section.
  *
  * The button callback doesn't have an identifier to the button which the button is rendering. To overcome this
- * limitation an data attribute is set.
+ * limitation a data attribute is set.
  */
 class SetOperationDataAttributeListener
 {
