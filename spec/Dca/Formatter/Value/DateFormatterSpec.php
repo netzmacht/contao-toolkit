@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Contao\Config;
+use Contao\CoreBundle\Framework\Adapter;
 use Contao\Date;
 use PhpSpec\ObjectBehavior;
 use ReflectionClass;
@@ -24,13 +25,12 @@ class DateFormatterSpec extends ObjectBehavior
     public function let(): void
     {
         $reflector = new ReflectionClass(Config::class);
-        $config    = $reflector->newInstanceWithoutConstructor();
 
         $GLOBALS['TL_CONFIG']['dateFormat']  = self::DATE_FORMAT;
         $GLOBALS['TL_CONFIG']['datimFormat'] = self::DATIM_FORMAT;
         $GLOBALS['TL_CONFIG']['timeFormat']  = self::TIME_FORMAT;
 
-        $this->beConstructedWith($config);
+        $this->beConstructedWith(new Adapter(Config::class));
     }
 
     public function it_is_initializable(): void
