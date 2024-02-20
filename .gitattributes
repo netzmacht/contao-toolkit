@@ -11,3 +11,5 @@ phpspec.yml
 /tests export-ignore
 /specs export-ignore
 /docs export-ignore
+
+phpcq.lock binary

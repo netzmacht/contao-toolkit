@@ -4,6 +4,12 @@ Changelog
 [Unreleased]
 ------------
 
+[3.9.2] (2024-02-20)
+
+### Fixed
+
+ - Prevent error if specification query does not contain a column
+
 [3.9.0] (2024-01-09)
 --------------------
 
