@@ -1,6 +1,6 @@
 phpcq:
   repositories:
-    - ./.phpcq/local/repository.json
+    - ./vendor/netzmacht/phpspec-phpcq-plugin/repository.json
     - https://phpcq.github.io/repository/repository.json
   directories:
     - src

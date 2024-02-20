@@ -36,11 +36,11 @@
                 <referencedClass name="Symfony\Component\Security\Core\Security"/>
             </errorLevel>
         </DeprecatedClass>
-        <DeprecatedConstant>
+        <DeprecatedMethod>
             <errorLevel type="suppress">
-                <file name="src/Data/Alias/Validator/UniqueDatabaseValueValidator.php"/>
+                <referencedMethod name="Contao\BackendUser::hasAccess"/>
             </errorLevel>
-        </DeprecatedConstant>
+        </DeprecatedMethod>
     </issueHandlers>
 
     <universalObjectCrates>

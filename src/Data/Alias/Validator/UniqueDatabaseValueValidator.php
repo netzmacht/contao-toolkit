@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Validator;
 
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Data\Alias\Validator;
 
@@ -79,9 +80,9 @@ final class UniqueDatabaseValueValidator implements Validator
             $builder->setParameter($field, $result->$field);
         }
 
-        if ($exclude) {
+        if ($exclude !== null) {
             $builder->andWhere('id NOT IN(:excluded)');
-            $builder->setParameter('excluded', $exclude, Connection::PARAM_INT_ARRAY);
+            $builder->setParameter('excluded', $exclude, ArrayParameterType::INTEGER);
         }
 
         return (int) $builder->fetchOne() === 0;

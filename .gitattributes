@@ -11,3 +11,5 @@ psalm.xml export-ignore
 /tests export-ignore
 /specs export-ignore
 /docs export-ignore
+
+phpcq.lock binaryv

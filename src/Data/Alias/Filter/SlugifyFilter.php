@@ -25,7 +25,7 @@ final class SlugifyFilter extends AbstractValueFilter
      * @param list<string> $columns           Columns being used for the value.
      * @param bool         $break             If true break after the filter if value is unique.
      * @param int          $combine           Combine flag.
-     * @param bool|mixed   $preserveUppercase If true uppercase values are not transformed.
+     * @param bool         $preserveUppercase If true uppercase values are not transformed.
      * @param string       $charset           Encoding charset.
      */
     public function __construct(

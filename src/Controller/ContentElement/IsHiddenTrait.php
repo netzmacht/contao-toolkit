@@ -30,6 +30,7 @@ trait IsHiddenTrait
      */
     protected function isHidden(ContentModel $model, Request $request): bool
     {
+        /** @psalm-suppress RiskyTruthyFalsyComparison */
         $isInvisible = $model->invisible
             || ($model->start && $model->start > time())
             || ($model->stop && $model->stop <= time());

@@ -105,6 +105,7 @@ final class StateButtonCallbackListener
         $name   = $this->getOperationName((string) $attributes);
         $config = $this->getConfig($dataContainer, $name);
 
+        /** @psalm-suppress RiskyTruthyFalsyComparison */
         if ($this->input->get('tid')) {
             try {
                 /** @psalm-suppress RiskyCast */

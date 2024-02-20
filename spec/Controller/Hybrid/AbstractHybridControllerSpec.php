@@ -44,6 +44,7 @@ class AbstractHybridControllerSpec extends ObjectBehavior
         $container->getParameter('kernel.debug')->willReturn(false);
 
         $router->generate(Argument::cetera())->willReturn('https://example.org');
+        $translator->trans(Argument::cetera())->willReturn('TRANSLATED');
 
         $this->beAnInstanceOf(ConcreteHybridController::class);
         $this->beConstructedWith(

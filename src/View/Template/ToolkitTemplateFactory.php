@@ -37,7 +37,7 @@ final class ToolkitTemplateFactory implements TemplateFactory
         $helpers  = $this->getTemplateHelpers($name, $contentType);
         $template = new FrontendTemplate($name, $helpers, $contentType);
 
-        if ($data) {
+        if ($data !== null) {
             $template->setData($data);
         }
 
@@ -57,7 +57,7 @@ final class ToolkitTemplateFactory implements TemplateFactory
         $helpers  = $this->getTemplateHelpers($name, $contentType);
         $template = new BackendTemplate($name, $helpers, $contentType);
 
-        if ($data) {
+        if ($data !== null) {
             $template->setData($data);
         }
 
