@@ -76,6 +76,10 @@ class ContaoRepository implements Repository
             $specification->buildQuery($column, $values);
         }
 
+        if ($column === []) {
+            return $this->findAll($options);
+        }
+
         $column = $this->addTablePrefix($column);
 
         return $this->findBy($column, $values, $options);
@@ -103,6 +107,10 @@ class ContaoRepository implements Repository
         $values = [];
 
         $specification->buildQuery($column, $values);
+
+        if ($column === []) {
+            return $this->countAll();
+        }
 
         return $this->countBy($column, $values);
     }
