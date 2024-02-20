@@ -66,7 +66,7 @@ abstract class AbstractWizardListener
      */
     protected function render(string|null $name = null, array $parameters = []): string
     {
-        return $this->templateEngine->render($name ?: $this->template, $parameters);
+        return $this->templateEngine->render($name ?? $this->template, $parameters);
     }
 
     /**

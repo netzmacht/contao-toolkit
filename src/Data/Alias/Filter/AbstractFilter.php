@@ -41,7 +41,7 @@ abstract class AbstractFilter implements Filter
      */
     protected function combine(string|null $previous, string|null $current, string $separator): string|null
     {
-        if (! $previous || ! $current) {
+        if ($previous === null || $current === null) {
             return $current;
         }
 

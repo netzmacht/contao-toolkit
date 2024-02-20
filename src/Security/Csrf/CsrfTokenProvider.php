@@ -41,7 +41,7 @@ final class CsrfTokenProvider
      */
     public function getToken(string|null $name = null): CsrfToken
     {
-        return $this->tokenManager->getToken($name ?: $this->defaultTokenName);
+        return $this->tokenManager->getToken($name ?? $this->defaultTokenName);
     }
 
     /**

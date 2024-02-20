@@ -40,7 +40,7 @@ final class CollectionOptions implements Options
         callable|string|null $labelColumn = null,
         private readonly string $valueColumn = 'id',
     ) {
-        $this->labelColumn = $labelColumn ?: $valueColumn;
+        $this->labelColumn = $labelColumn ?? $valueColumn;
     }
 
     /**

@@ -7,9 +7,7 @@ composer.lock
 
 # phpcq
 .phpcq.yaml
-.phpcq/*
-!.phpcq
-!.phpcq/local
+.phpcq
 
 #phpcs
 .phpcs-cache

@@ -37,6 +37,7 @@ class AbstractFrontendModuleControllerSpec extends ObjectBehavior
         System::setContainer($container->getWrappedObject());
 
         $router->generate(Argument::cetera())->willReturn('https://example.org');
+        $translator->trans(Argument::cetera())->willReturn('TRANSLATED');
 
         $container->getParameter('kernel.cache_dir')->willReturn(__DIR__ . '/../../fixtures');
         $container->getParameter('kernel.debug')->willReturn(false);

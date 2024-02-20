@@ -84,6 +84,7 @@ final class PopupWizardListener extends AbstractWizardListener
             $config,
         );
 
+        /** @psalm-suppress RiskyTruthyFalsyComparison */
         if ($config['always'] || $value) {
             $token = $this->csrfTokenManager->getToken($this->tokenName)->getValue();
             parse_str((string) $config['href'], $params);

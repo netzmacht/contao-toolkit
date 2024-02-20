@@ -83,10 +83,10 @@ final class GlobalsAssetsManager implements AssetsManager
             $path .= '|static';
         }
 
-        if ($name) {
-            $this->javascripts[$name] = $path;
-        } else {
+        if ($name === null) {
             $this->javascripts[] = $path;
+        } else {
+            $this->javascripts[$name] = $path;
         }
 
         return $this;
@@ -99,7 +99,7 @@ final class GlobalsAssetsManager implements AssetsManager
         string|null $name = null,
     ): AssetsManager {
         foreach ($paths as $identifier => $path) {
-            if ($name) {
+            if ($name !== null && $name !== '') {
                 $name .= '_' . $identifier;
             } elseif (! is_numeric($identifier)) {
                 $name = $identifier;
@@ -129,10 +129,10 @@ final class GlobalsAssetsManager implements AssetsManager
             }
         }
 
-        if ($name) {
-            $this->stylesheets[$name] = $path;
-        } else {
+        if ($name === null) {
             $this->stylesheets[] = $path;
+        } else {
+            $this->stylesheets[$name] = $path;
         }
 
         return $this;
@@ -146,7 +146,7 @@ final class GlobalsAssetsManager implements AssetsManager
         string|null $name = null,
     ): AssetsManager {
         foreach ($paths as $identifier => $path) {
-            if ($name) {
+            if ($name !== null && $name !== '') {
                 $name .= '_' . $identifier;
             } elseif (! is_numeric($identifier)) {
                 $name = $identifier;
