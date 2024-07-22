@@ -12,8 +12,8 @@ use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator;
 use Netzmacht\Contao\Toolkit\Data\Alias\Factory\AliasGeneratorFactory;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
+use stdClass;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
-
 use function array_values;
 use function assert;
 use function sprintf;
@@ -50,9 +50,9 @@ final class GenerateAliasListener
     /**
      * Construct.
      *
-     * @param Container  $container               Dependency container.
-     * @param DcaManager $dcaManager              Data container manager.
-     * @param string     $defaultFactoryServiceId Default alias generator factory service id.
+     * @param Container $container Dependency container.
+     * @param DcaManager $dcaManager Data container manager.
+     * @param string $defaultFactoryServiceId Default alias generator factory service id.
      */
     public function __construct(Container $container, DcaManager $dcaManager, string $defaultFactoryServiceId)
     {
@@ -64,7 +64,7 @@ final class GenerateAliasListener
     /**
      * Generate the alias value.
      *
-     * @param mixed         $value         The current value.
+     * @param mixed $value The current value.
      * @param DataContainer $dataContainer The data container driver.
      *
      * @throws AssertionFailedException If invalid data container is given.
@@ -72,7 +72,7 @@ final class GenerateAliasListener
     public function onSaveCallback(mixed $value, DataContainer $dataContainer): string|null
     {
         Assertion::true(
-            $dataContainer->activeRecord instanceof Result || $dataContainer->activeRecord instanceof Model,
+            $dataContainer->activeRecord instanceof Result || $dataContainer->activeRecord instanceof Model || $dataContainer->activeRecord instanceof stdClass,
         );
 
         return $this->getGenerator($dataContainer)->generate($dataContainer->activeRecord, $value);
@@ -94,7 +94,7 @@ final class GenerateAliasListener
     /**
      * Guard that service is an alias generator.
      *
-     * @param mixed  $factory   Retrieved alias generator factory service.
+     * @param mixed $factory Retrieved alias generator factory service.
      * @param string $serviceId Service id.
      */
     private function guardIsAliasGeneratorFactory(mixed $factory, string $serviceId): void
