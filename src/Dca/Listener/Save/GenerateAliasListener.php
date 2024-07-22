@@ -12,6 +12,7 @@ use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Data\Alias\AliasGenerator;
 use Netzmacht\Contao\Toolkit\Data\Alias\Factory\AliasGeneratorFactory;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
+use stdClass;
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 use function array_values;
@@ -72,7 +73,9 @@ final class GenerateAliasListener
     public function onSaveCallback(mixed $value, DataContainer $dataContainer): string|null
     {
         Assertion::true(
-            $dataContainer->activeRecord instanceof Result || $dataContainer->activeRecord instanceof Model,
+            $dataContainer->activeRecord instanceof Result
+            || $dataContainer->activeRecord instanceof Model
+            || $dataContainer->activeRecord instanceof stdClass,
         );
 
         return $this->getGenerator($dataContainer)->generate($dataContainer->activeRecord, $value);
