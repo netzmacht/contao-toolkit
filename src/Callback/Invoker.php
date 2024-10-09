@@ -22,12 +22,12 @@ final class Invoker
     /**
      * Handle the callback.
      *
-     * @param callable    $callback  Callback as Contao array notation or as PHP callable.
-     * @param list<mixed> $arguments List of arguments being passed to the callback.
+     * @param callable|array{0: string,1: string} $callback  Callback as Contao array notation or as PHP callable.
+     * @param list<mixed>                         $arguments List of arguments being passed to the callback.
      *
      * @throws InvalidArgumentException On callback is not callable.
      */
-    public function invoke(callable $callback, array $arguments = []): mixed
+    public function invoke(callable|array $callback, array $arguments = []): mixed
     {
         if (is_array($callback)) {
             $callback[0] = $this->systemAdapter->importStatic($callback[0]);
