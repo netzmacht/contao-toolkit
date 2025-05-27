@@ -1,7 +1,6 @@
-<?= $this->generateImage(
-    $this->icon,
-    $this->title,
-    'style="cursor:pointer" title="' . $this->title .'" id="moo_' . $this->field . '"'
+<?= \Contao\Image::getHtml($this->icon,
+                       $this->title,
+                       'style="cursor:pointer" title="' . $this->title .'" id="moo_' . $this->field . '"'
 ); ?>
 <script>
     window.addEvent('domready', function() {
