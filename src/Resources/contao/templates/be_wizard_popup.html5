@@ -7,5 +7,5 @@
    title="<?= $this->label ?>"
    style="padding-left: 3px"
     >
-    <?= $this->generateImage($this->icon, $this->title) ?>
+    <?= \Contao\Image::getHtml($this->icon, $this->title) ?>
 </a>

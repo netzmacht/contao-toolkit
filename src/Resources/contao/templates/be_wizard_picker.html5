@@ -8,5 +8,5 @@
         'self': this
     }); return false"
 >
-<?= $this->generateImage($this->icon, $this->title, 'style="cursor:pointer"') ?>
+<?= \Contao\Image::getHtml($this->icon, $this->title, 'style="cursor:pointer"') ?>
 </a>
