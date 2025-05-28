@@ -43,14 +43,14 @@
     "contao/manager-plugin": "^2.0",
     "doctrine/coding-standard": "^12.0",
     "friends-of-phpspec/phpspec-expect": "^4.0",
-    "friendsofsymfony/http-cache": "^2.0",
+    "friendsofsymfony/http-cache": "^2.0 || ^3.0",
     "netzmacht/phpspec-phpcq-plugin": "@dev",
     "phpcq/runner-bootstrap": "^1.0@dev",
     "phpspec/phpspec": "^7.0"
   },
   "conflict": {
     "contao/manager-plugin": "<2.0 || >=3.0",
-    "friendsofsymfony/http-cache": "<2.0 || >=3.0"
+    "friendsofsymfony/http-cache": "<2.0 || >=4.0"
   },
   "autoload": {
     "psr-4": {
