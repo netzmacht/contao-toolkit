@@ -4,6 +4,16 @@ Changelog
 [Unreleased]
 ------------
 
+[4.0.5]
+
+### Fixed
+
+ - Fix `StateButtonCallbackListener` in Contao 5. Backend::log does not exist anymor
+
+### Changed
+
+ - Improve return type annotations of Collection in `\Netzmacht\Contao\Toolkit\Data\Model\Repository` 
+
 [4.0.0] (2024-01-09)
 --------------------
 
