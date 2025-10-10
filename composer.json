@@ -44,9 +44,9 @@
     "doctrine/coding-standard": "^12.0",
     "friends-of-phpspec/phpspec-expect": "^4.0",
     "friendsofsymfony/http-cache": "^2.0 || ^3.0",
-    "netzmacht/phpspec-phpcq-plugin": "@dev",
+    "netzmacht/phpspec-phpcq-plugin": "^1.0.1",
     "phpcq/runner-bootstrap": "^1.0@dev",
-    "phpspec/phpspec": "^7.0"
+    "phpspec/phpspec": "^7.0 || ^8.0"
   },
   "conflict": {
     "contao/manager-plugin": "<2.0 || >=3.0",
