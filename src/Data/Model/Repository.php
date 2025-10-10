@@ -41,6 +41,8 @@ interface Repository
      * @param list<string>        $column  Column criteria.
      * @param list<mixed>         $values  Column values.
      * @param array<string,mixed> $options Options.
+     *
+     * @return Collection<T>|null
      */
     public function findBy(array $column, array $values, array $options = []): Collection|null;
 
@@ -61,7 +63,7 @@ interface Repository
      * @param Specification       $specification Specification.
      * @param array<string,mixed> $options       Options.
      *
-     * @psalm-return Collection|T|null
+     * @psalm-return Collection<T>|T|null
      */
     public function findBySpecification(Specification $specification, array $options = []): Collection|Model|null;
 
@@ -70,7 +72,7 @@ interface Repository
      *
      * @param array<string,mixed> $options Query options.
      *
-     * @psalm-return Collection|null
+     * @psalm-return Collection<T>|null
      */
     public function findAll(array $options = []): Collection|null;
 
