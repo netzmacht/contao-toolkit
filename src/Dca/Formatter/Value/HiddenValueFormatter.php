@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
+use Override;
+
 final class HiddenValueFormatter implements ValueFormatter
 {
     /**
@@ -18,6 +20,7 @@ final class HiddenValueFormatter implements ValueFormatter
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         if (! empty($fieldDefinition['inputType']) && $fieldDefinition['inputType'] === 'password') {
@@ -32,6 +35,7 @@ final class HiddenValueFormatter implements ValueFormatter
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         if ($this->passwordMask) {

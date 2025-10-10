@@ -7,6 +7,7 @@ namespace Netzmacht\Contao\Toolkit\Dca;
 use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory;
+use Override;
 
 /**
  * Data container definition manager.
@@ -55,6 +56,7 @@ final class Manager implements DcaManager
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
+    #[Override]
     public function getDefinition(string $name, bool $noCache = false): Definition
     {
         if ($noCache) {
@@ -84,6 +86,7 @@ final class Manager implements DcaManager
      *
      * @param string $name Definition or name.
      */
+    #[Override]
     public function getFormatter(string $name): Formatter
     {
         if (! isset($this->formatter[$name])) {

@@ -6,6 +6,7 @@ namespace Netzmacht\Contao\Toolkit\View\Template;
 
 use Netzmacht\Contao\Toolkit\View\Template;
 use Netzmacht\Contao\Toolkit\View\Template\Event\GetTemplateHelpersEvent;
+use Override;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 
 /**
@@ -29,6 +30,7 @@ final class ToolkitTemplateFactory implements TemplateFactory
      *
      * @phpcs:disable SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilityTypeMissing
      */
+    #[Override]
     public function createFrontendTemplate(
         string $name,
         array $data = null,
@@ -49,6 +51,7 @@ final class ToolkitTemplateFactory implements TemplateFactory
      *
      * @phpcs:disable SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilityTypeMissing
      */
+    #[Override]
     public function createBackendTemplate(
         string $name,
         array $data = null,

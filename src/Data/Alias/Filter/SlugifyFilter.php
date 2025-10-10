@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
 use Contao\StringUtil;
+use Override;
 use Symfony\Component\String\UnicodeString;
 
 use function html_entity_decode;
@@ -39,6 +40,7 @@ final class SlugifyFilter extends AbstractValueFilter
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function apply(object $model, string|null $value, string $separator): string|null
     {
         $values = [];

@@ -7,6 +7,7 @@ namespace Netzmacht\Contao\Toolkit\Response;
 use FOS\HttpCache\Exception\InvalidTagException as FosInvalidTagException;
 use FOS\HttpCache\ResponseTagger as FosResponseTagger;
 use Netzmacht\Contao\Toolkit\Exception\InvalidHttpResponseTagException;
+use Override;
 
 final class FosCacheResponseTagger implements ResponseTagger
 {
@@ -26,6 +27,7 @@ final class FosCacheResponseTagger implements ResponseTagger
      *
      * @throws InvalidHttpResponseTagException If apply tags failed.
      */
+    #[Override]
     public function addTags(array $tags): void
     {
         try {

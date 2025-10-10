@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Netzmacht\Contao\Toolkit\Assertion\Assertion;
+use Override;
 
 /**
  * Set of multiple formatter.
@@ -27,6 +28,7 @@ final class FormatterChain implements ValueFormatter
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         foreach ($this->formatter as $formatter) {
@@ -39,6 +41,7 @@ final class FormatterChain implements ValueFormatter
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         foreach ($this->formatter as $formatter) {

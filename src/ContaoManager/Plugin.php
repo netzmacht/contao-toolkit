@@ -10,10 +10,12 @@ use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Contao\ManagerPlugin\Dependency\DependentPluginInterface;
 use Netzmacht\Contao\Toolkit\NetzmachtContaoToolkitBundle;
+use Override;
 
 final class Plugin implements BundlePluginInterface, DependentPluginInterface
 {
     /** {@inheritDoc} */
+    #[Override]
     public function getBundles(ParserInterface $parser): array
     {
         return [
@@ -24,6 +26,7 @@ final class Plugin implements BundlePluginInterface, DependentPluginInterface
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function getPackageDependencies(): array
     {
         return ['contao/core-bundle'];

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
+use Override;
 use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
 /**
@@ -23,6 +24,7 @@ final class YesNoFormatter implements ValueFormatter
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         if (empty($fieldDefinition['inputType']) || $fieldDefinition['inputType'] !== 'checkbox') {
@@ -37,6 +39,7 @@ final class YesNoFormatter implements ValueFormatter
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         return $this->translator->trans((empty($value) ? 'MSC.no' : 'MSC.yes'), [], 'contao_default');

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\DependencyInjection\Compiler;
 
 use Netzmacht\Contao\Toolkit\View\Template\DelegatingTemplateRenderer;
+use Override;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -14,6 +15,7 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 final class TemplateRendererPass implements CompilerPassInterface
 {
+    #[Override]
     public function process(ContainerBuilder $container): void
     {
         if (

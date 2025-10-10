@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter;
+use Override;
 
 /**
  * Base filter class.
@@ -23,11 +24,13 @@ abstract class AbstractFilter implements Filter
     {
     }
 
+    #[Override]
     public function breakIfValid(): bool
     {
         return $this->break;
     }
 
+    #[Override]
     public function initialize(): void
     {
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Dca\Options;
 
 use Contao\Model\Collection;
+use Override;
 
 use function call_user_func;
 use function is_callable;
@@ -46,6 +47,7 @@ final class CollectionOptions implements Options
     /**
      * Get the label column.
      */
+    #[Override]
     public function getLabelKey(): string|callable
     {
         return $this->labelColumn;
@@ -54,11 +56,13 @@ final class CollectionOptions implements Options
     /**
      * Get the value column.
      */
+    #[Override]
     public function getValueKey(): string
     {
         return $this->valueColumn;
     }
 
+    #[Override]
     public function current(): mixed
     {
         if (is_callable($this->labelColumn)) {
@@ -69,27 +73,32 @@ final class CollectionOptions implements Options
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function row(): array
     {
         return $this->collection->row();
     }
 
+    #[Override]
     public function next(): void
     {
         $this->position++;
         $this->collection->next();
     }
 
+    #[Override]
     public function key(): mixed
     {
         return $this->collection->{$this->valueColumn};
     }
 
+    #[Override]
     public function valid(): bool
     {
         return $this->position < $this->collection->count();
     }
 
+    #[Override]
     public function rewind(): void
     {
         $this->position = 0;
@@ -97,6 +106,7 @@ final class CollectionOptions implements Options
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function offsetExists($offset): bool
     {
         foreach ($this->collection as $row) {
@@ -109,6 +119,7 @@ final class CollectionOptions implements Options
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function offsetGet($offset): mixed
     {
         foreach ($this->collection as $row) {
@@ -121,18 +132,21 @@ final class CollectionOptions implements Options
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function offsetSet($offset, $value): void
     {
         // unsupported
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function offsetUnset($offset): void
     {
         // unsupported
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function getArrayCopy(): array
     {
         $values = [];

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Doctrine\DBAL\Connection;
+use Override;
 
 use function count;
 use function explode;
@@ -27,12 +28,14 @@ final class ForeignKeyFormatter implements ValueFormatter
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         return isset($fieldDefinition['foreignKey']);
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         $foreignKey = explode('.', $fieldDefinition['foreignKey'], 2);

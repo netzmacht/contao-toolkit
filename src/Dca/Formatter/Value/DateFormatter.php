@@ -7,6 +7,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 use Contao\Config;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\Date;
+use Override;
 
 use function in_array;
 
@@ -21,6 +22,7 @@ final class DateFormatter implements ValueFormatter
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         if ($fieldName === 'tstamp') {
@@ -35,6 +37,7 @@ final class DateFormatter implements ValueFormatter
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         if (empty($fieldDefinition['eval']['rgxp'])) {

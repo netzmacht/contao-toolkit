@@ -10,6 +10,7 @@ use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
+use Override;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -78,6 +79,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
+    #[Override]
     public function setFragmentOptions(array $options): void
     {
         $this->options = $options;

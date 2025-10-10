@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Netzmacht\Contao\Toolkit\Assertion\Assertion;
+use Override;
 
 /**
  * FilterFormatter applies formatter used as filters to an value.
@@ -34,12 +35,14 @@ final class FilterFormatter implements ValueFormatter
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         return true;
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         foreach ($this->filters as $filter) {

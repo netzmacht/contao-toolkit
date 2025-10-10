@@ -6,6 +6,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter;
 
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Value\ValueFormatter;
+use Override;
 
 use function is_array;
 
@@ -35,6 +36,7 @@ final class ValueFormatterBasedFormatter implements Formatter
      *
      * @return array<int|string, string>|string|int|float|null
      */
+    #[Override]
     public function formatValue(string $field, mixed $value, mixed $context = null): array|string|int|float|null
     {
         $fieldDefinition = $this->definition->get(['fields', $field]);
@@ -56,6 +58,7 @@ final class ValueFormatterBasedFormatter implements Formatter
      *
      * @param string $field Field name.
      */
+    #[Override]
     public function formatFieldLabel(string $field): string
     {
         return (string) $this->definition->get(['fields', $field, 'label', 0], $field);
@@ -66,6 +69,7 @@ final class ValueFormatterBasedFormatter implements Formatter
      *
      * @param string $field Field name.
      */
+    #[Override]
     public function formatFieldDescription(string $field): string
     {
         return (string) $this->definition->get(['fields', $field, 'label', 1], $field);
@@ -80,6 +84,7 @@ final class ValueFormatterBasedFormatter implements Formatter
      *
      * @return array<int|string,string|array<int|string,string>>
      */
+    #[Override]
     public function formatOptions(string $field, array $values, mixed $context = null): array
     {
         $definition = $this->definition->get(['fields', $field]);

@@ -11,6 +11,7 @@ use Netzmacht\Contao\Toolkit\Controller\AbstractFragmentController;
 use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
+use Override;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -61,6 +62,7 @@ abstract class AbstractContentElementController extends AbstractFragmentControll
         return $this->generate($request, $model, $section, $classes);
     }
 
+    #[Override]
     protected function getFallbackTemplateName(Model $model): string
     {
         return 'ce_' . $this->getType();

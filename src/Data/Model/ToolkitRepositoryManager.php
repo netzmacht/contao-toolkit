@@ -9,6 +9,7 @@ use Contao\Model;
 use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Exception\InvalidArgumentException;
+use Override;
 
 use function is_subclass_of;
 use function sprintf;
@@ -62,6 +63,7 @@ final class ToolkitRepositoryManager implements RepositoryManager
      * @psalm-suppress InvalidReturnType
      * @psalm-suppress InvalidReturnStatement
      */
+    #[Override]
     public function getRepository(string $modelClass): Repository
     {
         if (isset($this->repositories[$modelClass])) {
@@ -84,6 +86,7 @@ final class ToolkitRepositoryManager implements RepositoryManager
         );
     }
 
+    #[Override]
     public function getConnection(): Connection
     {
         return $this->connection;

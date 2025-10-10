@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\DependencyInjection\Compiler;
 
 use Netzmacht\Contao\Toolkit\Exception\RuntimeException;
+use Override;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -18,6 +19,7 @@ final class RepositoriesPass implements CompilerPassInterface
      *
      * @throws RuntimeException When table attribute is not given for a tagged repository.
      */
+    #[Override]
     public function process(ContainerBuilder $container): void
     {
         if (! $container->hasDefinition('netzmacht.contao_toolkit.repository_manager')) {

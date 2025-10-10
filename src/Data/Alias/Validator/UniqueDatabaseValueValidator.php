@@ -7,6 +7,7 @@ namespace Netzmacht\Contao\Toolkit\Data\Alias\Validator;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Data\Alias\Validator;
+use Override;
 
 /**
  * Class UniqueDatabaseValueValidator validates a value as true if it does not exists in the database.
@@ -62,6 +63,7 @@ final class UniqueDatabaseValueValidator implements Validator
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function validate(object $result, mixed $value, array|null $exclude = null): bool
     {
         if (! $this->allowEmptyAlias && empty($value)) {

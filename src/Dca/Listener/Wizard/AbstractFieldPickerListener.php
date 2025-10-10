@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 
 use Contao\DataContainer;
+use Override;
 
 abstract class AbstractFieldPickerListener extends AbstractPickerListener
 {
@@ -24,6 +25,7 @@ abstract class AbstractFieldPickerListener extends AbstractPickerListener
     ): string;
 
     /** {@inheritDoc} */
+    #[Override]
     public function onWizardCallback(DataContainer $dataContainer): string
     {
         return $this->generate(

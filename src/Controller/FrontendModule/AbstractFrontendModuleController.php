@@ -10,6 +10,7 @@ use Netzmacht\Contao\Toolkit\Controller\AbstractFragmentController;
 use Netzmacht\Contao\Toolkit\Response\ResponseTagger;
 use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
+use Override;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
@@ -65,6 +66,7 @@ abstract class AbstractFrontendModuleController extends AbstractFragmentControll
         return $this->generate($request, $model, $section, $classes);
     }
 
+    #[Override]
     protected function getFallbackTemplateName(Model $model): string
     {
         return 'mod_' . $this->getType();

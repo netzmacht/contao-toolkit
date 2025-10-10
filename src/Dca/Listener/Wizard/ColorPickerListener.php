@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Wizard;
 
 use Contao\DataContainer;
+use Override;
 
 use function array_merge;
 
@@ -30,6 +31,7 @@ final class ColorPickerListener extends AbstractPickerListener
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function onWizardCallback(DataContainer $dataContainer): string
     {
         return $this->generate($dataContainer->table, $dataContainer->field);
