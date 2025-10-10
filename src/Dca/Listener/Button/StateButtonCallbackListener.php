@@ -6,6 +6,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Listener\Button;
 
 use Contao\Backend;
 use Contao\CoreBundle\Framework\Adapter;
+use Contao\CoreBundle\Monolog\SystemLogger;
 use Contao\DataContainer;
 use Contao\Image;
 use Contao\Input;
@@ -60,6 +61,7 @@ final class StateButtonCallbackListener
         Adapter $input,
         Updater $updater,
         DcaManager $dcaManager,
+        private SystemLogger|null $logger = null,
     ) {
         $this->input      = $input;
         $this->updater    = $updater;
@@ -118,7 +120,7 @@ final class StateButtonCallbackListener
 
                 $this->backend->redirect($this->backend->getReferer());
             } catch (AccessDenied $e) {
-                $this->backend->log($e->getMessage(), __METHOD__, 'ERROR');
+                $this->logger?->error($e->getMessage());
                 $this->backend->redirect('contao?act=error');
             }
         }
@@ -167,7 +169,7 @@ final class StateButtonCallbackListener
             return 'invisible.' . $matches[1];
         }
 
-        return preg_replace('/\.([^\.]*)$/', '_.$1', $icon);
+        return (string) preg_replace('/\.([^\.]*)$/', '_.$1', $icon);
     }
 
     /**
