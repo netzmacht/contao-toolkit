@@ -6,6 +6,7 @@ namespace Netzmacht\Contao\Toolkit\View\Template;
 
 use Netzmacht\Contao\Toolkit\Exception\InvalidArgumentException;
 use Netzmacht\Contao\Toolkit\Exception\RuntimeException;
+use Override;
 use Twig\Environment;
 
 use function preg_match;
@@ -38,6 +39,7 @@ final class DelegatingTemplateRenderer implements TemplateRenderer
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function render(string $name, array $parameters = []): string
     {
         if (str_ends_with($name, '.twig')) {

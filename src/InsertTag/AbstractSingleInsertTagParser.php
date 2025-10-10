@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\InsertTag;
 
+use Override;
+
 abstract class AbstractSingleInsertTagParser extends AbstractInsertTagParser
 {
     /**
@@ -16,6 +18,7 @@ abstract class AbstractSingleInsertTagParser extends AbstractInsertTagParser
      */
     protected bool $supportsCaching = true;
 
+    #[Override]
     protected function supports(string $tag, bool $cache): bool
     {
         if ($tag !== $this->tagName) {

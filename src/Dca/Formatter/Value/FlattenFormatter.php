@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
+use Override;
+
 use function array_map;
 use function get_object_vars;
 use function implode;
@@ -17,12 +19,14 @@ use function is_string;
 final class FlattenFormatter implements ValueFormatter
 {
     /** {@inheritDoc} */
+    #[Override]
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         return ! empty($fieldDefinition['eval']['multiple']);
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         return $this->flatten($value);

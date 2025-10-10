@@ -6,6 +6,7 @@ namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
 use Netzmacht\Contao\Toolkit\Assertion\Assertion;
 use Netzmacht\Contao\Toolkit\Data\Alias\Exception\InvalidAliasException;
+use Override;
 
 /**
  * Alias generator.
@@ -120,6 +121,7 @@ final class FilterBasedAliasGenerator implements AliasGenerator
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function generate(object $result, mixed $value = null): string
     {
         $value = $this->applyFilters($result, $value);

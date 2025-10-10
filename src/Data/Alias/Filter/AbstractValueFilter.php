@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Alias\Filter;
 
+use Override;
+
 use function array_filter;
 use function implode;
 use function is_array;
@@ -26,6 +28,7 @@ abstract class AbstractValueFilter extends AbstractFilter
         parent::__construct($break, $combine);
     }
 
+    #[Override]
     public function repeatUntilValid(): bool
     {
         return false;
@@ -38,6 +41,7 @@ abstract class AbstractValueFilter extends AbstractFilter
      * @param string|list<string>|null $current   Current alias value.
      * @param string                   $separator A separator string.
      */
+    #[Override]
     protected function combine(string|null $previous, string|array|null $current, string $separator): string|null
     {
         if (is_array($current)) {

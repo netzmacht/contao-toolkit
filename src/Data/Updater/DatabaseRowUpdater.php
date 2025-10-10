@@ -11,6 +11,7 @@ use Netzmacht\Contao\Toolkit\Callback\Invoker;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Exception\AccessDenied;
+use Override;
 use Symfony\Component\Security\Core\Security;
 
 use function array_keys;
@@ -43,6 +44,7 @@ final class DatabaseRowUpdater implements Updater
      *
      * @return array<string,mixed>
      */
+    #[Override]
     public function update(string $dataContainerName, int|string $recordId, array $data, mixed $context): array
     {
         $this->guardUserHasAccess($dataContainerName, $recordId, $data);
@@ -66,6 +68,7 @@ final class DatabaseRowUpdater implements Updater
      * @param string $dataContainerName Data container name.
      * @param string $columnName        Column name.
      */
+    #[Override]
     public function hasUserAccess(string $dataContainerName, string $columnName): bool
     {
         $user = $this->security->getUser();

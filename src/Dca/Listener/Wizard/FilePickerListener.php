@@ -9,6 +9,7 @@ use Contao\Input;
 use Contao\StringUtil;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer;
+use Override;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
@@ -48,6 +49,7 @@ final class FilePickerListener extends AbstractFieldPickerListener
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function generate(string $tableName, string $fieldName, int $rowId, mixed $value = null): string
     {
         $url = $this->router->generate('contao_backend_picker', [

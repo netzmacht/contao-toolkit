@@ -6,6 +6,7 @@ namespace Netzmacht\Contao\Toolkit\Dca\Formatter\Value;
 
 use Contao\DataContainer;
 use Netzmacht\Contao\Toolkit\Callback\Invoker;
+use Override;
 
 use function array_keys;
 use function count;
@@ -29,6 +30,7 @@ final class OptionsFormatter implements ValueFormatter
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function accepts(string $fieldName, array $fieldDefinition): bool
     {
         if (! empty($fieldDefinition['eval']['isAssociative']) || ! empty($fieldDefinition['options'])) {
@@ -39,6 +41,7 @@ final class OptionsFormatter implements ValueFormatter
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function format(mixed $value, string $fieldName, array $fieldDefinition, mixed $context = null): mixed
     {
         if (

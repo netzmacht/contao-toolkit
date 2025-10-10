@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Dca\Options;
 
 use Netzmacht\Contao\Toolkit\Exception\InvalidArgumentException;
+use Override;
 
 use function array_keys;
 use function call_user_func;
@@ -52,6 +53,7 @@ final class ArrayListOptions implements Options
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function getLabelKey(): callable|string
     {
         return $this->labelKey;
@@ -60,12 +62,14 @@ final class ArrayListOptions implements Options
     /**
      * Get the value column.
      */
+    #[Override]
     public function getValueKey(): string
     {
         return $this->valueKey;
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function current(): mixed
     {
         $current = $this->list[$this->keys[$this->position]];
@@ -78,45 +82,53 @@ final class ArrayListOptions implements Options
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function row(): array
     {
         return $this->list[$this->keys[$this->position]];
     }
 
+    #[Override]
     public function next(): void
     {
         $this->position++;
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function key(): mixed
     {
         return $this->list[$this->keys[$this->position]][$this->valueKey];
     }
 
+    #[Override]
     public function valid(): bool
     {
         return $this->position < count($this->keys);
     }
 
+    #[Override]
     public function rewind(): void
     {
         $this->position = 0;
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function offsetExists($offset): bool
     {
         return isset($this->list[$offset]);
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function offsetGet($offset): array
     {
         return $this->list[$offset];
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function offsetSet($offset, $value): void
     {
         if (! isset($this->list[$offset]) || $offset !== count($this->list)) {
@@ -134,12 +146,14 @@ final class ArrayListOptions implements Options
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function offsetUnset($offset): void
     {
         unset($this->list[$offset]);
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function getArrayCopy(): array
     {
         $values = [];

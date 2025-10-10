@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\View\Assets;
 
+use Override;
 use Symfony\Component\Asset\Packages;
 
 use function count;
@@ -72,6 +73,7 @@ final class GlobalsAssetsManager implements AssetsManager
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function addJavascript(
         string $path,
         bool|string $static = self::STATIC_PRODUCTION,
@@ -93,6 +95,7 @@ final class GlobalsAssetsManager implements AssetsManager
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function addJavascripts(
         array $paths,
         bool|string $static = self::STATIC_PRODUCTION,
@@ -112,6 +115,7 @@ final class GlobalsAssetsManager implements AssetsManager
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function addStylesheet(
         string $path,
         string $media = '',
@@ -139,6 +143,7 @@ final class GlobalsAssetsManager implements AssetsManager
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function addStylesheets(
         array $paths,
         string $media = '',
@@ -158,6 +163,7 @@ final class GlobalsAssetsManager implements AssetsManager
         return $this;
     }
 
+    #[Override]
     public function addToBody(string $name, string $html): AssetsManager
     {
         $this->body[$name] = $html;
@@ -165,6 +171,7 @@ final class GlobalsAssetsManager implements AssetsManager
         return $this;
     }
 
+    #[Override]
     public function appendToBody(string $html): AssetsManager
     {
         $this->body[] = $html;
@@ -172,6 +179,7 @@ final class GlobalsAssetsManager implements AssetsManager
         return $this;
     }
 
+    #[Override]
     public function addToHead(string $name, string $html): AssetsManager
     {
         $this->head[$name] = $html;
@@ -179,6 +187,7 @@ final class GlobalsAssetsManager implements AssetsManager
         return $this;
     }
 
+    #[Override]
     public function appendToHead(string $html): AssetsManager
     {
         $this->head[] = $html;

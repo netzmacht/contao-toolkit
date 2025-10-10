@@ -11,6 +11,7 @@ use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SlugifyFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\Filter\SuffixFilter;
 use Netzmacht\Contao\Toolkit\Data\Alias\FilterBasedAliasGenerator;
 use Netzmacht\Contao\Toolkit\Data\Alias\Validator\UniqueDatabaseValueValidator;
+use Override;
 
 final class ToolkitAliasGeneratorFactory implements AliasGeneratorFactory
 {
@@ -20,6 +21,7 @@ final class ToolkitAliasGeneratorFactory implements AliasGeneratorFactory
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function create(string $dataContainerName, string $aliasField, array $fields): AliasGenerator
     {
         $filters = [

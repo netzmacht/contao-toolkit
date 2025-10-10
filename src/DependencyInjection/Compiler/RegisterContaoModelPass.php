@@ -6,6 +6,7 @@ namespace Netzmacht\Contao\Toolkit\DependencyInjection\Compiler;
 
 use Contao\Model;
 use Netzmacht\Contao\Toolkit\Assertion\Assert;
+use Override;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -14,6 +15,7 @@ use function is_subclass_of;
 
 final class RegisterContaoModelPass implements CompilerPassInterface
 {
+    #[Override]
     public function process(ContainerBuilder $container): void
     {
         $serviceId = 'netzmacht.contao_toolkit.listeners.register_models';

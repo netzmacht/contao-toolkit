@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\DependencyInjection\Compiler;
 
 use Netzmacht\Contao\Toolkit\Response\FosCacheResponseTagger;
+use Override;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface as CompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -19,6 +20,7 @@ final class FosCacheResponseTaggerPass implements CompilerPass
 {
     private const SERVICE_ID = 'fos_http_cache.http.symfony_response_tagger';
 
+    #[Override]
     public function process(ContainerBuilder $container): void
     {
         if (! $container->has(self::SERVICE_ID)) {

@@ -7,6 +7,7 @@ namespace Netzmacht\Contao\Toolkit\Data\Model;
 use Contao\Model;
 use Contao\Model\Collection;
 use Netzmacht\Contao\Toolkit\Assertion\Assert;
+use Override;
 
 use function array_map;
 use function call_user_func_array;
@@ -30,22 +31,26 @@ class ContaoRepository implements Repository
             ->subclassOf(Model::class);
     }
 
+    #[Override]
     public function getTableName(): string
     {
         return $this->call('getTable');
     }
 
+    #[Override]
     public function getModelClass(): string
     {
         return $this->modelClass;
     }
 
+    #[Override]
     public function find(int $modelId): Model|null
     {
         return $this->call('findByPK', [$modelId]);
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function findBy(array $column, array $values, array $options = []): Collection|null
     {
         $column  = $this->addTablePrefix($column);
@@ -55,6 +60,7 @@ class ContaoRepository implements Repository
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function findOneBy(array $column, array $values, array $options = []): Model|null
     {
         $column  = $this->addTablePrefix($column);
@@ -64,6 +70,7 @@ class ContaoRepository implements Repository
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function findBySpecification(Specification $specification, array $options = []): Collection|Model|null
     {
         $column  = [];
@@ -86,6 +93,7 @@ class ContaoRepository implements Repository
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function findAll(array $options = []): Collection|null
     {
         $options = $this->addTablePrefixToOrder($options);
@@ -94,6 +102,7 @@ class ContaoRepository implements Repository
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function countBy(array $column, array $values): int
     {
         $column = $this->addTablePrefix($column);
@@ -101,6 +110,7 @@ class ContaoRepository implements Repository
         return $this->call('countBy', [$column, $values]);
     }
 
+    #[Override]
     public function countBySpecification(Specification $specification): int
     {
         $column = [];
@@ -115,16 +125,19 @@ class ContaoRepository implements Repository
         return $this->countBy($column, $values);
     }
 
+    #[Override]
     public function countAll(): int
     {
         return $this->call('countAll');
     }
 
+    #[Override]
     public function save(Model $model): void
     {
         $model->save();
     }
 
+    #[Override]
     public function delete(Model $model): void
     {
         $model->delete();

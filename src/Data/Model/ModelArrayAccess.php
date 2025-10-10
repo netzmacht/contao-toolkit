@@ -7,6 +7,7 @@ namespace Netzmacht\Contao\Toolkit\Data\Model;
 use ArrayAccess;
 use Contao\Database\Result;
 use Contao\Model;
+use Override;
 
 /**
  * ModelArrayAccess decorates a Contao data model to provide array access.
@@ -21,24 +22,28 @@ final class ModelArrayAccess implements ArrayAccess
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function offsetExists($offset): bool
     {
         return isset($this->model->$offset);
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function offsetGet($offset): mixed
     {
         return $this->model->$offset;
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function offsetSet($offset, $value): void
     {
         $this->model->$offset = $value;
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function offsetUnset($offset): void
     {
         $this->model->$offset = null;
