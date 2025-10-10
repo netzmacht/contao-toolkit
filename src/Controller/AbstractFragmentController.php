@@ -272,7 +272,7 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
             return $this->options['type'];
         }
 
-        $className = ltrim(strrchr(static::class, '\\'), '\\');
+        $className = ltrim((string) strrchr(static::class, '\\'), '\\');
 
         if (substr($className, -10) === 'Controller') {
             $className = substr($className, 0, -10);

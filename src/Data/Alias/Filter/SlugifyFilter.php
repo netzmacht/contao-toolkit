@@ -66,7 +66,7 @@ final class SlugifyFilter extends AbstractValueFilter
         $value = html_entity_decode($value, ENT_QUOTES, $this->charset);
         $value = StringUtil::stripInsertTags($value);
         $value = (new UnicodeString($value))->ascii()->toString();
-        $value = preg_replace($arrSearch, $arrReplace, $value);
+        $value = (string) preg_replace($arrSearch, $arrReplace, $value);
 
         if (! $this->preserveUppercase) {
             $value = strtolower($value);

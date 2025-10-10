@@ -9,13 +9,14 @@ namespace Netzmacht\Contao\Toolkit\View\Assets;
  */
 interface AssetsManager
 {
+    /** @psalm-suppress MissingClassConstType */
     public const STATIC_PRODUCTION = 'prod';
 
     /**
-     * Add a javascript file to Contao assets.
+     * Add a JavaScript file to Contao assets.
      *
-     * @param string      $path   The assets path.
-     * @param bool|string $static Register it as static entry.
+     * @param string      $path   The asset path.
+     * @param bool|string $static Register it as a static entry.
      * @param string|null $name   Optional assets name.
      *
      * @return $this
@@ -29,8 +30,8 @@ interface AssetsManager
     /**
      * Add javascript files to Contao assets.
      *
-     * @param array<int|string,string> $paths  The assets paths.
-     * @param bool|string              $static Register it as static entry.
+     * @param array<int|string,string> $paths  The asset paths.
+     * @param bool|string              $static Register it as a static entry.
      * @param string|null              $name   Optional assets name.
      *
      * @return $this
@@ -42,11 +43,11 @@ interface AssetsManager
     ): self;
 
     /**
-     * Add a javascript file to Contao assets.
+     * Add a JavaScript file to Contao assets.
      *
-     * @param string      $path   The assets path.
+     * @param string      $path   The asset path.
      * @param string      $media  The media query.
-     * @param bool|string $static Register it as static entry.
+     * @param bool|string $static Register it as a static entry.
      * @param string|null $name   Optional assets name.
      *
      * @return $this
@@ -61,9 +62,9 @@ interface AssetsManager
     /**
      * Add stylesheet files to Contao assets.
      *
-     * @param array<int|string,string> $paths  The assets paths.
+     * @param array<int|string,string> $paths  The asset paths.
      * @param string                   $media  The media type.
-     * @param bool|string              $static Register it as static entry.
+     * @param bool|string              $static Register it as a static entry.
      * @param string|null              $name   Optional assets name.
      *
      * @return $this

@@ -12,9 +12,14 @@ use Override;
  */
 abstract class AbstractFilter implements Filter
 {
+    /** @psalm-suppress MissingClassConstType */
     public const COMBINE_REPLACE = 0;
+
+    /** @psalm-suppress MissingClassConstType */
     public const COMBINE_PREPEND = 1;
-    public const COMBINE_APPEND  = 2;
+
+    /** @psalm-suppress MissingClassConstType */
+    public const COMBINE_APPEND = 2;
 
     /**
      * @param bool $break   If true break after the filter if value is unique.

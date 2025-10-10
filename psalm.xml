@@ -14,19 +14,6 @@
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
-        <TooManyArguments>
-            <errorLevel type="suppress">
-                <referencedFunction name="Symfony\Contracts\EventDispatcher\EventDispatcherInterface::dispatch"/>
-            </errorLevel>
-        </TooManyArguments>
-        <InternalMethod>
-            <errorLevel type="suppress">
-                <referencedMethod name="Contao\CoreBundle\Framework\Adapter::__call"/>
-                <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::initialize"/>
-                <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::createInstance"/>
-                <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::getAdapter"/>
-            </errorLevel>
-        </InternalMethod>
         <UndefinedMagicPropertyFetch>
             <errorLevel type="suppress">
                 <referencedProperty name="Contao\DataContainer::$activeRecord"/>
@@ -42,6 +29,11 @@
                 <referencedMethod name="Contao\BackendUser::hasAccess"/>
             </errorLevel>
         </DeprecatedMethod>
+        <ClassMustBeFinal>
+            <errorLevel type="suppress">
+                <directory name="src"/>
+            </errorLevel>
+        </ClassMustBeFinal>
     </issueHandlers>
 
     <universalObjectCrates>
