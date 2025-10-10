@@ -22,7 +22,7 @@ final class Invoker
     /**
      * Handle the callback.
      *
-     * @param callable|array{0: string,1: string} $callback  Callback as Contao array notation or as PHP callable.
+     * @param callable|array{0: string,1: string} $callback  Callback as a Contao array notation or as PHP callable.
      * @param list<mixed>                         $arguments List of arguments being passed to the callback.
      *
      * @throws InvalidArgumentException On callback is not callable.
@@ -33,6 +33,7 @@ final class Invoker
             $callback[0] = $this->systemAdapter->importStatic($callback[0]);
         }
 
+        /** @psalm-suppress TooManyArguments */
         return call_user_func_array($callback, $arguments);
     }
 

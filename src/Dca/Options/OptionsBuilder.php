@@ -105,6 +105,8 @@ final class OptionsBuilder
      * @param callable|null $callback Optional callback.
      *
      * @return $this
+     *
+     * @psalm-suppress PossiblyNullArrayOffset
      */
     public function groupBy(string $column, callable|null $callback = null): self
     {
@@ -129,6 +131,8 @@ final class OptionsBuilder
      * @param string $indentBy Indent entry by this value.
      *
      * @return $this
+     *
+     * @psalm-suppress PossiblyNullArrayOffset
      */
     public function asTree(string $parent = 'pid', string $indentBy = '-- '): self
     {
@@ -136,8 +140,10 @@ final class OptionsBuilder
         $values  = [];
 
         foreach ($this->options as $key => $value) {
+            /** @psalm-suppress PossiblyNullArgument */
             $pid = $this->options[$key][$parent];
 
+            /** @psalm-suppress PossiblyNullArgument */
             $values[$pid][$key] = array_merge($this->options[$key], ['__label__' => $value]);
         }
 
@@ -187,6 +193,7 @@ final class OptionsBuilder
      */
     private function buildTree(array &$values, array &$options, int $index, string $indentBy, int $depth = 0): array
     {
+        /** @psalm-suppress RiskyTruthyFalsyComparison */
         if (empty($values[$index])) {
             return $options;
         }
