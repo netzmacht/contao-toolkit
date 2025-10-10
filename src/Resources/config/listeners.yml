@@ -47,6 +47,7 @@ services:
       - '@netzmacht.contao_toolkit.contao.input_adapter'
       - '@netzmacht.contao_toolkit.data.database_row_updater'
       - '@netzmacht.contao_toolkit.dca.manager'
+      - '@?monolog.logger.contao.error'
 
   netzmacht.contao_toolkit.dca.listeners.state_button_callback:
     alias: Netzmacht\Contao\Toolkit\Dca\Listener\Button\StateButtonCallbackListener
