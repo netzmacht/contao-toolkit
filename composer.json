@@ -50,8 +50,7 @@
   },
   "conflict": {
     "contao/manager-plugin": "<2.0 || >=3.0",
-    "friendsofsymfony/http-cache": "<2.0 || >=4.0",
-    "symfony/security-bundle": "^7.0"
+    "friendsofsymfony/http-cache": "<2.0 || >=4.0"
   },
   "autoload": {
     "psr-4": {
