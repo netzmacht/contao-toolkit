@@ -12,6 +12,7 @@ use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Exception\AccessDenied;
 use Override;
+use Symfony\Bundle\SecurityBundle\Security as SecurityBundleSecurity;
 use Symfony\Component\Security\Core\Security;
 
 use function array_keys;
@@ -27,7 +28,7 @@ final class DatabaseRowUpdater implements Updater
      * @param Invoker    $invoker    Callback invoker.
      */
     public function __construct(
-        private readonly Security $security,
+        private readonly Security|SecurityBundleSecurity $security,
         private readonly Connection $connection,
         private readonly DcaManager $dcaManager,
         private readonly Invoker $invoker,

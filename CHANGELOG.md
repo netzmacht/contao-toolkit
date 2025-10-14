@@ -4,6 +4,12 @@ Changelog
 [Unreleased]
 ------------
 
+[4.0.6]
+
+### Fixed
+
+ - Support `Symfony\Bundle\SecurityBundle\Security`
+
 [4.0.5]
 
 ### Fixed
