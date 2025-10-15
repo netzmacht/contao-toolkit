@@ -19,11 +19,6 @@
                 <referencedProperty name="Contao\DataContainer::$activeRecord"/>
             </errorLevel>
         </UndefinedMagicPropertyFetch>
-        <DeprecatedClass>
-            <errorLevel type="suppress">
-                <referencedClass name="Symfony\Component\Security\Core\Security"/>
-            </errorLevel>
-        </DeprecatedClass>
         <DeprecatedMethod>
             <errorLevel type="suppress">
                 <referencedMethod name="Contao\BackendUser::hasAccess"/>
@@ -34,6 +29,11 @@
                 <directory name="src"/>
             </errorLevel>
         </ClassMustBeFinal>
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <referencedClass name="Symfony\Component\Security\Core\Security"/>
+            </errorLevel>
+        </UndefinedClass>
     </issueHandlers>
 
     <universalObjectCrates>
