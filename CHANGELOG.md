@@ -4,6 +4,12 @@ Changelog
 [Unreleased]
 ------------
 
+[4.0.8]
+
+### Changed
+
+ - Allow Symfony v7
+
 [4.0.6]
 
 ### Fixed
