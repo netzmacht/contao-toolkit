@@ -80,10 +80,11 @@ services:
       - '@event_dispatcher'
 
   netzmacht.contao_toolkit.dca.manager:
-    class: Netzmacht\Contao\Toolkit\Dca\Manager
+    class: Netzmacht\Contao\Toolkit\Dca\RequestScopedManager
     arguments:
       - '@netzmacht.contao_toolkit.dca.loader'
       - '@netzmacht.contao_toolkit.dca.formatter.factory'
+      - '@request_stack'
 
   netzmacht.contao_toolkit.dca.loader:
     class: Netzmacht\Contao\Toolkit\Dca\DcaLoader
