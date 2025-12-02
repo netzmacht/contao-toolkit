@@ -8,7 +8,7 @@ use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-use function spl_object_id;
+use function spl_object_hash;
 
 final class RequestScopedManager implements DcaManager
 {
@@ -35,7 +35,7 @@ final class RequestScopedManager implements DcaManager
     private function getManager(): DcaManager
     {
         $request   = $this->requestStack->getCurrentRequest();
-        $requestId = $request ? spl_object_id($request) : '__empty__';
+        $requestId = $request ? spl_object_hash($request) : '__empty__';
 
         $this->managers[$requestId] ??= new Manager($this->loader, $this->formatterFactory);
 
