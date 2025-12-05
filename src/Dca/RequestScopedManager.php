@@ -6,15 +6,11 @@ namespace Netzmacht\Contao\Toolkit\Dca;
 
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory;
+use Override;
 use Symfony\Component\HttpFoundation\RequestStack;
-
-use function spl_object_hash;
 
 final class RequestScopedManager implements DcaManager
 {
-    /** @var array<string, DcaManager> */
-    private array $managers = [];
-
     public function __construct(
         private readonly DcaLoader $loader,
         private readonly FormatterFactory $formatterFactory,
@@ -22,11 +18,13 @@ final class RequestScopedManager implements DcaManager
     ) {
     }
 
+    #[Override]
     public function getDefinition(string $name, bool $noCache = false): Definition
     {
         return $this->getManager()->getDefinition($name, $noCache);
     }
 
+    #[Override]
     public function getFormatter(string $name): Formatter
     {
         return $this->getManager()->getFormatter($name);
@@ -34,11 +32,19 @@ final class RequestScopedManager implements DcaManager
 
     private function getManager(): DcaManager
     {
-        $request   = $this->requestStack->getCurrentRequest();
-        $requestId = $request ? spl_object_hash($request) : '__empty__';
+        $request = $this->requestStack->getCurrentRequest();
+        if ($request === null) {
+            return new Manager($this->loader, $this->formatterFactory);
+        }
 
-        $this->managers[$requestId] ??= new Manager($this->loader, $this->formatterFactory);
+        $manager = $request->attributes->get(DcaManager::class);
+        if ($manager instanceof DcaManager) {
+            return $manager;
+        }
 
-        return $this->managers[$requestId];
+        $manager = new Manager($this->loader, $this->formatterFactory);
+        $request->attributes->set(DcaManager::class, $manager);
+
+        return $manager;
     }
 }
