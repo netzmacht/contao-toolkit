@@ -21,7 +21,6 @@ updates:
     directory: "/"
     labels:
       - "dependency"
-    open-pull-requests-limit: 0
     package-ecosystem: "github-actions"
     schedule:
       interval: "weekly"
