@@ -7,15 +7,23 @@ namespace Netzmacht\Contao\Toolkit\Dca;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\Formatter;
 use Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory;
 use Override;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use WeakMap;
 
 final class RequestScopedManager implements DcaManager
 {
+    /** @var WeakMap<Request|RequestScopedManager, DcaManager>  */
+    private WeakMap $managers;
+
     public function __construct(
         private readonly DcaLoader $loader,
         private readonly FormatterFactory $formatterFactory,
         private readonly RequestStack $requestStack,
     ) {
+        /** @psalm-var  WeakMap<Request|RequestScopedManager, DcaManager> $manager */
+        $manager        = new WeakMap();
+        $this->managers = $manager;
     }
 
     #[Override]
@@ -30,21 +38,21 @@ final class RequestScopedManager implements DcaManager
         return $this->getManager()->getFormatter($name);
     }
 
+    /**
+     * @psalm-suppress NullableReturnStatement
+     * @psalm-suppress InvalidNullableReturnType
+     */
     private function getManager(): DcaManager
     {
         $request = $this->requestStack->getCurrentRequest();
         if ($request === null) {
-            return new Manager($this->loader, $this->formatterFactory);
+            $request = $this;
         }
 
-        $manager = $request->attributes->get(DcaManager::class);
-        if ($manager instanceof DcaManager) {
-            return $manager;
+        if (! $this->managers->offsetExists($request)) {
+            $this->managers->offsetSet($request, new Manager($this->loader, $this->formatterFactory));
         }
 
-        $manager = new Manager($this->loader, $this->formatterFactory);
-        $request->attributes->set(DcaManager::class, $manager);
-
-        return $manager;
+        return $this->managers->offsetGet($request);
     }
 }
