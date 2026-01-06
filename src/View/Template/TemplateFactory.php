@@ -22,7 +22,7 @@ interface TemplateFactory
      */
     public function createFrontendTemplate(
         string $name,
-        array $data = null,
+        ?array $data = null,
         string $contentType = 'text/html',
     ): Template;
 
@@ -35,7 +35,7 @@ interface TemplateFactory
      */
     public function createBackendTemplate(
         string $name,
-        array $data = null,
+        ?array $data = null,
         string $contentType = 'text/html',
     ): Template;
 }
