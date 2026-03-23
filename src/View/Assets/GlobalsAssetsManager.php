@@ -18,58 +18,16 @@ use function str_contains;
 final class GlobalsAssetsManager implements AssetsManager
 {
     /**
-     * The registered stylesheets.
-     *
-     * @var array<int|string,string>
-     */
-    private array $javascripts;
-
-    /**
-     * The registered javascripts.
-     *
-     * @var array<int|string,string>
-     */
-    private array $stylesheets;
-
-    /**
-     * The registered body content.
-     *
-     * @var array|string[]
-     */
-    private array $body;
-
-    /**
-     * The registered head content.
-     *
-     * @var array|string[]
-     */
-    private array $head;
-
-    /**
      * Debug mode of the environment.
      */
     private bool $debugMode;
 
-    /**
-     * @param array<int|string,string> $stylesheets The registered stylesheets.
-     * @param array<int|string,string> $javascripts The registered javascripts.
-     * @param array<int|string,string> $head        The registered body content.
-     * @param array<int|string,string> $body        The registered head content.
-     * @param bool                     $debugMode   Debug mode of the environment.
-     */
+    /** @param bool $debugMode Debug mode of the environment. */
     public function __construct(
         private readonly Packages $packages,
-        array &$stylesheets,
-        array &$javascripts,
-        array &$head,
-        array &$body,
         bool $debugMode = false,
     ) {
-        $this->stylesheets = &$stylesheets;
-        $this->javascripts = &$javascripts;
-        $this->head        = &$head;
-        $this->body        = &$body;
-        $this->debugMode   = $debugMode;
+        $this->debugMode = $debugMode;
     }
 
     /** {@inheritDoc} */
@@ -85,11 +43,7 @@ final class GlobalsAssetsManager implements AssetsManager
             $path .= '|static';
         }
 
-        if ($name === null) {
-            $this->javascripts[] = $path;
-        } else {
-            $this->javascripts[$name] = $path;
-        }
+        $this->addTo('TL_JAVASCRIPT', $path, $name);
 
         return $this;
     }
@@ -133,11 +87,7 @@ final class GlobalsAssetsManager implements AssetsManager
             }
         }
 
-        if ($name === null) {
-            $this->stylesheets[] = $path;
-        } else {
-            $this->stylesheets[$name] = $path;
-        }
+        $this->addTo('TL_CSS', $path, $name);
 
         return $this;
     }
@@ -166,7 +116,7 @@ final class GlobalsAssetsManager implements AssetsManager
     #[Override]
     public function addToBody(string $name, string $html): AssetsManager
     {
-        $this->body[$name] = $html;
+        $this->addTo('TL_BODY', $html, $name);
 
         return $this;
     }
@@ -174,7 +124,7 @@ final class GlobalsAssetsManager implements AssetsManager
     #[Override]
     public function appendToBody(string $html): AssetsManager
     {
-        $this->body[] = $html;
+        $this->addTo('TL_BODY', $html);
 
         return $this;
     }
@@ -182,7 +132,7 @@ final class GlobalsAssetsManager implements AssetsManager
     #[Override]
     public function addToHead(string $name, string $html): AssetsManager
     {
-        $this->head[$name] = $html;
+        $this->addTo('TL_HEAD', $html, $name);
 
         return $this;
     }
@@ -190,9 +140,22 @@ final class GlobalsAssetsManager implements AssetsManager
     #[Override]
     public function appendToHead(string $html): AssetsManager
     {
-        $this->head[] = $html;
+        $this->addTo('TL_HEAD', $html);
 
         return $this;
+    }
+
+    private function addTo(string $key, string $value, string|null $name = null): void
+    {
+        if (! isset($GLOBALS[$key])) {
+            $GLOBALS[$key] = [];
+        }
+
+        if ($name === null) {
+            $GLOBALS[$key][] = $value;
+        } else {
+            $GLOBALS[$key][$name] = $value;
+        }
     }
 
     /**
@@ -202,7 +165,7 @@ final class GlobalsAssetsManager implements AssetsManager
      */
     public function getJavascripts(): array
     {
-        return $this->javascripts;
+        return $GLOBALS['TL_JAVASCRIPT'] ?? [];
     }
 
     /**
@@ -212,7 +175,7 @@ final class GlobalsAssetsManager implements AssetsManager
      */
     public function getStylesheets(): array
     {
-        return $this->stylesheets;
+        return $GLOBALS['TL_CSS'] ?? [];
     }
 
     /**
@@ -222,7 +185,7 @@ final class GlobalsAssetsManager implements AssetsManager
      */
     public function getBody(): array
     {
-        return $this->body;
+        return $GLOBALS['TL_BODY'] ?? [];
     }
 
     /**
@@ -232,7 +195,7 @@ final class GlobalsAssetsManager implements AssetsManager
      */
     public function getHead(): array
     {
-        return $this->head;
+        return $GLOBALS['TL_HEAD'] ?? [];
     }
 
     private function isStatic(bool|string $flag): bool
