@@ -21,7 +21,7 @@
     "source": "https://github.com/netzmacht/contao-toolkit"
   },
   "require": {
-    "php": "^8.1",
+    "php": "^8.2",
     "beberlei/assert": "^3.0",
     "contao/core-bundle": "^4.13 || ^5.2",
     "doctrine/dbal": "^3.1 || ^4.0",
