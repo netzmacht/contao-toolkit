@@ -6,8 +6,6 @@ namespace Netzmacht\Contao\Toolkit\View\Assets;
 
 use Symfony\Component\Asset\Packages;
 
-use function is_array;
-
 /**
  * Class GlobalsAssetsManagerFactory creates the global assets manager.
  */
@@ -25,21 +23,6 @@ final class GlobalsAssetsManagerFactory
      */
     public function create(): AssetsManager
     {
-        foreach (['TL_CSS', 'TL_JAVASCRIPT', 'TL_HEAD', 'TL_BODY'] as $key) {
-            if (isset($GLOBALS[$key]) && is_array($GLOBALS[$key])) {
-                continue;
-            }
-
-            $GLOBALS[$key] = [];
-        }
-
-        return new GlobalsAssetsManager(
-            $this->packages,
-            $GLOBALS['TL_CSS'],
-            $GLOBALS['TL_JAVASCRIPT'],
-            $GLOBALS['TL_HEAD'],
-            $GLOBALS['TL_BODY'],
-            $this->debug,
-        );
+        return new GlobalsAssetsManager($this->packages, $this->debug);
     }
 }
