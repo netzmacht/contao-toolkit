@@ -98,15 +98,26 @@ Die bisherigen `.html5`-Dateien bleiben unverändert im Paket bestehen (für exp
 Fremdreferenzen von außen), werden aber nicht mehr als Default verwendet.
 
 ### Deprecation-Markierungen
+
+**Prinzip (gilt projektweit für alle 4.1-Deprecations, siehe
+[[deprecation-mechanics]]):** `trigger_deprecation()` zur Laufzeit wird nur dort
+eingesetzt, wo ein Konsument **aktiv** einen vermeidbaren Legacy-Pfad auslöst. Wo eine
+als deprecated markierte Klasse weiterhin als **Pflicht-Abhängigkeit** anderer,
+unveränderter Bestandteile verdrahtet ist und dadurch bei jedem Request instanziiert
+würde, bleibt es bei einer reinen `@deprecated`-Doc-Annotation ohne Runtime-Warnung.
+
 Neue Abhängigkeit: `symfony/deprecation-contracts` (für `trigger_deprecation()`).
 
-Als `@deprecated` markiert, Entfernung in 5.0.0 angekündigt
-(`trigger_deprecation('netzmacht/contao-toolkit', '4.1', '...')`):
+Nur `@deprecated`-Doc-Annotation (keine Runtime-Warnung, da weiterhin verpflichtende
+Abhängigkeit von `DelegatingTemplateRenderer`, die bei jedem Request instanziiert wird):
 - Interface `View\Template` und alle Implementierungen (`FrontendTemplate`,
   `BackendTemplate`, `TemplateTrait`)
 - Interface `View\Template\TemplateFactory` + `ToolkitTemplateFactory`
 - `View\Template\Event\GetTemplateHelpersEvent` + `Subscriber\GetTemplateHelpersListener`
 - `View\Template\Exception\HelperNotFound`
+
+Mit Runtime-Warnung (`trigger_deprecation('netzmacht/contao-toolkit', '4.1', '...')`),
+da nur ausgelöst, wenn ein Konsument tatsächlich den Legacy-Pfad aktiv nutzt:
 - Legacy-Zweig in `DelegatingTemplateRenderer` (`renderContaoTemplate()` /
   `extractScopeAndTemplateName()`) — Warnung wird ausgelöst, wenn dieser Zweig
   tatsächlich einen Namen verarbeitet (nicht beim Instanziieren der Klasse)
