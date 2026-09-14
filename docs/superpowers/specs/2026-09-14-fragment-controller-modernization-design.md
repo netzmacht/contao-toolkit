@@ -154,9 +154,9 @@ alten, deprecateten Klassen entfernt. Ein Konsumenten-Bundle, das seine Controll
 ## Änderungen Version 5.0.0 (Zielbild, Contao 6)
 
 - Entfernt: `src/Controller/AbstractFragmentController.php`,
-  `src/Controller/ContentElement/` (alte Klasse + `IsHiddenTrait`, `RenderBackendViewTrait`
-  sofern nicht mehr referenziert), `src/Controller/FrontendModule/AbstractFrontendModuleController.php`
-  (alt) + `ModuleRenderBackendViewTrait` (sofern nicht mehr referenziert),
+  `src/Controller/ContentElement/` (alte Klasse + `IsHiddenTrait`, `RenderBackendViewTrait`),
+  `src/Controller/FrontendModule/AbstractFrontendModuleController.php`
+  (alt) + `ModuleRenderBackendViewTrait`,
   `src/Controller/Hybrid/` (komplett).
 - `src/Controller/Fragment/*` bleibt unverändert bestehen.
 
@@ -168,9 +168,11 @@ alten, deprecateten Klassen entfernt. Ein Konsumenten-Bundle, das seine Controll
   (doc-only) zugunsten von `Contao\CoreBundle\Cache\CacheTagManager`, siehe
   `2026-09-14-response-tagger-deprecation-design.md`.
 - Ob/wie `RenderBackendViewTrait` (Backend-Vorschau-Rendering für ausgeblendete
-  Frontend-Module/Content-Elemente im Editor) in der neuen Klassengeneration
-  eine Entsprechung braucht, wird bei Bedarf als Nachtrag zu diesem Punkt ergänzt,
-  sobald ein konkreter Anwendungsfall ansteht.
+  Frontend-Module/Content-Elemente im Editor) in der neuen Klassengeneration eine
+  Entsprechung braucht: als eigener Punkt der Migrationsreihe geklärt. Für Module
+  vollautomatisch durch Contao Core abgedeckt, für Content-Elemente durch den neuen
+  Opt-in-Trait `Controller\Fragment\RenderBackendWildcardTrait` ersetzt, siehe
+  `2026-09-14-render-backend-view-trait-deprecation-design.md`.
 
 ## Testing
 
