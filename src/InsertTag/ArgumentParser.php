@@ -196,7 +196,8 @@ final class ArgumentParser
         }
 
         $parts[1] = str_replace('+', '&', $parts[1]);
-        $parts[1] = StringUtil::decodeEntities($parts[1]);
+        /** @psalm-suppress PossiblyInvalidCast */
+        $parts[1] = (string) StringUtil::decodeEntities($parts[1]);
         parse_str($parts[1], $options);
 
         return [

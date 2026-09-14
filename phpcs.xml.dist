@@ -21,6 +21,7 @@
         <exclude name="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming.SuperfluousPrefix"/>
         <exclude name="SlevomatCodingStandard.Classes.SuperfluousTraitNaming.SuperfluousSuffix"/>
         <exclude name="Squiz.NamingConventions.ValidVariableName.MemberNotCamelCaps"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.ClassConstantTypeHint.MissingNativeTypeHint"/>
     </rule>
 
     <rule ref="Generic.Files.LineLength">
