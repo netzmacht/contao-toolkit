@@ -38,6 +38,41 @@ Inverse-Logik (`reverseToggle`) und Rechteprüfung
 `Updater`-Service. Konsumenten, die sich auf `Updater::update()`-Events/-Hooks beim
 Statuswechsel verlassen, müssen das beim Umstieg prüfen.
 
+### `Data\Updater\Updater`/`DatabaseRowUpdater` (bleiben bestehen, kein Teil der Deprecation)
+
+`StateButtonCallbackListener` ist der einzige interne Konsument von
+`Data\Updater\DatabaseRowUpdater`. Trotzdem wird der Service selbst **nicht** deprecated:
+Er bietet über `Updater::update()`/`hasUserAccess()` eine eigenständig nützliche
+Funktionalität (Rechteprüfung + Ausführung der `save_callback`s + Versionierung + Speichern
+eines Datensatzausschnitts, unabhängig vom DCA-Callback-Kontext) und soll Konsumenten
+weiterhin als eigenständiger Baustein zur Verfügung stehen.
+
+Innerhalb von `DatabaseRowUpdater::hasUserAccess()` ist jedoch der Rechte-Check selbst
+veraltet: `$user->hasAccess($dataContainerName . '::' . $columnName, 'alexf')` ruft
+`Contao\BackendUser`s alte, direkte ACL-Prüfmethode auf. Contao hat dafür inzwischen ein
+Symfony-Voter-basiertes Rechtesystem aufgebaut. Geprüft gegen den tatsächlichen Core-Code
+(`Contao\CoreBundle\Security\Voter\AbstractBackendAccessVoter`/`BackendAccessVoter`, siehe
+auch deren Verwendung in `DataContainerOperationsBuilder::handleToggle()`): Der Aufruf
+
+```php
+$this->security->isGranted(
+    ContaoCorePermissions::USER_CAN_EDIT_FIELD_OF_TABLE,
+    $dataContainerName . '::' . $columnName,
+);
+```
+
+ist funktional äquivalent (der Voter prüft intern exakt dieselbe Mitgliedschaft in
+`$user->alexf`), berücksichtigt aber zusätzlich sauber `isAdmin` sowie Symfonys übliche
+Token-/Impersonation-Mechanismen. Da `DatabaseRowUpdater` den `Security`-Service
+(`Symfony\Bundle\SecurityBundle\Security|Symfony\Component\Security\Core\Security`)
+bereits injiziert bekommt (der auch `AuthorizationCheckerInterface::isGranted()`
+implementiert), ist keine neue Konstruktor-Abhängigkeit nötig — reiner Austausch der
+Methodenimplementierung, kein Signatur-/Verhaltensbruch, `use Contao\BackendUser;` entfällt
+komplett. Da sich an der öffentlichen Signatur von `hasUserAccess()` nichts ändert und das
+beobachtbare Verhalten identisch bleibt, ist dies **keine Deprecation, sondern eine normale
+interne Korrektur** — sie landet direkt und ausschließlich in 4.1.0 und bleibt in 5.0.0
+unverändert gültig.
+
 ### `ColorPickerListener`
 
 Rendert manuell einen Farbwähler-Button samt Template und JS-Hook. Contao Core bietet
@@ -110,6 +145,13 @@ die einen eigenen, wirklich individuellen Picker ohne Contao-Pendant bauen wolle
 `PopupWizardListener` und `AbstractWizardListener` bleiben ebenfalls vollständig
 unverändert (siehe Analyse).
 
+`Data\Updater\Updater`/`DatabaseRowUpdater` sind ebenfalls **nicht** Teil dieser
+Deprecation — sie bleiben als eigenständiger, öffentlicher Baustein für Konsumenten
+bestehen (siehe Analyse). Einzige Änderung dort: die interne Rechteprüfung in
+`hasUserAccess()` wird von `Contao\BackendUser::hasAccess()` auf
+`Security::isGranted(ContaoCorePermissions::USER_CAN_EDIT_FIELD_OF_TABLE, ...)`
+umgestellt — eine reine interne Korrektur, keine Deprecation.
+
 ## Änderungen Version 4.1.0 (Kompatibilitätsschicht)
 
 - `StateButtonCallbackListener`: Konstruktor erhält `trigger_deprecation()`-Aufruf
@@ -125,6 +167,11 @@ unverändert (siehe Analyse).
   Migrationsempfehlung je Klasse (natives `toggle`-Eval, `colorpicker`-Eval,
   `dcaPicker`-Eval).
 - Dokumentation (sofern vorhanden) erhält entsprechende Deprecation-Hinweise.
+- `DatabaseRowUpdater::hasUserAccess()`: interne Implementierung auf
+  `Security::isGranted(ContaoCorePermissions::USER_CAN_EDIT_FIELD_OF_TABLE, $table . '::' . $field)`
+  umgestellt, `use Contao\BackendUser;` entfernt. Keine Signaturänderung, kein
+  Deprecation-Hinweis nötig (reine interne Korrektur, `Updater`/`DatabaseRowUpdater`
+  bleiben öffentlich unterstützt).
 
 ## Änderungen Version 5.0.0 (Zielbild, Contao 6)
 
@@ -133,7 +180,9 @@ unverändert (siehe Analyse).
   `src/Dca/Listener/Wizard/FilePickerListener.php`,
   `src/Dca/Listener/Wizard/PagePickerListener.php` sowie zugehörige Specs.
 - Unverändert: `AbstractPickerListener`, `AbstractFieldPickerListener`,
-  `AbstractWizardListener`, `PopupWizardListener`.
+  `AbstractWizardListener`, `PopupWizardListener`, `Data\Updater\Updater`,
+  `Data\Updater\DatabaseRowUpdater` (inkl. der bereits in 4.1.0 modernisierten
+  `hasUserAccess()`-Implementierung).
 
 ## Bewusst nicht Teil dieses Themas
 
@@ -149,3 +198,6 @@ unverändert (siehe Analyse).
   aus, bestehendes Verhalten (Rendering, Toggle-Logik) bleibt unverändert
   funktionsfähig.
 - Bestehende Specs für die vier Klassen bleiben ansonsten unverändert.
+- `DatabaseRowUpdaterSpec`: bestehender `hasUserAccess()`-Spec-Fall wird auf
+  `Security::isGranted()`-Mocking umgestellt (statt `BackendUser::hasAccess()`),
+  beobachtbares Verhalten (true/false je nach `alexf`-Mitgliedschaft) bleibt identisch.
