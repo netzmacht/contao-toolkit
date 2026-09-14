@@ -164,8 +164,9 @@ alten, deprecateten Klassen entfernt. Ein Konsumenten-Bundle, das seine Controll
 
 - `ResponseTagger`/`FosCacheResponseTagger`/`NoOpResponseTagger`: durch Contaos
   natives, automatisches `tagResponse($model)` in den neuen Basisklassen bereits jetzt
-  erkennbar redundant, wird aber als eigener, späterer Punkt der Migrationsreihe separat
-  bewertet (betrifft ggf. auch Verwendungsstellen außerhalb der Fragment-Controller).
+  erkennbar redundant. Als eigener Punkt der Migrationsreihe geklärt und deprecated
+  (doc-only) zugunsten von `Contao\CoreBundle\Cache\CacheTagManager`, siehe
+  `2026-09-14-response-tagger-deprecation-design.md`.
 - Ob/wie `RenderBackendViewTrait` (Backend-Vorschau-Rendering für ausgeblendete
   Frontend-Module/Content-Elemente im Editor) in der neuen Klassengeneration
   eine Entsprechung braucht, wird bei Bedarf als Nachtrag zu diesem Punkt ergänzt,
