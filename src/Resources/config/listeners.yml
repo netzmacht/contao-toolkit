@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
 parameters:
   netzmacht.contao_toolkit.alias_generator.default: 'netzmacht.contao_toolkit.data.alias_generator.factory.default_factory'
 
