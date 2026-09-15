@@ -14,6 +14,8 @@ simultaneously increase the code quality.
    data/index
    dca/index
    view/index
+   controller/index
+   routing/index
    insert-tags/index
 
 
