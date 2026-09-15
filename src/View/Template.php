@@ -8,6 +8,8 @@ use Netzmacht\Contao\Toolkit\View\Template\Exception\HelperNotFound;
 
 /**
  * Interface describes the templates being used in the toolkit.
+ *
+ * @deprecated Use native Twig templates instead. Will be removed in 5.0.
  */
 // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 // phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint

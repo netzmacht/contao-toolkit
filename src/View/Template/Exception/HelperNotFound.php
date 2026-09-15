@@ -9,6 +9,9 @@ use Throwable;
 
 use function sprintf;
 
+/**
+ * @deprecated Part of the deprecated legacy template component. Will be removed in 5.0.
+ */
 final class HelperNotFound extends RuntimeException
 {
     /**

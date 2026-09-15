@@ -8,6 +8,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Class GetTemplateHelpersEvent is triggered when the helpers for a template are generated.
+ *
+ * @deprecated Part of the deprecated legacy template component. Will be removed in 5.0.
  */
 final class GetTemplateHelpersEvent extends Event
 {

@@ -4,6 +4,15 @@ Templates
 Toolkit provides some improvements to the default Contao template. It provides a common interface for templates, supports
 template helpers and a simple to use template factory.
 
+.. important::
+
+   The Contao-template-based rendering path described below (``Template``, ``TemplateFactory``,
+   ``FrontendTemplate``, ``BackendTemplate``, ``TemplateTrait``, the
+   ``netzmacht.contao_toolkit.view.get_template_helpers`` event) is deprecated as of 4.1.0 and
+   will be removed in 5.0.0. Contao 6 removes the legacy PHP template engine entirely. Write new
+   templates in Twig and keep rendering them via the same
+   ``netzmacht.contao_toolkit.template_renderer`` service — Twig templates don't need registered
+   helpers, use Contao's own Twig functions/filters instead (e.g. ``trans()``, ``backend_icon()``).
 
 Template renderer
 ----------------
@@ -30,8 +39,8 @@ Using the template renderer makes it easy. You don't have to worry about any hel
 
 .. _template-helpers:
 
-Helpers
--------
+Helpers (deprecated, legacy Contao templates only)
+---------------------------------------------------
 
 Some templates requires helpers to improve template development and code quality by reusing helper codes. Instead of
 working with singletons or static helpers, Toolkit encourages you to use view helpers. Every object could be registered
