@@ -16,6 +16,9 @@ Changelog
    `AbstractPickerListener`, `ColorPickerListener` and `PopupWizardListener`.
  - New `Netzmacht\Contao\Toolkit\Data\Alias\SlugAliasGenerator` and
    `Dca\Listener\Save\SlugAliasListener`, built on Contao's native `contao.slug` service.
+ - New `Netzmacht\Contao\Toolkit\Controller\Fragment\RenderBackendWildcardTrait`, an opt-in
+   replacement for the deprecated `RenderBackendViewTrait`. See
+   `docs/controller/render-backend-wildcard.rst`.
 
 ### Changed
 
@@ -63,6 +66,8 @@ Changelog
    `DependencyInjection\Compiler\FosCacheResponseTaggerPass`,
    `Exception\InvalidHttpResponseTagException`. Use `Contao\CoreBundle\Cache\CacheTagManager`
    instead. See `docs/cache/response-tagger.rst`.
+ - `Controller\ContentElement\RenderBackendViewTrait`,
+   `Controller\FrontendModule\ModuleRenderBackendViewTrait`.
 
 [4.0.8]
 
