@@ -143,8 +143,7 @@ services:
     alias: Netzmacht\Contao\Toolkit\Dca\Listener\Options\TemplateOptionsListener
     public: true
 
-  netzmacht.contao_toolkit.listeners.register_field_callbacks:
-    class: Netzmacht\Contao\Toolkit\Dca\Listener\RegisterFieldCallbacksListener
+  Netzmacht\Contao\Toolkit\Dca\Listener\RegisterFieldCallbacksListener:
     public: true
     arguments:
       - '@netzmacht.contao_toolkit.dca.manager'
