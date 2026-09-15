@@ -15,9 +15,13 @@ use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
 use function sprintf;
 use function str_replace;
+use function trigger_deprecation;
 
 /**
  * FilePicker wizard.
+ *
+ * @deprecated Use the native `eval => ['dcaPicker' => [...]]` field eval
+ *             (Contao\Backend::getDcaPickerWizard()) instead. Will be removed in 5.0.
  */
 final class FilePickerListener extends AbstractFieldPickerListener
 {
@@ -46,6 +50,12 @@ final class FilePickerListener extends AbstractFieldPickerListener
         parent::__construct($templateRenderer, $translator, $dcaManager, $template);
 
         $this->input = $input;
+
+        trigger_deprecation(
+            'netzmacht/contao-toolkit',
+            '4.1',
+            'FilePickerListener is deprecated. Use the native "dcaPicker" field eval instead.',
+        );
     }
 
     /** {@inheritDoc} */

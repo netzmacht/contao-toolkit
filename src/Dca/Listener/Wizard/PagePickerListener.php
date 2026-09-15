@@ -15,7 +15,12 @@ use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
 use function sprintf;
 use function str_replace;
+use function trigger_deprecation;
 
+/**
+ * @deprecated Use the native `eval => ['dcaPicker' => [...]]` field eval
+ *             (Contao\Backend::getDcaPickerWizard()) instead. Will be removed in 5.0.
+ */
 final class PagePickerListener extends AbstractFieldPickerListener
 {
     /**
@@ -44,6 +49,12 @@ final class PagePickerListener extends AbstractFieldPickerListener
         parent::__construct($templateRenderer, $translator, $dcaManager, $template);
 
         $this->input = $input;
+
+        trigger_deprecation(
+            'netzmacht/contao-toolkit',
+            '4.1',
+            'PagePickerListener is deprecated. Use the native "dcaPicker" field eval instead.',
+        );
     }
 
     /** {@inheritDoc} */
