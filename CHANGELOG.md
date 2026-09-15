@@ -59,6 +59,10 @@ Changelog
    `createFrontendUserInstance()` (and the `netzmacht.contao_toolkit.contao.backend_user`/
    `...frontend_user` services). Use `Symfony\Bundle\SecurityBundle\Security::isGranted()`/
    `::getUser()` instead. See `docs/dependency-injection/contao-services-factory.rst`.
+ - `Response\ResponseTagger`, `FosCacheResponseTagger`, `NoOpResponseTagger`,
+   `DependencyInjection\Compiler\FosCacheResponseTaggerPass`,
+   `Exception\InvalidHttpResponseTagException`. Use `Contao\CoreBundle\Cache\CacheTagManager`
+   instead. See `docs/cache/response-tagger.rst`.
 
 [4.0.8]
 

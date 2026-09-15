@@ -8,6 +8,8 @@ use Override;
 
 /**
  * Class NoOpResponseTagger is there for BC reasons. It's used if Contao < 4.6 is used.
+ *
+ * @deprecated Use Contao\CoreBundle\Cache\CacheTagManager instead. Will be removed in 5.0.
  */
 final class NoOpResponseTagger implements ResponseTagger
 {
