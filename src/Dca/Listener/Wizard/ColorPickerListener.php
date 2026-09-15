@@ -14,7 +14,7 @@ final class ColorPickerListener extends AbstractPickerListener
     /**
      * Template name.
      */
-    protected string $template = 'toolkit:be:be_wizard_color_picker.html5';
+    protected string $template = '@NetzmachtContaoToolkit/backend/wizard_color_picker.html.twig';
 
     /**
      * Generate the color picker.
