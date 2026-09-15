@@ -45,7 +45,7 @@ class SetOperationDataAttributeListener
      */
     public function onLoadDataContainer(string $dataContainerName): void
     {
-        if (! $this->scopeMatcher->isContaoRequest() || $this->scopeMatcher->isInstallRequest()) {
+        if (! $this->scopeMatcher->isContaoRequest()) {
             return;
         }
 
