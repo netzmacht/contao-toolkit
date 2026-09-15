@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\InsertTag;
 
+use Netzmacht\Contao\Toolkit\InsertTag\ArgumentParser;
 use PhpSpec\ObjectBehavior;
 use RuntimeException;
+use spec\Netzmacht\Contao\Toolkit\DeprecationSpecHelper;
 
 final class ArgumentParserSpec extends ObjectBehavior
 {
+    use DeprecationSpecHelper;
+
     public function it_parses_arguments_default_splitted_by_double_colons(): void
     {
         $this->splitBy();
@@ -88,5 +92,14 @@ final class ArgumentParserSpec extends ObjectBehavior
                     'test'      => '?foo=bar',
                 ],
             );
+    }
+
+    public function it_triggers_a_deprecation_warning_via_create(): void
+    {
+        $messages = $this->captureDeprecations(static function (): void {
+            ArgumentParser::create();
+        });
+
+        $this->assertDeprecationTriggered($messages, 'InsertTag component');
     }
 }

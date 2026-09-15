@@ -6,6 +6,9 @@ namespace Netzmacht\Contao\Toolkit\InsertTag;
 
 use Override;
 
+/**
+ * @deprecated Use Contao\CoreBundle\DependencyInjection\Attribute\AsInsertTag instead. Will be removed in 5.0.
+ */
 abstract class AbstractSingleInsertTagParser extends AbstractInsertTagParser
 {
     /**
