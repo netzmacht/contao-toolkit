@@ -55,6 +55,10 @@ Changelog
  - `Dca\Listener\Save\GenerateAliasListener` and the filter-/factory-based alias generator
    (`FilterBasedAliasGenerator`, `Filter` and its implementations, `AliasGeneratorFactory`,
    `ToolkitAliasGeneratorFactory`). Use `Dca\Listener\Save\SlugAliasListener` instead.
+ - `DependencyInjection\ContaoServicesFactory::createBackendUserInstance()`/
+   `createFrontendUserInstance()` (and the `netzmacht.contao_toolkit.contao.backend_user`/
+   `...frontend_user` services). Use `Symfony\Bundle\SecurityBundle\Security::isGranted()`/
+   `::getUser()` instead. See `docs/dependency-injection/contao-services-factory.rst`.
 
 [4.0.8]
 

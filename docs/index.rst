@@ -16,6 +16,7 @@ simultaneously increase the code quality.
    view/index
    controller/index
    routing/index
+   dependency-injection/index
    insert-tags/index
 
 
