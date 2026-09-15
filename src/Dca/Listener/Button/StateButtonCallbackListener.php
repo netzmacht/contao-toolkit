@@ -20,9 +20,14 @@ use function array_merge;
 use function preg_match;
 use function preg_replace;
 use function sprintf;
+use function trigger_deprecation;
 
 /**
  * StateButtonCallback creates the state toggle button known in Contao.
+ *
+ * @deprecated Use the native "toggle" field eval instead
+ *             (Contao\CoreBundle\DataContainer\DataContainerOperationsBuilder::handleToggle()).
+ *             Will be removed in 5.0.
  */
 final class StateButtonCallbackListener
 {
@@ -67,6 +72,12 @@ final class StateButtonCallbackListener
         $this->updater    = $updater;
         $this->dcaManager = $dcaManager;
         $this->backend    = $backend;
+
+        trigger_deprecation(
+            'netzmacht/contao-toolkit',
+            '4.1',
+            'StateButtonCallbackListener is deprecated. Use the native "toggle" field eval instead.',
+        );
     }
 
     /**
