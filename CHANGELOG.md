@@ -4,6 +4,39 @@ Changelog
 [Unreleased]
 ------------
 
+[4.1.0]
+
+### Added
+
+ - New `Netzmacht\Contao\Toolkit\Controller\Fragment\AbstractContentElementController` and
+   `AbstractFrontendModuleController` base classes built directly on Contao Core's own fragment
+   infrastructure. See `docs/controller/fragment.rst`.
+ - New Twig backend-wizard templates (`@NetzmachtContaoToolkit/backend/wizard_picker.html.twig`,
+   `wizard_color_picker.html.twig`, `wizard_popup.html.twig`), now the default for
+   `AbstractPickerListener`, `ColorPickerListener` and `PopupWizardListener`.
+
+### Changed
+
+ - Raised `contao/core-bundle` requirement to `^5.7`. Support for Contao 4.13 is dropped in 4.1.0.
+
+### Deprecated
+
+ - `Netzmacht\Contao\Toolkit\View\Template` and its implementations (`FrontendTemplate`,
+   `BackendTemplate`, `TemplateTrait`, `TemplateFactory`, `ToolkitTemplateFactory`,
+   `GetTemplateHelpersEvent`/`GetTemplateHelpersListener`, `HelperNotFound`). Use native Twig
+   templates instead.
+ - Rendering legacy Contao templates via `DelegatingTemplateRenderer` (`be:`/`fe:`/`toolkit:`
+   prefixed names) and the implicit `fe:` auto-prefix in
+   `Controller\AbstractFragmentController::render()`. Both now trigger a runtime deprecation
+   warning when actually used.
+ - `Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher`. Use
+   `Contao\CoreBundle\Routing\ScopeMatcher` directly. `isInstallRequest()` is removed outright
+   (already dead code under the new `^5.7` floor).
+ - `Netzmacht\Contao\Toolkit\Controller\AbstractFragmentController` and its
+   `ContentElement`/`FrontendModule`/`Hybrid` subclasses. Use the new
+   `Controller\Fragment\AbstractContentElementController`/`AbstractFrontendModuleController`
+   instead.
+
 [4.0.8]
 
 ### Changed
