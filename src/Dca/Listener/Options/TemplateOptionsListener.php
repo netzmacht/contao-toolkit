@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Dca\Listener\Options;
 
 use Contao\Controller;
+use Contao\CoreBundle\Twig\Finder\FinderFactory;
 use Contao\DataContainer;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 
@@ -12,18 +13,14 @@ use function array_diff;
 use function array_map;
 use function array_merge;
 use function array_values;
+use function str_contains;
 
 final class TemplateOptionsListener
 {
-    /**
-     * Data container manager.
-     */
-    private DcaManager $dcaManager;
-
-    /** @param DcaManager $dcaManager Data container manager. */
-    public function __construct(DcaManager $dcaManager)
-    {
-        $this->dcaManager = $dcaManager;
+    public function __construct(
+        private readonly DcaManager $dcaManager,
+        private readonly FinderFactory $finderFactory,
+    ) {
     }
 
     /**
@@ -39,7 +36,9 @@ final class TemplateOptionsListener
     public function onOptionsCallback(DataContainer $dataContainer): array
     {
         $config    = $this->getConfig($dataContainer);
-        $templates = Controller::getTemplateGroup($config['prefix']);
+        $templates = str_contains($config['prefix'], '/')
+            ? $this->finderFactory->create()->identifier($config['prefix'])->withVariants()->asIdentifierList()
+            : Controller::getTemplateGroup($config['prefix']);
 
         if (empty($config['exclude'])) {
             return $templates;
