@@ -19,6 +19,11 @@ Changelog
  - New `Netzmacht\Contao\Toolkit\Controller\Fragment\RenderBackendWildcardTrait`, an opt-in
    replacement for the deprecated `RenderBackendViewTrait`. See
    `docs/controller/render-backend-wildcard.rst`.
+ - Toolkit DCA field callbacks (`TemplateOptionsListener`, `SlugAliasListener`,
+   `PopupWizardListener`) are now automatically registered based on
+   `fields.<field>.toolkit.<key>` config presence — manual `options_callback`/`save_callback`/
+   `wizard` registration is no longer required (but remains a supported explicit override). See
+   `docs/dca/auto-callbacks.rst`.
 
 ### Changed
 

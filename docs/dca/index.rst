@@ -13,3 +13,4 @@ definitions.
    definition
    callbacks
    formatter
+   auto-callbacks
