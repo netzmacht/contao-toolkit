@@ -9,6 +9,8 @@ use Override;
 
 /**
  * Base filter class.
+ *
+ * @deprecated Part of the deprecated filter-based alias generator. Will be removed in 5.0.
  */
 abstract class AbstractFilter implements Filter
 {

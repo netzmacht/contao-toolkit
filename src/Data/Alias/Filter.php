@@ -6,6 +6,8 @@ namespace Netzmacht\Contao\Toolkit\Data\Alias;
 
 /**
  * Filter modifies a value for the alias generator.
+ *
+ * @deprecated Part of the deprecated filter-based alias generator. Will be removed in 5.0.
  */
 interface Filter
 {

@@ -17,6 +17,8 @@ use const ENT_QUOTES;
 
 /**
  * SlugifyFilter creates a slug value of the columns being represented.
+ *
+ * @deprecated Part of the deprecated filter-based alias generator. Will be removed in 5.0.
  */
 final class SlugifyFilter extends AbstractValueFilter
 {
