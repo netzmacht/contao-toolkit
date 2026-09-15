@@ -15,6 +15,8 @@ use Symfony\Component\DependencyInjection\Reference;
  * Class FosCacheResponseTaggerPass registers the FosCacheResponseTagger if it's supported.
  *
  * The response tagger is supported since Contao 4.6 if the fos http cache is installed and enabled.
+ *
+ * @deprecated Part of the deprecated ResponseTagger encapsulation. Will be removed in 5.0.
  */
 final class FosCacheResponseTaggerPass implements CompilerPass
 {
