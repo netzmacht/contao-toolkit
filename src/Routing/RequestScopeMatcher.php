@@ -8,6 +8,9 @@ use Contao\CoreBundle\Routing\ScopeMatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
+/**
+ * @deprecated Use Contao\CoreBundle\Routing\ScopeMatcher directly. Will be removed in 5.0.
+ */
 class RequestScopeMatcher
 {
     /**
@@ -76,24 +79,6 @@ class RequestScopeMatcher
         $request = $request ?: $this->getCurrentRequest();
         if ($request) {
             return $this->scopeMatcher->isContaoRequest($request);
-        }
-
-        return false;
-    }
-
-    /**
-     * Check if the route of the request is to the install route.
-     *
-     * If no request is given the current request from the request scope is used.
-     *
-     * @param Request|null $request Request which should be checked.
-     */
-    public function isInstallRequest(Request|null $request = null): bool
-    {
-        $request = $request ?: $this->getCurrentRequest();
-
-        if ($request) {
-            return $request->attributes->get('_route') === 'contao_install';
         }
 
         return false;
