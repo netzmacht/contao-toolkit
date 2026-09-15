@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Controller\Fragment;
 
+// phpcs:ignore Generic.Files.LineLength.MaxExceeded
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController as ContaoAbstractFrontendModuleController;
 use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\ModuleModel;
@@ -36,6 +37,8 @@ abstract class AbstractFrontendModuleController extends ContaoAbstractFrontendMo
 
     /**
      * Pre-generate hook. Return a Response to short-circuit the default rendering.
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function preGenerate(FragmentTemplate $template, ModuleModel $model, Request $request): Response|null
     {
@@ -48,6 +51,8 @@ abstract class AbstractFrontendModuleController extends ContaoAbstractFrontendMo
      * @param array<string,mixed> $data
      *
      * @return array<string,mixed>
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function prepareTemplateData(array $data, Request $request, ModuleModel $model): array
     {
@@ -57,6 +62,8 @@ abstract class AbstractFrontendModuleController extends ContaoAbstractFrontendMo
     /**
      * Post-generate hook. Return a Response to replace the default rendered response,
      * or null to keep it unchanged.
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function postGenerate(
         Response $response,

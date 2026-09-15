@@ -42,7 +42,11 @@ final class SlugAliasListener
         return new SlugAliasGenerator($this->slug, $validator, $dataContainer->table, $config['fields']);
     }
 
-    /** @return array{fields: list<string>, unique_key_fields: list<string>, allow_empty: bool} */
+    /**
+     * @return array{fields: list<string>, unique_key_fields: list<string>, allow_empty: bool}
+     *
+     * @psalm-suppress InvalidReturnType, InvalidReturnStatement
+     */
     private function getConfig(DataContainer $dataContainer): array
     {
         $definition = $this->dcaManager->getDefinition($dataContainer->table);

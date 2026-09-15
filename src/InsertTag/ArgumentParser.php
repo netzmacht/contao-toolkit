@@ -44,7 +44,8 @@ final class ArgumentParser
         trigger_deprecation(
             'netzmacht/contao-toolkit',
             '4.1',
-            'The InsertTag component (%s) is deprecated. Use Contao\CoreBundle\DependencyInjection\Attribute\AsInsertTag instead.',
+            'The InsertTag component (%s) is deprecated. Use'
+            . ' Contao\CoreBundle\DependencyInjection\Attribute\AsInsertTag instead.',
             self::class,
         );
 

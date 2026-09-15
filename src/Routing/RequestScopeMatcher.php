@@ -8,9 +8,7 @@ use Contao\CoreBundle\Routing\ScopeMatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-/**
- * @deprecated Use Contao\CoreBundle\Routing\ScopeMatcher directly. Will be removed in 5.0.
- */
+/** @deprecated Use Contao\CoreBundle\Routing\ScopeMatcher directly. Will be removed in 5.0. */
 class RequestScopeMatcher
 {
     /**

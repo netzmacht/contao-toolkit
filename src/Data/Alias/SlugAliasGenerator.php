@@ -53,7 +53,7 @@ final class SlugAliasGenerator implements AliasGenerator
             $values[] = (string) $result->$field;
         }
 
-        return implode(' ', array_filter($values, static fn (string $v): bool => $v !== ''));
+        return implode(' ', array_filter($values, static fn (string $value): bool => $value !== ''));
     }
 
     private function guardValidAlias(object $result, string $value): void

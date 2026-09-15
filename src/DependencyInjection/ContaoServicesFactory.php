@@ -122,7 +122,8 @@ final class ContaoServicesFactory
         trigger_deprecation(
             'netzmacht/contao-toolkit',
             '4.1',
-            'ContaoServicesFactory::createBackendUserInstance() is deprecated. Use Symfony\Bundle\SecurityBundle\Security::isGranted() or ::getUser() instead.',
+            'ContaoServicesFactory::createBackendUserInstance() is deprecated.'
+            . ' Use Symfony\Bundle\SecurityBundle\Security::isGranted() or ::getUser() instead.',
         );
 
         return $this->createInstance(BackendUser::class);
@@ -139,7 +140,8 @@ final class ContaoServicesFactory
         trigger_deprecation(
             'netzmacht/contao-toolkit',
             '4.1',
-            'ContaoServicesFactory::createFrontendUserInstance() is deprecated. Use Symfony\Bundle\SecurityBundle\Security::isGranted() or ::getUser() instead.',
+            'ContaoServicesFactory::createFrontendUserInstance() is deprecated.'
+            . ' Use Symfony\Bundle\SecurityBundle\Security::isGranted() or ::getUser() instead.',
         );
 
         return $this->createInstance(FrontendUser::class);

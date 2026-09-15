@@ -67,7 +67,8 @@ final class GenerateAliasListener
         trigger_deprecation(
             'netzmacht/contao-toolkit',
             '4.1',
-            'GenerateAliasListener is deprecated. Use Netzmacht\Contao\Toolkit\Dca\Listener\Save\SlugAliasListener instead.',
+            'GenerateAliasListener is deprecated. Use'
+            . ' Netzmacht\Contao\Toolkit\Dca\Listener\Save\SlugAliasListener instead.',
         );
     }
 
