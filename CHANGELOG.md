@@ -36,6 +36,10 @@ Changelog
    `ContentElement`/`FrontendModule`/`Hybrid` subclasses. Use the new
    `Controller\Fragment\AbstractContentElementController`/`AbstractFrontendModuleController`
    instead.
+ - `Netzmacht\Contao\Toolkit\InsertTag\AbstractInsertTagParser`, `AbstractSingleInsertTagParser`,
+   `ArgumentParser`, `ArgumentParserPlugin`. Use Contao's native
+   `Contao\CoreBundle\DependencyInjection\Attribute\AsInsertTag` instead. See
+   `docs/insert-tags/index.rst`.
 
 [4.0.8]
 

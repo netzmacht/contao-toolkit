@@ -1,68 +1,76 @@
 Insert tags
 ===========
 
-Toolkit introduces an object oriented way to implement own insert tags and also add an API to replace insert tags.
+Contao provides a native, attribute-based way to register insert tags since Contao 5.0. This is the recommended way
+to implement custom insert tags — use it instead of Toolkit's own (deprecated) ``InsertTag`` classes.
 
-Replacing insert tags
----------------------
+Registering an insert tag
+--------------------------
 
-Why does Toolkit provides an own API entry point to replace insert tags? Looking at Contao's history the way how insert
-tags could be replaced has changed some times. The method was protected for a while, got public static later and finally
-got extracted into an own InsertTags class.
-
-Supporting different Contao versions is a bit complicated here even then not extending every class form the *Controller*
-class. That's why Toolkit v1 provided a standard way to replace insert tags.
+Mark an invokable service method with ``#[AsInsertTag('name')]``. The attribute is repeatable and can be placed on
+the class or on individual methods.
 
 .. code-block:: php
 
    <?php
 
-    // Both method does the same
+   declare(strict_types=1);
 
-    /** @var ContaoInsertTags $replacer */
-    $replacer = $container->get('contao.controller.insert_tags');
-    $buffer   = $replacer->replace($buffer);
+   namespace App\InsertTag;
 
-    /** @var Netzmacht\Contao\Toolkit\InsertTag\Replacer $replacer */
-    $replacer = $container->get('netzmacht.contao_toolkit.insert_tag.replacer');
-    $buffer   = $replacer->replace($buffer);
+   use Contao\CoreBundle\DependencyInjection\Attribute\AsInsertTag;
+   use Contao\CoreBundle\InsertTag\InsertTagResult;
+   use Contao\CoreBundle\InsertTag\OutputType;
+   use Contao\CoreBundle\InsertTag\ResolvedInsertTag;
 
-.. hint:: You should be careful using the InsertTags class provided by Contao. It hassles with the right order of the Contao object stack.
+   #[AsInsertTag('smiley')]
+   final class SmileyInsertTag
+   {
+       public function __invoke(ResolvedInsertTag $insertTag): InsertTagResult
+       {
+           $mood = $insertTag->getParameters()->get(0) ?? 'happy';
 
+           return new InsertTagResult($this->renderSmiley($mood), OutputType::html);
+       }
 
-Register a insert tag parser
-----------------------------
+       private function renderSmiley(string $mood): string
+       {
+           // ...
+       }
+   }
 
-The insert tag component of Toolkit allows you to provide a custom insert tag parser which do the replacing stuff for
-you. The :code:`Netzmacht\Contao\Toolkit\InsertTag\Parser` interface is used for it.
+Reliable parameter access
+--------------------------
+
+``ResolvedInsertTag::getParameters()`` returns a ``ResolvedParameters`` value object which replaces what Toolkit's
+own ``ArgumentParser``/``AbstractSingleInsertTagParser`` tried to provide on top of the raw tag string:
 
 .. code-block:: php
 
-    // 1. Define your parser
-    class SmileyParser implements Netzmacht\Contao\Toolkit\InsertTag\Parser
-    {
-        // Check if tag is supported. Note that not the whole insert tag is passed here, only the part before the first ::
-        public function supports($tag)
-        {
-            return $tag === 'smiley';
-        }
+   <?php
 
-        // An insert tag value, e.g. smiley::lol?color=blue would be passed this way
-        // $raw = 'smiley::lol?color=blue'
-        // $tag = 'smiley'
-        // $params = 'lol?color=blue' (All after the first ::)-
-        public function parse($raw, $tag, $params = null, $cache = true)
-        {
-            // Do the parsing here.
-        }
-    }
+   $parameters = $insertTag->getParameters();
 
-.. code-block:: yaml
+   $parameters->get(0);            // First positional parameter.
+   $parameters->all();             // All positional parameters as a list.
+   $parameters->get('name');       // Named parameter ("name=value" convention), if present.
+   $parameters->getScalar(0);      // Automatically cast to int/float where applicable.
 
-    // 2. Register your parser
+Named parameters, nested insert-tag resolution and caching metadata (``InsertTagResult::withExpiresAt()``,
+``withCacheTags()``) are all handled natively — no manual query parsing is required.
 
-    // src/Resources/config/services.yml in your bundle
-    my.custom.smiley-insert-tag-parser:
-      class: SmileyParser
-      tags:
-        - { name: netzmacht.contao_toolkit.insert_tag.parser}
+.. _insert-tags-deprecated:
+
+Deprecated: Toolkit's own `InsertTag` classes
+-----------------------------------------------
+
+.. important::
+
+   ``Netzmacht\Contao\Toolkit\InsertTag\AbstractInsertTagParser``, ``AbstractSingleInsertTagParser``,
+   ``ArgumentParser`` and ``ArgumentParserPlugin`` are deprecated as of 4.1.0 and will be removed in 5.0.0.
+   Instantiating ``AbstractInsertTagParser`` (directly or via a subclass) or calling ``ArgumentParser::create()``
+   triggers a runtime deprecation warning. Migrate to ``#[AsInsertTag]`` as shown above.
+
+These classes were originally built to provide reliable parameter access on top of Contao's historic raw
+``replaceInsertTags`` hook string. Contao's native insert-tag system now covers this natively and more, so no
+replacement abstraction is provided by Toolkit — register your insert tag as a native Contao service instead.
