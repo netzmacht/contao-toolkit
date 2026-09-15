@@ -65,6 +65,17 @@ services:
     alias: Netzmacht\Contao\Toolkit\Dca\Listener\Save\GenerateAliasListener
     public: true
 
+  Netzmacht\Contao\Toolkit\Dca\Listener\Save\SlugAliasListener:
+    public: true
+    arguments:
+      - '@contao.slug'
+      - '@database_connection'
+      - '@netzmacht.contao_toolkit.dca.manager'
+
+  netzmacht.contao_toolkit.dca.listeners.slug_alias_generator:
+    alias: Netzmacht\Contao\Toolkit\Dca\Listener\Save\SlugAliasListener
+    public: true
+
   Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\ColorPickerListener:
     public: true
     arguments:
