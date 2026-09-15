@@ -13,6 +13,10 @@ use function sprintf;
 
 /**
  * The RenderBackendViewTrait renders the backend placeholder view for modules
+ *
+ * @deprecated No successor needed: Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController
+ *             already renders the backend wildcard automatically before getResponse() is called.
+ *             Will be removed in 5.0.
  */
 trait ModuleRenderBackendViewTrait
 {
