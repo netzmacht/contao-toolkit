@@ -12,5 +12,5 @@ abstract class AbstractPickerListener extends AbstractWizardListener
     /**
      * Template name.
      */
-    protected string $template = 'toolkit:be:be_wizard_picker.html5';
+    protected string $template = '@NetzmachtContaoToolkit/backend/wizard_picker.html.twig';
 }
