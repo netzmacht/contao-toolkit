@@ -120,6 +120,7 @@ services:
     public: true
     arguments:
       - '@netzmacht.contao_toolkit.dca.manager'
+      - '@Contao\CoreBundle\Twig\Finder\FinderFactory'
 
   netzmacht.contao_toolkit.dca.listeners.template_options:
     alias: Netzmacht\Contao\Toolkit\Dca\Listener\Options\TemplateOptionsListener
