@@ -54,29 +54,39 @@ Provided callbacks
 Alias generator callback
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-The alias generator uses the :doc:`../data/alias` to create an alias callback. By default a predefined alias generator
-is used. You may use the configurations to the `toolkit.alias_generator` configuration. The `fields` configuration is
-required.
+.. important::
+
+   `GenerateAliasListener` (and the filter-/factory-based alias generator it drives) is deprecated
+   as of 4.1.0 and will be removed in 5.0.0. Use `SlugAliasListener` below instead, which is
+   built directly on Contao's native `contao.slug` service.
+
+`SlugAliasListener` uses the :doc:`../data/alias` to create an alias callback based on Contao's own
+`contao.slug` service. The `fields` configuration is required.
 
 .. code-block:: php
 
    <?php
 
     $GLOBALS['TL_DCA']['tl_example']['fields']['alias']['save_callback'][] = [
-        Netzmacht\Contao\Toolkit\Dca\Listener\Save\GenerateAliasListener::class,
+        Netzmacht\Contao\Toolkit\Dca\Listener\Save\SlugAliasListener::class,
         'onSaveCallback'
     ];
 
     $GLOBALS['TL_DCA']['tl_example']['fields']['alias']['toolkit']['alias_generator'] = [
-        'factory' => 'netzmacht.contao_toolkit.data.alias_generator.factory.default_factory',
-        'fields' => ['title']
+        'fields' => ['title'],
+        'unique_key_fields' => [],
+        'allow_empty' => false,
     ];
 
-For more details please have a look at the `GenerateAliasListener`_.
+For more details please have a look at the `SlugAliasListener`_.
 
 
 State button callback
 ~~~~~~~~~~~~~~~~~~~~~
+
+.. important::
+
+   This listener is deprecated as of 4.1.0 and will be removed in 5.0.0.
 
 The state button callback is used to generate the state toggle button to toggle the active state of an entry. The
 `stateColumn` configuration is required.
@@ -102,6 +112,10 @@ For more details please have a look at the `StateButtonCallbackListener`_.
 Color picker wizard
 ~~~~~~~~~~~~~~~~~~~
 
+.. important::
+
+   This listener is deprecated as of 4.1.0 and will be removed in 5.0.0.
+
 The color picker wizard provides a wizard to choose a rgb color. Every configuration is optional.
 
 .. code-block:: php
@@ -126,6 +140,10 @@ For more details please have a look at the `ColorPickerListener`_ wizard.
 File picker wizard
 ~~~~~~~~~~~~~~~~~~
 
+.. important::
+
+   This listener is deprecated as of 4.1.0 and will be removed in 5.0.0.
+
 The file picker wizard provides a popup wizard to choose a file.
 
 .. code-block:: php
@@ -142,6 +160,10 @@ For more details please have a look at the `FilePickerListener`_ wizard.
 
 Page picker wizard
 ~~~~~~~~~~~~~~~~~~
+
+.. important::
+
+   This listener is deprecated as of 4.1.0 and will be removed in 5.0.0.
 
 The page picker wizard provides a popup wizard to choose a page.
 
@@ -201,6 +223,10 @@ The get templates callback get all available templates.
         'exclude' => null,
     ];
 
+As of 4.1.0, `prefix` also supports modern, namespaced fragment-template identifiers
+(e.g. `content_element/text`) in addition to classic prefixes (`ce_`, `mod_`, …) — the listener
+automatically uses Contao's `contao.twig.finder_factory` service for the former.
+
 For more details please have a look at the `TemplateOptionsListener`_ wizard.
 
 Invoker
@@ -224,7 +250,7 @@ For this case toolkit provides an invoker which is registered as a service.
     $value = $invoker->invokeAll($GLOBALS['TL_DCA']['tl_example']['fields']['save_callback'], [$value, $dc], 0);
 
 
-.. _GenerateAliasListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Save/GenerateAliasListener.php
+.. _SlugAliasListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Listener/Save/SlugAliasListener.php
 .. _StateButtonCallbackListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Button/StateButtonCallbackListener.php
 .. _ColorPickerListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Wizard/ColorPickerListener.php
 .. _FilePickerListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Wizard/FilePickerListener.php

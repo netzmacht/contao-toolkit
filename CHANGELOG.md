@@ -14,10 +14,17 @@ Changelog
  - New Twig backend-wizard templates (`@NetzmachtContaoToolkit/backend/wizard_picker.html.twig`,
    `wizard_color_picker.html.twig`, `wizard_popup.html.twig`), now the default for
    `AbstractPickerListener`, `ColorPickerListener` and `PopupWizardListener`.
+ - New `Netzmacht\Contao\Toolkit\Data\Alias\SlugAliasGenerator` and
+   `Dca\Listener\Save\SlugAliasListener`, built on Contao's native `contao.slug` service.
 
 ### Changed
 
  - Raised `contao/core-bundle` requirement to `^5.7`. Support for Contao 4.13 is dropped in 4.1.0.
+ - `TemplateOptionsListener` now also supports modern, namespaced fragment-template identifiers
+   (e.g. `content_element/text`), resolved via `contao.twig.finder_factory`.
+ - `DatabaseRowUpdater::hasUserAccess()` now checks permissions via Symfony's
+   `Security::isGranted(ContaoCorePermissions::USER_CAN_EDIT_FIELD_OF_TABLE, ...)` instead of the
+   legacy `Contao\BackendUser::hasAccess()`.
 
 ### Deprecated
 
@@ -40,6 +47,14 @@ Changelog
    `ArgumentParser`, `ArgumentParserPlugin`. Use Contao's native
    `Contao\CoreBundle\DependencyInjection\Attribute\AsInsertTag` instead. See
    `docs/insert-tags/index.rst`.
+ - `Dca\Listener\Button\StateButtonCallbackListener`. Use the native `toggle` field eval instead.
+ - `Dca\Listener\Wizard\ColorPickerListener`. Use the native `eval => ['colorpicker' => true]`
+   field eval instead.
+ - `Dca\Listener\Wizard\FilePickerListener`, `PagePickerListener`. Use the native
+   `eval => ['dcaPicker' => [...]]` field eval instead.
+ - `Dca\Listener\Save\GenerateAliasListener` and the filter-/factory-based alias generator
+   (`FilterBasedAliasGenerator`, `Filter` and its implementations, `AliasGeneratorFactory`,
+   `ToolkitAliasGeneratorFactory`). Use `Dca\Listener\Save\SlugAliasListener` instead.
 
 [4.0.8]
 

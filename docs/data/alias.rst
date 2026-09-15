@@ -1,10 +1,29 @@
 Alias generator
 ===============
 
-Toolkit provides an flexible, configurable alias generator which is able to creates unique aliases in different formats.
+.. important::
 
-Filter based alias generator
-----------------------------
+   The filter-based alias generator described below (`FilterBasedAliasGenerator`, the `Filter`
+   chain, `AliasGeneratorFactory`/`ToolkitAliasGeneratorFactory`) is deprecated as of 4.1.0 and
+   will be removed in 5.0.0. Use the `Slug-based generator`_ instead.
+
+.. _Slug-based generator:
+
+Slug-based generator (recommended)
+----------------------------------
+
+`Netzmacht\\Contao\\Toolkit\\Data\\Alias\\SlugAliasGenerator` implements the same
+`AliasGenerator`_ interface but delegates to Contao's own `contao.slug` service
+(`Contao\\CoreBundle\\Slug\\Slug`, backed by `ausi/slug-generator`) instead of a custom filter
+chain. It still uses the existing `Validator`_ (typically `UniqueDatabaseValueValidator`_) to
+guard uniqueness — including for a manually entered, non-unique value, which now throws
+`InvalidAliasException`_ instead of being silently overwritten (a deliberate behavior change
+versus the deprecated filter-based generator).
+
+Use it via the `SlugAliasListener` callback — see :doc:`../dca/callbacks`.
+
+Filter based alias generator (deprecated)
+------------------------------------------
 
 The core of this tool is a `filter based alias generator`_. It implements the `alias generator interface`_ and uses a
 set of `filters`_ to generate the alias. It uses a `validator`_ to ensure a valid alias is generated.
