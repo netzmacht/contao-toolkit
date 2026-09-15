@@ -13,9 +13,7 @@ use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 use function array_merge;
 use function trigger_deprecation;
 
-/**
- * @deprecated Use the native `eval => ['colorpicker' => true]` field eval instead. Will be removed in 5.0.
- */
+/** @deprecated Use the native `eval => ['colorpicker' => true]` field eval instead. Will be removed in 5.0. */
 final class ColorPickerListener extends AbstractPickerListener
 {
     /**

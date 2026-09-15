@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\Controller\Fragment;
 
 use Contao\ContentModel;
+// phpcs:ignore Generic.Files.LineLength.MaxExceeded
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController as ContaoAbstractContentElementController;
 use Contao\CoreBundle\Twig\FragmentTemplate;
 use Override;
@@ -43,6 +44,8 @@ abstract class AbstractContentElementController extends ContaoAbstractContentEle
     /**
      * Pre-generate hook. Return a Response to short-circuit the default rendering
      * (e.g. a redirect or a file download instead of the normal template).
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function preGenerate(FragmentTemplate $template, ContentModel $model, Request $request): Response|null
     {
@@ -55,6 +58,8 @@ abstract class AbstractContentElementController extends ContaoAbstractContentEle
      * @param array<string,mixed> $data
      *
      * @return array<string,mixed>
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function prepareTemplateData(array $data, Request $request, ContentModel $model): array
     {
@@ -64,6 +69,8 @@ abstract class AbstractContentElementController extends ContaoAbstractContentEle
     /**
      * Post-generate hook. Return a Response to replace the default rendered response
      * (e.g. to set additional cache-control directives), or null to keep it unchanged.
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function postGenerate(
         Response $response,

@@ -234,7 +234,8 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
             trigger_deprecation(
                 'netzmacht/contao-toolkit',
                 '4.1',
-                'Implicitly prefixing template name "%s" with "fe:" is deprecated. Pass an explicit scope prefix or a ".twig" template name instead.',
+                'Implicitly prefixing template name "%s" with "fe:" is deprecated. Pass an explicit scope'
+                . ' prefix or a ".twig" template name instead.',
                 $templateName,
             );
 

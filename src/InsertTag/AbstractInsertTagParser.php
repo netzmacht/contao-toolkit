@@ -7,9 +7,7 @@ namespace Netzmacht\Contao\Toolkit\InsertTag;
 use function explode;
 use function trigger_deprecation;
 
-/**
- * @deprecated Use Contao\CoreBundle\DependencyInjection\Attribute\AsInsertTag instead. Will be removed in 5.0.
- */
+/** @deprecated Use Contao\CoreBundle\DependencyInjection\Attribute\AsInsertTag instead. Will be removed in 5.0. */
 abstract class AbstractInsertTagParser
 {
     public function __construct()
@@ -17,7 +15,8 @@ abstract class AbstractInsertTagParser
         trigger_deprecation(
             'netzmacht/contao-toolkit',
             '4.1',
-            'The InsertTag component (%s) is deprecated. Use Contao\CoreBundle\DependencyInjection\Attribute\AsInsertTag instead.',
+            'The InsertTag component (%s) is deprecated. Use'
+            . ' Contao\CoreBundle\DependencyInjection\Attribute\AsInsertTag instead.',
             static::class,
         );
     }
