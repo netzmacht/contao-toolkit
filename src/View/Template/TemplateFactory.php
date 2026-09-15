@@ -9,6 +9,8 @@ use Netzmacht\Contao\Toolkit\View\Template;
 /**
  * TemplateFactory creates a template with some predefined helpers.
  *
+ * @deprecated Use native Twig templates instead. Will be removed in 5.0.
+ *
  * phpcs:disable SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilityTypeMissing
  */
 interface TemplateFactory

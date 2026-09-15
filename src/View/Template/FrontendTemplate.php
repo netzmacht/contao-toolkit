@@ -10,6 +10,8 @@ use Netzmacht\Contao\Toolkit\View\Template;
 /**
  * FrontendTemplate with extended features.
  *
+ * @deprecated Use native Twig templates instead. Will be removed in 5.0.
+ *
  * @psalm-suppress PropertyNotSetInConstructor
  */
 final class FrontendTemplate extends ContaoFrontendTemplate implements Template

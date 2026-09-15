@@ -10,6 +10,8 @@ use Symfony\Contracts\Translation\TranslatorInterface as Translator;
 
 /**
  * Class GetTemplateHelpersListener registers the default supported template helpers for all templates.
+ *
+ * @deprecated Part of the deprecated legacy template component. Will be removed in 5.0.
  */
 final class GetTemplateHelpersListener
 {

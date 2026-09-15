@@ -8,6 +8,8 @@ use Netzmacht\Contao\Toolkit\View\Template\Exception\HelperNotFound;
 
 /**
  * Trait extends the default Contao template classes.
+ *
+ * @deprecated Use native Twig templates instead. Will be removed in 5.0.
  */
 trait TemplateTrait
 {
