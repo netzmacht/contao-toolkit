@@ -1,0 +1,17 @@
+{{ backend_icon(icon, title, attrs().set('style', 'cursor:pointer').set('title', title).set('id', 'moo_' ~ field)) }}
+<script>
+    window.addEvent('domready', function() {
+        new MooRainbow('moo_{{ field }}', {
+            id: 'ctrl_{{ field }}',
+            startColor: ((cl = $('ctrl_{{ field }}').value.hexToRgb(true)) ? cl : [255, 0, 0]),
+            imgPath: 'assets/colorpicker/images/',
+            onComplete: function(color) {
+                {% if replaceHex %}
+                $('ctrl_{{ field }}').value = color.hex.replace("#", "");
+                {% else %}
+                $('ctrl_{{ field }}').value = color.hex;
+                {% endif %}
+            }
+        });
+    });
+</script>
