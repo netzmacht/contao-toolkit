@@ -9,3 +9,6 @@
 /.phpcq
 /.phpcq.yaml
 /.phpcs-cache
+
+# Superpowers subagent-driven-development workspace
+/.superpowers/
