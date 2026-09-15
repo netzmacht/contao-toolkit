@@ -9,6 +9,8 @@ use Override;
 
 /**
  * Class ExistingAliasFilter uses the existing value.
+ *
+ * @deprecated Part of the deprecated filter-based alias generator. Will be removed in 5.0.
  */
 final class ExistingAliasFilter implements Filter
 {

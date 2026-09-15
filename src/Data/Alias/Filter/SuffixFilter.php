@@ -8,6 +8,8 @@ use Override;
 
 /**
  * SuffixFilter adds a numeric suffix until a unique value is given.
+ *
+ * @deprecated Part of the deprecated filter-based alias generator. Will be removed in 5.0.
  */
 final class SuffixFilter extends AbstractFilter
 {

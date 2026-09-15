@@ -10,6 +10,8 @@ use Override;
 
 /**
  * Alias generator.
+ *
+ * @deprecated Use Netzmacht\Contao\Toolkit\Data\Alias\SlugAliasGenerator instead. Will be removed in 5.0.
  */
 final class FilterBasedAliasGenerator implements AliasGenerator
 {

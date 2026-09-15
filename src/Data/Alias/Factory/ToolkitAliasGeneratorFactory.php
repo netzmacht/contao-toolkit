@@ -13,6 +13,9 @@ use Netzmacht\Contao\Toolkit\Data\Alias\FilterBasedAliasGenerator;
 use Netzmacht\Contao\Toolkit\Data\Alias\Validator\UniqueDatabaseValueValidator;
 use Override;
 
+/**
+ * @deprecated Use Netzmacht\Contao\Toolkit\Data\Alias\SlugAliasGenerator instead. Will be removed in 5.0.
+ */
 final class ToolkitAliasGeneratorFactory implements AliasGeneratorFactory
 {
     /** @param Connection $connection Database connection. */

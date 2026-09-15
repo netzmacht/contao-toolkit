@@ -8,6 +8,8 @@ use Override;
 
 /**
  * RawValueFilter uses the values as given.
+ *
+ * @deprecated Part of the deprecated filter-based alias generator. Will be removed in 5.0.
  */
 final class RawValueFilter extends AbstractValueFilter
 {
