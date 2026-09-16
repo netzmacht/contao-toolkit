@@ -19,8 +19,29 @@ use function in_array;
  */
 final class RegisterFieldCallbacksListener
 {
-    /** Callback slots that hold an array of [class, method] pairs, safe to append to. */
-    private const LIST_SLOTS = ['save_callback', 'wizard'];
+    /**
+     * Callback slots that hold a single [class, method] pair, never to be appended to.
+     *
+     * Every other slot is treated as a list slot (array of [class, method] pairs) that is safe
+     * to append to. This mirrors Contao's own default behaviour, since toolkit config can wire
+     * arbitrary DCA callback slots and we cannot know all of them upfront. Keep this list in
+     * sync with Contao's canonical list, see
+     * {@see \Contao\CoreBundle\EventListener\DataContainerCallbackListener::SINGLETONS}.
+     */
+    private const SINGLETON_SLOTS = [
+        'button_callback',
+        'child_record_callback',
+        'default',
+        'group_callback',
+        'header_callback',
+        'input_field_callback',
+        'label_callback',
+        'options_callback',
+        'panel_callback',
+        'paste_button_callback',
+        'title_tag_callback',
+        'url_callback',
+    ];
 
     /** @param array<string,array{slot:string,service:string,method:string}> $callbacks */
     public function __construct(
@@ -64,25 +85,25 @@ final class RegisterFieldCallbacksListener
         $path  = ['fields', $field, $callback['slot']];
         $entry = [$callback['service'], $callback['method']];
 
-        if (in_array($callback['slot'], self::LIST_SLOTS, true)) {
-            $definition->modify($path, static function (mixed $current) use ($entry): array {
-                $current = (array) $current;
+        if (in_array($callback['slot'], self::SINGLETON_SLOTS, true)) {
+            // Singleton slot (e.g. options_callback): never replace an already-set callback.
+            if ($definition->has($path)) {
+                return;
+            }
 
-                if (in_array($entry, $current, true)) {
-                    return $current;
-                }
-
-                return [...$current, $entry];
-            });
+            $definition->set($path, $entry);
 
             return;
         }
 
-        // Single slot (e.g. options_callback): never replace an already-set callback.
-        if ($definition->has($path)) {
-            return;
-        }
+        $definition->modify($path, static function (mixed $current) use ($entry): array {
+            $current = (array) $current;
 
-        $definition->set($path, $entry);
+            if (in_array($entry, $current, true)) {
+                return $current;
+            }
+
+            return [...$current, $entry];
+        });
     }
 }
