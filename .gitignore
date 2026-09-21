@@ -10,5 +10,7 @@
 /.phpcq.yaml
 /.phpcs-cache
 
-# Superpowers subagent-driven-development workspace
+# Claude
 /.superpowers/
+/.claude/*
+!/.claude/settings.json
