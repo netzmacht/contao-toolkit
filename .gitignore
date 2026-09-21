@@ -1,3 +1,7 @@
+# Claude Code
+/.claude/*
+!/.claude/settings.json
+
 # Companion
 /.env.companion
 
@@ -9,8 +13,3 @@
 /.phpcq
 /.phpcq.yaml
 /.phpcs-cache
-
-# Claude
-/.superpowers/
-/.claude/*
-!/.claude/settings.json

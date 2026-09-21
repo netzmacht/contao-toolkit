@@ -30,3 +30,6 @@ psalm.xml export-ignore
 
 # PHP files
 *.php text eol=lf diff=php
+
+# Claude Code
+.claude export-ignore
