@@ -41,6 +41,14 @@
                 <referencedClass name="Netzmacht\Contao\Toolkit\Data\Alias\Factory\AliasGeneratorFactory"/>
             </errorLevel>
         </DeprecatedInterface>
+        <DeprecatedTrait>
+            <errorLevel type="suppress">
+                <file name="src/Controller/FrontendModule/AbstractFrontendModuleController.php"/>
+                <file name="src/Controller/Hybrid/AbstractHybridController.php"/>
+                <file name="src/View/Template/BackendTemplate.php"/>
+                <file name="src/View/Template/FrontendTemplate.php"/>
+            </errorLevel>
+        </DeprecatedTrait>
         <DeprecatedMethod>
             <errorLevel type="suppress">
                 <referencedMethod name="Contao\BackendUser::hasAccess"/>
