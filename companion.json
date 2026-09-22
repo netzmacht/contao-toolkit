@@ -1,6 +1,6 @@
 {
   "receipts": [
-    "projects/contao-bundle/5.7"
+    "projects/contao-bundle/5.7-6.0"
   ],
   "config": {
     "phpConstraint": "^8.3"
