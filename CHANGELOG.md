@@ -4,6 +4,50 @@ Changelog
 [Unreleased]
 ------------
 
+[5.0.0]
+
+### Breaking
+
+ - Remove `Netzmacht\Contao\Toolkit\View\Template` and all of its implementations
+   (`FrontendTemplate`, `BackendTemplate`, `TemplateTrait`, `TemplateFactory`,
+   `ToolkitTemplateFactory`, `GetTemplateHelpersEvent`/`GetTemplateHelpersListener`,
+   `HelperNotFound`), the `netzmacht.contao_toolkit.view.template_factory` service, and
+   `DependencyInjection\Compiler\TemplateRendererPass`. `DelegatingTemplateRenderer` now only
+   renders Twig and requires a non-nullable `Twig\Environment`. Use native Twig templates instead.
+ - Remove `Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher` and the
+   `netzmacht.contao_toolkit.routing.scope_matcher` service. Use
+   `Contao\CoreBundle\Routing\ScopeMatcher` directly.
+ - Remove `Netzmacht\Contao\Toolkit\Controller\AbstractFragmentController` and its
+   `ContentElement`/`FrontendModule`/`Hybrid` subclasses and traits
+   (`ContentElement\IsHiddenTrait`, `ContentElement\RenderBackendViewTrait`,
+   `FrontendModule\ModuleRenderBackendViewTrait`). Use
+   `Controller\Fragment\AbstractContentElementController`/`AbstractFrontendModuleController`
+   instead — there is no `Hybrid` successor, split a hybrid controller into a content-element
+   and/or frontend-module controller.
+ - Remove `Netzmacht\Contao\Toolkit\InsertTag\AbstractInsertTagParser`,
+   `AbstractSingleInsertTagParser`, `ArgumentParser`, `ArgumentParserPlugin`. Use Contao's native
+   `Contao\CoreBundle\DependencyInjection\Attribute\AsInsertTag` instead.
+ - Remove `Dca\Listener\Button\StateButtonCallbackListener`, `Dca\Listener\Wizard\ColorPickerListener`,
+   `FilePickerListener`, `PagePickerListener`. Use the native `toggle`, `colorpicker`, and
+   `dcaPicker` field evals instead.
+ - Remove `Dca\Listener\Save\GenerateAliasListener` and the filter-/factory-based alias generator
+   (`Data\Alias\FilterBasedAliasGenerator`, `Data\Alias\Filter` and its implementations,
+   `Data\Alias\Factory\AliasGeneratorFactory`, `ToolkitAliasGeneratorFactory`), the
+   `netzmacht.contao_toolkit.data.alias_generator.factory.default_factory` service, and the
+   `netzmacht.contao_toolkit.alias_generator.default` parameter. Use
+   `Dca\Listener\Save\SlugAliasListener` instead.
+ - Remove `DependencyInjection\ContaoServicesFactory::createBackendUserInstance()`/
+   `createFrontendUserInstance()` and the `netzmacht.contao_toolkit.contao.backend_user`/
+   `...frontend_user` services. Use `Symfony\Bundle\SecurityBundle\Security::isGranted()`/
+   `::getUser()` instead.
+ - Remove `Response\ResponseTagger`, `FosCacheResponseTagger`, `NoOpResponseTagger`,
+   `DependencyInjection\Compiler\FosCacheResponseTaggerPass`,
+   `Exception\InvalidHttpResponseTagException`, the `netzmacht.contao_toolkit.response_tagger`
+   service, and the `friendsofsymfony/http-cache` `require-dev`/`conflict` dependency. Use
+   `Contao\CoreBundle\Cache\CacheTagManager` instead.
+
+See `UPGRADE-5.0.md` for the full migration guide.
+
 [4.1.0-beta1]
 
 ### Added
