@@ -54,12 +54,6 @@ Provided callbacks
 Alias generator callback
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. important::
-
-   `GenerateAliasListener` (and the filter-/factory-based alias generator it drives) is deprecated
-   as of 4.1.0 and will be removed in 5.0.0. Use `SlugAliasListener` below instead, which is
-   built directly on Contao's native `contao.slug` service.
-
 `SlugAliasListener` uses the :doc:`../data/alias` to create an alias callback based on Contao's own
 `contao.slug` service. The `fields` configuration is required.
 
@@ -79,104 +73,6 @@ Alias generator callback
     ];
 
 For more details please have a look at the `SlugAliasListener`_.
-
-
-State button callback
-~~~~~~~~~~~~~~~~~~~~~
-
-.. important::
-
-   This listener is deprecated as of 4.1.0 and will be removed in 5.0.0.
-
-The state button callback is used to generate the state toggle button to toggle the active state of an entry. The
-`stateColumn` configuration is required.
-
-.. code-block:: php
-
-   <?php
-
-    $GLOBALS['TL_DCA']['tl_example']['list']['operations']['toggle']['button_callback'][] = [
-        Netzmacht\Contao\Toolkit\Dca\Listener\Button\SaveButtonCallbackListener::class,
-        'onButtonCallback'
-    ];
-
-    $GLOBALS['TL_DCA']['tl_example']['list']['operations']['toggle']['toolkit']['state_button'] = [
-        'disabledIcon' => 'custom-invisible-icon.png,
-        'stateColumn'  => 'published',
-        'inverse'      => false
-    ];
-
-For more details please have a look at the `StateButtonCallbackListener`_.
-
-
-Color picker wizard
-~~~~~~~~~~~~~~~~~~~
-
-.. important::
-
-   This listener is deprecated as of 4.1.0 and will be removed in 5.0.0.
-
-The color picker wizard provides a wizard to choose a rgb color. Every configuration is optional.
-
-.. code-block:: php
-
-   <?php
-
-    $GLOBALS['TL_DCA']['tl_example']['fields']['color']['wizard'][] = [
-        Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\ColorPickerListener::class,
-        'onWizardCallback'
-    ];
-
-    $GLOBALS['TL_DCA']['tl_example']['fields']['color']['toolkit']['alias_generator'] = [
-        'title'      => null,
-        'template'   => null,
-        'icon'       => null,
-        'replaceHex' => null,
-    ];
-
-For more details please have a look at the `ColorPickerListener`_ wizard.
-
-
-File picker wizard
-~~~~~~~~~~~~~~~~~~
-
-.. important::
-
-   This listener is deprecated as of 4.1.0 and will be removed in 5.0.0.
-
-The file picker wizard provides a popup wizard to choose a file.
-
-.. code-block:: php
-
-   <?php
-
-    $GLOBALS['TL_DCA']['tl_example']['fields']['file']['wizard'][] = [
-        Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\FilePickerListener::class,
-        'onWizardCallback'
-    ];
-
-For more details please have a look at the `FilePickerListener`_ wizard.
-
-
-Page picker wizard
-~~~~~~~~~~~~~~~~~~
-
-.. important::
-
-   This listener is deprecated as of 4.1.0 and will be removed in 5.0.0.
-
-The page picker wizard provides a popup wizard to choose a page.
-
-.. code-block:: php
-
-   <?php
-
-    $GLOBALS['TL_DCA']['tl_example']['fields']['page']['wizard'][] = [
-        Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PagePickerListener::class,
-        'onWizardCallback'
-    ];
-
-For more details please have a look at the `PagePickerListener`_ wizard.
 
 
 Popup wizard
@@ -251,9 +147,5 @@ For this case toolkit provides an invoker which is registered as a service.
 
 
 .. _SlugAliasListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Listener/Save/SlugAliasListener.php
-.. _StateButtonCallbackListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Button/StateButtonCallbackListener.php
-.. _ColorPickerListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Wizard/ColorPickerListener.php
-.. _FilePickerListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Wizard/FilePickerListener.php
-.. _PagePickerListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Wizard/PagePickerListener.php
 .. _PopupWizardListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Wizard/PopupWizardListener.php
 .. _TemplateOptionsListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Callback/Wizard/TemplateOptionsListener.php

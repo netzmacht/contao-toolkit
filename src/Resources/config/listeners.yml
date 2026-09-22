@@ -33,19 +33,6 @@ services:
     tags:
       - { name: 'contao.hook', hook: 'loadDataContainer', method: 'onLoadDataContainer' }
 
-  Netzmacht\Contao\Toolkit\Dca\Listener\Button\StateButtonCallbackListener:
-    public: true
-    arguments:
-      - '@netzmacht.contao_toolkit.contao.backend_adapter'
-      - '@netzmacht.contao_toolkit.contao.input_adapter'
-      - '@netzmacht.contao_toolkit.data.database_row_updater'
-      - '@netzmacht.contao_toolkit.dca.manager'
-      - '@?monolog.logger.contao.error'
-
-  netzmacht.contao_toolkit.dca.listeners.state_button_callback:
-    alias: Netzmacht\Contao\Toolkit\Dca\Listener\Button\StateButtonCallbackListener
-    public: true
-
   Netzmacht\Contao\Toolkit\Dca\Listener\Save\GenerateAliasListener:
     public: true
     arguments:
@@ -68,43 +55,6 @@ services:
 
   netzmacht.contao_toolkit.dca.listeners.slug_alias_generator:
     alias: Netzmacht\Contao\Toolkit\Dca\Listener\Save\SlugAliasListener
-    public: true
-
-  Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\ColorPickerListener:
-    public: true
-    arguments:
-      - '@netzmacht.contao_toolkit.template_renderer'
-      - '@translator'
-      - '@netzmacht.contao_toolkit.dca.manager'
-
-  netzmacht.contao_toolkit.dca.listeners.color_picker:
-    alias: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\ColorPickerListener
-    public: true
-
-  Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\FilePickerListener:
-    public: true
-    arguments:
-      - '@netzmacht.contao_toolkit.template_renderer'
-      - '@translator'
-      - '@netzmacht.contao_toolkit.dca.manager'
-      - '@netzmacht.contao_toolkit.contao.input_adapter'
-      - '@router'
-
-  netzmacht.contao_toolkit.dca.listeners.file_picker:
-    alias: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\FilePickerListener
-    public: true
-
-  Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PagePickerListener:
-    public: true
-    arguments:
-      - '@netzmacht.contao_toolkit.template_renderer'
-      - '@translator'
-      - '@netzmacht.contao_toolkit.dca.manager'
-      - '@netzmacht.contao_toolkit.contao.input_adapter'
-      - '@router'
-
-  netzmacht.contao_toolkit.dca.listeners.page_picker:
-    alias: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PagePickerListener
     public: true
 
   Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PopupWizardListener:
