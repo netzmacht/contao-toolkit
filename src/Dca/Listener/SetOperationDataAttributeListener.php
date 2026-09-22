@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener;
 
+use Contao\CoreBundle\Routing\ScopeMatcher;
 use Netzmacht\Contao\Toolkit\Assertion\AssertionFailed;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
-use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 
 use function trim;
 
@@ -26,13 +26,13 @@ class SetOperationDataAttributeListener
     /**
      * Request scope matcher.
      */
-    private RequestScopeMatcher $scopeMatcher;
+    private ScopeMatcher $scopeMatcher;
 
     /**
-     * @param DcaManager          $dcaManager   Data container manager.
-     * @param RequestScopeMatcher $scopeMatcher The scope matcher.
+     * @param DcaManager   $dcaManager   Data container manager.
+     * @param ScopeMatcher $scopeMatcher The scope matcher.
      */
-    public function __construct(DcaManager $dcaManager, RequestScopeMatcher $scopeMatcher)
+    public function __construct(DcaManager $dcaManager, ScopeMatcher $scopeMatcher)
     {
         $this->dcaManager   = $dcaManager;
         $this->scopeMatcher = $scopeMatcher;

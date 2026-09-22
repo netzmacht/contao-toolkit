@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Dca\Listener;
 
+use Contao\CoreBundle\Routing\ScopeMatcher;
 use Netzmacht\Contao\Toolkit\Assertion\AssertionFailed;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
-use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 
 use function array_keys;
 use function in_array;
@@ -46,7 +46,7 @@ final class RegisterFieldCallbacksListener
     /** @param array<string,array{slot:string,service:string,method:string}> $callbacks */
     public function __construct(
         private readonly DcaManager $dcaManager,
-        private readonly RequestScopeMatcher $scopeMatcher,
+        private readonly ScopeMatcher $scopeMatcher,
         private readonly array $callbacks,
     ) {
     }

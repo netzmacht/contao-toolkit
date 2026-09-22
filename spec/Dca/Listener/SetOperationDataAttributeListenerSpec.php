@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Listener;
 
+use Contao\CoreBundle\Routing\ScopeMatcher;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Listener\SetOperationDataAttributeListener;
-use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use RuntimeException;
 
 class SetOperationDataAttributeListenerSpec extends ObjectBehavior
 {
-    public function let(DcaManager $dcaManager, RequestScopeMatcher $scopeMatcher): void
+    public function let(DcaManager $dcaManager, ScopeMatcher $scopeMatcher): void
     {
         $this->beConstructedWith($dcaManager, $scopeMatcher);
     }
@@ -25,7 +25,7 @@ class SetOperationDataAttributeListenerSpec extends ObjectBehavior
     }
 
     public function it_does_nothing_outside_a_contao_request(
-        RequestScopeMatcher $scopeMatcher,
+        ScopeMatcher $scopeMatcher,
         DcaManager $dcaManager,
     ): void {
         $scopeMatcher->isContaoRequest()->willReturn(false);
@@ -35,7 +35,7 @@ class SetOperationDataAttributeListenerSpec extends ObjectBehavior
     }
 
     public function it_sets_the_data_operation_attribute_for_toolkit_operations(
-        RequestScopeMatcher $scopeMatcher,
+        ScopeMatcher $scopeMatcher,
         DcaManager $dcaManager,
     ): void {
         $dca = [

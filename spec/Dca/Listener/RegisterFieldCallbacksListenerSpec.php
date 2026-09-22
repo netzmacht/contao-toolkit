@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit\Dca\Listener;
 
+use Contao\CoreBundle\Routing\ScopeMatcher;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Dca\Definition;
 use Netzmacht\Contao\Toolkit\Dca\Listener\RegisterFieldCallbacksListener;
-use Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use RuntimeException;
 
 class RegisterFieldCallbacksListenerSpec extends ObjectBehavior
 {
-    public function let(DcaManager $dcaManager, RequestScopeMatcher $scopeMatcher): void
+    public function let(DcaManager $dcaManager, ScopeMatcher $scopeMatcher): void
     {
         $callbacks = [
             'template_options' => [
@@ -38,7 +38,7 @@ class RegisterFieldCallbacksListenerSpec extends ObjectBehavior
     }
 
     public function it_does_nothing_outside_a_contao_request(
-        RequestScopeMatcher $scopeMatcher,
+        ScopeMatcher $scopeMatcher,
         DcaManager $dcaManager,
     ): void {
         $scopeMatcher->isContaoRequest()->willReturn(false);
@@ -48,7 +48,7 @@ class RegisterFieldCallbacksListenerSpec extends ObjectBehavior
     }
 
     public function it_registers_a_single_slot_callback_when_none_is_set(
-        RequestScopeMatcher $scopeMatcher,
+        ScopeMatcher $scopeMatcher,
         DcaManager $dcaManager,
     ): void {
         $dca        = ['fields' => ['template' => ['toolkit' => ['template_options' => ['prefix' => 'ce_']]]]];
@@ -65,7 +65,7 @@ class RegisterFieldCallbacksListenerSpec extends ObjectBehavior
     }
 
     public function it_does_not_overwrite_an_already_set_single_slot_callback(
-        RequestScopeMatcher $scopeMatcher,
+        ScopeMatcher $scopeMatcher,
         DcaManager $dcaManager,
     ): void {
         $dca = [
@@ -89,7 +89,7 @@ class RegisterFieldCallbacksListenerSpec extends ObjectBehavior
     }
 
     public function it_appends_a_list_slot_callback_without_duplicating_it(
-        RequestScopeMatcher $scopeMatcher,
+        ScopeMatcher $scopeMatcher,
         DcaManager $dcaManager,
     ): void {
         $dca = [
