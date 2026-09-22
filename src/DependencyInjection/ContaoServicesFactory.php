@@ -151,5 +151,4 @@ final class ContaoServicesFactory
 
         return $this->framework->getAdapter($class);
     }
-
 }

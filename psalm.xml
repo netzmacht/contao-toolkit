@@ -12,43 +12,6 @@
                 <referencedProperty name="Contao\DataContainer::$activeRecord"/>
             </errorLevel>
         </UndefinedMagicPropertyFetch>
-        <DeprecatedClass>
-            <errorLevel type="suppress">
-                <referencedClass name="Netzmacht\Contao\Toolkit\View\Template\BackendTemplate"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\View\Template\FrontendTemplate"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\View\Template\Event\GetTemplateHelpersEvent"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\View\Template\Exception\HelperNotFound"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\Exception\InvalidHttpResponseTagException"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\FosCacheResponseTaggerPass"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\InsertTag\AbstractInsertTagParser"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\Response\FosCacheResponseTagger"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\Data\Alias\Filter\AbstractFilter"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\Controller\AbstractFragmentController"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\Data\Alias\Filter\AbstractValueFilter"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\Data\Alias\Filter\ExistingAliasFilter"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\Data\Alias\Filter\SlugifyFilter"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\Data\Alias\Filter\SuffixFilter"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\Data\Alias\FilterBasedAliasGenerator"/>
-            </errorLevel>
-        </DeprecatedClass>
-        <DeprecatedInterface>
-            <errorLevel type="suppress">
-                <referencedClass name="Netzmacht\Contao\Toolkit\View\Template\TemplateFactory"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\View\Template"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\Response\ResponseTagger"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\Data\Alias\Filter"/>
-                <referencedClass name="Netzmacht\Contao\Toolkit\Data\Alias\Factory\AliasGeneratorFactory"/>
-            </errorLevel>
-        </DeprecatedInterface>
-        <DeprecatedTrait>
-            <errorLevel type="suppress">
-                <file name="src/Controller/FrontendModule/AbstractFrontendModuleController.php"/>
-                <file name="src/Controller/Hybrid/AbstractHybridController.php"/>
-                <file name="src/View/Template/BackendTemplate.php"/>
-                <file name="src/View/Template/FrontendTemplate.php"/>
-            </errorLevel>
-        </DeprecatedTrait>
         <DeprecatedMethod>
             <errorLevel type="suppress">
                 <referencedMethod name="Contao\BackendUser::hasAccess"/>
