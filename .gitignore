@@ -13,3 +13,9 @@
 /.phpcq
 /.phpcq.yaml
 /.phpcs-cache
+
+# Worktrees
+/.worktrees
+
+# Superpowers scratch state
+/.superpowers
