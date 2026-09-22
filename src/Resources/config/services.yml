@@ -53,16 +53,6 @@ services:
     class: Contao\CoreBundle\Framework\Adapter
     factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createMessageAdapter']
 
-  # @deprecated Use Symfony\Bundle\SecurityBundle\Security::isGranted()/::getUser() instead. Will be removed in 5.0.
-  netzmacht.contao_toolkit.contao.backend_user:
-    class: Contao\BackendUser
-    factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createBackendUserInstance']
-
-  # @deprecated Use Symfony\Bundle\SecurityBundle\Security::isGranted()/::getUser() instead. Will be removed in 5.0.
-  netzmacht.contao_toolkit.contao.frontend_user:
-    class: Contao\FrontendUser
-    factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createFrontendUserInstance']
-
   netzmacht.contao_toolkit.data.database_row_updater:
     class: Netzmacht\Contao\Toolkit\Data\Updater\DatabaseRowUpdater
     arguments:

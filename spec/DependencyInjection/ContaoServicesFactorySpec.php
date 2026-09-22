@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace spec\Netzmacht\Contao\Toolkit\DependencyInjection;
 
 use Contao\Backend;
-use Contao\BackendUser;
 use Contao\Config;
 use Contao\Controller;
 use Contao\CoreBundle\Framework\Adapter;
@@ -13,19 +12,15 @@ use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Dbafs;
 use Contao\Environment;
 use Contao\Frontend;
-use Contao\FrontendUser;
 use Contao\Image;
 use Contao\Input;
 use Contao\Message;
 use Contao\System;
 use Netzmacht\Contao\Toolkit\DependencyInjection\ContaoServicesFactory;
 use PhpSpec\ObjectBehavior;
-use spec\Netzmacht\Contao\Toolkit\DeprecationSpecHelper;
 
 class ContaoServicesFactorySpec extends ObjectBehavior
 {
-    use DeprecationSpecHelper;
-
     public function let(ContaoFramework $framework): void
     {
         $this->beConstructedWith($framework);
@@ -96,48 +91,6 @@ class ContaoServicesFactorySpec extends ObjectBehavior
         $this->createDbafsAdapter()->shouldReturn($adapter);
     }
 
-    public function it_creates_backend_user_instance(
-        ContaoFramework $framework,
-        BackendUser $backendUser,
-    ): void {
-        $this->expectInstanceWillBeCreated($framework, BackendUser::class, $backendUser);
-        $this->createBackendUserInstance()->shouldReturn($backendUser);
-    }
-
-    public function it_creates_frontend_user_instance(
-        ContaoFramework $framework,
-        FrontendUser $frontendUser,
-    ): void {
-        $this->expectInstanceWillBeCreated($framework, FrontendUser::class, $frontendUser);
-        $this->createFrontendUserInstance()->shouldReturn($frontendUser);
-    }
-
-    public function it_triggers_a_deprecation_warning_when_creating_a_backend_user_instance(
-        ContaoFramework $framework,
-        BackendUser $backendUser,
-    ): void {
-        $this->expectInstanceWillBeCreated($framework, BackendUser::class, $backendUser);
-
-        $messages = $this->captureDeprecations(function (): void {
-            $this->createBackendUserInstance();
-        });
-
-        $this->assertDeprecationTriggered($messages, 'createBackendUserInstance() is deprecated');
-    }
-
-    public function it_triggers_a_deprecation_warning_when_creating_a_frontend_user_instance(
-        ContaoFramework $framework,
-        FrontendUser $frontendUser,
-    ): void {
-        $this->expectInstanceWillBeCreated($framework, FrontendUser::class, $frontendUser);
-
-        $messages = $this->captureDeprecations(function (): void {
-            $this->createFrontendUserInstance();
-        });
-
-        $this->assertDeprecationTriggered($messages, 'createFrontendUserInstance() is deprecated');
-    }
-
     public function expectAdapterWillBeReturned(
         ContaoFramework $framework,
         string $class,
@@ -145,11 +98,5 @@ class ContaoServicesFactorySpec extends ObjectBehavior
     ): void {
         $framework->initialize()->shouldBeCalled();
         $framework->getAdapter($class)->willReturn($adapter)->shouldBeCalled();
-    }
-
-    public function expectInstanceWillBeCreated(ContaoFramework $framework, string $class, object $instance): void
-    {
-        $framework->initialize()->shouldBeCalled();
-        $framework->createInstance($class)->willReturn($instance)->shouldBeCalled();
     }
 }

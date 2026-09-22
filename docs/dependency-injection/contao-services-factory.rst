@@ -23,17 +23,3 @@ ContaoServicesFactory
        {
        }
    }
-
-.. important::
-
-   ``createBackendUserInstance()``/``createFrontendUserInstance()`` (and the corresponding
-   ``netzmacht.contao_toolkit.contao.backend_user``/``...frontend_user`` services) are deprecated
-   as of 4.1.0 and will be removed in 5.0.0. Unlike the adapter methods above, they resolve the
-   legacy ``Contao\BackendUser::getInstance()``/``Contao\FrontendUser::getInstance()`` singleton.
-   Migrate to Symfony's security component instead:
-
-   - For a permission check, use
-     ``Symfony\Bundle\SecurityBundle\Security::isGranted($permission, $subject)`` with the
-     appropriate ``Contao\CoreBundle\Security\ContaoCorePermissions::*`` constant.
-   - For the concrete user object, use ``Symfony\Bundle\SecurityBundle\Security::getUser()``
-     (optionally combined with an ``instanceof BackendUser``/``FrontendUser`` check).
