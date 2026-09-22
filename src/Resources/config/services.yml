@@ -94,16 +94,10 @@ services:
     arguments:
       - '@contao.framework'
 
-  netzmacht.contao_toolkit.view.template_factory:
-    class: Netzmacht\Contao\Toolkit\View\Template\ToolkitTemplateFactory
-    arguments:
-      - "@event_dispatcher"
-
   netzmacht.contao_toolkit.template_renderer:
     class: Netzmacht\Contao\Toolkit\View\Template\DelegatingTemplateRenderer
     arguments:
-      - '@netzmacht.contao_toolkit.view.template_factory'
-      - ~
+      - '@twig'
 
   netzmacht.contao_toolkit.globals_assets_manager_factory:
     class: Netzmacht\Contao\Toolkit\View\Assets\GlobalsAssetsManagerFactory

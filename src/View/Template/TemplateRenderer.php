@@ -5,16 +5,9 @@ declare(strict_types=1);
 namespace Netzmacht\Contao\Toolkit\View\Template;
 
 /**
- * The template renderer abstracts the task of rendering templates.
- *
- * It replaces the templating component which is deprecated and removed from Symfony 5. The TemplateRenderer is a
- * wrapper for rendering toolkit based Contao templates and twig templates.
+ * The template renderer abstracts the task of rendering Twig templates.
  *
  * Supported template names are:
- *  - be:be_main
- *  - fe:fe_page
- *  - toolkit:be:be_main.html5
- *  - toolkit:fe:fe_page.html5
  *  - twig/template.html.twig
  *  - @Bundle/twig/template.html.twig
  */

@@ -8,7 +8,6 @@ use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\FosCacheResponseTagger
 use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\RegisterContaoModelPass;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\RegisterFieldCallbacksPass;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\RepositoriesPass;
-use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\TemplateRendererPass;
 use Override;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -23,7 +22,6 @@ final class NetzmachtContaoToolkitBundle extends Bundle
         $container->addCompilerPass(new RepositoriesPass());
         $container->addCompilerPass(new FosCacheResponseTaggerPass());
         $container->addCompilerPass(new RegisterContaoModelPass());
-        $container->addCompilerPass(new TemplateRendererPass());
         $container->addCompilerPass(new RegisterFieldCallbacksPass());
     }
 }
