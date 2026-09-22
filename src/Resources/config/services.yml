@@ -96,9 +96,6 @@ services:
       - []
       - '@contao.framework'
 
-  netzmacht.contao_toolkit.response_tagger:
-    class: Netzmacht\Contao\Toolkit\Response\NoOpResponseTagger
-
   netzmacht.contao_toolkit.logger.null_logger:
     class: Psr\Log\NullLogger
 

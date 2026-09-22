@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit;
 
-use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\FosCacheResponseTaggerPass;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\RegisterContaoModelPass;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\RegisterFieldCallbacksPass;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\RepositoriesPass;
@@ -20,7 +19,6 @@ final class NetzmachtContaoToolkitBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new RepositoriesPass());
-        $container->addCompilerPass(new FosCacheResponseTaggerPass());
         $container->addCompilerPass(new RegisterContaoModelPass());
         $container->addCompilerPass(new RegisterFieldCallbacksPass());
     }

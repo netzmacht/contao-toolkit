@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace spec\Netzmacht\Contao\Toolkit;
 
-use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\FosCacheResponseTaggerPass;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\RegisterContaoModelPass;
 use Netzmacht\Contao\Toolkit\DependencyInjection\Compiler\RepositoriesPass;
 use Netzmacht\Contao\Toolkit\NetzmachtContaoToolkitBundle;
@@ -35,19 +34,6 @@ final class NetzmachtContaoToolkitBundleSpec extends ObjectBehavior
     public function it_registers_contao_model_pass(ContainerBuilder $container): void
     {
         $container->addCompilerPass(Argument::type(RegisterContaoModelPass::class))
-            ->willReturn($container)
-            ->shouldBeCalledOnce();
-
-        $container->addCompilerPass(Argument::any())
-            ->willReturn($container)
-            ->shouldBeCalled();
-
-        $this->build($container);
-    }
-
-    public function it_registers_fos_cache_response_tagger_pass(ContainerBuilder $container): void
-    {
-        $container->addCompilerPass(Argument::type(FosCacheResponseTaggerPass::class))
             ->willReturn($container)
             ->shouldBeCalledOnce();
 
