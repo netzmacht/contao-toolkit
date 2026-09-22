@@ -6,6 +6,11 @@ Changelog
 
 [5.0.0]
 
+### Changed
+
+ - Raised `contao/core-bundle` requirement to `^5.7 || ^6.0` to support Contao 6. `symfony/*`
+   constraints now also allow `^8.0`. `doctrine/dbal` now also allows `^4.4`.
+
 ### Breaking
 
  - Remove `Netzmacht\Contao\Toolkit\View\Template` and all of its implementations

@@ -8,6 +8,11 @@ actually gets **removed** in 5.0.0 and what to migrate to, one section per 4.1.0
 Migrate each item while still on 4.1.x (the deprecated code stays fully functional there) before
 upgrading to 5.0.0.
 
+## Requirements
+
+5.0.0 also raises the platform floor: PHP `^8.3`, `contao/core-bundle: ^5.7 || ^6.0`, and Symfony
+`^6.4 || ^7.4 || ^8.0`. Make sure your project meets these before upgrading.
+
 ## Legacy Contao templates (`View\Template`)
 
 Removed: `View\Template` (interface), `View\Template\TemplateFactory`,
@@ -25,7 +30,8 @@ Replace `$this->helper('name')` calls with Twig-native functions/filters (e.g. `
 ## `RequestScopeMatcher`
 
 Removed: `Routing\RequestScopeMatcher` (`src/Routing/RequestScopeMatcher.php`), the
-`netzmacht.contao_toolkit.routing.scope_matcher` service. Toolkit's own `SetOperationDataAttributeListener` and `RegisterFieldCallbacksListener` now consume
+`netzmacht.contao_toolkit.routing.scope_matcher` service. Toolkit's own
+`SetOperationDataAttributeListener` and `RegisterFieldCallbacksListener` now consume
 `Contao\CoreBundle\Routing\ScopeMatcher` (service `contao.routing.scope_matcher`) directly; this is
 only relevant if you decorated or replaced either service.
 
@@ -95,8 +101,7 @@ Removed: `Response\ResponseTagger`, `FosCacheResponseTagger`, `NoOpResponseTagge
 `DependencyInjection\Compiler\FosCacheResponseTaggerPass`,
 `Exception\InvalidHttpResponseTagException`; the `netzmacht.contao_toolkit.response_tagger`
 service; the compiler-pass registration in `NetzmachtContaoToolkitBundle`. Also removed from
-`composer.json`: the `friendsofsymfony/http-cache` `require-dev`/`conflict` entries (if not needed
-for anything else by then).
+`composer.json`: the `friendsofsymfony/http-cache` `require-dev`/`conflict` entries.
 
 Migrate to: `Contao\CoreBundle\Cache\CacheTagManager` (`contao.cache.tag_manager`). See
 `docs/cache/response-tagger.rst`.
