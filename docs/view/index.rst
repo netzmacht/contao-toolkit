@@ -1,8 +1,8 @@
 View
 ====
 
-Toolkit provides some view improvements to the default behaviour of Contao. It provides extended templates with template
-view helper support and an assets manager.
+Toolkit provides some view improvements to the default behaviour of Contao. It provides an
+assets manager to simplify registering and rendering front end assets.
 
 .. _contents:
 

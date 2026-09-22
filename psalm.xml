@@ -14,7 +14,6 @@
         </UndefinedMagicPropertyFetch>
         <DeprecatedMethod>
             <errorLevel type="suppress">
-                <referencedMethod name="Contao\BackendUser::hasAccess"/>
                 <referencedMethod name="Doctrine\DBAL\Schema\AbstractSchemaManager::listTableColumns"/>
             </errorLevel>
         </DeprecatedMethod>
