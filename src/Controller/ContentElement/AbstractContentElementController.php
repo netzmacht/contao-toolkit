@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class AbstractContentElementController is the base fragment controller for content elements
  *
+ * @deprecated Use Netzmacht\Contao\Toolkit\Controller\Fragment\AbstractContentElementController instead.
+ *             Will be removed in 5.0.
+ *
  * @extends AbstractFragmentController<ContentModel>
  */
 abstract class AbstractContentElementController extends AbstractFragmentController

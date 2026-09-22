@@ -131,6 +131,7 @@ final class ArrayListOptions implements Options
     #[Override]
     public function offsetSet($offset, $value): void
     {
+        /** @psalm-suppress PossiblyNullArrayOffset */
         if (! isset($this->list[$offset]) || $offset !== count($this->list)) {
             throw new InvalidArgumentException(
                 'Offset ' . (string) $offset . ' has to be part of the list or a new entry',

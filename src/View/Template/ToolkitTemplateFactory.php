@@ -11,6 +11,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatche
 
 /**
  * TemplateFactory creates a template with some predefined helpers.
+ *
+ * @deprecated Use native Twig templates instead. Will be removed in 5.0.
  */
 final class ToolkitTemplateFactory implements TemplateFactory
 {

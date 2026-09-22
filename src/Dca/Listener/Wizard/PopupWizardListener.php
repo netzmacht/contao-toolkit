@@ -22,7 +22,7 @@ final class PopupWizardListener extends AbstractWizardListener
     /**
      * Template name.
      */
-    protected string $template = 'be:be_wizard_popup.html5';
+    protected string $template = '@NetzmachtContaoToolkit/backend/wizard_popup.html.twig';
 
     /**
      * Link pattern for the url.

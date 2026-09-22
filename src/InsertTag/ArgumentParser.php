@@ -14,7 +14,12 @@ use function is_string;
 use function parse_str;
 use function sprintf;
 use function str_replace;
+use function trigger_deprecation;
 
+/**
+ * @deprecated Use Contao\CoreBundle\DependencyInjection\Attribute\AsInsertTag and
+ *             ResolvedInsertTag::getParameters() instead. Will be removed in 5.0.
+ */
 final class ArgumentParser
 {
     /**
@@ -36,6 +41,14 @@ final class ArgumentParser
      */
     public static function create(): self
     {
+        trigger_deprecation(
+            'netzmacht/contao-toolkit',
+            '4.1',
+            'The InsertTag component (%s) is deprecated. Use'
+            . ' Contao\CoreBundle\DependencyInjection\Attribute\AsInsertTag instead.',
+            self::class,
+        );
+
         return new self();
     }
 
@@ -196,7 +209,8 @@ final class ArgumentParser
         }
 
         $parts[1] = str_replace('+', '&', $parts[1]);
-        $parts[1] = StringUtil::decodeEntities($parts[1]);
+        /** @psalm-suppress PossiblyInvalidCast */
+        $parts[1] = (string) StringUtil::decodeEntities($parts[1]);
         parse_str($parts[1], $options);
 
         return [

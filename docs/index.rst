@@ -14,6 +14,10 @@ simultaneously increase the code quality.
    data/index
    dca/index
    view/index
+   controller/index
+   routing/index
+   dependency-injection/index
+   cache/index
    insert-tags/index
 
 

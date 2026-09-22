@@ -4,6 +4,76 @@ Changelog
 [Unreleased]
 ------------
 
+[4.1.0-beta1]
+
+### Added
+
+ - New `Netzmacht\Contao\Toolkit\Controller\Fragment\AbstractContentElementController` and
+   `AbstractFrontendModuleController` base classes built directly on Contao Core's own fragment
+   infrastructure. See `docs/controller/fragment.rst`.
+ - New Twig backend-wizard templates (`@NetzmachtContaoToolkit/backend/wizard_picker.html.twig`,
+   `wizard_color_picker.html.twig`, `wizard_popup.html.twig`), now the default for
+   `AbstractPickerListener`, `ColorPickerListener` and `PopupWizardListener`.
+ - New `Netzmacht\Contao\Toolkit\Data\Alias\SlugAliasGenerator` and
+   `Dca\Listener\Save\SlugAliasListener`, built on Contao's native `contao.slug` service.
+ - New `Netzmacht\Contao\Toolkit\Controller\Fragment\RenderBackendWildcardTrait`, an opt-in
+   replacement for the deprecated `RenderBackendViewTrait`. See
+   `docs/controller/render-backend-wildcard.rst`.
+ - Toolkit DCA field callbacks (`TemplateOptionsListener`, `SlugAliasListener`,
+   `PopupWizardListener`) are now automatically registered based on
+   `fields.<field>.toolkit.<key>` config presence — manual `options_callback`/`save_callback`/
+   `wizard` registration is no longer required (but remains a supported explicit override). See
+   `docs/dca/auto-callbacks.rst`.
+
+### Changed
+
+ - Raised `contao/core-bundle` requirement to `^5.7`. Support for Contao 4.13 is dropped in 4.1.0.
+ - `TemplateOptionsListener` now also supports modern, namespaced fragment-template identifiers
+   (e.g. `content_element/text`), resolved via `contao.twig.finder_factory`.
+ - `DatabaseRowUpdater::hasUserAccess()` now checks permissions via Symfony's
+   `Security::isGranted(ContaoCorePermissions::USER_CAN_EDIT_FIELD_OF_TABLE, ...)` instead of the
+   legacy `Contao\BackendUser::hasAccess()`.
+
+### Deprecated
+
+ - `Netzmacht\Contao\Toolkit\View\Template` and its implementations (`FrontendTemplate`,
+   `BackendTemplate`, `TemplateTrait`, `TemplateFactory`, `ToolkitTemplateFactory`,
+   `GetTemplateHelpersEvent`/`GetTemplateHelpersListener`, `HelperNotFound`). Use native Twig
+   templates instead.
+ - Rendering legacy Contao templates via `DelegatingTemplateRenderer` (`be:`/`fe:`/`toolkit:`
+   prefixed names) and the implicit `fe:` auto-prefix in
+   `Controller\AbstractFragmentController::render()`. Both now trigger a runtime deprecation
+   warning when actually used.
+ - `Netzmacht\Contao\Toolkit\Routing\RequestScopeMatcher`. Use
+   `Contao\CoreBundle\Routing\ScopeMatcher` directly. `isInstallRequest()` is removed outright
+   (already dead code under the new `^5.7` floor).
+ - `Netzmacht\Contao\Toolkit\Controller\AbstractFragmentController` and its
+   `ContentElement`/`FrontendModule`/`Hybrid` subclasses. Use the new
+   `Controller\Fragment\AbstractContentElementController`/`AbstractFrontendModuleController`
+   instead.
+ - `Netzmacht\Contao\Toolkit\InsertTag\AbstractInsertTagParser`, `AbstractSingleInsertTagParser`,
+   `ArgumentParser`, `ArgumentParserPlugin`. Use Contao's native
+   `Contao\CoreBundle\DependencyInjection\Attribute\AsInsertTag` instead. See
+   `docs/insert-tags/index.rst`.
+ - `Dca\Listener\Button\StateButtonCallbackListener`. Use the native `toggle` field eval instead.
+ - `Dca\Listener\Wizard\ColorPickerListener`. Use the native `eval => ['colorpicker' => true]`
+   field eval instead.
+ - `Dca\Listener\Wizard\FilePickerListener`, `PagePickerListener`. Use the native
+   `eval => ['dcaPicker' => [...]]` field eval instead.
+ - `Dca\Listener\Save\GenerateAliasListener` and the filter-/factory-based alias generator
+   (`FilterBasedAliasGenerator`, `Filter` and its implementations, `AliasGeneratorFactory`,
+   `ToolkitAliasGeneratorFactory`). Use `Dca\Listener\Save\SlugAliasListener` instead.
+ - `DependencyInjection\ContaoServicesFactory::createBackendUserInstance()`/
+   `createFrontendUserInstance()` (and the `netzmacht.contao_toolkit.contao.backend_user`/
+   `...frontend_user` services). Use `Symfony\Bundle\SecurityBundle\Security::isGranted()`/
+   `::getUser()` instead. See `docs/dependency-injection/contao-services-factory.rst`.
+ - `Response\ResponseTagger`, `FosCacheResponseTagger`, `NoOpResponseTagger`,
+   `DependencyInjection\Compiler\FosCacheResponseTaggerPass`,
+   `Exception\InvalidHttpResponseTagException`. Use `Contao\CoreBundle\Cache\CacheTagManager`
+   instead. See `docs/cache/response-tagger.rst`.
+ - `Controller\ContentElement\RenderBackendViewTrait`,
+   `Controller\FrontendModule\ModuleRenderBackendViewTrait`.
+
 [4.0.8]
 
 ### Changed

@@ -34,5 +34,12 @@ provided as a service. The updater is provided as a service with service id
     // 6. Return the saved data.
     $savedData = $updater->update('my_table', ID, $data, $context);
 
+.. note::
+
+   As of 4.1.0, `DatabaseRowUpdater::hasUserAccess()` checks permissions via Symfony's
+   `Security::isGranted(ContaoCorePermissions::USER_CAN_EDIT_FIELD_OF_TABLE, ...)` instead of the
+   legacy `Contao\BackendUser::hasAccess()`. The observable true/false outcome for the standard
+   `alexf` field-permission check is unchanged.
+
 .. _Updater: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Data/Updater/Updater.php
 .. _database row updater: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Data/Updater/DatabaseRowUpdater.php

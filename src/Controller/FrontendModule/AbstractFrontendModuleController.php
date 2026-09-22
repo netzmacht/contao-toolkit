@@ -19,6 +19,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Class AbstractModuleController is the base fragment controller for frontend modules
  *
+ * @deprecated Use Netzmacht\Contao\Toolkit\Controller\Fragment\AbstractFrontendModuleController instead.
+ *             Will be removed in 5.0.
+ *
  * @extends AbstractFragmentController<ModuleModel>
  */
 abstract class AbstractFrontendModuleController extends AbstractFragmentController

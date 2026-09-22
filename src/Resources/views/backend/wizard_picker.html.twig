@@ -1,0 +1,12 @@
+<a href="{{ url }}"
+    onclick="Backend.getScrollOffset();Backend.openModalSelector({
+        'width':768,
+        'title':'{{ jsTitle }}',
+        'url': this.href,
+        'id': '{{ field }}',
+        'tag': 'ctrl_{{ id }}',
+        'self': this
+    }); return false"
+>
+{{ backend_icon(icon, title, attrs().set('style', 'cursor:pointer')) }}
+</a>

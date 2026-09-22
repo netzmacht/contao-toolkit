@@ -9,6 +9,7 @@ use FOS\HttpCache\ResponseTagger as FosResponseTagger;
 use Netzmacht\Contao\Toolkit\Exception\InvalidHttpResponseTagException;
 use Override;
 
+/** @deprecated Use Contao\CoreBundle\Cache\CacheTagManager instead. Will be removed in 5.0. */
 final class FosCacheResponseTagger implements ResponseTagger
 {
     /**

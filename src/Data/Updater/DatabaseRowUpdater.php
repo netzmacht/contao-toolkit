@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Netzmacht\Contao\Toolkit\Data\Updater;
 
-use Contao\BackendUser;
+use Contao\CoreBundle\Security\ContaoCorePermissions;
 use Contao\Versions;
 use Doctrine\DBAL\Connection;
 use Netzmacht\Contao\Toolkit\Callback\Invoker;
@@ -72,13 +72,10 @@ final class DatabaseRowUpdater implements Updater
     #[Override]
     public function hasUserAccess(string $dataContainerName, string $columnName): bool
     {
-        $user = $this->security->getUser();
-
-        if (! $user instanceof BackendUser) {
-            return false;
-        }
-
-        return $user->hasAccess($dataContainerName . '::' . $columnName, 'alexf');
+        return $this->security->isGranted(
+            ContaoCorePermissions::USER_CAN_EDIT_FIELD_OF_TABLE,
+            $dataContainerName . '::' . $columnName,
+        );
     }
 
     /**

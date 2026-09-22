@@ -18,9 +18,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use function array_values;
 use function assert;
 use function sprintf;
+use function trigger_deprecation;
 
 /**
  * Class GenerateAliasCallback is designed to create an alias of a column.
+ *
+ * @deprecated Use Netzmacht\Contao\Toolkit\Dca\Listener\Save\SlugAliasListener instead. Will be removed in 5.0.
  *
  * @SuppressWarnings(PHPMD.LongVariable)
  */
@@ -60,6 +63,13 @@ final class GenerateAliasListener
         $this->container               = $container;
         $this->defaultFactoryServiceId = $defaultFactoryServiceId;
         $this->dcaManager              = $dcaManager;
+
+        trigger_deprecation(
+            'netzmacht/contao-toolkit',
+            '4.1',
+            'GenerateAliasListener is deprecated. Use'
+            . ' Netzmacht\Contao\Toolkit\Dca\Listener\Save\SlugAliasListener instead.',
+        );
     }
 
     /**

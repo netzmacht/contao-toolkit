@@ -20,11 +20,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use spec\Netzmacht\Contao\Toolkit\DeprecationSpecHelper;
 
 use function serialize;
 
 class AbstractFrontendModuleControllerSpec extends ObjectBehavior
 {
+    use DeprecationSpecHelper;
+
     public function let(
         TemplateRenderer $templateRenderer,
         ScopeMatcher $scopeMatcher,
@@ -231,5 +234,24 @@ class AbstractFrontendModuleControllerSpec extends ObjectBehavior
             ->willReturn('HTML');
 
         $this->__invoke($request, $model, 'main')->getContent()->shouldBe('HTML');
+    }
+
+    public function it_triggers_a_deprecation_warning_for_the_implicit_fe_prefix(
+        Request $request,
+        ScopeMatcher $scopeMatcher,
+        TemplateRenderer $templateRenderer,
+    ): void {
+        $model           = (new ReflectionClass(ModuleModel::class))->newInstanceWithoutConstructor();
+        $model->cssID    = serialize(['foo', 'bar']);
+        $model->headline = serialize(['value' => 'Headline', 'unit' => 'h1']);
+
+        $scopeMatcher->isBackendRequest($request)->willReturn(false);
+        $templateRenderer->render(Argument::cetera())->willReturn('HTML');
+
+        $messages = $this->captureDeprecations(function () use ($request, $model): void {
+            $this->__invoke($request, $model, 'main');
+        });
+
+        $this->assertDeprecationTriggered($messages, 'Implicitly prefixing template name');
     }
 }

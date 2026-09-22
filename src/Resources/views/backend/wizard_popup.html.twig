@@ -1,0 +1,11 @@
+<a href="{{ href }}"
+   onclick="Backend.getScrollOffset();Backend.openModalSelector({
+       'width':768,
+       'title':'{{ jsTitle }}',
+       'url': this.href
+       }); return false"
+   title="{{ label }}"
+   style="padding-left: 3px"
+    >
+    {{ backend_icon(icon, title) }}
+</a>

@@ -12,6 +12,8 @@ use function is_array;
 
 /**
  * Base class for filters depending on values from other columns.
+ *
+ * @deprecated Part of the deprecated filter-based alias generator. Will be removed in 5.0.
  */
 abstract class AbstractValueFilter extends AbstractFilter
 {

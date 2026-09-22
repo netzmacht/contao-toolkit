@@ -1,13 +1,15 @@
-# composer related
-vendor/
-composer.lock
+# Claude Code
+/.claude/*
+!/.claude/settings.json
 
-# Translations
-.tx
+# Companion
+/.env.companion
 
-# phpcq
-.phpcq.yaml
-.phpcq
+# Composer
+/composer.lock
+/vendor
 
-#phpcs
-.phpcs-cache
+# PHPCQ
+/.phpcq
+/.phpcq.yaml
+/.phpcs-cache

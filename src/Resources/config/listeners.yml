@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
 parameters:
   netzmacht.contao_toolkit.alias_generator.default: 'netzmacht.contao_toolkit.data.alias_generator.factory.default_factory'
 
@@ -64,6 +65,19 @@ services:
     alias: Netzmacht\Contao\Toolkit\Dca\Listener\Save\GenerateAliasListener
     public: true
 
+  Netzmacht\Contao\Toolkit\Dca\Listener\Save\SlugAliasListener:
+    public: true
+    arguments:
+      - '@contao.slug'
+      - '@database_connection'
+      - '@netzmacht.contao_toolkit.dca.manager'
+    tags:
+      - { name: 'netzmacht.contao_toolkit.dca.auto_callback', key: 'alias_generator', slot: 'save_callback', method: 'onSaveCallback' }
+
+  netzmacht.contao_toolkit.dca.listeners.slug_alias_generator:
+    alias: Netzmacht\Contao\Toolkit\Dca\Listener\Save\SlugAliasListener
+    public: true
+
   Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\ColorPickerListener:
     public: true
     arguments:
@@ -110,6 +124,8 @@ services:
       - '@security.csrf.token_manager'
       - '@router'
       - '%contao.csrf_token_name%'
+    tags:
+      - { name: 'netzmacht.contao_toolkit.dca.auto_callback', key: 'popup_wizard', slot: 'wizard', method: 'onWizardCallback' }
 
   netzmacht.contao_toolkit.dca.listeners.popup_wizard:
     alias: Netzmacht\Contao\Toolkit\Dca\Listener\Wizard\PopupWizardListener
@@ -119,7 +135,19 @@ services:
     public: true
     arguments:
       - '@netzmacht.contao_toolkit.dca.manager'
+      - '@Contao\CoreBundle\Twig\Finder\FinderFactory'
+    tags:
+      - { name: 'netzmacht.contao_toolkit.dca.auto_callback', key: 'template_options', slot: 'options_callback', method: 'onOptionsCallback' }
 
   netzmacht.contao_toolkit.dca.listeners.template_options:
     alias: Netzmacht\Contao\Toolkit\Dca\Listener\Options\TemplateOptionsListener
     public: true
+
+  Netzmacht\Contao\Toolkit\Dca\Listener\RegisterFieldCallbacksListener:
+    public: true
+    arguments:
+      - '@netzmacht.contao_toolkit.dca.manager'
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
+      - []
+    tags:
+      - { name: 'contao.hook', hook: 'loadDataContainer', method: 'onLoadDataContainer' }

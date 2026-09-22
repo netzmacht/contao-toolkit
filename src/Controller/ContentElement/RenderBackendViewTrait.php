@@ -15,6 +15,9 @@ use function sprintf;
 
 /**
  * The RenderBackendViewTrait renders the backend placeholder view for content elements
+ *
+ * @deprecated Use Netzmacht\Contao\Toolkit\Controller\Fragment\RenderBackendWildcardTrait instead.
+ *             Will be removed in 5.0.
  */
 trait RenderBackendViewTrait
 {

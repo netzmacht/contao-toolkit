@@ -21,6 +21,7 @@ use Contao\Model;
 use Contao\System;
 
 use function assert;
+use function trigger_deprecation;
 
 /** @SuppressWarnings(PHPMD.TooManyPublicMethods) */
 final class ContaoServicesFactory
@@ -112,17 +113,37 @@ final class ContaoServicesFactory
 
     /**
      * Create backend user instance.
+     *
+     * @deprecated Use Symfony\Bundle\SecurityBundle\Security::isGranted() for permission checks,
+     *             or ::getUser() for the concrete user object, instead. Will be removed in 5.0.
      */
     public function createBackendUserInstance(): BackendUser
     {
+        trigger_deprecation(
+            'netzmacht/contao-toolkit',
+            '4.1',
+            'ContaoServicesFactory::createBackendUserInstance() is deprecated.'
+            . ' Use Symfony\Bundle\SecurityBundle\Security::isGranted() or ::getUser() instead.',
+        );
+
         return $this->createInstance(BackendUser::class);
     }
 
     /**
      * Frontend user.
+     *
+     * @deprecated Use Symfony\Bundle\SecurityBundle\Security::isGranted() for permission checks,
+     *             or ::getUser() for the concrete user object, instead. Will be removed in 5.0.
      */
     public function createFrontendUserInstance(): FrontendUser
     {
+        trigger_deprecation(
+            'netzmacht/contao-toolkit',
+            '4.1',
+            'ContaoServicesFactory::createFrontendUserInstance() is deprecated.'
+            . ' Use Symfony\Bundle\SecurityBundle\Security::isGranted() or ::getUser() instead.',
+        );
+
         return $this->createInstance(FrontendUser::class);
     }
 

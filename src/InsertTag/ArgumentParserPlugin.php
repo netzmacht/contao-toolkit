@@ -10,6 +10,9 @@ namespace Netzmacht\Contao\Toolkit\InsertTag;
  * Following parsing strategy is used:
  * - Splits query by '::' into arguments
  * - Checks if any argument contains an url style query (foo?bar=baz)
+ *
+ * @deprecated Use Contao\CoreBundle\DependencyInjection\Attribute\AsInsertTag and
+ *             ResolvedInsertTag::getParameters() instead. Will be removed in 5.0.
  */
 trait ArgumentParserPlugin
 {

@@ -12,10 +12,9 @@ use Twig\Environment;
 use function preg_match;
 use function sprintf;
 use function str_ends_with;
+use function trigger_deprecation;
 
-/**
- * Class DelegatingTemplateRenderer support Twig and Contao templates and delegates the rendering to the engines.
- */
+/** Class DelegatingTemplateRenderer support Twig and Contao templates and delegates the rendering to the engines. */
 final class DelegatingTemplateRenderer implements TemplateRenderer
 {
     /**
@@ -76,6 +75,14 @@ final class DelegatingTemplateRenderer implements TemplateRenderer
      */
     private function renderContaoTemplate(string $name, array $parameters): string
     {
+        trigger_deprecation(
+            'netzmacht/contao-toolkit',
+            '4.1',
+            'Rendering legacy Contao templates via "%s" is deprecated and will be removed in 5.0.'
+            . ' Use a Twig template instead.',
+            $name,
+        );
+
         [$scope, $templateName] = $this->extractScopeAndTemplateName($name);
 
         return match ($scope) {

@@ -29,6 +29,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * Hybrid fragment controllers might be used as frontend modules or content elements. Be aware that you have to register
  * the methods renderAsContentElement() and renderAsFrontendModule() as fragment controllers.
  *
+ * @deprecated There is no Hybrid-controller successor in the new Controller\Fragment\* namespace — split your
+ *             controller into a Controller\Fragment\AbstractContentElementController and/or
+ *             Controller\Fragment\AbstractFrontendModuleController subclass instead. Will be removed in 5.0.
+ *
  * @extends AbstractFragmentController<ContentModel|ModuleModel>
  */
 abstract class AbstractHybridController extends AbstractFragmentController

@@ -11,6 +11,8 @@ use Netzmacht\Contao\Toolkit\Exception\InvalidHttpResponseTagException;
  *
  * It allows you to use the response tagger in your userland code. The tags are only added if Contao can handle it
  * (since version 4.6).
+ *
+ * @deprecated Use Contao\CoreBundle\Cache\CacheTagManager instead. Will be removed in 5.0.
  */
 interface ResponseTagger
 {

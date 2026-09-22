@@ -26,10 +26,14 @@ use function str_ends_with;
 use function str_starts_with;
 use function strrchr;
 use function substr;
+use function trigger_deprecation;
 use function trim;
 
 /**
  * This class a the base class for the base fragment controller provided by the Toolkit.
+ *
+ * @deprecated Use Netzmacht\Contao\Toolkit\Controller\Fragment\AbstractContentElementController or
+ *             AbstractFrontendModuleController instead. Will be removed in 5.0.
  *
  * @template TModel of Model
  */
@@ -227,6 +231,14 @@ abstract class AbstractFragmentController implements FragmentOptionsAwareInterfa
             && ! str_starts_with($templateName, 'fe:')
             && ! str_starts_with($templateName, 'be:')
         ) {
+            trigger_deprecation(
+                'netzmacht/contao-toolkit',
+                '4.1',
+                'Implicitly prefixing template name "%s" with "fe:" is deprecated. Pass an explicit scope'
+                . ' prefix or a ".twig" template name instead.',
+                $templateName,
+            );
+
             $templateName = 'fe:' . $templateName;
         }
 
