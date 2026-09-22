@@ -58,19 +58,3 @@ own ``ArgumentParser``/``AbstractSingleInsertTagParser`` tried to provide on top
 
 Named parameters, nested insert-tag resolution and caching metadata (``InsertTagResult::withExpiresAt()``,
 ``withCacheTags()``) are all handled natively — no manual query parsing is required.
-
-.. _insert-tags-deprecated:
-
-Deprecated: Toolkit's own `InsertTag` classes
------------------------------------------------
-
-.. important::
-
-   ``Netzmacht\Contao\Toolkit\InsertTag\AbstractInsertTagParser``, ``AbstractSingleInsertTagParser``,
-   ``ArgumentParser`` and ``ArgumentParserPlugin`` are deprecated as of 4.1.0 and will be removed in 5.0.0.
-   Instantiating ``AbstractInsertTagParser`` (directly or via a subclass) or calling ``ArgumentParser::create()``
-   triggers a runtime deprecation warning. Migrate to ``#[AsInsertTag]`` as shown above.
-
-These classes were originally built to provide reliable parameter access on top of Contao's historic raw
-``replaceInsertTags`` hook string. Contao's native insert-tag system now covers this natively and more, so no
-replacement abstraction is provided by Toolkit — register your insert tag as a native Contao service instead.
