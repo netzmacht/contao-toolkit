@@ -29,7 +29,6 @@
     "symfony/asset": "^6.4 || ^7.4 || ^8.0",
     "symfony/config": "^6.4 || ^7.4 || ^8.0",
     "symfony/dependency-injection": "^6.4 || ^7.4 || ^8.0",
-    "symfony/deprecation-contracts": "^3.0",
     "symfony/event-dispatcher": "^6.4 || ^7.4 || ^8.0",
     "symfony/event-dispatcher-contracts": "^3.0",
     "symfony/http-foundation": "^6.4 || ^7.4 || ^8.0",
@@ -37,8 +36,8 @@
     "symfony/routing": "^6.4 || ^7.4 || ^8.0",
     "symfony/security-core": "^6.4 || ^7.4 || ^8.0",
     "symfony/security-csrf": "^6.4 || ^7.4 || ^8.0",
-    "symfony/string": "^6.4 || ^7.4 || ^8.0",
-    "symfony/translation-contracts": "^3.0"
+    "symfony/translation-contracts": "^3.0",
+    "twig/twig": "^3.0"
   },
   "require-dev": {
     "contao/manager-plugin": "^2.1",
