@@ -63,12 +63,6 @@ services:
     class: Contao\FrontendUser
     factory: ['@netzmacht.contao_toolkit.contao_services_factory', 'createFrontendUserInstance']
 
-  netzmacht.contao_toolkit.data.alias_generator.factory.default_factory:
-    class: Netzmacht\Contao\Toolkit\Data\Alias\Factory\ToolkitAliasGeneratorFactory
-    public: true
-    arguments:
-      - '@database_connection'
-
   netzmacht.contao_toolkit.data.database_row_updater:
     class: Netzmacht\Contao\Toolkit\Data\Updater\DatabaseRowUpdater
     arguments:

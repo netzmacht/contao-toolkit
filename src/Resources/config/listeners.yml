@@ -1,7 +1,4 @@
 # yaml-language-server: $schema=../../../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
-parameters:
-  netzmacht.contao_toolkit.alias_generator.default: 'netzmacht.contao_toolkit.data.alias_generator.factory.default_factory'
-
 services:
   _defaults:
     public: false
@@ -32,17 +29,6 @@ services:
       - '@contao.routing.scope_matcher'
     tags:
       - { name: 'contao.hook', hook: 'loadDataContainer', method: 'onLoadDataContainer' }
-
-  Netzmacht\Contao\Toolkit\Dca\Listener\Save\GenerateAliasListener:
-    public: true
-    arguments:
-      - '@service_container'
-      - '@netzmacht.contao_toolkit.dca.manager'
-      - '%netzmacht.contao_toolkit.alias_generator.default%'
-
-  netzmacht.contao_toolkit.dca.listeners.alias_generator:
-    alias: Netzmacht\Contao\Toolkit\Dca\Listener\Save\GenerateAliasListener
-    public: true
 
   Netzmacht\Contao\Toolkit\Dca\Listener\Save\SlugAliasListener:
     public: true
