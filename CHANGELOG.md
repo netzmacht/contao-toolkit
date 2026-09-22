@@ -4,7 +4,7 @@ Changelog
 [Unreleased]
 ------------
 
-[4.1.0]
+[4.1.0-beta1]
 
 ### Added
 
