@@ -7,8 +7,7 @@ side-effecting elements (sliders, accordions, forms) where showing the real fron
 the backend editor would not make sense. Contao Core itself still renders this placeholder for
 such elements even in its own modern base classes, just not automatically for custom ones.
 
-Unlike the deprecated ``Controller\ContentElement\RenderBackendViewTrait``, it is **not**
-auto-invoked — call it explicitly from your own ``preGenerate()`` hook:
+It is **not** auto-invoked — call it explicitly from your own ``preGenerate()`` hook:
 
 .. code-block:: php
 

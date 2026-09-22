@@ -1,12 +1,6 @@
 Fragment controllers
 =====================
 
-.. important::
-
-   The legacy ``Netzmacht\Contao\Toolkit\Controller\AbstractFragmentController`` and its
-   ``ContentElement``/``FrontendModule``/``Hybrid`` subclasses are deprecated as of 4.1.0 and will
-   be removed in 5.0.0. New controllers should extend the classes documented on this page instead.
-
 ``Netzmacht\Contao\Toolkit\Controller\Fragment\AbstractContentElementController`` and
 ``AbstractFrontendModuleController`` are slim base classes built directly on top of
 ``Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController`` and
