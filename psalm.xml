@@ -17,6 +17,12 @@
                 <directory name="src"/>
             </errorLevel>
         </ClassMustBeFinal>
+        <!-- Symfony < 8.1 support: Bundle still implements the deprecated HttpKernel BundleInterface -->
+        <DeprecatedInterface>
+            <errorLevel type="suppress">
+                <referencedClass name="Symfony\Component\HttpKernel\Bundle\BundleInterface"/>
+            </errorLevel>
+        </DeprecatedInterface>
     </issueHandlers>
 
     <universalObjectCrates>
