@@ -140,11 +140,10 @@ final class OptionsBuilder
         $values  = [];
 
         foreach ($this->options as $key => $value) {
-            /** @psalm-suppress PossiblyNullArgument */
-            $pid = $this->options[$key][$parent];
+            $row = $this->options->row();
+            $pid = $row[$parent];
 
-            /** @psalm-suppress PossiblyNullArgument */
-            $values[$pid][$key] = array_merge($this->options[$key], ['__label__' => $value]);
+            $values[$pid][$key] = array_merge($row, ['__label__' => $value]);
         }
 
         $this->buildTree($values, $options, 0, $indentBy);

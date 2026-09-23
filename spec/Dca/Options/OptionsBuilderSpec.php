@@ -67,4 +67,39 @@ class OptionsBuilderSpec extends ObjectBehavior
 
         expect($this->getOptions()->offsetExists('aa'))->shouldReturn(true);
     }
+
+    public function it_builds_a_tree_from_array_list_with_ids_differing_from_positions(): void
+    {
+        $data = [
+            ['id' => 5, 'pid' => 0, 'title' => 'Root'],
+            ['id' => 7, 'pid' => 5, 'title' => 'Child'],
+            ['id' => 9, 'pid' => 7, 'title' => 'Grandchild'],
+            ['id' => 3, 'pid' => 0, 'title' => 'Second root'],
+        ];
+
+        $this->beConstructedWith(new ArrayListOptions($data, 'title', 'id'));
+        $this->asTree();
+
+        $this->getOptions()->shouldReturn(
+            [
+                5 => ' Root',
+                7 => '--  Child',
+                9 => '-- --  Grandchild',
+                3 => ' Second root',
+            ],
+        );
+    }
+
+    public function it_builds_a_tree_with_custom_parent_column_and_indent(): void
+    {
+        $data = [
+            ['id' => 1, 'parent' => 0, 'title' => 'Root'],
+            ['id' => 2, 'parent' => 1, 'title' => 'Child'],
+        ];
+
+        $this->beConstructedWith(new ArrayListOptions($data, 'title', 'id'));
+        $this->asTree('parent', '>');
+
+        $this->getOptions()->shouldReturn([1 => ' Root', 2 => '> Child']);
+    }
 }

@@ -61,6 +61,9 @@ Changelog
    `FlattenFormatter`) now run after the value formatter as documented.
  - `FormatterChain` formats array values element by element, so multiple values of options,
    reference, foreign key and file fields get formatted before they are flattened.
+ - `OptionsBuilder::asTree()` read the rows by option value via `ArrayAccess`, which returned wrong
+   rows (or failed) for `ArrayListOptions` and broke the iteration of `CollectionOptions`. It now
+   uses the current row of the iterated options.
 
 See `UPGRADE-5.0.md` for the full migration guide.
 
