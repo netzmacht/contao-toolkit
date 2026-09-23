@@ -56,13 +56,7 @@ final class GlobalsAssetsManager implements AssetsManager
         string|null $name = null,
     ): AssetsManager {
         foreach ($paths as $identifier => $path) {
-            if ($name !== null && $name !== '') {
-                $name .= '_' . $identifier;
-            } elseif (! is_numeric($identifier)) {
-                $name = $identifier;
-            }
-
-            $this->addJavascript($path, $static, $name);
+            $this->addJavascript($path, $static, $this->assetName($name, $identifier));
         }
 
         return $this;
@@ -101,13 +95,7 @@ final class GlobalsAssetsManager implements AssetsManager
         string|null $name = null,
     ): AssetsManager {
         foreach ($paths as $identifier => $path) {
-            if ($name !== null && $name !== '') {
-                $name .= '_' . $identifier;
-            } elseif (! is_numeric($identifier)) {
-                $name = $identifier;
-            }
-
-            $this->addStylesheet($path, $media, $static, $name);
+            $this->addStylesheet($path, $media, $static, $this->assetName($name, $identifier));
         }
 
         return $this;
@@ -196,6 +184,24 @@ final class GlobalsAssetsManager implements AssetsManager
     public function getHead(): array
     {
         return $GLOBALS['TL_HEAD'] ?? [];
+    }
+
+    /**
+     * Get the name of an asset registered in a list of assets.
+     *
+     * The given name is used as prefix for each asset. Without a name, string keys are used as asset name.
+     */
+    private function assetName(string|null $prefix, int|string $identifier): string|null
+    {
+        if ($prefix !== null && $prefix !== '') {
+            return $prefix . '_' . $identifier;
+        }
+
+        if (is_numeric($identifier)) {
+            return null;
+        }
+
+        return $identifier;
     }
 
     private function isStatic(bool|string $flag): bool

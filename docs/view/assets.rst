@@ -60,9 +60,12 @@ Stylesheets and javascripts
    // Javascript files accept the static flag and a name
    $assetsManager->addJavascript('files/js/app.js', true, 'project-app-js');
 
-   // Register multiple files at once.
-   $assetsManager->addJavascripts(['files/js/vendor.js', 'files/js/app.js']);
-   $assetsManager->addStylesheets(['files/css/a.css', 'files/css/b.css'], 'screen');
+   // Register multiple files at once. String keys are used as asset names, numeric keys are unnamed.
+   // Registers "vendor" and "app"
+   $assetsManager->addJavascripts(['vendor' => 'files/js/vendor.js', 'app' => 'files/js/app.js']);
+
+   // The name is used as prefix for each asset. Registers "theme_0" and "theme_1"
+   $assetsManager->addStylesheets(['files/css/a.css', 'files/css/b.css'], 'screen', true, 'theme');
 
 Paths can reference a `Symfony asset package`_ by using the ``package::path`` notation. The url is then resolved using
 the asset packages:

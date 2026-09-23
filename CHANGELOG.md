@@ -64,6 +64,9 @@ Changelog
  - `OptionsBuilder::asTree()` read the rows by option value via `ArrayAccess`, which returned wrong
    rows (or failed) for `ArrayListOptions` and broke the iteration of `CollectionOptions`. It now
    uses the current row of the iterated options.
+ - `GlobalsAssetsManager::addJavascripts()`/`addStylesheets()` accumulated the asset names over the
+   iterations (`theme_0`, `theme_0_1`, …). The given name is now used as prefix for each asset
+   (`theme_0`, `theme_1`, …), without a name string keys are used as asset names.
 
 See `UPGRADE-5.0.md` for the full migration guide.
 
