@@ -87,8 +87,29 @@ Class                       Step         Accepts
 ``FlattenFormatter``        post filter  fields with ``eval.multiple``
 ==========================  ===========  ===========================================================================
 
-``OptionsFormatter`` is also used as options formatter for ``formatOptions()``. The ``HtmlFormatter`` is available but
-not registered by default.
+``OptionsFormatter`` is also used as options formatter for ``formatOptions()``.
+
+
+Escaping HTML values
+~~~~~~~~~~~~~~~~~~~~
+
+The ``HtmlFormatter`` escapes values of fields with ``eval.allowHtml`` or ``eval.preserveTags``. It is not registered
+by default. If you output formatted values without auto escaping (e.g. in legacy PHP templates), register it as post
+filter:
+
+.. code-block:: yaml
+
+   # config/services.yaml
+   services:
+       app.formatter.html:
+           class: Netzmacht\Contao\Toolkit\Dca\Formatter\Value\HtmlFormatter
+           tags:
+               - { name: 'netzmacht.contao_toolkit.dca.formatter.post_filter', priority: -10 }
+
+The negative priority makes sure it runs after the ``FlattenFormatter``, so multiple values are escaped as a whole.
+
+.. warning:: Don't register it if you render the formatted values in Twig. Twig escapes the output automatically, so
+   the values would be escaped twice.
 
 
 Customize formatter
