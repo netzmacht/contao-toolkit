@@ -37,12 +37,12 @@ service has to implement the :code:`Netzmacht\Contao\Toolkit\Data\Model\Reposito
 
 .. code-block:: yaml
 
-   // your services.yml
+   # your services.yml
    services:
       custom.repository.example_model:
          class: Custom\Model\ExampleRepository
          tags:
-            { name: "netzmacht.contao_toolkit.repository" model: "Custom\Model\ExampleModel" }
+            - { name: 'netzmacht.contao_toolkit.repository', model: 'Custom\Model\ExampleModel' }
 
 If you register a custom repository the model you specified in the model tag is automatically added to Contao's
 :code:`$GLOBALS['TL_MODELS']`.

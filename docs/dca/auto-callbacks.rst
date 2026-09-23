@@ -5,13 +5,13 @@ Setting a `fields.<field>.toolkit.<key>` configuration for one of the three
 toolkit DCA listeners automatically registers the matching Contao callback — you no
 longer have to also wire `options_callback`/`save_callback`/`wizard` manually.
 
-============================  =================  ===============================================
-Config key                    DCA slot           Listener (method)
-============================  =================  ===============================================
-`toolkit.template_options`    `options_callback` `TemplateOptionsListener::onOptionsCallback`
-`toolkit.alias_generator`     `save_callback`    `SlugAliasListener::onSaveCallback`
-`toolkit.popup_wizard`        `wizard`           `PopupWizardListener::onWizardCallback`
-============================  =================  ===============================================
+============================  ==================  ===============================================
+Config key                    DCA slot            Listener (method)
+============================  ==================  ===============================================
+`toolkit.template_options`    `options_callback`  `TemplateOptionsListener::onOptionsCallback`
+`toolkit.alias_generator`     `save_callback`     `SlugAliasListener::onSaveCallback`
+`toolkit.popup_wizard`        `wizard`            `PopupWizardListener::onWizardCallback`
+============================  ==================  ===============================================
 
 .. code-block:: php
 

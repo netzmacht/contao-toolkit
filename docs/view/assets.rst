@@ -29,10 +29,3 @@ To avoid combining all assets when debugging, the assets manager uses the :code:
 flag by default. This means that only in production mode the assets get the `static` flag.
 
 .. hint:: The production mode is set by the dependency container using the symfony debug environment setting.
-
-
-Template helper
----------------
-
-The assets manager is also registered as template helper named `assets`. Read the :ref:`template-helpers` section of
-the templates documentation.
