@@ -46,14 +46,6 @@ when saving or toggling a record. It's provided as service :code:`netzmacht.cont
        }
    }
 
-.. code-block:: yaml
-
-   # config/services.yaml
-   services:
-       App\PublishService:
-           arguments:
-               - '@netzmacht.contao_toolkit.data.database_row_updater'
-
 The context is passed to the callbacks. Usually an instance of ``Contao\DataContainer`` is used.
 
 

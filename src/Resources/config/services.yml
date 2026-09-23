@@ -109,3 +109,13 @@ services:
 
   netzmacht.contao_toolkit.csrf.token_manager:
     alias: 'contao.csrf.token_manager'
+
+  # Autowiring aliases
+  Netzmacht\Contao\Toolkit\Dca\DcaManager: '@netzmacht.contao_toolkit.dca.manager'
+  Netzmacht\Contao\Toolkit\Callback\Invoker: '@netzmacht.contao_toolkit.callback_invoker'
+  Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager: '@netzmacht.contao_toolkit.repository_manager'
+  Netzmacht\Contao\Toolkit\Data\Updater\Updater: '@netzmacht.contao_toolkit.data.database_row_updater'
+  Netzmacht\Contao\Toolkit\View\Template\TemplateRenderer: '@netzmacht.contao_toolkit.template_renderer'
+  Netzmacht\Contao\Toolkit\View\Assets\AssetsManager: '@netzmacht.contao_toolkit.assets_manager'
+  Netzmacht\Contao\Toolkit\Security\Csrf\CsrfTokenProvider: '@netzmacht.contao_toolkit.csrf.token_provider'
+  Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory: '@netzmacht.contao_toolkit.dca.formatter.factory'

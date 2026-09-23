@@ -32,15 +32,6 @@ The default implementation ``GlobalsAssetsManager`` is provided as service ``net
        }
    }
 
-.. code-block:: yaml
-
-   # config/services.yaml
-   services:
-       App\Controller\ExampleController:
-           arguments:
-               - '@netzmacht.contao_toolkit.assets_manager'
-
-
 Stylesheets and javascripts
 ---------------------------
 

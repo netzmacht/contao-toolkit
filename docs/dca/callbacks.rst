@@ -35,17 +35,7 @@ which gets the data container manager injected.
        }
    }
 
-The constructor of ``AbstractListener`` expects a ``Netzmacht\Contao\Toolkit\Dca\DcaManager``. Toolkit does not
-register autowiring aliases for its services, so pass the ``netzmacht.contao_toolkit.dca.manager`` service explicitly:
-
-.. code-block:: yaml
-
-   # config/services.yaml
-   services:
-       App\EventListener\ExampleListener:
-           autoconfigure: true
-           arguments:
-               - '@netzmacht.contao_toolkit.dca.manager'
+The constructor of ``AbstractListener`` expects a ``Netzmacht\Contao\Toolkit\Dca\DcaManager`` which gets autowired.
 
 The ``AbstractListener`` class provides following helpers:
 
@@ -210,10 +200,6 @@ formats. For this case Toolkit provides an invoker which is registered as servic
            );
        }
    }
-
-.. hint:: The invoker is not autowireable by class name. Inject the service
-   ``netzmacht.contao_toolkit.callback_invoker`` explicitly, e.g.
-   ``arguments: ['@netzmacht.contao_toolkit.callback_invoker']``.
 
 
 .. _SlugAliasListener: https://github.com/netzmacht/contao-toolkit/blob/develop/src/Dca/Listener/Save/SlugAliasListener.php

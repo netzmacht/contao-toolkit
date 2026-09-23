@@ -49,15 +49,6 @@ The repository manager implements ``Netzmacht\Contao\Toolkit\Data\Model\Reposito
        }
    }
 
-.. code-block:: yaml
-
-   # config/services.yaml
-   services:
-       App\ExampleService:
-           arguments:
-               - '@netzmacht.contao_toolkit.repository_manager'
-
-
 Register a custom repository
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

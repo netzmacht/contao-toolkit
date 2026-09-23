@@ -30,13 +30,5 @@ Template renderer
        }
    }
 
-.. code-block:: yaml
-
-   # config/services.yaml
-   services:
-       App\ExampleService:
-           arguments:
-               - '@netzmacht.contao_toolkit.template_renderer'
-
 The template name is passed to Twig as is, so every namespace known to Twig (e.g. ``@Contao``, ``@MyBundle``) can be
 used.

@@ -38,16 +38,23 @@ Using the services
 ------------------
 
 All services of the toolkit are private and are registered with service ids like
-``netzmacht.contao_toolkit.dca.manager``. Toolkit does not register autowiring aliases for its interfaces, so you have
-to reference the service id explicitly when injecting a service:
+``netzmacht.contao_toolkit.dca.manager``. The main services can be autowired by their interface or class, e.g.
+``Netzmacht\Contao\Toolkit\Dca\DcaManager``:
 
-.. code-block:: yaml
+.. code-block:: php
 
-   # config/services.yaml
-   services:
-       App\ExampleService:
-           arguments:
-               $dcaManager: '@netzmacht.contao_toolkit.dca.manager'
+   <?php
+
+   declare(strict_types=1);
+
+   use Netzmacht\Contao\Toolkit\Dca\DcaManager;
+
+   final class ExampleService
+   {
+       public function __construct(private readonly DcaManager $dcaManager)
+       {
+       }
+   }
 
 See :doc:`reference/services` for a list of all services and tags.
 

@@ -1,7 +1,8 @@
 Services and tags
 =================
 
-All services are private. Reference them by their service id, see :doc:`../installation`.
+All services are private. The services listed with an autowiring alias can be injected by their type, see
+:doc:`../installation`.
 
 
 Services
@@ -23,7 +24,8 @@ Service id                                                        Type
                                                                   :doc:`../dependency-injection/contao-services-factory`
 ================================================================  ====================================================
 
-All types are relative to the ``Netzmacht\Contao\Toolkit`` namespace.
+All types are relative to the ``Netzmacht\Contao\Toolkit`` namespace. Except for the ``ContaoServicesFactory`` and
+the adapters, each type is registered as autowiring alias of its service.
 
 
 DCA listeners

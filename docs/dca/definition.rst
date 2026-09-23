@@ -37,16 +37,6 @@ formatter per request.
        }
    }
 
-.. code-block:: yaml
-
-   # config/services.yaml
-   services:
-       App\ExampleService:
-           arguments:
-               - '@netzmacht.contao_toolkit.dca.manager'
-
-.. hint:: Toolkit does not register autowiring aliases for its services. Always reference the service id explicitly.
-
 If the data container does not exist, an ``Netzmacht\Contao\Toolkit\Assertion\AssertionFailed`` exception is thrown.
 
 

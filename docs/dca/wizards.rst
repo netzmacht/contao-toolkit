@@ -62,17 +62,6 @@ current value to an abstract ``generate()`` method:
        }
    }
 
-.. code-block:: yaml
-
-   # config/services.yaml
-   services:
-       App\EventListener\IconPickerListener:
-           autoconfigure: true
-           arguments:
-               - '@netzmacht.contao_toolkit.template_renderer'
-               - '@translator'
-               - '@netzmacht.contao_toolkit.dca.manager'
-
 .. note:: Custom wizards are not registered automatically by the ``toolkit`` configuration section. Register them
    as callback yourself, see :doc:`auto-callbacks`.
 

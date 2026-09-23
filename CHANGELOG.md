@@ -6,6 +6,12 @@ Changelog
 
 [5.0.0]
 
+### Added
+
+ - Autowiring aliases for `Dca\DcaManager`, `Dca\Formatter\FormatterFactory`, `Callback\Invoker`,
+   `Data\Model\RepositoryManager`, `Data\Updater\Updater`, `View\Template\TemplateRenderer`,
+   `View\Assets\AssetsManager` and `Security\Csrf\CsrfTokenProvider`.
+
 ### Changed
 
  - Raised `contao/core-bundle` requirement to `^5.7 || ^6.0` to support Contao 6. `symfony/*`
