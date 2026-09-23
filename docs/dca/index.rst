@@ -12,5 +12,7 @@ definitions.
 
    definition
    callbacks
-   formatter
    auto-callbacks
+   options
+   formatter
+   wizards

@@ -16,11 +16,14 @@ simultaneously increase the code quality.
    :maxdepth: 2
 
    introduction
+   installation
    data/index
    dca/index
    view/index
    controller/index
    dependency-injection/index
+   utilities
+   reference/services
 
 
 .. _Contao Content Management System: https://contao.org

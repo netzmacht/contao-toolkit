@@ -2,8 +2,8 @@ Introduction
 ============
 
 I develop Contao extensions for many years. Although Contao provides a useful library some aspects which are required in
-the daily life are missing. Furthermore some developer concepts which has grown in popularity, especially dependency
-injection, wasn't really usable in Contao. Working in projects which have high quality standards some improvements were
+the daily life are missing. Toolkit fills these gaps with small, interface based services which integrate into
+Contao's Symfony based architecture. Working in projects which have high quality standards some improvements were
 required.
 
 
@@ -30,7 +30,8 @@ and uses the features provided by the other tools.
     The `haste libary`_ is one of the more comprehensive developer tools for Contao developers. There are some
     intersections between Toolkit and haste but the main focus is different.
 
-The `dependency-container`_, `event-dispatcher`_ and `translator`_ got obsolete since Contao 4 based on Symfony.
+Where Contao meanwhile provides a native solution, Toolkit removed its own implementation in favour of the Contao
+feature. See the `upgrade guide`_ for details.
 
 
 Examples
@@ -43,8 +44,6 @@ If you want to see how Toolkit is used in real contao extensions you can have a 
 
 
 .. _haste libary: https://github.com/codefog/contao-haste
-.. _dependency-container: https://github.com/contao-community-alliance/dependency-container
-.. _event-dispatcher: https://github.com/contao-community-alliance/event-dispatcher
-.. _translator: https://github.com/contao-community-alliance/translator
+.. _upgrade guide: https://github.com/netzmacht/contao-toolkit/blob/develop/UPGRADE-5.0.md
 .. _contao-leaflet-maps: https://github.com/netzmacht/contao-leaflet-maps
 .. _contao-form-validation: https://github.com/netzmacht/contao-form-validation
