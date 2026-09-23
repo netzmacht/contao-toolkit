@@ -22,11 +22,6 @@
                 <directory name="src"/>
             </errorLevel>
         </ClassMustBeFinal>
-        <UndefinedClass>
-            <errorLevel type="suppress">
-                <referencedClass name="Symfony\Component\Security\Core\Security"/>
-            </errorLevel>
-        </UndefinedClass>
     </issueHandlers>
 
     <universalObjectCrates>

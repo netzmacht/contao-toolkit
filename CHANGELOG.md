@@ -50,6 +50,9 @@ Changelog
    `Exception\InvalidHttpResponseTagException`, the `netzmacht.contao_toolkit.response_tagger`
    service, and the `friendsofsymfony/http-cache` `require-dev`/`conflict` dependency. Use
    `Contao\CoreBundle\Cache\CacheTagManager` instead.
+ - `Data\Updater\DatabaseRowUpdater` no longer accepts the removed
+   `Symfony\Component\Security\Core\Security`, only `Symfony\Bundle\SecurityBundle\Security`.
+   The `symfony/security-core` requirement was replaced by `symfony/security-bundle`.
 
 See `UPGRADE-5.0.md` for the full migration guide.
 
