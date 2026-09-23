@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<psalm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://getpsalm.org/schema/config" errorLevel="7" hideExternalErrors="true" findUnusedCode="false" xsi:schemaLocation="https://getpsalm.org/schema/config https://getpsalm.org/schema/config" findUnusedBaselineEntry="false">
+<psalm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://getpsalm.org/schema/config" errorLevel="7" hideExternalErrors="true" findUnusedCode="false" xsi:schemaLocation="https://getpsalm.org/schema/config https://getpsalm.org/schema/config" findUnusedBaselineEntry="false" findUnusedIssueHandlerSuppression="false">
     <projectFiles>
         <directory name="src"/>
         <ignoreFiles>
