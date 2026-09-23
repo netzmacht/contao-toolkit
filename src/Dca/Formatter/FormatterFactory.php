@@ -53,7 +53,7 @@ final class FormatterFactory
             $chainFilters[] = new FormatterChain($formatter);
         }
 
-        if ($preFilters) {
+        if ($postFilters) {
             $chainFilters[] = new FilterFormatter($postFilters);
         }
 

@@ -123,7 +123,7 @@ final class CreateFormatterEvent extends Event
      */
     public function addPostFilter(ValueFormatter $formatter): self
     {
-        $this->preFilters[] = $formatter;
+        $this->postFilters[] = $formatter;
 
         return $this;
     }

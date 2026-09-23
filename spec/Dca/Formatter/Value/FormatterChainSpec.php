@@ -67,4 +67,18 @@ class FormatterChainSpec extends ObjectBehavior
 
         $this->format('foo', 'test', [])->shouldReturn('foo');
     }
+
+    public function it_applies_matching_formatter_to_each_array_element(
+        ValueFormatter $formatterA,
+        ValueFormatter $formatterB,
+    ): void {
+        $formatterA->accepts(Argument::cetera())->willReturn(false);
+        $formatterA->format(Argument::cetera())->shouldNotBeCalled();
+
+        $formatterB->accepts(Argument::cetera())->willReturn(true);
+        $formatterB->format('a', 'test', [], null)->willReturn('A')->shouldBeCalledOnce();
+        $formatterB->format('b', 'test', [], null)->willReturn('B')->shouldBeCalledOnce();
+
+        $this->format(['x' => 'a', 'y' => 'b'], 'test', [])->shouldReturn(['x' => 'A', 'y' => 'B']);
+    }
 }

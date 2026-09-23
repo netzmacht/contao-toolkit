@@ -54,6 +54,14 @@ Changelog
    `Symfony\Component\Security\Core\Security`, only `Symfony\Bundle\SecurityBundle\Security`.
    The `symfony/security-core` requirement was replaced by `symfony/security-bundle`.
 
+### Fixed
+
+ - `CreateFormatterEvent::addPostFilter()` registered the filter as pre filter and
+   `FormatterFactory` only applied post filters if pre filters existed. Post filters (e.g.
+   `FlattenFormatter`) now run after the value formatter as documented.
+ - `FormatterChain` formats array values element by element, so multiple values of options,
+   reference, foreign key and file fields get formatted before they are flattened.
+
 See `UPGRADE-5.0.md` for the full migration guide.
 
 [4.1.0-beta1]
