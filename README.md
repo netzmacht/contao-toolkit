@@ -23,6 +23,11 @@ Changelog
 
 See [CHANGELOG.md](CHANGELOG.md)
 
+Upgrading
+---------
+
+Upgrading from 4.x? See [UPGRADE-5.0.md](UPGRADE-5.0.md) for removed components and their replacements.
+
 Documentation
 -------------
 

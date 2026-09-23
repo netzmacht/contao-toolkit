@@ -103,7 +103,7 @@ See `UPGRADE-5.0.md` for the full migration guide.
  - `Netzmacht\Contao\Toolkit\InsertTag\AbstractInsertTagParser`, `AbstractSingleInsertTagParser`,
    `ArgumentParser`, `ArgumentParserPlugin`. Use Contao's native
    `Contao\CoreBundle\DependencyInjection\Attribute\AsInsertTag` instead. See
-   `docs/insert-tags/index.rst`.
+   `UPGRADE-5.0.md`.
  - `Dca\Listener\Button\StateButtonCallbackListener`. Use the native `toggle` field eval instead.
  - `Dca\Listener\Wizard\ColorPickerListener`. Use the native `eval => ['colorpicker' => true]`
    field eval instead.

@@ -119,7 +119,7 @@ The get templates callback get all available templates.
         'exclude' => null,
     ];
 
-As of 4.1.0, `prefix` also supports modern, namespaced fragment-template identifiers
+`prefix` supports modern, namespaced fragment-template identifiers
 (e.g. `content_element/text`) in addition to classic prefixes (`ce_`, `mod_`, …) — the listener
 automatically uses Contao's `contao.twig.finder_factory` service for the former.
 

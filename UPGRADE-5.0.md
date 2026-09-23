@@ -54,7 +54,8 @@ Removed: `InsertTag\AbstractInsertTagParser`, `AbstractSingleInsertTagParser`, `
 `ArgumentParserPlugin` (all of `src/InsertTag/`).
 
 Migrate to: `Contao\CoreBundle\DependencyInjection\Attribute\AsInsertTag` +
-`ResolvedInsertTag`/`ResolvedParameters`. See `docs/insert-tags/index.rst`.
+`ResolvedInsertTag`/`ResolvedParameters`. See the
+[Contao developer documentation](https://docs.contao.org/dev/framework/insert-tags/).
 
 ## DCA wizard listeners (StateButton/Color/File/Page picker)
 

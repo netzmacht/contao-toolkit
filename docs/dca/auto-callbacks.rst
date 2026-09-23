@@ -1,8 +1,8 @@
 Auto-registered field callbacks
 =================================
 
-As of 4.1.0, setting a `fields.<field>.toolkit.<key>` configuration for one of the three
-remaining toolkit DCA listeners automatically registers the matching Contao callback — you no
+Setting a `fields.<field>.toolkit.<key>` configuration for one of the three
+toolkit DCA listeners automatically registers the matching Contao callback — you no
 longer have to also wire `options_callback`/`save_callback`/`wizard` manually.
 
 ============================  =================  ===============================================
@@ -30,8 +30,6 @@ Manually registering a callback remains a fully supported, explicit override:
   is appended alongside any manually registered ones, without duplicating itself across repeated
   `loadDataContainer` invocations.
 
-This auto-registration only applies to the three listeners above — the deprecated
-`GenerateAliasListener`, `StateButtonCallbackListener`, `ColorPickerListener`, `FilePickerListener`
-and `PagePickerListener` are intentionally excluded (see :doc:`callbacks`), as is the generic
-`AbstractPickerListener`/`AbstractFieldPickerListener` infrastructure (no fixed service/method to
-tag).
+This auto-registration only applies to the three listeners above — the generic
+`AbstractPickerListener`/`AbstractFieldPickerListener` infrastructure is intentionally excluded
+(no fixed service/method to tag).
