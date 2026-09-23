@@ -20,9 +20,7 @@ simultaneously increase the code quality.
    dca/index
    view/index
    controller/index
-   routing/index
    dependency-injection/index
-   cache/index
 
 
 .. _Contao Content Management System: https://contao.org
