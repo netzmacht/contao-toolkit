@@ -63,7 +63,8 @@ Removed: `Dca\Listener\Button\StateButtonCallbackListener`, `Dca\Listener\Wizard
 `FilePickerListener`, `PagePickerListener`.
 
 Unchanged, stay available: `AbstractPickerListener`, `AbstractFieldPickerListener`,
-`AbstractWizardListener`, `PopupWizardListener`, `Data\Updater\Updater`/`DatabaseRowUpdater`.
+`AbstractWizardListener`, `PopupWizardListener`, `Data\Updater\Updater`. `DatabaseRowUpdater` was
+reworked, see below.
 
 Migrate to: the native `toggle` field eval (state button), `eval => ['colorpicker' => true]`
 (color picker), `eval => ['dcaPicker' => [...]]` + `Contao\Backend::getDcaPickerWizard()`
@@ -129,3 +130,22 @@ automatically). For content elements, opt in to `RenderBackendWildcardTrait` fro
 No removals — both the modern-fragment-template support added to `TemplateOptionsListener` and the
 DCA auto-callback-registration tag/compiler pass are permanent additions, unchanged going into
 5.0.0.
+
+## `DatabaseRowUpdater`
+
+`Data\Updater\DatabaseRowUpdater` now updates a record the same way Contao's `DC_Table` driver does:
+
+- The constructor requires two additional arguments: the `contao.data_container.virtual_fields_handler`
+  and the `contao.cache.tag_manager` service. If you use the `netzmacht.contao_toolkit.data.database_row_updater`
+  service, nothing has to be changed.
+- `hasUserAccess()` only asks the security voter for excluded fields (`DataContainer::isFieldExcluded()`
+  semantics). Not excluded fields are always accessible.
+- `update()` throws `AccessDenied` if the table is `notEditable`, the record doesn't exist or the
+  `contao_dc.<table>` permission (`ReadAction`/`UpdateAction`) is denied.
+- Unchanged values are only saved for `alwaysSave` fields, empty values are skipped for `doNotSaveEmpty`
+  fields and converted to the empty value of the column type otherwise (e.g. `0` or `NULL`).
+- `update()` returns the saved values only. The `tstamp` is always set if anything changed.
+- `onbeforesubmit_callback` and `onsubmit_callback` are triggered, cache tags are invalidated and a new
+  version is only created if the record was changed.
+
+`update()` expects raw values. Formatted date values (`rgxp` `date`, `time`, `datim`) are not converted.

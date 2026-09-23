@@ -60,6 +60,8 @@ services:
       - '@database_connection'
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@netzmacht.contao_toolkit.callback_invoker'
+      - '@contao.data_container.virtual_fields_handler'
+      - '@contao.cache.tag_manager'
 
   netzmacht.contao_toolkit.dca.formatter.factory:
     class: Netzmacht\Contao\Toolkit\Dca\Formatter\FormatterFactory

@@ -53,6 +53,11 @@ Changelog
  - `Data\Updater\DatabaseRowUpdater` no longer accepts the removed
    `Symfony\Component\Security\Core\Security`, only `Symfony\Bundle\SecurityBundle\Security`.
    The `symfony/security-core` requirement was replaced by `symfony/security-bundle`.
+ - `Data\Updater\DatabaseRowUpdater` now mirrors the save logic of Contao's `DC_Table` driver:
+   `notEditable` tables, `ReadAction`/`UpdateAction` permissions, field access for excluded fields only,
+   csv values, unique values, `doNotSaveEmpty`/`alwaysSave`, empty values by column type, virtual fields,
+   fallback fields, `onbeforesubmit_callback`/`onsubmit_callback`, cache tag invalidation and
+   versioning. The constructor requires the `VirtualFieldsHandler` and the `CacheTagManager`.
 
 ### Fixed
 

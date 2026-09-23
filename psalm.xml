@@ -12,11 +12,6 @@
                 <referencedProperty name="Contao\DataContainer::$activeRecord"/>
             </errorLevel>
         </UndefinedMagicPropertyFetch>
-        <DeprecatedMethod>
-            <errorLevel type="suppress">
-                <referencedMethod name="Doctrine\DBAL\Schema\AbstractSchemaManager::listTableColumns"/>
-            </errorLevel>
-        </DeprecatedMethod>
         <ClassMustBeFinal>
             <errorLevel type="suppress">
                 <directory name="src"/>
